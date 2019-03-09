@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Thrift RPC 框架</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 23, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/thrift-rpc-kuang-jia.html" rel="bookmark" title="Permanent Link to &quot;Thrift RPC 框架&quot;">Thrift RPC 框架</a>
+                </h2>
+
+                
+                
+
+                <p>Thrift 是一个全栈的 RPC 框架，它包含了接口定义语言（IDL）和RPC服务两部分，大概相当于 protobuf + gRPC 的功能。</p>
+<h1>安装</h1>
+<p>可以使用 https://github.com/yifeikong/install 中的脚本来安装</p>
+<h1>Thrift 中的类型与 IDL</h1>
+<p>包括 <code>bool, byte/i8, i16, i32, i64, double, string, binary</code>。</p>
+<ul>
+<li>比较蛋疼的是 thrift 不支持 uint，原因是好多语言里面没有原生无符号类型（无语。。）</li>
+<li>binary 类型相当于某些语言中的 bytes</li>
+<li>string 使用 utf-8 编码</li>
+<li>byte 和 i8 是同一个类型，也是有符号的</li>
+</ul>
+<h2>复合类型（struct）</h2>
+<p>struct 就像编程语言中的结构体或者类一样，用来自定义类型。注意在 Thrift 中定义类型的时候需要使用数字标记顺序，这样是为了更高效地序列化。</p>
+<p>注意其中的 required 和 optional 字段，required 表示必选的字段，optional 的字段可以忽略。为了兼容性考虑，建议尽可能把字段声明为 optional。</p>
+<div class="highlight"><pre><span></span><span class="nt">struct</span> <span class="nt">Cat</span> <span class="p">{</span>
+    <span class="err">1:</span> <span class="err">required</span> <span class="err">i32</span> <span class="err">number=10</span><span class="p">;</span>  <span class="err">//</span> <span class="err">可以有默认值</span>
+    <span class="err">2:</span> <span class="err">optional</span> <span class="err">i64</span> <span class="err">big_number</span><span class="p">;</span>
+    <span class="err">3:</span> <span class="err">double</span> <span class="err">decimal</span><span class="p">;</span>
+    <span class="err">4:</span> <span class="err">string</span> <span class="err">name=&quot;thrifty&quot;</span><span class="p">;</span>  <span class="err">//</span> <span class="err">字符串也可以有默认值</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h2>exceptions</h2>
+<p>Thrift 中还可以定义异常，关键字是 exception，其他语法和 struct 一样。</p>
+<h2>typedef</h2>
+<p>Thrift 支持 C/C++ 类型的 typedef</p>
+<div class="highlight"><pre><span></span>typedef i32 MyInteger   // 1
+typedef Tweet ReTweet   // 2
+</pre></div>
+
+
+<h2>枚举</h2>
+<div class="highlight"><pre><span></span><span class="k">enum</span> <span class="n">Operation</span> {
+    <span class="n">ADD</span> = <span class="mi">1</span>;
+    <span class="n">SUB</span> = <span class="mi">2</span>;
+    <span class="n">MUL</span> = <span class="mi">3</span>;
+    <span class="n">DIV</span> = <span class="mi">4</span>;
+}
+</pre></div>
+
+
+<h2>容器类型</h2>
+<p>Thrift 中包含了常见的容器类型 <code>list set map</code> 等。</p>
+<ul>
+<li><code>list&lt;t1&gt;</code>: 一个t1类型的有序数组</li>
+<li><code>set&lt;t1&gt;</code>: 一个t1类型的无需集合</li>
+<li><code>map&lt;t1,t2&gt;</code>: 一个字典，key 是 t1 类型，value 是 t2 类型</li>
+</ul>
+<h2>常量</h2>
+<p>使用 const 定义常量</p>
+<div class="highlight"><pre><span></span>const i32 INT_CONST = 1234;    // 1
+const map&lt;string,string&gt; MAP_CONST = {&quot;hello&quot;: &quot;world&quot;, &quot;goodnight&quot;: &quot;moon&quot;}
+</pre></div>
+
+
+<h2>注释</h2>
+<p>Thrift 支持 Python 和 C++ 类型的注释。</p>
+<div class="highlight"><pre><span></span># This is a valid comment.
+
+/*
+ * This is a multi-line comment.
+ * Just like in C.
+ */
+
+// C++/Java style single-line comments work just as well.
+</pre></div>
+
+
+<h2>命名空间</h2>
+<p>for each thrift file, you have to add a namespace for it.</p>
+<div class="highlight"><pre><span></span>namespace py tutorial
+namespace java tutorial
+</pre></div>
+
+
+<h2>include</h2>
+<p>include "other.thrift"</p>
+<h1>服务</h1>
+<p>服务类似于一个接口，在 Thrift 中定义，然后根据 Thrift 生成的文件，再使用具体的代码实现。</p>
+<p>注意其中的 <code>oneway</code>, 意思是客户端不会等待响应。</p>
+<div class="highlight"><pre><span></span>service StringCache {
+    void set(1:i32 key, 2:string value),
+    string get(1:i32 key) throws (1:KeyNotFound knf),
+    oneway void delete(1:i32 key)
+}
+</pre></div>
+
+
+<h2>生成的代码</h2>
+<p>Thrift 的整个网络架构如图：</p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tKfTcgy1fslz611nmfj30y40igdj2.jpg"></p>
+<p>生成的代码位于蓝色的一层，Transport 实现了二进制数据的传输，我们可以选择 TCP 或者 HTTP 等协议传输我们的数据。也就是Processor。Protocol 层定义了如何把Thrift内部结构的数据序列化到二进制数据，或者反过来解析，可以使用 JSON、compact 等转换方法。Processor 负责从 Protocol 中读取请求，调用用户的代码，并写入响应。Server 的实现可以有很多中，比如多线程、多进程的等等。</p>
+<p>Processor 的定义：</p>
+<div class="highlight"><pre><span></span><span class="kr">interface</span> <span class="nx">TProcessor</span> <span class="p">{</span>
+    <span class="kt">bool</span> <span class="nx">process</span><span class="p">(</span><span class="nx">TProtocol</span> <span class="k">in</span><span class="p">,</span> <span class="nx">TProtocol</span> <span class="nx">out</span><span class="p">)</span> <span class="kr">throws</span> <span class="nx">TException</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Server 的具体工作：</p>
+<ul>
+<li>创建一个 Transport 用于传输数据</li>
+<li>为这个Transport创建输入输出的 Protocol </li>
+<li>基于上面的 Protocol 创建 Processor</li>
+<li>等待客户端请求，并且把收到的请求交给 Processor 处理，一直循环下去。</li>
+</ul>
+<h1>编译</h1>
+<div class="highlight"><pre><span></span>thrift -r --gen py file.thrift
+</pre></div>
+
+
+<p>编译好的文件在 gen-py 目录下</p>
+<ul>
+<li><code>-r</code> 表示递归编译</li>
+<li><code>--gen</code> 指定要生成的语言</li>
+</ul>
+<h1>一个例子</h1>
+<p>handler 对应实现 service
+Server 中使用 Handler</p>
+<p>Python的 server 和 client </p>
+<h1>常见问题</h1>
+<p>YN: 线程安全性</p>
+<ol>
+<li>thrift默认提供了thread/process 等不同的server类型, 需要考虑handler的线程安全问题</li>
+<li>thrift client不是线程安全的, 在多线程程序中使用需要注意(http://grokbase.com/t/thrift/user/127yhv7wmx/is-the-thrift-client-thread-safe)</li>
+<li>看一下pyutil中是如何使用的...</li>
+</ol>
+<p>何时需要一个 thrift 服务呢？而不是封装一个类或者 dal 来操作？</p>
+<ol>
+<li>跨语言，跨代码库的调用</li>
+<li>需要维持一个很重的资源的服务</li>
+</ol>
+<p>如果只是同一个语言内，需要读写一些数据库之类的，封装成一个类就可以了</p>
+<p>Const应该定义在哪儿？</p>
+<p>如果是一个需要在调用过程中使用的常量，使用 thrift，如果是在数据库中存储，使用在代码中定义的常量</p>
+<h2>Thrift vs http api</h2>
+<p>A few reasons other than speed:</p>
+<ol>
+<li>Thrift generates the client and server code completely, including the data structures you are passing, so you don't have to deal with anything other than writing the handlers and invoking the client. and everything, including parameters and returns are automatically validated and parsed. so you are getting sanity checks on your data for free.</li>
+<li>Thrift is more compact than HTTP, and can easily be extended to support things like encryption, compression, non blocking IO, etc.</li>
+<li>Thrift can be set up to use HTTP and JSON pretty easily if you want it (say if your client is somewhere on the internet and needs to pass firewalls)</li>
+<li>Thrift supports persistent connections and avoids the continuous TCP and HTTP handshakes that HTTP incurs.</li>
+</ol>
+<p>Personally, I use thrift for internal LAN RPC and HTTP when I need connections from outside.</p>
+<h1>参考</h1>
+<ol>
+<li>https://stackoverflow.com/questions/9732381/why-thrift-why-not-http-rpcjsongzip</li>
+<li>https://thrift-tutorial.readthedocs.io/en/latest/usage-example.html#a-simple-example-to-warm-up</li>
+<li>http://thrift-tutorial.readthedocs.io/en/latest/index.html</li>
+<li>https://diwakergupta.github.io/thrift-missing-guide/</li>
+<li>http://thrift.apache.org/tutorial/py</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/thrift-rpc-kuang-jia.html">posted at 15:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

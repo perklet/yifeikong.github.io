@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 使用 Python 提取字幕文件</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 13, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-python-ti-qu-zi-mu-wen-jian.html" rel="bookmark" title="Permanent Link to &quot;使用 Python 提取字幕文件&quot;">使用 Python 提取字幕文件</a>
+                </h2>
+
+                
+                
+
+                <p>最近打算做一个字幕相关的 app，需要从字幕文件中提取出单词。对比了几个库之后，发现 PySubs2 还不错，主要原因是他支持三种主流的字幕文件 <code>.srt</code>, <code>.ass</code>, <code>.ssa</code>。而其他的库往往只支持其中一个，实际使用还需要两个库配合，所以不如直接使用 PySubs 2.</p>
+<h1>用法</h1>
+<p>因为我的需求主要是解析提取字幕文件，所以这里只讨论相关问题。对于字幕时间轴和样式的编译，可以查看 pysubs2 的官方文档。</p>
+<p>因为字幕文件本身结构也比较简单，PySubs2 使用也非常简单，核心只有两个类： SSAFile 和 SSAEvent。其中 SSAFile 指的是一个字幕文件，它像一个数组一样，包含了多个 SSAEvent。下面直接看代码吧：</p>
+<h2>安装</h2>
+<p>使用 pip</p>
+<div class="highlight"><pre><span></span>pip install pysubs2
+</pre></div>
+
+
+<p>比如我们有一个srt格式的字幕文件 subtitles.srt：</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; SIMPLE_FILE = &quot;&quot;&quot;\
+... 1
+... 00:00:00,000 --&gt; 00:01:00,000
+... Once upon a time,
+...
+... 2
+... 00:01:00,000 --&gt; 00:02:00,000
+... there was a SubRip file
+... <span class="nt">&lt;i&gt;</span>with<span class="nt">&lt;/i&gt;</span> two subtitles.
+... &quot;&quot;&quot;
+&gt;&gt;&gt; with open(&quot;subtitles.srt&quot;, &quot;w&quot;) as fp:
+...      fp.write(SIMPLE_FILE)
+</pre></div>
+
+
+<p>可以使用 SSAFile.load 或者 from_string 加载</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pysubs2</span> <span class="kn">import</span> <span class="n">SSAFile</span><span class="p">,</span> <span class="n">SSAEvent</span><span class="p">,</span> <span class="n">make_time</span>
+<span class="n">subs</span> <span class="o">=</span> <span class="n">SSAFile</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;subtitle.srt&#39;</span><span class="p">)</span>
+<span class="c1"># 或者从字符串中读取</span>
+<span class="c1"># subs = SSAFile.from_string(字幕数据)</span>
+</pre></div>
+
+
+<p>可以把 SSAFile 当做数组使用，每个元素都是一个 SSAEvent，也就是一条字幕。SSAEvent 提供了不少方便的属性用于读取。</p>
+<div class="highlight"><pre><span></span>subs[0].text  字幕文字，包含了样式
+subs[0].start 字幕开始时间，单位毫秒
+subs[0].end   字幕结束时间
+subs[0].plaintext 纯文本
+
+&gt;&gt;&gt; for line in subs:
+...     print(line.text)
+&quot;Once upon a time,&quot;
+&quot;there was a SubRip file\\N<span class="nt">&lt;i&gt;</span>with<span class="nt">&lt;/i&gt;</span> two subtitles.&quot;
+</pre></div>
+
+
+<p>注意其中 text 中包含各种格式信息，换行是使用 \N 表示的。如果需要提取纯文本，可以使用 plaintext。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-python-ti-qu-zi-mu-wen-jian.html">posted at 01:07</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | MyISAM vs InnoDB: mysql 的两种存储引擎的区别</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Mar 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/myisam-vs-innodb-mysql-de-liang-chong-cun-chu-yin-qing-de-qu-bie.html" rel="bookmark" title="Permanent Link to &quot;MyISAM vs InnoDB: mysql 的两种存储引擎的区别&quot;">MyISAM vs InnoDB: mysql 的两种存储引擎的区别</a>
+                </h2>
+
+                
+                
+
+                <ul>
+<li>InnoDB 有行级别的锁，而 MyISAM 只能锁定到表级别。</li>
+<li>InnoDB 有更好的故障恢复机制.</li>
+<li>MyISAM 有全文索引，InnoDB 直到5.6(Feb 2013)才拥有。</li>
+<li>InnoDB 实现了事物、外键和关系限制, MyISAM 没有.</li>
+</ul>
+<p>ref: https://dba.stackexchange.com/questions/1/what-are-the-main-differences-between-innodb-and-myisam</p>
+<p>总的来说，引用完整性和事物才是数据库的本质，所以说：“MyISAM is a file system that understands SQL. There’s no comparison. If you want a database engine with MySQL, use InnoDB.”</p>
+<p>ref: https://jeremystein.com/journal/innodb-versus-myisam-no-comparison/</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/myisam-vs-innodb-mysql-de-liang-chong-cun-chu-yin-qing-de-qu-bie.html">posted at 22:11</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Linux 上的 DNS 缓存</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机,网络" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 13, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-shang-de-dns-huan-cun.html" rel="bookmark" title="Permanent Link to &quot;Linux 上的 DNS 缓存&quot;">Linux 上的 DNS 缓存</a>
+                </h2>
+
+                
+                
+
+                <p>Linux 内核中没有 DNS 缓存</p>
+<p>Firefox 内置了 DNS 缓存</p>
+<p><code>nscd</code> 可以提供本地的 DNS 缓存，好多机器开了，但是据说这个服务有很多问题。</p>
+<p>Python 使用了 <code>getaddrinfo</code> 函数，会使用系统的 DNS 缓存</p>
+<p>像 <code>nslookup</code> 和是dig这样的工具会 bypass 掉 DNS 缓存。</p>
+<p>另外 Go 语言好像也不会使用本机的 DNS 缓存，即使开了</p>
+<p>https://wiki.archlinux.org/index.php/dnsmasq 可以用来做本地缓存</p>
+<p>还可以使用systemd提供的resolved</p>
+<p>1 https://stackoverflow.com/questions/11020027/dns-caching-in-linux</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-shang-de-dns-huan-cun.html">posted at 05:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

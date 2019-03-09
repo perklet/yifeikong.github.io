@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "计算机" | Page 7</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/ji-suan-ji/page/7/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-de-queue-mo-kuai.html" rel="bookmark" title="Permanent Link to &quot;Python 中的 queue 模块&quot;">Python 中的 queue 模块</a>
+                </h2>
+
+                
+                
+
+                <p>在Python中多进程或者多线程之间通信可以使用队列，标准库中实现了一个线程安全的库 queue.Queue，和进程安全的库 multiprocessing.Queue</p>
+<p>There are 3 kind of queues: `Queue LifoQueue HeapQueue</p>
+<div class="highlight"><pre><span></span>q = Queue(size)
+
+get(block=True) return a object
+get_nowait()
+put(item, block=True) put a object 
+
+qsize()
+empty()
+full()
+
+task_done() # indicate one item process finished raise ValueError
+join() # wait until all item processed …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-de-queue-mo-kuai.html">posted at 09:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-functools-zhong-you-yong-de-yi-xie-han-shu.html" rel="bookmark" title="Permanent Link to &quot;Python functools 中有用的一些函数&quot;">Python functools 中有用的一些函数</a>
+                </h2>
+
+                
+                
+
+                <p>functools</p>
+<p>partial partial(fn, <em>args, </em>*kwargs)</p>
+<h1>lru_cache</h1>
+<p>Decorator to wrap a function with a memoizing callable that saves up to the maxsize most recent calls. It can save time when an expensive or I/O bound function is periodically called with the same arguments.
+Since a dictionary is used to …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-functools-zhong-you-yong-de-yi-xie-han-shu.html">posted at 08:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ji-zhu-xuan-xing-de-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;技术选型的技巧&quot;">技术选型的技巧</a>
+                </h2>
+
+                
+                
+
+                <h1>不要魔改原系统</h1>
+<p>所以我们的建议是不要改动原系统，而是要开发辅助系统:监控，报警，负载均衡，管理等。以Redis为例，如果我们想增加集群功能，不要去改动Redis本身的实现，而是增加一个proxy层来实现，Twitter的Twemproxy就是这样做的，而Redis到了3.0后本身提供了集群功能，原有的方案简单切换到Redis3.0即可。详细可参考(http://www.cnblogs.com/gomysql/p/4413922.html)</p>
+<p>如果实在想改到原有系统，怎么办呢？我们的建议是直接给开源项目提需求或者bug，但弊端就是响应比较缓慢，这个就要看业务紧急程度了，如果实在太急那就只能自己改了，不过不是太急，建议做好备份或者应急手段即可。</p>
+<p>所以，如果你有钱有人有时间，投入人力去重复发明完美符合自己业务特点的轮子也是很好的选择！毕竟，土豪们（BAT......等）很多都是这样做的，否则的话我们也就没有那么多好用的开源项目了 :)</p>
+<p>魔改系统的另一个不好是员工的不满。对于员工来说，自然希望能够在简历上写上一些通用的技能，而使用公司内部工具的化，对员工的发展也不利。</p>
+<p>来源：https://book …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ji-zhu-xuan-xing-de-ji-qiao.html">posted at 04:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 18, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-8-zhu-cong-fu-zhi.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(8) - 主从复制&quot;">mysql 基础知识(8) - 主从复制</a>
+                </h2>
+
+                
+                
+
+                <p>mysql 有三种主从复制方式</p>
+<p>MySQL传统的高可用解决方案是通过binlog复制来搭建主从或一主多从的数据库集群。主从之间的复制模式支持异步模式(async replication)和半同步模式(semi-sync replication)。无论哪种模式下，都是主库master提供读写事务的能力，而slave只能提供只读事务的能力。在master上执行的更新事务通过binlog复制的方式传送给slave，slave收到后将事务先写入relay log，然后重放事务，即在slave上重新执行一次事务，从而达到主从机事务一致的效果。 </p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tNc79gy1fsfd8akzrlj30o108at9e.jpg"></p>
+<p>其他文档：</p>
+<p>http://mysql.taobao.org/monthly/2017/08/01/
+http://blog.csdn.net/d6619309/article/details/53691352
+http://blog.51cto.com/wangwei007/1893703
+https://www.digitalocean.com/community/tutorials/how-to-configure-mysql-group-replication-on-ubuntu-16-04
+http://blog …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-8-zhu-cong-fu-zhi.html">posted at 07:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 18, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-ansible-bu-shu-fu-wu.html" rel="bookmark" title="Permanent Link to &quot;使用 Ansible 部署服务&quot;">使用 Ansible 部署服务</a>
+                </h2>
+
+                
+                
+
+                <p>ansible 的操作是幂等的，也就是说可以进行任意次操作而不会造成副作用。ansible 基于 ssh，不需要在目标机器上运行任何特殊的 agent。</p>
+<h1>安装</h1>
+<div class="highlight"><pre><span></span>sudo pip3 install ansible
+</pre></div>
+
+
+<h1>Hosts 文件</h1>
+<p>ansible 使用 <code>hosts</code> 文件来管理主机，每个Hosts中定义多个 Inventory，可以认为是分组的主机</p>
+<p>默认位置: <code>/etc/ansible/hosts</code>。可以使用 <code>-i</code> 来指定 Inventory 文件</p>
+<p>format</p>
+<div class="highlight"><pre><span></span><span class="k">[inventory_name]</span>
+<span class="na">192.168.0.1</span>
+<span class="c1"># 或者域名</span>
+</pre></div>
+
+
+<p>如果需要改变登录使用的用户名，可以在当前目录的 <code>ansible.cfg</code> 或者 <code>$HOME/.ansible.cfg</code> 或者 <code>/etc/ansible/ansible …</code></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-ansible-bu-shu-fu-wu.html">posted at 03:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 18, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/tmux-cheatsheet.html" rel="bookmark" title="Permanent Link to &quot;tmux cheatsheet&quot;">tmux cheatsheet</a>
+                </h2>
+
+                
+                
+
+                <p>if you use set mouse off, then you could use system mark and copy, or if you are  in Mac, you could use Option + Mouse Select</p>
+<h1>按键绑定</h1>
+<div class="highlight"><pre><span></span>C-b         发送 Ctrl-b 按键
+C-z         暂停（suspend） tmux 客户端
+</pre></div>
+
+
+<h2>窗口创建与管理</h2>
+<div class="highlight"><pre><span></span>!           把当前分区独立出来作为单独的窗口
+&quot;           横向分隔，变成上线两个分区
+%           纵向分隔，变成左右两个分区
+&amp;           关闭当前窗口（window），也就是所有的分区                    
+.           Prompt for an index to …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/tmux-cheatsheet.html">posted at 00:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiao-gong-ju.html" class="tags">小工具</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>            <h4 class="date">Jun 18, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-nei-zhi-lei-xing-he-han-shu.html" rel="bookmark" title="Permanent Link to &quot;Python 的内置类型和函数&quot;">Python 的内置类型和函数</a>
+                </h2>
+
+                
+                
+
+                <h1>内置类型</h1>
+<p>Python的内置类型按照类来分，包括了 numerics, sequences, mappings, files, classes, instances 和 exceptions
+。对用户自定义类型的实例，如果__nonzero__或者__len__返回是 0 或 False 会被认为是假。</p>
+<h2>注意浅拷贝</h2>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; lists = [[]] * 3
+&gt;&gt;&gt; lists
+[[], [], []]
+&gt;&gt;&gt; lists[0].append(3)
+&gt;&gt;&gt; lists
+[[3], [3], [3]]
+</pre></div>
+
+
+<h2>字典的一些方法</h2>
+<div class="highlight"><pre><span></span>keys()/values()
+iterkeys()/itervalues()
+items()/iteritems()
+update()
+get(key, default)
+</pre></div>
+
+
+<p>可能会抛出</p>
+<p>read/readline/readlines
+write/writelines</p>
+<h2>字符串方法</h2>
+<div class="highlight"><pre><span></span>str.capitalize()    首字母大写 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-nei-zhi-lei-xing-he-han-shu.html">posted at 00:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-dan-yuan-ce-shi.html" rel="bookmark" title="Permanent Link to &quot;django 单元测试&quot;">django 单元测试</a>
+                </h2>
+
+                
+                
+
+                <p>和普通的单元测试不同的是，django 单独提供了一个测试模块，所有的 TestCase 需要继承 django.test.TestCase。</p>
+<h2>简单的测试</h2>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Animal</span>
+
+
+<span class="k">class</span> <span class="nc">AnimalTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Animal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;lion&quot;</span><span class="p">,</span> <span class="n">sound</span><span class="o">=</span><span class="s2">&quot;roar&quot;</span><span class="p">)</span>
+        <span class="n">Animal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">sound</span><span class="o">=</span><span class="s2">&quot;meow&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_animals_can_speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Animals that can speak are correctly identified …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-dan-yuan-ce-shi.html">posted at 23:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-guo-ji-hua.html" rel="bookmark" title="Permanent Link to &quot;django 国际化&quot;">django 国际化</a>
+                </h2>
+
+                
+                
+
+                <p>settings.py 中的设置：</p>
+<div class="highlight"><pre><span></span>MIDDLEWARE_CLASSES = (
+    ...
+    &#39;django.middleware.locale.LocaleMiddleware&#39;,
+)
+
+
+LANGUAGE_CODE = &#39;en&#39;
+TIME_ZONE = &#39;UTC&#39;
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
+LANGUAGES = (
+    (&#39;en&#39;, (&#39;English&#39;)),
+    (&#39;zh-hans&#39;, (&#39;中文简体&#39;)),
+    (&#39;zh-hant&#39;, (&#39;中文繁體&#39;)),
+)
+
+#翻译文件所在目录，需要手工创建
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, &#39;locale&#39;),
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    ...
+    &quot;django.core.context_processors.i18n&quot;,
+)
+</pre></div>
+
+
+<p>生成需要翻译的文件：</p>
+<div class="highlight"><pre><span></span>python manage.py makemessages -l zh_hans
+python manage.py makemessages -l …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-guo-ji-hua.html">posted at 23:07</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-ye-mian-huan-cun.html" rel="bookmark" title="Permanent Link to &quot;django 页面缓存&quot;">django 页面缓存</a>
+                </h2>
+
+                
+                
+
+                <p>django 作为一个动态的网站系统，在并发访问量大的时候会遇到性能问题，这时候可以使用缓存来显著提高性能。</p>
+<p>settings.py 中的配置</p>
+<p>可以使用 django-redis 来使用redis作为缓存。</p>
+<div class="highlight"><pre><span></span>pip install django-redis
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>CACHES = {
+    &quot;default&quot;: {
+        &quot;BACKEND&quot;: &quot;django_redis.cache.RedisCache&quot;,
+        &quot;LOCATION&quot;: &quot;redis://127.0.0.1:6379/1&quot;,
+        &quot;OPTIONS&quot;: {
+            &quot;CLIENT_CLASS&quot;: &quot;django_redis.client.DefaultClient&quot;,
+        }
+    }
+}
+</pre></div>
+
+
+<p>配置需要缓存的函数</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.views.decorators.cache</span> <span class="kn">import</span> <span class="n">cache_page</span>
+
+<span class="nd">@cache_page</span><span class="p">(</span><span class="mi">60</span> <span class="o">*</span> <span class="mi">15</span><span class="p">)</span> <span class="c1"># 秒数，这里指缓存 15 分钟，不直接写900是为了提高可读性</span>
+<span class="k">def</span> <span class="nf">index …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-ye-mian-huan-cun.html">posted at 15:08</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/6" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/8" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 7 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

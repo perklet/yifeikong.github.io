@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 函数式编程中的 Pattern Matching (模式匹配)</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 26, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/han-shu-shi-bian-cheng-zhong-de-pattern-matching-mo-shi-pi-pei.html" rel="bookmark" title="Permanent Link to &quot;函数式编程中的 Pattern Matching (模式匹配)&quot;">函数式编程中的 Pattern Matching (模式匹配)</a>
+                </h2>
+
+                
+                
+
+                <p>以 haskell 为例，简单来说，pattern 就像是数学中的分段函数。通过使用 pattern matching，就可以对不同的参数定义不同的函数体。当调用函数的时候，可以通过对比实参和形参的模式就可以选择正确的函数体。</p>
+<p>比较一下</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1fqq6q36pkij30aq02cglo.jpg" max-width="400px" /></p>
+<p>和对应的 haskell 代码：</p>
+<div class="highlight"><pre><span></span>fib 0 = 1
+fib 1 = 1
+fib n | n &gt;= 2 
+      = fib (n-1) + fib (n-2)
+</pre></div>
+
+
+<p>注意在分段函数中 "n ≥ 2" 这个条件在 haskell 中变成了一个 guard。但是另外两个条件就是简单的 pattern。Pattern 就是可以测试值和结构的条件，比如 <code>x:xs</code>, <code>(x, y, z)</code>, 或者 <code>x</code>。在一个分段函数定义中，基于 <code>=</code> 或者 <code>∈</code> 的条件会变成简单的 pattern，而其他的更广义的条件会变成 guard。如果用 guard 来重写一下上面的函数：</p>
+<div class="highlight"><pre><span></span>fib n | n == 0 = 1
+      | n == 1 = 1
+      | n &gt;= 2 = fib (n-1) + fib (n-2)
+</pre></div>
+
+
+<h1>和 switch/ifelse 语句的区别</h1>
+<ol>
+<li>编译器可以替你检查你是否覆盖了所有情形</li>
+<li>可以直接把 pattern match 作为一个赋值语句</li>
+<li>如果你有一个不同类型复合的变量，每一个匹配结果都会有不同的类型</li>
+<li>使用 pattern matching 在某些情况下要简洁得多[4]</li>
+</ol>
+<h1>REF</h1>
+<ol>
+<li>https://stackoverflow.com/questions/2225774/haskell-pattern-matching-what-is-it</li>
+<li>https://www.zhihu.com/question/22344888</li>
+<li>https://stackoverflow.com/questions/199918/explaining-pattern-matching-vs-switch</li>
+<li>https://hongjiang.info/scala-pattern-matching-1/</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/han-shu-shi-bian-cheng-zhong-de-pattern-matching-mo-shi-pi-pei.html">posted at 09:18</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

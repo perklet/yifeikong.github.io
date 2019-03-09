@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Linux 中的 Process Group 和 Session</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="并发编程,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Oct 20, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-zhong-de-process-group-he-session.html" rel="bookmark" title="Permanent Link to &quot;Linux 中的 Process Group 和 Session&quot;">Linux 中的 Process Group 和 Session</a>
+                </h2>
+
+                
+                
+
+                <p>使用了这么多年的 Ubuntu, 自以为 Linux 下进程的概念已经很熟悉了, 然而发现进程组(Process Group)和会话(Session)两个概念日常并不会接触很多, 平时也没有注意, 导致今天遇到一个问题还想了半天才想明白.</p>
+<p>看了一些讲进程控制的书和文章, 感觉都比较老了, 不少都还在讲 double fork 的原理及意义, 而现实是 systemd 已经接管了几乎整个 Linux 世界, double fork 这种东西真的不应该存在了, 至少在新的程序中不应该再使用了, 所以有了这篇文章.</p>
+<h1>引子--问题</h1>
+<p>我们知道在命令行运行的前台命令, 可以随时通过 Ctrl-C 关闭掉. 原理很简单, 当我们按下 Ctrl-C 的时候, shell 进程会向前台进程发送一个 SIGINT 信号, 进程收到 SIGINT 的默认操作就是退出. 按照这个思路出发, 在 fork 之后, 如果按下 Ctrl-C 应该只有主进程会关闭, 而子进程应该继续运行, 实际上并不是这样的, 两个进程都收到了 SIGINT 信号.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="k">def</span> <span class="nf">child</span><span class="p">():</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;child process</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;child sigint</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;main process</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;main sigint</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+
+<span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">pid</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">child</span><span class="p">()</span>
+</pre></div>
+
+
+<p>当我们按下 Ctrl-C 的时候</p>
+<div class="highlight"><pre><span></span>main process
+child process
+main process
+child process
+^Cchild sigint
+main sigint
+</pre></div>
+
+
+<p>也就是说上述说法并不是完全正确的. 实际上, SIGINT 并不只会发送给前台进程, 而是发送给<strong>前台进程组</strong>中的每一个进程. 那么什么是进程组呢?</p>
+<h1>进程 -- Process</h1>
+<p>要说进程组, 我们首先来回忆一下进程的概念. 进程可以理解为 "进行中的程序", 在 Linux 上可以通过 fork 来创建新的进程, 然后可以使用 exec 来在子进程或者父进程中执行新的程序.</p>
+<h2>进程退出的情况</h2>
+<p>当一个进程的子进程退出的时候, 父进程有义务对子进程的状态进行回收(wait). 子进程退出的时候, 父进程会收到 SIGCHLD 信号. 如果子进程退出了, 而父进程又还没有进行回收, 那么在这段时间内, 这个子进程被称为僵尸进程(zombie process), 僵尸进程会持续占用一部分系统资源, 所以最好还是尽快回收. 如果父进程没有进行回收, 也退出了, pid=1 的 init 进程会接管僵尸状态的子进程并进行回收.</p>
+<p>当一个进程的父进程退出时, 这个进程被称为孤儿进程(orphaned process), 子进程会被 init 进程接管, 也就是说, 子进程的 ppid 会变成 1. 但是, 默认情况下, 子进程并不会收到任何信号. 不过, 可以使用 prctl 系统调用来设置在父进程退出的时候, 子进程收到什么信号.</p>
+<h1>进程组 -- Process Group</h1>
+<p>顾名思义就是一组进程. 进程组的 id (pgid) 就是进程组组长(group leader)的 pid. 当一个进程 fork 的时候, 子进程默认是和父进程在同一个进程组的. 从 shell 中启动一个进程的时候, shell 会给这个进程设置为一个新的进程组. 如果使用了 pipe, 那么 shell 会将这些进程放入同一个进程组, 比如 <code>cat hello | less</code></p>
+<p>需要注意的是, 当进程组的 leader 退出的时候, 进程组的其他进程并不会受影响, 系统不会给孤儿进程发送任何信号. 一个进程组在最后一个进程退出时消失.</p>
+<h2>相关函数</h2>
+<div class="highlight"><pre><span></span>getpgid(pid) - 获得指定 pid 对应的 pgid
+setpgid(pid, pgid) - 设定指定进程的 pgid
+</pre></div>
+
+
+<p>其中可以用 0 来表示当前进程, 如果设置当前进程的 pgid 为自己的 pid, 也就是钦点自己为 group leader, 那么就相当于创建了一个新的进程组.</p>
+<h2>相关命令</h2>
+<p>kill 命令用来给 pid 发送信号, 一般命令形式是 <code>kill -SIG PID</code>, 可以在PID参数前面加上 <code>-</code> 表示一个 Process Group, 而不是 Process. 比如:</p>
+<div class="highlight"><pre><span></span>kill -TERM -6379  # 向 6379 进程组发送 TERM 信号
+</pre></div>
+
+
+<h1>回到问题</h1>
+<p>那么我们现在可以再思考一下刚开始的问题, 为什么按 Ctrl-C 的时候, 父进程和子进程都会收到 SIGINT 信号呢? 答案之前说了:实际上, SIGINT 并不只会发送给前台进程, 而是发送给前台进程组中的每一个进程. 而父进程和子进程当前所在的组正是前台进程组.</p>
+<p>前台进程组是一个 session 中在前台运行的那一组进程, 那么什么又是 session 呢?</p>
+<h1>会话 -- session</h1>
+<p>session 是一个更大的概念, 一个 session 中可以包含多个 process group.</p>
+<p>他们的关系是这样的:</p>
+<div class="highlight"><pre><span></span>+--------------------------------------------------------------+
+|                                                              |
+|      pg1             pg2             pg3            pg4      |
+|    +------+       +-------+        +-----+        +------+   |
+|    | bash |       | sleep |        | cat |        | jobs |   |
+|    +------+       +-------+        +-----+        +------+   |
+| session leader                     | wc  |                   |
+|                                    +-----+                   |
+|                                                              |
++--------------------------------------------------------------+
+                            session
+</pre></div>
+
+
+<p>和 process group 一样, 每个 session 也有一个 leader, session leader 就是 这个进程的 pid. session 的本意是用来作业控制, 每个用户登录的时候都会创建自己的 session. 一般来说在 shell 中, session leader 就是 shell 本身.</p>
+<h2>相关函数</h2>
+<div class="highlight"><pre><span></span>getsid(pid) - 获得指定 pid 对应的 sid
+setsid() - 创建新的session
+</pre></div>
+
+
+<p>其中需要注意的是, setsid 不能由 group leader 进程来调用, 因为这样会导致同一个 group 中的进程属于不同的 session, 所以 POSIX 标准直接禁止了这么做.</p>
+<h2>session 退出</h2>
+<p>当一个session leader 退出时, 其他进程不会受到任何影响, 但是因为 session leader 退出可能造成 orphaned process group, 因此在shell中, <strong>一般情况下会造成进程退出的情况</strong></p>
+<h2>Orphaned Process Group</h2>
+<p>当一个 group leader 退出的时候, 本身并不会对进程组造成任何影响, 也不会收到任何信号. 但是, 当一个进程组变成孤儿进程组(orphaned process group)的时候, 可能会收到一些信号.</p>
+<blockquote>
+<p>孤儿进程组</p>
+<p>A process group is called orphaned when the parent of every member is either in the process group or outside the session. In particular, the process group of the session leader is always orphaned.</p>
+</blockquote>
+<p>如果一个进程组中的所有进程的父进程都在组内或者都是其他 session 的进程(比如 init)的时候, 这个进程组被称为孤儿进程组. 显然, 每个进程的退出或者移出进程组都可能造成进程组变成孤儿进程组. </p>
+<p><strong>如果这时候进程组中的某个进程的状态是 STOP, 那么内核会向该进程组的所有进程发送 SIGHUP, 并紧接着发送 SIGCONT 信号.</strong></p>
+<p>值得注意的是, session leader 本身就是一个孤儿进程组了, 所以退出的时候不会给本组的进程发信号, 下面要用到.</p>
+<p>为什么内核要这么做呢?</p>
+<p>一般情况下, shell 进程是当前 session 的 leader, 当我们运行每个命令的时候都会创建一个新的 Process Group, 如果这时候某个孤儿进程组中有进程是 STOP 状态的, 那么可能就再也没有机会运行了, 所以系统首先发送 SIGHUP 信号退出, 如果有进程对 SIGINT 做了处理, 那么在收到 SIGCONT 信号之后又可以继续运行了.</p>
+<p>也就是说当我们退出 shell 的时候, 内核会向 session 中的</p>
+<ol>
+<li>前台进程组</li>
+<li>孤儿进程组</li>
+</ol>
+<p>发送 SIGHUP 信号, 从而退出他们. 那么问题来了, 后台进程组呢?</p>
+<p>答案是: shell 会向session的所有进程组发送 SIGHUP 信号, 所以运行中的后台进程组也会退出.</p>
+<h2>daemonize</h2>
+<p>在 Unix 的上古时期, 没有 Process Manager 这个概念, 所以每个守护进程(比如说 apache)都需要自己变成守护进程, 一般来说是通过 double fork 的形式:</p>
+<ol>
+<li>fork 第一次, 确保自己不是 group leader</li>
+<li>setsid, 创建新的 session</li>
+<li>fork 第二次, 确保自己不是 session leader, 避免获取 tty</li>
+</ol>
+<p>实际上整个步骤需要 15 步之多, 可以查看 <code>man 7 daemon</code> 命令.</p>
+<p>整个过程非常复杂, 在 GNU C lib 中提供了 daemon() 函数来实现这些步骤, 然而讽刺的是, 由于步骤实在太多了, 系统提供的 daemon 函数竟然忘了其中几步, 所以不推荐使用...</p>
+<p>在我看来, 由进程自我守护实际上完全背离的 Unix philosophy -- Write programs that do one thing and do it well, 每个进程应该只做一件事, 变成守护进程显然是让一个进程做了两件事, 而且是一个重复性的工作, 由一个统一的 init 进程来管理 daemon 才是真正符合 Unix 哲学的.</p>
+<h1>systemd</h1>
+<p>在现代的 Linux 上, 系统层面, 我们通过 systemd 来管理守护进程, 每个进程只需要实现最简单的单进程程序就好了, 然后通过编写 systemd 的 unit 文件来实现 daemonize. 用户层面, 我们可以使用 supervisord 或者 pm2 来管理进程, 他们和 systemd 的功能和理念都是类似的.</p>
+<p>但是, 如上文所述, 一个进程完全可以通过 setsid 和 fork 等操作而完全脱离创建进程的控制, 而且不少进程在创建的时候也是具有 root 权限的, 那么 systemd 是怎样确保进程不会偷偷跑掉的呢? </p>
+<p>答案是 cgroups, 且听下回分解...</p>
+<h1>参考资料</h1>
+<ol>
+<li>https://www.win.tue.nl/~aeb/linux/lk/lk-10.html</li>
+<li>https://notes.shichao.io/apue/ch9/#sessions</li>
+<li>http://blog.jorgenschaefer.de/2014/07/why-systemd.html</li>
+<li>https://unix.stackexchange.com/questions/149741/why-is-sigint-not-propagated-to-child-process-when-sent-to-its-parent-process</li>
+<li>https://segmentfault.com/a/1190000009152815</li>
+<li>https://stackoverflow.com/questions/24346126/where-do-zombie-processes-go-after-their-parent-dies</li>
+<li>https://stackoverflow.com/questions/881388/what-is-the-reason-for-performing-a-double-fork-when-creating-a-daemon</li>
+<li>https://unix.stackexchange.com/questions/404054/how-is-a-process-group-id-set</li>
+<li>https://stackoverflow.com/a/39109685/1061155</li>
+<li>https://stackoverflow.com/questions/32780706/does-linux-kill-background-processes-if-we-close-the-terminal-from-which-it-has</li>
+<li>https://superuser.com/questions/403200/what-is-a-stopped-process-in-linux</li>
+<li>http://www.informit.com/articles/article.aspx?p=397655&amp;seqNum=6</li>
+<li>https://stackoverflow.com/questions/13069634/python-daemon-and-systemd-service</li>
+<li>https://unix.stackexchange.com/questions/447275/does-systemd-not-protect-processes-against-acquiring-a-controlling-terminal</li>
+<li>https://linuxaria.com/article/how-to-manage-processes-with-cgroup-on-systemd</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-zhong-de-process-group-he-session.html">posted at 07:22</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/bing-fa-bian-cheng.html" class="tags">并发编程</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

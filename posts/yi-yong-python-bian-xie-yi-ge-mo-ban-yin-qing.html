@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | [译] 用 Python 编写一个模板引擎</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yi-yong-python-bian-xie-yi-ge-mo-ban-yin-qing.html" rel="bookmark" title="Permanent Link to &quot;[译] 用 Python 编写一个模板引擎&quot;">[译] 用 Python 编写一个模板引擎</a>
+                </h2>
+
+                
+                
+
+                <p>一直对模板引擎的实现很好奇，正好看到了<a href="http://alexmic.net/building-a-template-engine/">这篇</a>文章，翻译一下，供大家学习、参考。</p>
+<p>我们编写一个最简单的模板引擎，并且探索一下它的底层实现。如果你想直接看代码的话，<a href="https://github.com/alexmic/microtemplates">GitHub</a> 是你的好朋友</p>
+<h1>语言设计</h1>
+<p>这里设计的模板语言非常基础。使用两种标签，变量和块。</p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- 变量使用 `</span><span class="cp">{{</span><span class="err">`</span> <span class="err">和</span> <span class="err">`</span><span class="cp">}}</span><span class="c">` 作为标识--&gt;</span>
+<span class="nt">&lt;div&gt;</span><span class="cp">{{</span><span class="nv">my_var</span><span class="cp">}}</span><span class="nt">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- 块使用 `{%` 和 `%}` 作为标识--&gt;</span>
+<span class="cp">{%</span> <span class="k">each</span> <span class="nv">items</span> <span class="cp">%}</span>
+    <span class="nt">&lt;div&gt;</span><span class="cp">{{</span><span class="nv">it</span><span class="cp">}}</span><span class="nt">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">end</span> <span class="cp">%}</span>
+</pre></div>
+
+
+<p>大多数的块需要使用关闭标签，关闭标签使用<code>{% end %}</code>表示。</p>
+<p>这个模板引擎能够处理基本的循环和条件语句，而且也支持在块中使用 callable。在我看来，能够在模板中调用任意的 Python 函数非常方便。</p>
+<h1>循环</h1>
+<p>使用循环可以遍历集合或者 iterable。</p>
+<div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">each</span> <span class="nv">people</span> <span class="cp">%}</span>
+    <span class="nt">&lt;div&gt;</span><span class="cp">{{</span><span class="nv">it.name</span><span class="cp">}}</span><span class="nt">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">end</span> <span class="cp">%}</span>
+
+<span class="cp">{%</span> <span class="k">each</span> <span class="o">[</span><span class="m">1</span><span class="o">,</span> <span class="m">2</span><span class="o">,</span> <span class="m">3</span><span class="o">]</span> <span class="cp">%}</span>
+    <span class="nt">&lt;div&gt;</span><span class="cp">{{</span><span class="nv">it</span><span class="cp">}}</span><span class="nt">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">end</span> <span class="cp">%}</span>
+
+<span class="cp">{%</span> <span class="k">each</span> <span class="nv">records</span> <span class="cp">%}</span>
+    <span class="nt">&lt;div&gt;</span><span class="cp">{{</span><span class="err">.</span><span class="nv">.name</span><span class="cp">}}</span><span class="nt">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">end</span> <span class="cp">%}</span>
+</pre></div>
+
+
+<p>在上面的例子里面，people 是一个集合，<code>it</code> 指向了当前迭代的元素。使用点分隔的路径会被解析成字典属性。使用 <code>..</code> 可以访问外部上下文中的对象。</p>
+<h1>条件语句</h1>
+<p>条件语句不需要多解释。这个语言支持 if 和 else 结构，而且支持 <code>==</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>!=</code>, <code>is</code>, <code>&lt;</code>, <code>&gt;</code> 这几个操作符。</p>
+<div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">num</span> <span class="o">&gt;</span> <span class="m">5</span> <span class="cp">%}</span>
+    <span class="nt">&lt;div&gt;</span>more than 5<span class="nt">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">else</span> <span class="cp">%}</span>
+    <span class="nt">&lt;div&gt;</span>less than or equal to 5<span class="nt">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">end</span> <span class="cp">%}</span>
+</pre></div>
+
+
+<h1>调用块</h1>
+<p>Callable 可以通过模板上下文传递，并且使用普通位置参数或者具名参数调用。调用块不需要使用 end 关闭。</p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- 使用普通参数... --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&#39;date&#39;</span><span class="nt">&gt;</span>{% call prettify date_created %}<span class="nt">&lt;/div&gt;</span>
+<span class="c">&lt;!-- ...使用具名参数 --&gt;</span>
+<span class="nt">&lt;div&gt;</span>{% call log &#39;here&#39; verbosity=&#39;debug&#39; %}<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+
+
+<h1>原理</h1>
+<p>在探索引擎是如何编译和渲染模板之前，我们需要了解下在内存中如何表示一个编译好的模板。</p>
+<p>编译器使用抽象语法树（Abstract Syntax Tree, AST）来表示计算机程序。AST 是对源代码进行词法分析（lexical analysis）的结果。AST 相对源代码来说有很多好处，比如说它不包含任何无关紧要的文本元素，比如说分隔符这种。而且，树中的节点可以使用属性来添加更多的功能，而不需要改动代码。</p>
+<p>我们会解析并分析模板来构造这样一棵树，并用它来表示编译后的模板。渲染的时候，遍历这棵树，传给它对应的上下文，然后输出 HTML。</p>
+<h1>模板切词（tokenize）</h1>
+<p>解析的第一步是把内容分隔成不同的片段。每个片段可以是任意的 HTML 或者是一个标签。这里使用正则表达式和 <code>split()</code> 函数分隔文本。</p>
+<div class="highlight"><pre><span></span>VAR_TOKEN_START = &#39;{{&#39;
+VAR_TOKEN_END = &#39;}}&#39;
+BLOCK_TOKEN_START = &#39;{%&#39;
+BLOCK_TOKEN_END = &#39;%}&#39;
+TOK_REGEX = re.compile(r&quot;(%s.*?%s|%s.*?%s)&quot; % (
+    VAR_TOKEN_START,
+    VAR_TOKEN_END,
+    BLOCK_TOKEN_START,
+    BLOCK_TOKEN_END
+))
+</pre></div>
+
+
+<p>让我们来看一下 TOK_REGEX。可以看到这个正则的意思是 TOK_REGEX 要么是一个变量标签，要么是一个块标签，这是为了让变量标签和块标签都能够分隔文本。表达式的最外层是一个括号，用来捕获匹配到的文本。其中的 <code>?</code> 表示非贪婪的匹配。我们想让我们的正则表达式是惰性的，并且在第一次匹配到的时候停下来。</p>
+<p>下面这个例子实际展示了一下上面的正则:</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; TOK_REGEX.split(&#39;<span class="cp">{%</span> <span class="k">each</span> <span class="nv">vars</span> <span class="cp">%}</span><span class="nt">&lt;i&gt;</span><span class="cp">{{</span><span class="nv">it</span><span class="cp">}}</span><span class="nt">&lt;/i&gt;</span><span class="cp">{%</span> <span class="k">endeach</span> <span class="cp">%}</span>&#39;)
+[&#39;<span class="cp">{%</span> <span class="k">each</span> <span class="nv">vars</span> <span class="cp">%}</span>&#39;, &#39;<span class="nt">&lt;i&gt;</span>&#39;, &#39;<span class="cp">{{</span><span class="nv">it</span><span class="cp">}}</span>&#39;, &#39;<span class="nt">&lt;/i&gt;</span>&#39;, &#39;<span class="cp">{%</span> <span class="k">endeach</span> <span class="cp">%}</span>&#39;]
+</pre></div>
+
+
+<p>把每个片段封装成 Fragment 对象。这个对象包含了片段的类型，并且可以作为编译函数的参数。片段有以下四种类型：</p>
+<div class="highlight"><pre><span></span>VAR_FRAGMENT = 0
+OPEN_BLOCK_FRAGMENT = 1
+CLOSE_BLOCK_FRAGMENT = 2
+TEXT_FRAGMENT = 3
+</pre></div>
+
+
+<h1>构建 AST</h1>
+<p>一旦我们做好了分词，下一步就可以遍历每个片段并构建语法树了。我们使用 Node 类来作为树的节点的基类，然后创建对每一种节点类型创建子类。每个子类都必须提供 <code>process_fragment</code> 和 <code>render</code> 方法。<code>process_fragment</code> 用来进一步解析片段的内容并且把需要的属性存到 <code>Node</code> 对象上。<code>render</code> 方法负责使用提供的上下文转换对应的节点内容到 HTML。</p>
+<p>子类也可以实现 <code>enter_scope</code> 和 <code>exit_scope</code> 钩子方法，这两个方法不是必须的。在编译器编译期间，会调用这两个钩子函数，他们应该负责进一步的初始化和清理工作。当一个 <code>Node</code> 创建了一个新的作用域（scope）的时候，会调用 <code>enter_scope</code>，当退出作用域时，会调用 <code>exit_scope。关于作用域</code>，下面会讲到。</p>
+<p>Node 基类如下：</p>
+<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">_Node</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">fragment</span><span class="o">=</span><span class="nx">None</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">children</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">creates_scope</span> <span class="o">=</span> <span class="nx">False</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">process_fragment</span><span class="p">(</span><span class="nx">fragment</span><span class="p">)</span>
+
+    <span class="nx">def</span> <span class="nx">process_fragment</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">fragment</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+    <span class="nx">def</span> <span class="nx">enter_scope</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+    <span class="nx">def</span> <span class="nx">render</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+    <span class="nx">def</span> <span class="nx">exit_scope</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+    <span class="nx">def</span> <span class="nx">render_children</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">children</span><span class="o">=</span><span class="nx">None</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">if</span> <span class="nx">children</span> <span class="nx">is</span> <span class="nx">None</span>:
+            <span class="kt">children</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">children</span>
+        <span class="nx">def</span> <span class="nx">render_child</span><span class="p">(</span><span class="nx">child</span><span class="p">)</span><span class="o">:</span>
+            <span class="nx">child_html</span> <span class="o">=</span> <span class="nx">child</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">context</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="nx">not</span> <span class="nx">child_html</span> <span class="k">else</span> <span class="nx">str</span><span class="p">(</span><span class="nx">child_html</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">map</span><span class="p">(</span><span class="nx">render_child</span><span class="p">,</span> <span class="nx">children</span><span class="p">))</span>
+</pre></div>
+
+
+<p>下面是变量节点的定义：</p>
+<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">_Variable</span><span class="p">(</span><span class="nx">_Node</span><span class="p">)</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">process_fragment</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">fragment</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">fragment</span>
+
+    <span class="nx">def</span> <span class="nx">render</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nx">resolve_in_context</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span>
+</pre></div>
+
+
+<p>为了确定 Node 的类型（并且进一步初始化正确的类），需要查看片段的类型和文本。文本和变量片段直接翻译成文本节点和变量节点。块片段需要一些额外的处理 —— 他们的类型是使用块命令来确定的。比如说：</p>
+<div class="highlight"><pre><span></span>{% each items %}
+</pre></div>
+
+
+<p>是一个 <code>each</code> 类型的块节点，因为块命令是 each。</p>
+<p>一个节点也可以创建作用域。在编译时，我们记录当前的作用域，并且把新的节点作为作为当前作用域的子节点。一旦遇到一个正确的关闭标签，关闭当前作用域，并且从作用域栈中把当前作用域 pop 出来，使用栈顶作为新的作用域。</p>
+<div class="highlight"><pre><span></span>def compile(self):
+    root = _Root()
+    scope_stack = [root]
+    for fragment in self.each_fragment():
+        if not scope_stack:
+            raise TemplateError(&#39;nesting issues&#39;)
+        parent_scope = scope_stack[-1]
+        if fragment.type == CLOSE_BLOCK_FRAGMENT:
+            parent_scope.exit_scope()
+            scope_stack.pop()
+            continue
+        new_node = self.create_node(fragment)
+        if new_node:
+            parent_scope.children.append(new_node)
+            if new_node.creates_scope:
+                scope_stack.append(new_node)
+                new_node.enter_scope()
+    return root
+</pre></div>
+
+
+<h1>渲染</h1>
+<p>管线的最后一步就是把 AST 渲染成 HTML 了。这一步访问 AST 中的所有节点并且使用传递给模板的 context 参数调用 render 方法。在渲染过程中，render 不断地解析上下文变量的值。可以使用使用 <code>ast.literal_eval</code> 函数，它可以安全的执行包含了 Python 代码的字符串。</p>
+<div class="highlight"><pre><span></span>def eval_expression(expr):
+    try:
+        return &#39;literal&#39;, ast.literal_eval(expr)
+    except ValueError, SyntaxError:
+        return &#39;name&#39;, expr
+</pre></div>
+
+
+<p>如果我们使用上下文变量，而不是字面量的话，需要在上下文中搜索来找到它的值。在这里需要处理包含点的变量名以及使用两个点访问外部上下文的变量。下面是 resolve 函数，也是整个难题的最后一部分了~</p>
+<div class="highlight"><pre><span></span>def resolve(name, context):
+    if name.startswith(&#39;..&#39;):
+        context = context.get(&#39;..&#39;, {})
+        name = name[2:]
+    try:
+        for tok in name.split(&#39;.&#39;):
+            context = context[tok]
+        return context
+    except KeyError:
+        raise TemplateContextError(name)
+</pre></div>
+
+
+<h1>结论</h1>
+<p>我希望这个小小的学术联系能够让你对模板引擎是怎样工作的有一点初步的感觉。这个生产级别的代码还差得很远，但是也可以作为你开发更好的工具的基础。</p>
+<p>你可以在 GitHub 上找到完整的代码，你也可以进一步在 Hacker News 上讨论。</p>
+<blockquote>
+<p>感谢 Nassos Hadjipapas, Alex Loizou, Panagiotis Papageorgiou and Gearoid O’Rourke 审阅本文。</p>
+</blockquote>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yi-yong-python-bian-xie-yi-ge-mo-ban-yin-qing.html">posted at 07:08</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

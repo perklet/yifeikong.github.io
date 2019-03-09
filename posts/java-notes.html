@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Java Notes</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="大前端,Android,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/java-notes.html" rel="bookmark" title="Permanent Link to &quot;Java Notes&quot;">Java Notes</a>
+                </h2>
+
+                
+                
+
+                <p>内部类
+OuterClassName.InnerClassName
+内部类可以直接访问其外围对象的成员，而不需要任何特殊条件
+OuterClass.this OuterClass.new  </p>
+<p>匿名内部类非常有用。 new ClassName() {} 创建一个继承自ClassName的匿名类的对象</p>
+<p>嵌套类是指使用了static class 的内部类</p>
+<p>java中不允许变量隐藏</p>
+<p>只有类成员才会默认初始化，普通变量不会</p>
+<p>int x = a.f()
+其中，消息是f(), 对象是a,面向对象就是「给对象发消息」</p>
+<p>java中不允许将其他类型用做bool值</p>
+<p>java会为你提供默认构造器（无参构造器）</p>
+<p>无法通过返回值来重载函数</p>
+<p>静态块</p>
+<p>static {
+    i = 47;
+}</p>
+<p>可变参数列表
+doGET(Object... args)</p>
+<p>默认访问权限是包访问权限</p>
+<p>.java 文件编译生成 .class 文件，jar文件是.class 文件的打包</p>
+<p>使用import时，默认去CLASSPATH 查找对应的包</p>
+<p>enum</p>
+<p>enum Color {
+    GREEN,
+    RED,
+    BLUE
+}</p>
+<p>annotations</p>
+<p>@Override
+@Deprecated
+@SurpressWarnings</p>
+<p>Concurrency</p>
+<p>class MyRunnable implements Runnable {}
+Thread t = new Thread(new Runnable())</p>
+<p>AtomicInteger AtomicLong AtomicReference</p>
+<p>Oracle Java is more stable than OpenJDK, they are baisclly the same, you can think oracle java as a bugfix version of OpenJDK</p>
+<p>资料</p>
+<p>learnxinyminutes
+Java for c++ programmers http://pages.cs.wisc.edu/~hasti/cs368/JavaTutorial/
+Effecitve Java</p>
+<p>坑1</p>
+<p>每个文件一个public类, 要求类的名称必须和文件名一样
+当然还可以定义一些其他的非 public 的类
+javac MyClass.java  生成 MyClass.class 等其他一些文件, 每个类对应一个 class 文件
+java MyClass // 这里没有 class 后缀</p>
+<p>坑2</p>
+<p>数组  int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0}; // 未指定元素会被初始化
+ArrayList <br>
+LinkedList  </p>
+<p>.length 属性
+for 语句
+for (int i : numbers) {
+    // 
+}</p>
+<p>使用 System.arraycopy 来复制数组</p>
+<p>坑3</p>
+<p>switch语句
+java 中的 switch 语句和 c 一样, 依然是 fall-through, 在 java 7 中可以 switch string 了</p>
+<p>坑4</p>
+<p>类型转换: Integer.parseInt, Interger.toString</p>
+<p>坑5</p>
+<p>static block
+Java has no implementation of static constructors, but has a static block that can be used to initialize class variables (static variables). 
+This block will be called when the class is loaded.</p>
+<p>static {
+        className = "Bicycle";
+    }</p>
+<p>坑6</p>
+<p>构造器可以调用另一个构造器,  使用 this, 还可以使用 super 调用父类的构造器
+java 只能单继承, 但是可以实现多个接口, 接口中的方法不能有定义</p>
+<p>坑7</p>
+<p>不能使用==来判断对象(包括字符串)是否相等, 这样只能检测是否指向同一位置.</p>
+<p>坑8 - IO</p>
+<p>System.out.println</p>
+<p>坑9 - 类型</p>
+<p>原始类型    数字型
+引用类型    数组和类</p>
+<p>所有类都是 Object 的子类</p>
+<p>坑10 - Java.lang</p>
+<p>String  字符串类
+length   长度
+equals   相等
+toLowerCase/toUpperCase </p>
+<p>包装类 
+Integer 
+Boolean 
+Double  </p>
+<p>坑11 - Package</p>
+<p>使用 package name; 来声明包, 所有的源文件要放在 name 这个文件夹下
+可以使用 import package.class 或者 import package.* 来导入包
+CLASSPATH 存放 package 的根目录</p>
+<p>坑12 - 异常</p>
+<div class="highlight"><pre><span></span> try {
+   // statements that might cause exceptions
+   // possibly including function calls
+} catch ( exception-1 id-1 ) {
+   // statements to handle this exception 
+} catch ( exception-2 id-2 ) {
+   // statements to handle this exception 
+.
+.
+.
+} finally {
+   // statements to execute every time this try block executes
+}
+</pre></div>
+
+
+<p>try {
+        return 0; // 被覆盖
+    } finally {
+        return 2;
+    }
+尽量避免在 try...catch...finally 中使用控制转移语句</p>
+<div class="highlight"><pre><span></span>            +--------+
+            | Object |
+            +--------+
+            |
+            |
+           +-----------+
+       | Throwable |
+           +-----------+
+            /         \
+       /           \
+      +-------+      +-----------+
+      | Error |      | Exception |
+      +-------+      +-----------+
+   /  |  \        / |        \
+   \________/     \______/      \
+                    +------------------+
+unchecked    checked    | RuntimeException |
+                +------------------+
+                  /   |    |      \
+                 \_________________/
+
+                   unchecked
+</pre></div>
+
+
+<p>checked 和 unchecked exception, RuntimeException 通常是指 unchecked exception
+实际上，对于自己编写的异常类来讲，推荐默认的是继承RuntimeException，除非有特殊理由才继承Exception。 C#中没有Checked Exception的概念，这种推荐的做法等于是采用了C#的设计理念：把是否捕获和何时捕获这个问题交给使用者决定，不强制使用者。当然，如果某些情况 下明确提醒捕获更加重要还是可以采用Checked Exception的。对于编写一个方法来讲，“是否在方法上声明一个异常”这个问题比“是否采用Checked Exception”更加重要。</p>
+<p>坑13 - OO
+Each superclass method (except its constructors) can be either 
+    • inherited, or 
+    • overloaded, or 
+    • overridden 
+inherited: If no method with the same name is (re)defined in the subclass, then the subclass has that method with the same implementation as in the superclass. 
+overloaded: If the subclass defines a method with the same name, but with a different number of arguments or different argument types, then the subclass has two methods with that name: the old one defined by the superclass, and the new one it defined. 
+overridden: If the subclass defines a method with the same name, and the same number and types of arguments, then the subclass has only one method with that name: the new one it defined. 
+使用 super 调用基类的构造器，使用 this 调用自身其他的构造器，如果没有调用基类的构造器，会隐式调用基类的默认构造器</p>
+<p>Recall that every class extends Object. So you might wonder which methods of Object you should consider overriding when you define a new class. There are four methods that often should be overridden: 
+    1. toString 
+    2. equals 
+    3. hashCode 
+    4. clone 
+public String toString(): Returns a String representation of the object. It is used, for example, by System.out.print to print an object. The default version of toString is not very useful, so you should override this method whenever you want to provide a String representation of your class objects. 
+public boolean equals(Object ob): Returns true iff the object (pointed to by "this") and ob are the same. The default version uses pointer equality; i.e., it returns true only if "this" and "ob" contain the same address. You may want to override this method to provide a more liberal notion of equality. For example, the String class overrides equals so that it returns true for two Strings that contain the same sequence of characters. 
+public int hashCode(): Returns an integer for this object suitable for use as a hash code (e.g., for use with the Hashtable class defined in javil.util). This method should be overridden whenever the equals method is, so that hashCode returns the same value for two "equal" objects. 
+protected Object clone(): Returns a copy of this object (note that no constructor is called for the new object). The default version just copies the values of all fields (i.e., a "shallow" copy). That is probably not what you want when your class has fields that contain pointers (i.e., arrays or classes). So in that case you should override the clone method to do a deep copy -- clone all pointer fields. 
+Cloning
+To permit your object to be cloned you must declare that your object implements the Cloneable interface. (See the notes on INTERFACES.) For example: 
+    public class List implements Cloneable { 
+        private Object items[]; // a pointer field! 
+        ... 
+    } 
+If you forget to do this, an attempt to clone will cause the exception CloneNotSupportedException to be thrown. </p>
+<p>坑14 - casting
+java 需要显式转换类型
+Assume that we have the following declarations of function f and variables h1 and h2: 
+    public static void f( RaceHorse r ) { ... } 
+    Horse h1 = new RaceHorse(); 
+    Horse h2 = new Horse(); 
+Now consider the following three calls to f: 
+    1. f(h1); // compile-time error (missing cast) 
+    2. f( (RaceHorse)h1 ); // fine! h1 really does point to a RaceHorse 
+    3. f( (RaceHorse)h2 ); // runtime error (bad cast) h2 points to a Horse </p>
+<p>静态方法和成员变量并没有 dynamic dispatching
+可以使用 super.xxx()调用父类已经被重载的方法</p>
+<p>坑15 - Interface</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/java-notes.html">posted at 13:46</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

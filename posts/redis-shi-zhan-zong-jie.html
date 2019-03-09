@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | redis 实战总结</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/redis-shi-zhan-zong-jie.html" rel="bookmark" title="Permanent Link to &quot;redis 实战总结&quot;">redis 实战总结</a>
+                </h2>
+
+                
+                
+
+                <h2>redis是做什么的</h2>
+<p>一个数据结构存储器，数据驻留在内存里，可以在程序的两次之间保存数据</p>
+<h2>一些实现细节和比较好的地方</h2>
+<p>redis 的 string 是 binary-safe 的，可以存储任意的二进制数据（bytes），甚至可以把图片存储在 redis 中</p>
+<h2>经常用到的场合</h2>
+<ol>
+<li>用作缓存</li>
+<li>
+<p>最基础的，最经典的应用场合，当查询数据库或者ES等存储代价比较高的时候，直接用查询的语句做 key，查询结果用作缓存</p>
+</li>
+<li>
+<p>用做队列</p>
+</li>
+<li>
+<p>用做集合，也就是存储一批数据的池子。用作有序集合</p>
+</li>
+</ol>
+<h2>经常遇到的问题</h2>
+<p>过期之间只能指定到键级别，而不能指定到集合的键级别</p>
+<h2>pipeline</h2>
+<p>imporve performance by combining multi command into one and reduce TCP times</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; p = r.pipeline()        # 创建一个管道
+&gt;&gt;&gt; p.set(&#39;hello&#39;,&#39;redis&#39;)
+&gt;&gt;&gt; p.sadd(&#39;faz&#39;,&#39;baz&#39;)
+&gt;&gt;&gt; p.incr(&#39;num&#39;)
+&gt;&gt;&gt; p.execute()
+[True, 1, 1]
+&gt;&gt;&gt; r.get(&#39;hello&#39;)
+&#39;redis&#39;
+
+or 
+&gt;&gt;&gt; p.set(&#39;hello&#39;,&#39;redis&#39;).sadd(&#39;faz&#39;,&#39;baz&#39;).incr(&#39;num&#39;).execute()
+</pre></div>
+
+
+<p>默认的情况下，管道里执行的命令可以保证执行的原子性，执行pipe = r.pipeline(transaction=False)可以禁用这一特性。</p>
+<h2>坑</h2>
+<p>python redis 客户端中没有decrby指令</p>
+<h1>key 的命名</h1>
+<p>colon sign : is a convention when naming keys. Try to stick with a schema. For instance "object-type:id:field" can be a nice idea, like in "user:1000:password". I like to use dots for multi-words fields, like in "comment:1234:reply.to".</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/redis-shi-zhan-zong-jie.html">posted at 14:33</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | LSM 和 sstable</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="算法,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 31, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/lsm-he-sstable.html" rel="bookmark" title="Permanent Link to &quot;LSM 和 sstable&quot;">LSM 和 sstable</a>
+                </h2>
+
+                
+                
+
+                <h1>核心要点</h1>
+<p>lsm 是 bigtable、leveldb、rocksdb 等数据库采用的算法。</p>
+<p>硬盘，尤其是机械硬盘，顺序写入性能远大于随机写入性能，所以 lsm 把大量的随机写入抓换成了顺序写入，从而极大地又花了写入能力。同时查找效率收到了损伤。</p>
+<p>适用于顺序写入多，随机读取少的场景。</p>
+<p>之所以要使用 Immutable Memtable，就是为了避免将 MemTable 中的内容序列化到磁盘中时会阻塞写操作。</p>
+<h2>操作</h2>
+<ol>
+<li>插入</li>
+</ol>
+<p>写入 WAL，然后操作 memtable。WAL 是顺序读写，而memtable 是跳表，操作都很迅速</p>
+<ol>
+<li>更新</li>
+</ol>
+<p>和插入其实是一样的操作</p>
+<ol>
+<li>删除</li>
+</ol>
+<p>插入一条特殊的删除日志，在 memtable 中标记删除</p>
+<ol>
+<li>compaction（压缩）</li>
+</ol>
+<p>当 memtable 达到设定的阈值的时候，会写入到 immutable memtable，然后写入到硬盘上的 sstable。当 sstable 的数量达到某个阈值的时候，就合并到下一级的 memtable。需要注意的是只有第一级的memtable可能有重复的键值，其他层都不会有重复的，所以可以多线程 compact。</p>
+<ol>
+<li>读取</li>
+</ol>
+<p>最原始的算法：首先从memtable读，然后从sstable中往高层读取。</p>
+<p>可以采取的优化方法：</p>
+<ol>
+<li>把 sstable 的一些原始信息放到 manifest 中，放在内存中，快速查找</li>
+<li>使用 bloom filter 先过滤一遍，看 key 是否在 LSM 中，然后再查找。</li>
+</ol>
+<p>一图胜千言：</p>
+<p><img alt="" src="https://ws3.sinaimg.cn/large/801b780aly1ftt76pvzotj21kw13eh8u.jpg"></p>
+<p>参考：</p>
+<ol>
+<li>http://blog.fatedier.com/2016/06/15/learn-lsm-tree/</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/lsm-he-sstable.html">posted at 10:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | C/C++ 中的 RAII</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="C 语言,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/cc-zhong-de-raii.html" rel="bookmark" title="Permanent Link to &quot;C/C++ 中的 RAII&quot;">C/C++ 中的 RAII</a>
+                </h2>
+
+                
+                
+
+                <h1>RAII 的好处</h1>
+<ul>
+<li>异常安全</li>
+<li>保证匹配</li>
+<li>防止内存泄露</li>
+</ul>
+<h1>RAII in C</h1>
+<p>This is inherent implementation dependent, since the Standard doesn't include such a possibility. For GCC, the cleanup attribute runs a function when a variable goes out of scope:</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">scoped</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span> <span class="n">pvariable</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;variable (%d) goes out of scope</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">pvariable</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;before scope</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">watched</span> <span class="n">__attribute__</span><span class="p">((</span><span class="n">cleanup</span> <span class="p">(</span><span class="n">scoped</span><span class="p">)));</span>
+        <span class="n">watched</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;after scope</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Prints:</p>
+<div class="highlight"><pre><span></span>before scope
+variable (42) goes out of scope
+after scope
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/cc-zhong-de-raii.html">posted at 15:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

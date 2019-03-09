@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 为什么不使用 scrapy？</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机,爬虫" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Sep 05, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-shi-yao-bu-shi-yong-scrapy.html" rel="bookmark" title="Permanent Link to &quot;为什么不使用 scrapy？&quot;">为什么不使用 scrapy？</a>
+                </h2>
+
+                
+                
+
+                <p>最近面了几家公司，每当我提到头条的爬虫都是自己写的时候，对方一个下意识的问题就是“为什么不使用开源的 scrapy？”。实际上我在头条的 lead 就是 scrapy 的 contributor，而他自己也不用自己的框架，显然说明 scrapy 不适合大型项目，那么具体问题在哪儿呢？今天终于有时间了，详细写写这个问题。</p>
+<h1>爬虫并不需要一个框架</h1>
+<p>Web 服务器是一个爬虫可以抽象出来的是各种组件。而 scrapy 太简陋了，比如说去重，直接用的是内存中的一个集合。如果要依赖 scrapy 写一个大型的爬虫，几乎每个组件都要自己实现，那有何必用 scrapy 呢？</p>
+<h1>scrapy 不是完整的爬虫框架</h1>
+<p>一个完整的爬虫至少需要两部分，fetcher 和 frontier。其中 fetcher 用于下载网页，而 frontier 用于调度。scrapy 重点实现的是 fetcher 部分，也就是下载部分。</p>
+<h1>scrapy 依赖 twisted</h1>
+<p>这一点导致 scrapy 深入后曲线非常地陡峭，要想了解一些内部的机理，必须对 twisted 比较明了。而 twisted 正如它的名字一样，是非常扭曲的一些概念，虽然性能非常好，但是要理解起来是要花上不少时间的。</p>
+<h1>scrapy 适合的领域</h1>
+<p>scrapy 主要是和一次性地从指定的站点爬取一些数据</p>
+<h1>参考</h1>
+<ol>
+<li><a href="http://kaito-kidd.com/2016/11/01/scrapy-code-analyze-architecture/">scrapy 源码解读</a></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-shi-yao-bu-shi-yong-scrapy.html">posted at 19:50</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

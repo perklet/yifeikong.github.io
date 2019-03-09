@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Google 关于Machine Leaning 的笔记</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机,机器学习" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Dec 16, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/google-guan-yu-machine-leaning-de-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;Google 关于Machine Leaning 的笔记&quot;">Google 关于Machine Leaning 的笔记</a>
+                </h2>
+
+                
+                
+
+                <p>前几天看了 Google 的一个关于 Machine Learning 的<a href="https://docs.google.com/presentation/d/1kSuQyW5DTnkVaZEjGYCkfOxvzCqGEFzWBy4e9Uedd9k/preview">slides</a>，感觉不错，整理一下学习笔记</p>
+<h1>ML 的定义</h1>
+<blockquote>
+<p>An approach to achieve artificial intelligence through systems that can learn from experience to find patterns in that data</p>
+<p>ML teaches a computer to recognise patterns by examples, rather than programming it with specific rules.</p>
+</blockquote>
+<p>一个例子：</p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tNc79gy1fmjv6ugbr4j31jw0mo4qp.jpg"></p>
+<h1>feature</h1>
+<p>一般来说，几个属性就代表了几个维度。</p>
+<p><img width=300 src=https://ws3.sinaimg.cn/large/006tNc79gy1fmjllksmxfj30ma0omwg0.jpg /></p>
+<p>有时候更多的维度，更容易做出分类：参考<a href="http://www.visiondummy.com/2014/04/curse-dimensionality-affect-classification/">这里</a></p>
+<p><img width=300 src=https://ws2.sinaimg.cn/large/006tNc79gy1fmjnimu1pyj30qw0uaqe7.jpg /></p>
+<p><img width=300 src=https://ws3.sinaimg.cn/large/006tNc79gy1fmjnptevb6j30mk0gkwhb.jpg /></p>
+<h1>机器学习的分类</h1>
+<h2>监督学习</h2>
+<p>数据是标注过的</p>
+<h2>无监督的学习</h2>
+<p>从没有标注的数据中学习</p>
+<p><img width=300 src=https://ws3.sinaimg.cn/large/006tNc79gy1fmjnt7mzroj30os0nowg1.jpg /></p>
+<h2>强化学习</h2>
+<p>通过带有激励的试错来学习</p>
+<h1>例子</h1>
+<h2>线性回归（Linear Regression）</h2>
+<p><img width=300 src=https://ws1.sinaimg.cn/large/006tNc79gy1fmjo16iq86j30hy0b4gmc.jpg /></p>
+<h2>聚类</h2>
+<p><img width=300 src=https://ws4.sinaimg.cn/large/006tNc79gy1fmjo292bd4j30nu0o475r.jpg /></p>
+<h2>KNN</h2>
+<p><img width=300 src=https://ws4.sinaimg.cn/large/006tNc79gy1fmjo31w9wnj30nm0iuq3r.jpg /></p>
+<h2>神经网络</h2>
+<p><img src=https://ws2.sinaimg.cn/large/006tNc79gy1fmjo8g08s2j31ie0h07b4.jpg /></p>
+<h2>fully-connected 神经网络</h2>
+<p><img src=https://ws3.sinaimg.cn/large/006tNc79gy1fmjo81ka29j31kw0l9wr1.jpg /></p>
+<h2>深度神经网络（DNN）</h2>
+<p>深度的意思就是有很多的层。比如说，对于人脸识别，其中某些层可能会识别出线条，然后有的层会识别出眼睛等等</p>
+<h2>卷积神经网络（CNN）</h2>
+<p>CNN 可以用来处理图片数据，以及可以表示为图片的数据。要确定一组数据可不可以表示为图片，可以尝试交换任意两行，或者任意两列，如果交换后对数据没有影响，那么就不可以被认为是图片数据。更多细节参看这个 <a href="https://youtu.be/FmpDIaiMIeA">Video</a></p>
+<h1>算法的分类</h1>
+<p>详细讲解请看<a href="https://docs.google.com/presentation/d/1kSuQyW5DTnkVaZEjGYCkfOxvzCqGEFzWBy4e9Uedd9k/preview">这里</a></p>
+<h2>Regression</h2>
+<p>回归首先要有一个评价误差的方法，然后迭代的求出模型。回归是一类从统计中得出的方法，比如上面说到的 线性回归（用最小二乘法），还有逻辑回归等等。</p>
+<p><img width=300 src=https://ws3.sinaimg.cn/large/006tNc79gy1fmjq0fm7qsj30fa0euabi.jpg /></p>
+<h2>Instance Based</h2>
+<p>Instance Based 是一个决策方法。通过相似度计算找出最接近的实例。比如KNN</p>
+<p><img width=300 src=https://ws2.sinaimg.cn/large/006tNc79gy1fmjpzyw85ej30f40h2dhc.jpg /></p>
+<h2>Decision Tree</h2>
+<p>自定向下，做出决策</p>
+<p><img width=300 src=https://ws2.sinaimg.cn/large/006tNc79gy1fmjpzktongj30ho0guwg1.jpg /></p>
+<h2>Bayesian</h2>
+<p><img width=300 src=https://ws2.sinaimg.cn/large/006tNc79gy1fmjq298126j30fs0fe404.jpg /></p>
+<h2>clustering</h2>
+<p><img width=300 src=https://ws1.sinaimg.cn/large/006tNc79gy1fmjsnszjsnj30ea0fajsp.jpg /></p>
+<h2>association rules</h2>
+<p><img width=300 src=https://ws3.sinaimg.cn/large/006tNc79gy1fmjsp79sk7j30eo0h4abg.jpg /></p>
+<h2>Artificial Neural Network</h2>
+<p>模拟人的神经系统，比如感知机</p>
+<p><img width=300 src=https://ws4.sinaimg.cn/large/006tNc79gy1fmjsqfb0uij30ge0hejsj.jpg /></p>
+<h2>深度学习</h2>
+<p>其实就是很多层的神经网络，比如CNN</p>
+<p><img width=300 src=https://ws2.sinaimg.cn/large/006tNc79gy1fmju4bxxz6j30fs0goq5h.jpg /></p>
+<h2>降维 (Dimensionality Reduction)</h2>
+<p>找到数据的内在属性，然后缩减维度，以便能够使用监督学习方法</p>
+<p><img width=300 src=https://ws1.sinaimg.cn/large/006tNc79gy1fmju5kon3tj30fu0hc3zm.jpg /></p>
+<p>还有一个ensemble没看懂</p>
+<h1>机器学习的输出</h1>
+<h2>连续输出</h2>
+<p>比如拟合好的线性回归跟定一个数值，可以预测另一个数值</p>
+<h2>概率预测</h2>
+<h2>分类</h2>
+<p>比如分辨出小猫小狗，或者是识别数字</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/google-guan-yu-machine-leaning-de-bi-ji.html">posted at 19:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/ji-qi-xue-xi.html" class="tags">机器学习</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

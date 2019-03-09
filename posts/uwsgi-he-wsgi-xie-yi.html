@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | uwsgi 和 wsgi 协议</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 21, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/uwsgi-he-wsgi-xie-yi.html" rel="bookmark" title="Permanent Link to &quot;uwsgi 和 wsgi 协议&quot;">uwsgi 和 wsgi 协议</a>
+                </h2>
+
+                
+                
+
+                <p>uWSGI is a web server than runs python web frameworks. uwsgi(lower case) is the protocol it communicates with front end web servers(nginx)</p>
+<h1>wsgi 协议</h1>
+<p>YN:</p>
+<p>值得注意的是, wsgi实际上定义了一个同步的模型, 也就是每一个客户请求会调用一个同步的函数, 这样也就无法发挥异步的特性.</p>
+<h1>两个最简单的例子</h1>
+<p>其中实现 simple_app 函数也就是实现了wsgi协议.需要注意的有一下三点:</p>
+<ol>
+<li>environ字典中包含的变量</li>
+<li>start_response的参数</li>
+<li>simple_app的调用次序和返回值</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="nx">HELLO_WORLD</span> <span class="o">=</span> <span class="nx">b</span><span class="s2">&quot;Hello world!\n&quot;</span>
+
+<span class="nx">def</span> <span class="nx">simple_app</span><span class="p">(</span><span class="nx">environ</span><span class="p">,</span> <span class="nx">start_response</span><span class="p">)</span><span class="o">:</span>
+    <span class="s2">&quot;&quot;&quot;Simplest possible application object&quot;&quot;&quot;</span>
+    <span class="nx">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
+    <span class="nx">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">)]</span>
+    <span class="nx">start_response</span><span class="p">(</span><span class="nx">status</span><span class="p">,</span> <span class="nx">response_headers</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nx">HELLO_WORLD</span><span class="p">]</span>
+
+<span class="kr">class</span> <span class="nx">AppClass</span><span class="o">:</span>
+    <span class="s2">&quot;&quot;&quot;Produce the same output, but using a class</span>
+<span class="s2">    (Note: &#39;AppClass&#39; is the &quot;</span><span class="nx">application</span><span class="s2">&quot; here, so calling it</span>
+<span class="s2">    returns an instance of &#39;AppClass&#39;, which is then the iterable</span>
+<span class="s2">    return value of the &quot;</span><span class="nx">application</span> <span class="nx">callable</span><span class="s2">&quot; as required by</span>
+<span class="s2">    the spec.</span>
+<span class="s2">    If we wanted to use *instances* of &#39;AppClass&#39; as application</span>
+<span class="s2">    objects instead, we would have to implement a &#39;__call__&#39;</span>
+<span class="s2">    method, which would be invoked to execute the application,</span>
+<span class="s2">    and we would need to create an instance for use by the</span>
+<span class="s2">    server or gateway.</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">environ</span><span class="p">,</span> <span class="nx">start_response</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">environ</span> <span class="o">=</span> <span class="nx">environ</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">start</span> <span class="o">=</span> <span class="nx">start_response</span>
+    <span class="nx">def</span> <span class="nx">__iter__</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
+        <span class="nx">response_headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">)]</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="nx">status</span><span class="p">,</span> <span class="nx">response_headers</span><span class="p">)</span>
+        <span class="nx">yield</span> <span class="nx">HELLO_WORLD</span>
+</pre></div>
+
+
+<p>而对于server/gateway来说, 每接收到一个http客户端, 都会调用一次这个 application callable</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="n">enc</span><span class="p">,</span> <span class="n">esc</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">getfilesystemencoding</span><span class="p">(),</span> <span class="s1">&#39;surrogateescape&#39;</span>
+<span class="k">def</span> <span class="nf">unicode_to_wsgi</span><span class="p">(</span><span class="n">u</span><span class="p">):</span>
+    <span class="c1"># Convert an environment variable to a WSGI &quot;bytes-as-unicode&quot; string</span>
+    <span class="k">return</span> <span class="n">u</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">enc</span><span class="p">,</span> <span class="n">esc</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;iso-8859-1&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">wsgi_to_bytes</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;iso-8859-1&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">run_with_cgi</span><span class="p">(</span><span class="n">application</span><span class="p">):</span>
+    <span class="n">environ</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">unicode_to_wsgi</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.input&#39;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">buffer</span>
+    <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.errors&#39;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span>
+    <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.version&#39;</span><span class="p">]</span>      <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.multithread&#39;</span><span class="p">]</span>  <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.multiprocess&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.run_once&#39;</span><span class="p">]</span>     <span class="o">=</span> <span class="bp">True</span>
+<span class="k">if</span> <span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HTTPS&#39;</span><span class="p">,</span> <span class="s1">&#39;off&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;on&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">):</span>
+        <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.url_scheme&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;https&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.url_scheme&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;http&#39;</span>
+<span class="n">headers_set</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">headers_sent</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">buffer</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">headers_set</span><span class="p">:</span>
+             <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;write() before start_response()&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="ow">not</span> <span class="n">headers_sent</span><span class="p">:</span>
+             <span class="c1"># Before the first output, send the stored headers</span>
+             <span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span> <span class="o">=</span> <span class="n">headers_sent</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">headers_set</span>
+             <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">wsgi_to_bytes</span><span class="p">(</span><span class="s1">&#39;Status: </span><span class="si">%s</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">status</span><span class="p">))</span>
+             <span class="k">for</span> <span class="n">header</span> <span class="ow">in</span> <span class="n">response_headers</span><span class="p">:</span>
+                 <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">wsgi_to_bytes</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="se">\r\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">header</span><span class="p">))</span>
+             <span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">wsgi_to_bytes</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r\n</span><span class="s1">&#39;</span><span class="p">))</span>
+<span class="n">out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">exc_info</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">headers_sent</span><span class="p">:</span>
+                    <span class="c1"># Re-raise original exception if headers sent</span>
+                    <span class="k">raise</span> <span class="n">exc_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">with_traceback</span><span class="p">(</span><span class="n">exc_info</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">exc_info</span> <span class="o">=</span> <span class="bp">None</span>     <span class="c1"># avoid dangling circular ref</span>
+        <span class="k">elif</span> <span class="n">headers_set</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Headers already set!&quot;</span><span class="p">)</span>
+<span class="n">headers_set</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">]</span>
+<span class="c1"># Note: error checking on the headers should happen here,</span>
+        <span class="c1"># *after* the headers are set.  That way, if an error</span>
+        <span class="c1"># occurs, start_response can only be re-called with</span>
+        <span class="c1"># exc_info set.</span>
+<span class="k">return</span> <span class="n">write</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">data</span><span class="p">:</span>    <span class="c1"># don&#39;t send headers until body appears</span>
+                <span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">headers_sent</span><span class="p">:</span>
+            <span class="n">write</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>   <span class="c1"># send headers now if body was empty</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+
+<h1>参考资料</h1>
+<ol>
+<li>https://bottlepy.org/docs/dev/async.html</li>
+<li>http://uwsgi-docs-cn.readthedocs.io/zh_CN/latest/WSGIquickstart.html</li>
+<li>https://www.digitalocean.com/community/tutorials/how-to-deploy-python-wsgi-applications-using-uwsgi-web-server-with-nginx</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/uwsgi-he-wsgi-xie-yi.html">posted at 15:37</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

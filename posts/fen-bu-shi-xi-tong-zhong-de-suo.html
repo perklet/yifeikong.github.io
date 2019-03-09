@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 分布式系统中的锁</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="架构,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/fen-bu-shi-xi-tong-zhong-de-suo.html" rel="bookmark" title="Permanent Link to &quot;分布式系统中的锁&quot;">分布式系统中的锁</a>
+                </h2>
+
+                
+                
+
+                <p>分布式系统需要使用分布锁。首先我们来回忆一下在单机情况下的锁。</p>
+<p>当我们的程序在需要访问临界区的时候，我们可以加一个锁，如果是多线程程序，可以使用线程锁，如果是多进程程序，可以使用进程级别的锁。但是在分布式的环境中，如果在不同主机上部署的程序要访问同一个临界区是该怎么做呢？这时候我们需要分布式的锁。</p>
+<p>当部署的服务或者脚本不在同一台机器上时,使用分布式的锁，可以使用zookeeper或者redis实现一个分布式锁。这里主要介绍一下基于redis的分布式锁。</p>
+<p>redis 官方给出的单机redis分布式锁:</p>
+<p>加锁</p>
+<p>NX 命令指定了只有在不存在的时候才会创建，如果已经存在，则会返回失败。EX指定了过期时间，避免进程挂掉后死锁。值设定为了一个随机数，这样只有加锁的进程才知道锁的值是多少</p>
+<div class="highlight"><pre><span></span>SET resource-name my_random_string NX EX max-lock-time
+</pre></div>
+
+
+<p>解锁</p>
+<p>因为解锁时会检查是否提供了随机数的值，所以只有创建锁的进程才能够解锁。</p>
+<div class="highlight"><pre><span></span>if redis.call(&quot;get&quot;,KEYS[1]) == ARGV[1] then
+    return redis.call(&quot;del&quot;,KEYS[1])
+else
+    return 0
+end
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>EVAL &#39;script...&#39; 1 resource-name my_random_string
+</pre></div>
+
+
+<p>参考:</p>
+<p>[1] https://redis.io/topics/distlock</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/fen-bu-shi-xi-tong-zhong-de-suo.html">posted at 04:42</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

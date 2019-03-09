@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Configuring OpenWrt in TP-Link 702n</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="IoT,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/configuring-openwrt-in-tp-link-702n.html" rel="bookmark" title="Permanent Link to &quot;Configuring OpenWrt in TP-Link 702n&quot;">Configuring OpenWrt in TP-Link 702n</a>
+                </h2>
+
+                
+                
+
+                <h1>如何重置一个损坏的 OpenWrt</h1>
+<p>删除 overlay 下的文件即可</p>
+<div class="highlight"><pre><span></span>rm -rf /overlay/*
+</pre></div>
+
+
+<h1>网络配置</h1>
+<h3>1.Assign a Password for Root</h3>
+<p>telnet 192.168.1.1
+    passwd root
+    exit</p>
+<h3>2.Interface config: <code>/etc/config/network</code></h3>
+<div class="highlight"><pre><span></span>        config interface &#39;loopback&#39;
+            option ifname &#39;lo&#39;
+            option proto &#39;static&#39;
+            option ipaddr &#39;127.0.0.1&#39;
+            option netmask &#39;255.0.0.0&#39;
+        config interface &#39;lan&#39;
+            option ifname &#39;eth0&#39;
+            option proto &#39;dhcp&#39;
+        config interface &#39;wifi&#39;
+            option proto &#39;static&#39;
+            option ipaddr &#39;172.19.1.1&#39;
+            option netmask &#39;255.255.255.0&#39; 
+</pre></div>
+
+
+<h3>3.Wireless Config: <code>/etc/config/wireless</code></h3>
+<div class="highlight"><pre><span></span>        1) **remove to enable wifi**
+            # REMOVE THIS LINE TO ENABLE WIFI:
+            option disabled 1
+        2) config wifi interface
+            config wifi-iface
+                option device &#39;radio0&#39;
+                option network &#39;wifi&#39;
+                option mode &#39;ap&#39;
+                option ssid &#39;WR703n&#39;
+                option encryption &#39;psk2&#39;
+                option key &#39;secret&#39;
+</pre></div>
+
+
+<h3>4.DHCP Config: <code>/etc/config/dhcp</code></h3>
+<div class="highlight"><pre><span></span>        config dhcp wifi                                          
+            option interface        wifi                      
+            option start    100                               
+            option limit    150                               
+            option leasetime        12h                       
+                                                          
+        config dhcp lan                               
+            option interface        lan           
+            option ignore   1
+</pre></div>
+
+
+<h3>5.Firewall Config: <code>/etc/config/firewall</code></h3>
+<div class="highlight"><pre><span></span>        config defaults
+            option syn_flood 1
+            option input ACCEPT
+            option output ACCEPT
+            option forward ACCEPT
+        config zone
+            option name lan
+            option network &#39;lan&#39;
+            option input ACCEPT
+            option output ACCEPT
+            option forward ACCEPT
+            option masq 1
+            option mtu_fix 1
+        config zone
+            option name wifi
+            option network &#39;wifi&#39;
+            option input ACCEPT
+            option output ACCEPT
+            option forward ACCEPT
+        config forwarding
+            option src lan
+            option dest wifi
+        config forwarding
+            option src wifi
+            option dest lan 
+    PS: to use pppoe, lan -&gt; wan
+</pre></div>
+
+
+<h3>6.Reboot</h3>
+<h2>2.Mount Exteral Drive and Extroot(pivot root)</h2>
+<h3>1.Add USB support</h3>
+<p>opkg update &amp;&amp; opkg install kmod-usb2
+        insmod ehci-hcd
+        opkg install kmod-usb-storage block-mount kmod-fs-ext4
+    </p>
+<h3>2.Copy the Entire <code>/</code> to USB Storage</h3>
+<p>mkdir -p /mnt/sda1
+        mount /dev/sda1 /mnt/sda1
+        mkdir -p /tmp/cproot
+        mount --bind / /tmp/cproot
+        tar -C /tmp/cproot -cvf - . | tar -C /mnt/sda1 -xf -
+        umount /tmp/cproot
+        umount /mnt/sda1</p>
+<h3>2.Edit <code>/etc/config/fstab</code> file</h3>
+<p>config mount
+            option target /  # this is curcial
+            option device /dev/sda1
+            option fstype ext4
+            option options rw,sync
+            option enabled 1 #remeber to change this
+            option enabled_fsck 0 
+3.(Necessary only if you are not extrooting) Opkg to Exteral Drive</p>
+<hr>
+<h3>1.Edit <code>/etc/opkg.conf</code> file</h3>
+<p>dest usb /mnt/usb</p>
+<h3>2.Edit <code>/etc/profile</code> file</h3>
+<p>export USB=/mnt/usb
+        # it's crucial to make customized bin preceeds system ones
+        export PATH=$USB/usr/bin:$USB/usr/sbin:$PATH
+        export LD_LIBRARY_PATH=$USB/lib:$USB/usr/lib</p>
+<h3>3.Remeber to use</h3>
+<p>opkg isntall <package> -d usb</p>
+<h3>4.fix</h3>
+<p>run linkmaker to link /etc to /mnt/usb/etc
+!!!!!!!!!!!!!!!!!!!!!below is down on extroot!!!!!!!!!!!!!!!!!!!!!!!</p>
+<h1>安装 Python</h1>
+<div class="highlight"><pre><span></span>opkg install python
+</pre></div>
+
+
+<p>TODO: 不知道能否交叉编译一个 micropython</p>
+<h2>5.Samba configuration</h2>
+<p>1.Install Samba
+        opkg install samba36-server
+    2.mkdir ~/share
+      chmod 777 ~/share
+    3.Share Level Share
+        1. Edit <code>/etc.config/samba</code> file
+        config samba
+            option 'name'                   'OpenWrt'
+            option 'workgroup'              'WORKGROUP'
+            option 'description'            'OpenWrt'
+            option 'homes'                  '0' # disable ~ dir sharing
+        config sambashare
+            option name                     share
+            option path                     /root/share
+            option read_only                no # enable write
+            option guest_ok                 yes # enable no passwd visit
+            option create_mask              0777
+            option dir_mask                 0777
+        2. change security = user to security = share in /etc/samba/smb.conf.template
+    
+    4./etc/init.d/samba enable &amp;&amp; /etc/init.d/samba start</p>
+<h1>免密码登录</h1>
+<div class="highlight"><pre><span></span>scp ~/.ssh/id_rsa.pub root@ow:/etc/dropbear/authorized_keys
+</pre></div>
+
+
+<h1>更改 banner</h1>
+<p>编辑 /etc/banner 即可</p>
+<h2>8.SSH Proxy</h2>
+<p>1.install openssh and autossh
+        mv /usr/bin/ssh /usr/bin/ssh.dropbear
+        mv /usr/bin/scp /usr/bin/scp/dropbear
+        opkg install openssh-client autossh</p>
+<h1>禁用 luci</h1>
+<div class="highlight"><pre><span></span>/etc/init.d/uhttpd disable
+</pre></div>
+
+
+<h2>10.Install Camera</h2>
+<p>1.install video support
+        opkg install kmod-video-core kmod-video-uvc mjpg-streamer fswebcam
+    2.Using fswebcam
+        fswebcam capture.jpg -r 640x480
+    3.Using mjpg-streamer</p>
+<h2>11.Static DHCP leases</h2>
+<p>1.vi /etc/config/dhcp
+      http://wiki.openwrt.org/doc/uci/dhcp#static.leases</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/configuring-openwrt-in-tp-link-702n.html">posted at 01:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/iot.html" class="tags">IoT</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

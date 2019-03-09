@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Go 语言初体验</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="golang,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 02, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/go-yu-yan-chu-ti-yan.html" rel="bookmark" title="Permanent Link to &quot;Go 语言初体验&quot;">Go 语言初体验</a>
+                </h2>
+
+                
+                
+
+                <h1>安装</h1>
+<p>安装 go 很简单，在 mac 上直接使用 <code>brew install go</code> 就可以了。注意的是需要设定GOPATH这个环境变量，这里设定到了 ~/.go 这个目录。</p>
+<div class="highlight"><pre><span></span>export GOPATH=$HOME/.go
+</pre></div>
+
+
+<h1>语法和风格</h1>
+<p>Golang的整个语法还是极其简单的，基本是 C 和 Python 的混合体。Go 语言详尽地规定了代码的风格，所以就不用为了大括号究竟是放在哪儿而开始圣战了。Go 语言对程序员的约束很强，不容易犯错</p>
+<p>Go 语言官方提供了一个工具 goimports 用来管理 import 语句，还不错。</p>
+<p>比如import进来的包必须使用，声明的变量也必须使用。import 语句必须在 package 语句后面.虽然有大括号，但是大括号的位置也是指定的。</p>
+<h1>类型</h1>
+<p>几乎所有的值提供了默认都会初始化到对应的零值，即使没有初始化，不少函数处理 nil 的时候也是按照零值处理，这样避免了好多无谓的异常抛出。在go中也不会遇到len(None)这种问题，即使len(nil)也会返回0。</p>
+<p>值得一提的是 Go 中的字符串，实际上是一个 byte 的只读数组，如果使用索引访问的话，是按照 byte 为单位来访问的。但是在打印和 range 的时候会直接按照 utf-8 解码输出。如果需要按照 rune（Go 语言对 unicode code point 的称呼）来遍历，需要使用 <code>unicode/utf8</code> 这个包中的函数。</p>
+<p>即使字符串不是 utf-8的，或者不管怎样用错了编码，至少不会panic，而python中时不时就会抛出UnicodeDecodeError 。</p>
+<p>不用思考蛋疼的 Unicode 问题，不过虽然 Go 的string是 utf-8 的，但是使用下标访问的是字节，而使用 for range 访问的又是 rune</p>
+<h2>复合类型</h2>
+<p>像是 C 语言一样，Go 中也有定长数组，<code>var a [3]int</code>。</p>
+<p>在 Go 中经常作为变长数组使用的是 Slice。Slice 指的是一个数组的一个切片。在 Go 语言中，默认的函数调用都是值传递的，但是 Slice 做参数的时候传递的是一个 Slice Header，也就相当于按照引用传递。</p>
+<p>Map 类型是引用类型，也就是函数调用的时候是按照引用传递的。nil map 可以像空map一样使用，但是插入的时候会 panic，因为没有给他分配内存，所以 map 类型一般使用 make 初始化。</p>
+<div class="highlight"><pre><span></span>m := make(map[string]int)
+</pre></div>
+
+
+<h2>循环</h2>
+<p>go 还从 C 中 继承了 <code>if (p = fopen("xxx", "w")) != NULL</code> 这种在把赋值语句写在if中的写法，不过好在 Go 语言中可以写做两句。</p>
+<div class="highlight"><pre><span></span>if err := r.ParseForm(); err != nil {
+      //...
+}
+</pre></div>
+
+
+<p>另外 switch 语句默认就会 break 了，而不是 fall through 了。</p>
+<p>循环语句很有意思，Go 语言直接把 while 关键字扔掉了，只用 for 本身就够了</p>
+<div class="highlight"><pre><span></span>for {
+// ...
+}
+</pre></div>
+
+
+<p>就相当于其他语言中的 while(true) 了。</p>
+<p>不管是 Python 中的 for...in... 还是 JavaScript 中的 for...of... 语句，迭代数组和字典的时候多少感到一些不一致。在 Go 语言中，还是比较统一的，每次迭代都会返回两个值：key， value。</p>
+<p>迭代 slice</p>
+<div class="highlight"><pre><span></span>words := []string{&quot;a&quot;, &quot;b&quot;}
+for i, word := range words {
+    fmt.Printf(&quot;%d -&gt; %s&quot;, i, word)
+}
+</pre></div>
+
+
+<p>迭代 map</p>
+<div class="highlight"><pre><span></span>words := make(map[string]string)
+words[&quot;a&quot;] = &quot;a&quot;
+words[&quot;b&quot;] = &quot;b&quot;
+for k, v := range words {
+    fmt.Printf(&quot;%s -&gt; %s&quot;, k, v)
+}
+</pre></div>
+
+
+<h1>goroutine</h1>
+<p>goroutine 相对于 Python 的 coroutine 的好处就在于它是抢占的，不用主动交出。</p>
+<p>Python 的 coroutine 需要特别小心不要调用阻塞性的函数，比如 time.sleep，而要使用asyncio.sleep，所以写起来不是非常得方便。Python必须使用 await 来显式交出控制，而 Go 中则没有这种限制。</p>
+<h2>Timers and tickers</h2>
+<p>Timers 定义在你在未来的某个时间想要去做一次某件事。而 Tickers 则是定期执行某一个动作。这两个有点像是 js 里面的 setTimeout 和 setInterval 两个函数。</p>
+<p>defer 实际上就相当于 C++ 中的RAII，和Python中的 with 语句</p>
+<p>Go 的类型总体来说，和 Python 的 duck type 有点像，而和 Java 严格的继承则是完全背道而驰的。</p>
+<p>发生赋值时候会不会检查类型呢？</p>
+<p>interface{}</p>
+<h1>io</h1>
+<p>一般读取统一从 io.Reader 类型中读取</p>
+<p>记得一定要使用append函数，而不要直接在slice的结尾通过下标添加字符，这样可能会panic</p>
+<p>函数应该接受 interface 作为参数，并使用 struct 作为返回值。</p>
+<p>目前为止有几个不爽的地方</p>
+<ol>
+<li>nil 字典不能直接赋值，但是 nil slice 可以 append</li>
+<li>interface 的 nil 始终没有搞明白。empty slice(a[0:0]) 和 nil 也不一样</li>
+<li>没有一个统一的包管理工具，刚刚花一下午时间学习了 dep，号称是官方的试验，结果又看到一篇文章说 vgo 要取代 dep，WTF</li>
+<li>defer 执行的地方是函数的结尾，而不是块的结尾</li>
+</ol>
+<p>参考：</p>
+<p>https://stackoverflow.com/questions/18058164/is-a-go-goroutine-a-coroutine</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/go-yu-yan-chu-ti-yan.html">posted at 02:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | RSS 和 Atom 协议详解和不足</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机,网络" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Dec 27, 2016</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/rss-he-atom-xie-yi-xiang-jie-he-bu-zu.html" rel="bookmark" title="Permanent Link to &quot;RSS 和 Atom 协议详解和不足&quot;">RSS 和 Atom 协议详解和不足</a>
+                </h2>
+
+                
+                
+
+                <h1>关于CDATA</h1>
+<p>CDATA stands for Character Data and it means that the data in between these strings includes data that could be interpreted as XML markup, but should not be.</p>
+<p>So we could use CDATA to smuggle some HTML into the XML document, so that the HTML doesn't confuse the XML document structure, and then use XSLT later to pull it out and spit it into a HTML document that is being output.
+ 
+<em>In short, you don't have to escape all the &lt; and &amp; in CDATA section</em>
+ </p>
+<h1>RSS 2.0</h1>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="nt">&lt;rss</span> <span class="na">version=</span><span class="s">&quot;2.0&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;channel&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Example Feed<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;description&gt;</span>Insert witty or insightful remark here<span class="nt">&lt;/description&gt;</span>
+        <span class="nt">&lt;link&gt;</span>http://example.org/<span class="nt">&lt;/link&gt;</span>
+        <span class="nt">&lt;lastBuildDate&gt;</span>Sat, 13 Dec 2003 18:30:02 GMT<span class="nt">&lt;/lastBuildDate&gt;</span>
+        <span class="nt">&lt;managingEditor&gt;</span>johndoe@example.com (John Doe)<span class="nt">&lt;/managingEditor&gt;</span>
+        <span class="nt">&lt;item&gt;</span>
+            <span class="nt">&lt;title&gt;</span>Atom-Powered Robots Run Amok<span class="nt">&lt;/title&gt;</span>
+            <span class="nt">&lt;link&gt;</span>http://example.org/2003/12/13/atom03<span class="nt">&lt;/link&gt;</span>
+            <span class="nt">&lt;pubDate&gt;</span>Sat, 13 Dec 2003 18:30:02 GMT<span class="nt">&lt;/pubDate&gt;</span>
+            <span class="nt">&lt;description&gt;</span>Some text.<span class="nt">&lt;/description&gt;</span>
+            <span class="nt">&lt;source&gt;</span>Shit News<span class="nt">&lt;/source&gt;</span>
+        <span class="nt">&lt;/item&gt;</span>
+        <span class="nt">&lt;item&gt;</span>...<span class="nt">&lt;/item&gt;</span>
+    <span class="nt">&lt;/channel&gt;</span>
+<span class="nt">&lt;/rss&gt;</span>
+</pre></div>
+
+
+<h2>RSS 协议的一些不足和改进方向</h2>
+<ol>
+<li>没有标识文章重要度的字段</li>
+<li>没有途径把订阅数量等信息反馈给 RSS 提供方</li>
+<li>没有品牌特性</li>
+<li>没有机器推荐</li>
+<li>如果能够把 RSS 包装成像是 Amazon Prime 那样的服务，用户可能会很愿意付钱</li>
+</ol>
+<p>实际上文章的增删改查是一套组合操作，而只使用一个 RSS 作为列表显然是不够的，必然要拓展。</p>
+<p>现代的 RSS 阅读器需要做三个方面</p>
+<ol>
+<li>一个社区</li>
+<li>能够把所有服务都提供RSS，包括不提供RSS的站点</li>
+<li>评论服务</li>
+<li>转码。有的 RSS 只提供了文章的摘要，有的 RSS 有实效性，有的 RSS 有自己的字体</li>
+</ol>
+<h1>Atom 1.0</h1>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="nt">&lt;feed</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/2005/Atom&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Example Feed<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;subtitle&gt;</span>Insert witty or insightful remark here<span class="nt">&lt;/subtitle&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;http://example.org/&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;updated&gt;</span>2003-12-13T18:30:02Z<span class="nt">&lt;/updated&gt;</span>
+    <span class="nt">&lt;author&gt;</span>
+        <span class="nt">&lt;name&gt;</span>John Doe<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;email&gt;</span>johndoe@example.com<span class="nt">&lt;/email&gt;</span>
+    <span class="nt">&lt;/author&gt;</span>
+    <span class="nt">&lt;id&gt;</span>urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6<span class="nt">&lt;/id&gt;</span>
+ 
+    <span class="nt">&lt;entry&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Atom-Powered Robots Run Amok<span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;http://example.org/2003/12/13/atom03&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;id&gt;</span>urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a<span class="nt">&lt;/id&gt;</span>
+        <span class="nt">&lt;updated&gt;</span>2003-12-13T18:30:02Z<span class="nt">&lt;/updated&gt;</span>
+        <span class="nt">&lt;summary&gt;</span>Some text.<span class="nt">&lt;/summary&gt;</span>
+    <span class="nt">&lt;/entry&gt;</span>
+ 
+<span class="nt">&lt;/feed&gt;</span>
+</pre></div>
+
+
+<h1>reference</h1>
+<p>[1] http://www.intertwingly.net/wiki/pie/Rss20AndAtom10Compared</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/rss-he-atom-xie-yi-xiang-jie-he-bu-zu.html">posted at 11:35</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

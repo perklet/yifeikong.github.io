@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Get 和 Post 方法的选择和URL的设计</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="HTTP,计算机,网络" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 10, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/get-he-post-fang-fa-de-xuan-ze-he-urlde-she-ji.html" rel="bookmark" title="Permanent Link to &quot;Get 和 Post 方法的选择和URL的设计&quot;">Get 和 Post 方法的选择和URL的设计</a>
+                </h2>
+
+                
+                
+
+                <p>HTTP 中常用的方法有 GET/POST/PUT/DELETE 等，在设计API或者表单的时候我们需要选择合适的方法。一般有两种方案：</p>
+<ol>
+<li>只使用 GET 和 POST，GET 主要用来读取数据，POST 用来创建或者更新数据。</li>
+<li>RESTful的方法，GET/POST/PUT/DELETE 分别用来增删改查。</li>
+</ol>
+<h1>URL 的设计</h1>
+<p>为了探讨两种方案，首先我们来看一下 URL 的设计。URL 是 Universal Resource Locator 的缩写，也就是一个 URL 表示的是唯一的一个资源，所以这个资源的 id 或者说主键应该是放在 URL 路径中的。</p>
+<p>比如一个好的设计：</p>
+<div class="highlight"><pre><span></span>http://example.com/post/1234
+</pre></div>
+
+
+<p>不好的设计</p>
+<div class="highlight"><pre><span></span>http://example.com/post?id=1234
+</pre></div>
+
+
+<p>而控制这个资源展示方式的其他字段可以作为参数：</p>
+<div class="highlight"><pre><span></span>http://exmaple.com/post/1234?lang=zh&amp;utm_source=google
+</pre></div>
+
+
+<h1>HTTP 方法的含义</h1>
+<p>好多人对于 http 方法的理解是 GET 是参数在url里，而POST是参数在 body 里面，这样理解是不对的。</p>
+<p>在上述的两种方案中，GET 都是用来读取资源的，一般来说不要对资源进行任何更新操作，也就是没有副作用。比如说</p>
+<p>不好的设计：</p>
+<div class="highlight"><pre><span></span>GET http://example.com/post/1234?action=delete
+</pre></div>
+
+
+<p>上面的设计意图通过GET操作来删除一个资源，这样非常不好。比如说如果浏览器具有预缓存页面的功能，那么预先读取这个链接的时候就把对应的资源删掉了。</p>
+<p>一般来说，GET 方法还要求幂等性，也就是无论多少次操作，最终结果和操作一次都是一样的。GET 操作的参数受到 url 长度的限制，当参数超过 1k 的时候，可以使用 POST 代替。不过这时候你首先应该想一下这么多参数是不是都有用，是不是设计有问题。</p>
+<p>POST 方法可以用来创建资源，比如说：</p>
+<div class="highlight"><pre><span></span>POST http://example.com/post/
+
+content=xxxxxxx&amp;author=xxxx&amp;date=xxxx
+</pre></div>
+
+
+<p>POST 操作具有副作用，也就是说会更改服务器上的状态。另外 POST 操作一般不是幂等的，每次 POST 操作都应该创建一个新的资源。</p>
+<p>PUT 操作用来更新资源，也是幂等的。</p>
+<div class="highlight"><pre><span></span>PUT http://example.com/post/1234
+
+content=yyyyyy
+</pre></div>
+
+
+<p>DELETE 用来删除资源，值得注意的是，根据规范 DELETE 方法不能带有 body。</p>
+<div class="highlight"><pre><span></span>DELETE http://example.com/post/1234
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/get-he-post-fang-fa-de-xuan-ze-he-urlde-she-ji.html">posted at 08:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

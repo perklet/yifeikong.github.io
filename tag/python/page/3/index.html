@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "Python" | Page 3</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/python/page/3/index.html">Python</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-time-mo-kuai.html" rel="bookmark" title="Permanent Link to &quot;Python time 模块&quot;">Python time 模块</a>
+                </h2>
+
+                
+                
+
+                <p>时间戳，struct_time 可以被认为是一个表示时间的整数序列，一共9项对应于 C 中对应的数据结构，注意其中不包含时区信息</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>time.time</td>
+<td>获取当前时间戳，即 GMT 的 epoch 秒数</td>
+</tr>
+<tr>
+<td>time.clock()</td>
+<td>获取进程时间，即从进程开始执行的时间</td>
+</tr>
+<tr>
+<td>time.sleep()</td>
+<td>停止当前线程若干秒</td>
+</tr>
+<tr>
+<td>time.strftime</td>
+<td>产生可读时间字符串</td>
+</tr>
+<tr>
+<td>time.strptime</td>
+<td>parse time</td>
+</tr>
+<tr>
+<td>time.strftime()/time.mktime()/time.asctime()</td>
+<td>均接受 struct_time 作为参数</td>
+</tr>
+<tr>
+<td>time.gmtime()/time.localtime()/time.strptime()</td>
+<td>返回的是对应时间的struct_time</td>
+</tr>
+</tbody>
+</table>
+<h1>time.time vs …</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-time-mo-kuai.html">posted at 14:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 29, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-coroutine-yi-ji-he-goroutine-de-dui-bi.html" rel="bookmark" title="Permanent Link to &quot;Python coroutine 以及和 Goroutine 的对比&quot;">Python coroutine 以及和 Goroutine 的对比</a>
+                </h2>
+
+                
+                
+
+                <h1>Python 中的 coroutine</h1>
+<p>Python 3.5 中终于引入了 <code>async</code> 和 <code>await</code> 关键字，算是在语言层次上支持了 coroutine。</p>
+<h2>coroutine 基础</h2>
+<p>coroutine 又被称为用户级线程，也就是可以在一个系统线程中模拟多个线程构成的并发操作，对于有 GIL 的 Python 来说，反正线程也是费了，不失为多了一种选择，使用 asyncio 来爬取网页可以这样写：</p>
+<p>首先，<code>pip install pulsar lxml</code>。pulsar 是一个异步版的 http 库。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">pulsar.apps</span> <span class="kn">import</span> <span class="n">http</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">HttpClient</span><span class="p">()</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">fetch …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-coroutine-yi-ji-he-goroutine-de-dui-bi.html">posted at 05:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yi-yong-python-bian-xie-yi-ge-mo-ban-yin-qing.html" rel="bookmark" title="Permanent Link to &quot;[译] 用 Python 编写一个模板引擎&quot;">[译] 用 Python 编写一个模板引擎</a>
+                </h2>
+
+                
+                
+
+                <p>一直对模板引擎的实现很好奇，正好看到了<a href="http://alexmic.net/building-a-template-engine/">这篇</a>文章，翻译一下，供大家学习、参考。</p>
+<p>我们编写一个最简单的模板引擎，并且探索一下它的底层实现。如果你想直接看代码的话，<a href="https://github.com/alexmic/microtemplates">GitHub</a> 是你的好朋友</p>
+<h1>语言设计</h1>
+<p>这里设计的模板语言非常基础。使用两种标签，变量和块。</p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- 变量使用 `</span><span class="cp">{{</span><span class="err">`</span> <span class="err">和</span> <span class="err">`</span><span class="cp">}}</span><span class="c">` 作为标识--&gt;</span>
+<span class="nt">&lt;div&gt;</span><span class="cp">{{</span><span class="nv">my_var</span><span class="cp">}}</span><span class="nt">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- 块使用 `{%` 和 `%}` 作为标识--&gt;</span>
+<span class="cp">{%</span> <span class="k">each</span> <span class="nv">items</span> <span class="cp">%}</span>
+    <span class="nt">&lt;div&gt;</span><span class="cp">{{</span><span class="nv">it</span><span class="cp">}}</span><span class="nt">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">end</span> <span class="cp">%}</span>
+</pre></div>
+
+
+<p>大多数的块需要使用关闭标签，关闭标签使用<code>{% end %}</code>表示。</p>
+<p>这个模板引擎能够处理基本的循环和条件语句，而且也支持在块中使用 callable。在我看来，能够在模板中调用任意的 Python 函数非常方便。</p>
+<h1>循环</h1>
+<p>使用循环可以遍历集合或者 iterable。</p>
+<div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">each</span> <span class="nv">people</span> <span class="cp">%}</span>
+    <span class="nt">&lt;div&gt;</span><span class="cp">{{</span><span class="nv">it.name …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yi-yong-python-bian-xie-yi-ge-mo-ban-yin-qing.html">posted at 07:08</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-argparse-ku-de-shi-yong.html" rel="bookmark" title="Permanent Link to &quot;Python Argparse 库的使用&quot;">Python Argparse 库的使用</a>
+                </h2>
+
+                
+                
+
+                <h2>基本用法</h2>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--verbosity&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;increase output verbosity&quot;</span><span class="p">)</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">verbosity</span><span class="p">)</span>
+</pre></div>
+
+
+<p>两种不同的参数模式， <code>positional</code>，<code>optional arguments</code>，感觉之间的区别有点像 args 和 kwargs</p>
+<h2>subcommand</h2>
+<p>Actually, the argparse module is not ok with subcommand, mannually parse the first command and then pass the rest to argparse</p>
+<h3>add_argument …</h3>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-argparse-ku-de-shi-yong.html">posted at 06:23</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/sqlite3-he-zai-python-zhong-de-shi-yong-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;sqlite3 和在 Python 中的使用教程&quot;">sqlite3 和在 Python 中的使用教程</a>
+                </h2>
+
+                
+                
+
+                <p>Yifei's notes:</p>
+<p>所谓的事务、锁、存储过程、外键等等不适合互联网公司的业务场景，而更适合于“企业级”“IOE”这些应用。</p>
+<h1>sqlite3</h1>
+<p>% sqlite3 DATABASE</p>
+<div class="highlight"><pre><span></span><span class="na">.databases</span>  <span class="no">show</span> <span class="no">databases</span> <span class="no">connected</span> <span class="no">to</span>
+<span class="na">.dump</span> <span class="no">TABLE</span> <span class="no">dump</span> <span class="no">table</span> <span class="no">in</span> <span class="no">SQL</span> <span class="no">format</span>
+<span class="na">.import</span> <span class="no">FILE</span> <span class="err">?</span><span class="no">TABLE</span><span class="err">?</span>    <span class="no">import</span> <span class="no">SQL</span> <span class="no">data</span> <span class="no">into</span> <span class="no">table</span>
+<span class="na">.indices</span> <span class="err">?</span><span class="no">TABLE</span><span class="err">?</span>    <span class="no">show</span> <span class="no">indices</span> <span class="no">of</span> <span class="no">table</span>
+<span class="na">.mode</span> <span class="no">MODE</span>  <span class="no">set</span> <span class="no">output</span> <span class="no">mode</span><span class="p">(</span><span class="no">csv</span><span class="p">,</span> <span class="no">column</span>
+<span class="na">.read</span> <span class="no">FILE</span>  <span class="no">excute</span> <span class="no">FILE …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/sqlite3-he-zai-python-zhong-de-shi-yong-jiao-cheng.html">posted at 05:17</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Dec 17, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-dan-yuan-ce-shi.html" rel="bookmark" title="Permanent Link to &quot;Python 的单元测试&quot;">Python 的单元测试</a>
+                </h2>
+
+                
+                
+
+                <h1>编写测试的基本原则</h1>
+<p>每一个测试单元必须是完全独立的。每一个必须能够独立运行以及在其他的测试组中运行，不管他们的顺序如何。加载和清空数据应该使用 setUp() 和 tearDown() 方法（如果使用unittest）。</p>
+<p><strong>sans-io</strong>。也就是把逻辑和 IO 分开来，这样在测试的时候方便指定输入，以及捕获输出。</p>
+<p>尽量让测试跑的快一点。如果一个测试在几毫秒之内跑不完的话，开发就会慢下来，以至于没有人再去跑这些测试了。如果实在有很花时间的测试，把他们单独放在一起定期执行。</p>
+<p>如果你正在开发某样东西的过程中被打断的话，可以写一个测试，这样当你回过头来的时候还能很快想起来需要做什么。</p>
+<p>使用有描述性的长名字。实际代码中你可能使用 <code>square()</code> 这样的名字，但是在测试用你要用 <code>test_square_of_number_2</code> 这样的名字。</p>
+<p>测试代码的另一个用途是作为新手的介绍。让别人来看你的代码的时候，看看测试就知道他是干什么的了。</p>
+<h1>编写测试的思路</h1>
+<p>按照代码逻辑分支测试，把代码的每一个分支的</p>
+<ol>
+<li>入口参数是什么</li>
+<li>出口参数是什么</li>
+<li>副作用是什么</li>
+<li>产生的异常是什么</li>
+</ol>
+<p>都测试到。</p>
+<h1>工具选择</h1>
+<p>Python 常用的测试工具有三种：</p>
+<ol>
+<li>标准库自带的 unittest</li>
+<li>nose[2 …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-dan-yuan-ce-shi.html">posted at 20:26</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pdb.html" rel="bookmark" title="Permanent Link to &quot;pdb&quot;">pdb</a>
+                </h2>
+
+                
+                
+
+                <p>常用命令</p>
+<ul>
+<li>[n]ext 下一步</li>
+<li>[s]tep into 进入函数</li>
+<li>[r]eturn 跳出函数</li>
+<li>[b]reakpoint 打断点</li>
+</ul>
+<p>pdb</p>
+<p>pdb is fine, just don’t have so many features</p>
+<p>Usage: import pdb; pdb.set_trace()</p>
+<p>Ipdb is better</p>
+<p>Usage: import ipdb; ipdb.set_trace()
+n   next
+p   print
+pp  pprint
+s   setp into
+c   continue to …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pdb.html">posted at 23:47</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 11, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-bu-shuang-de-di-fang.html" rel="bookmark" title="Permanent Link to &quot;Python 中不爽的地方&quot;">Python 中不爽的地方</a>
+                </h2>
+
+                
+                
+
+                <h1>GIL</h1>
+<p>之前用多线程都是做一些IO密集的内容, 比如爬网页的时候开一个ThreadPool, 处理速度立马就翻了几倍. 所以一直没把GIL放在心上, 前几天要跑一些处理敏感词的数据, 大概要对几百万篇文章做正则匹配. 想都没想就用了多线程, 吃饭回来发现并没有跑完, 这才想起来正则匹配这种东西是CPU密集的, 用Python的线程并没有任何卵用. 这时候换成multiprocessing.Pool速度又飚起来了, 然而使用进程池终究还是不如线程池方便, 所有传入的函数必须是marshallable, 有时候还是不能直接替换的.</p>
+<h1>函数式编程</h1>
+<p>没有真正的闭包, 必须使用nonlocal关键词才能实现一些闭包的功能</p>
+<p>也没有真正的lambda表达式, 自带的lambda表达式局限非常大</p>
+<h1>其他</h1>
+<p>bytes的格式化输出竟然是 b'xxx'</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-bu-shuang-de-di-fang.html">posted at 11:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 08, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-duo-xian-cheng-he-duo-jin-cheng.html" rel="bookmark" title="Permanent Link to &quot;Python 的多线程和多进程&quot;">Python 的多线程和多进程</a>
+                </h2>
+
+                
+                
+
+                <h1>高层次多线程</h1>
+<p>使用 threading 模块，threading.Thread</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;thread worker function&quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s1">&#39;Worker {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="n">threads</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;worker&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="p">,))</span>
+    <span class="n">threads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>by default, it does not start running</p>
+<div class="highlight"><pre><span></span>t.start  # start executing the …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-duo-xian-cheng-he-duo-jin-cheng.html">posted at 19:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 13, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ipython-main-features.html" rel="bookmark" title="Permanent Link to &quot;IPython main features&quot;">IPython main features</a>
+                </h2>
+
+                
+                
+
+                <ul>
+<li>
+<p>use <code>?</code> to get quick help, and use <code>??</code> provides additional detail).</p>
+</li>
+<li>
+<p>Searching through modules and namespaces with * wildcards, both when using the ? system and via the %psearch command.</p>
+</li>
+<li>
+<p>magic commands, % or %% prefixed commands</p>
+</li>
+<li>
+<p>Alias facility for defining your own system aliases.</p>
+</li>
+<li>
+<p>Lines starting with ! are passed directly to the system shell …</p></li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ipython-main-features.html">posted at 03:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/2" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/4" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 3 of 6</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

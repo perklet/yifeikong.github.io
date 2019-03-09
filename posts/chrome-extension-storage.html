@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Chrome Extension storage</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="大前端,浏览器扩展,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/chrome-extension-storage.html" rel="bookmark" title="Permanent Link to &quot;Chrome Extension storage&quot;">Chrome Extension storage</a>
+                </h2>
+
+                
+                
+
+                <h1>Basic Concepts</h1>
+<p>there are 3 storage area for chrome, <code>sync</code>, <code>local</code>, <code>managed</code> areas. the <code>sync</code> area will be synced with the cloud. managed area is read-only.</p>
+<p>all your extension scripts share the same storage, including content scripts, they don't belong to their domain's localStorage.</p>
+<h1>Usage</h1>
+<div class="highlight"><pre><span></span>chrome.storage.local.get(&#39;key&#39;, function(data) {});
+chrome.storage.local.get([&quot;KEY1&quot;, &quot;KEY2&quot;], function(data) {});
+
+chrome.storage.local.set(data, function() {});  // data is key-value pair to store
+
+chrome.storage.local.remove(&#39;key&#39;, function() {});
+chroem.storage.local.remove([&quot;KEY1&quot;, &quot;KEY2&quot;], function() {});
+chrome.storage.local.clear(function() {});
+</pre></div>
+
+
+<h1>Events</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/chrome-extension-storage.html">posted at 13:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

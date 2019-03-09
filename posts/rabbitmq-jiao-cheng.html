@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | rabbitmq 教程</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Aug 07, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/rabbitmq-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;rabbitmq 教程&quot;">rabbitmq 教程</a>
+                </h2>
+
+                
+                
+
+                <p>更新：弃坑了，rabbitmq 在我这里总是崩溃，实在没法正常使用</p>
+<p>评估了几款 Message Queue，发现还是 rabbitmq 比较简单一些，各种特性也支持地很好。网上好多教程说“rabbitmq 非常重量级，适合企业应用开发”，这些话可以说是人云亦云，瞎扯了。实际上 rabbitmq 采用 erlang 开发，不光性能强大，而且从操作和运维上来说都是非常轻量级的。</p>
+<h1>基础概念</h1>
+<p>rabbitmq 实现的是 AMQP 0.9.1 协议，其中重要概念有：</p>
+<ul>
+<li>producer：生产者，生产消息</li>
+<li>consumer：消费者，消费消息</li>
+<li>routing-key: 每个消息中决定消息如何分发的参数</li>
+<li>exchange：类似路由，消息实际发送给 exchange，可以指定几种不同的分发算法，然后用 routing-key 作为参数计算出该发送到哪个队列中，一个exchange 可以和一个或者多个 queue 绑定，exchange 有如下几种分发算法</li>
+<li>direct，直接按照 routing-key 和 queue 名字匹配</li>
+<li>fan-out，发送到所有绑定的 queue 中</li>
+<li>topic，利用 routing-key 和 queue 的名字模式匹配</li>
+<li>queue：缓冲消息，需要和 exchange 绑定</li>
+<li>binding：指的是 exchange 和 queue 之间的绑定关系</li>
+</ul>
+<h1>安装</h1>
+<p>Ubuntu:</p>
+<div class="highlight"><pre><span></span>sudo apt-get install rabbitmq-server
+</pre></div>
+
+
+<p>Python 客户端 pika</p>
+<div class="highlight"><pre><span></span>pip install pika
+</pre></div>
+
+
+<h1>基础使用</h1>
+<p>和其他一些队列不一样的是，rabbitmq 的队列需要显式创建，不能直接发消息过去生成。可以使用 <code>sudo rabbitmqctl list_queues</code> 命令查看已有的队列。</p>
+<p>下面是实现一个生产者，多个消费者的关系，如图所示：</p>
+<p><img alt="" src="https://www.rabbitmq.com/img/tutorials/prefetch-count.png"></p>
+<p>生产者</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pika</span>
+
+<span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
+<span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
+<span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="n">durable</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c1"># 声明一个队列，rabbitmq 中的队列必须首先创建才能使用</span>
+
+<span class="c1"># 发送消息需要指明发送到的 exchange，留空表示默认 exchange</span>
+<span class="c1"># 默认的 exchange 会根据 routing-key 把消息发到对应的队列中</span>
+<span class="n">channel</span><span class="o">.</span><span class="n">basic_publish</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                      <span class="n">routing_key</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span>
+                      <span class="n">body</span><span class="o">=</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">,</span>  <span class="c1"># 消息体</span>
+                      <span class="n">properties</span><span class="o">=</span><span class="n">pika</span><span class="o">.</span><span class="n">BasicProperties</span><span class="p">(</span>
+                         <span class="n">delivery_mode</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>  <span class="c1"># AMQP 定义的，其中 1 代表不要持久化，2 代表需要持久化</span>
+                      <span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot; [x] Sent &#39;Hello World!&#39;&quot;</span><span class="p">)</span>
+
+<span class="c1"># 最后关闭链接</span>
+<span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+
+<p>消费者</p>
+<p>消费者通过注册处理函数，来消费消息，可以同时使用多个消费者消费同一个队列。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">pika</span>
+
+<span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
+<span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
+
+
+<span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="n">durable</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot; [x] Received </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">body</span><span class="p">)</span>
+    <span class="n">ch</span><span class="o">.</span><span class="n">basic_ack</span><span class="p">(</span><span class="n">delivery_tag</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="n">delivery_tag</span><span class="p">)</span>
+
+<span class="n">channel</span><span class="o">.</span><span class="n">basic_qos</span><span class="p">(</span><span class="n">prefetch_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 最多有一个消息没有 ack</span>
+<span class="n">channel</span><span class="o">.</span><span class="n">basic_consume</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span>
+                      <span class="n">queue</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span>
+                      <span class="n">no_ack</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>  <span class="c1"># 默认情况加就是 False，也就是需要 ack</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39; [*] Waiting for messages. To exit press CTRL+C&#39;</span><span class="p">)</span>
+<span class="n">channel</span><span class="o">.</span><span class="n">start_consuming</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+
+<p>可以直接使用多个消费者来消费同一个队列，默认情况下 rabbitmq 采用了 round robin 的算法，也就是消息会依次发送给每一个消费者。</p>
+<p>如果没有 ack 的话，rabbitmq 的内存最终可能会占满</p>
+<h1>使用其他的 exchange</h1>
+<p>rabbitmq 中默认的 exchange 是 <code>direct</code> exchange，也就是直接把收到的消息放到 routing key 对应的队列中。rabbitmq 还支持不少其他的类型，可以看文章开始的讨论。</p>
+<p>下面的例子通过使用一个 fanout 类型的 exchange 来实现消息发送给所有消费者。</p>
+<p><img alt="" src="https://www.rabbitmq.com/img/tutorials/python-three-overall.png"></p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">pika</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
+<span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
+
+<span class="c1"># 声明一个 fanout 类型的 exchange，名字为 logs</span>
+<span class="n">channel</span><span class="o">.</span><span class="n">exchange_declare</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="s1">&#39;logs&#39;</span><span class="p">,</span>
+                         <span class="n">exchange_type</span><span class="o">=</span><span class="s1">&#39;fanout&#39;</span><span class="p">)</span>
+
+<span class="n">message</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="ow">or</span> <span class="s2">&quot;info: Hello World!&quot;</span>
+<span class="n">channel</span><span class="o">.</span><span class="n">basic_publish</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="s1">&#39;logs&#39;</span><span class="p">,</span>
+                      <span class="n">routing_key</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                      <span class="n">body</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot; [x] Sent </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">message</span><span class="p">)</span>
+<span class="n">connection</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+
+<p>消费者</p>
+<p>Exchange 需要和 queue 绑定才会发送消息，否则会直接丢掉。
+queue 需要和 exchange 绑定之后才能够接收到消息，而所有的 queue 默认已经是和默认 exchange 绑定的，所以在上一个例子中并没有使用绑定。</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">pika</span>
+
+<span class="n">connection</span> <span class="o">=</span> <span class="n">pika</span><span class="o">.</span><span class="n">BlockingConnection</span><span class="p">(</span><span class="n">pika</span><span class="o">.</span><span class="n">ConnectionParameters</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">))</span>
+<span class="n">channel</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">channel</span><span class="p">()</span>
+
+<span class="n">channel</span><span class="o">.</span><span class="n">exchange_declare</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="s1">&#39;logs&#39;</span><span class="p">,</span>
+                         <span class="n">exchange_type</span><span class="o">=</span><span class="s1">&#39;fanout&#39;</span><span class="p">)</span>
+
+<span class="c1"># 声明一个临时的私有 queue</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">queue_declare</span><span class="p">(</span><span class="n">exclusive</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">queue_name</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">method</span><span class="o">.</span><span class="n">queue</span>
+
+<span class="c1"># 绑定 queue 到刚刚声明的 exchange</span>
+<span class="n">channel</span><span class="o">.</span><span class="n">queue_bind</span><span class="p">(</span><span class="n">exchange</span><span class="o">=</span><span class="s1">&#39;logs&#39;</span><span class="p">,</span>
+                   <span class="n">queue</span><span class="o">=</span><span class="n">queue_name</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39; [*] Waiting for logs. To exit press CTRL+C&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot; [x] </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">body</span><span class="p">)</span>
+
+<span class="n">channel</span><span class="o">.</span><span class="n">basic_consume</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span>
+                      <span class="n">queue</span><span class="o">=</span><span class="n">queue_name</span><span class="p">,</span>
+                      <span class="n">no_ack</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">channel</span><span class="o">.</span><span class="n">start_consuming</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+
+<h1>常见问题</h1>
+<h2>在一个循环中发送消息，为什么有时候会提示 Channel Closed?</h2>
+<p>使用 BlockingConnection 需要手动管理心跳，如果超过心跳时间就会被关闭链接。常见的错误包括使用了 time.sleep 导致长时间没有 publish 消息，从而链接被关闭。</p>
+<p>可以通过单独开一个心跳线程的方法，或者使用 <a href="https://github.com/pika/pika/commit/df6a31630c530559cc61df14c1f23813b870d80a">connction.sleep</a>。当然使用 connction.sleep 无法避免本身操作时长超过了心跳时间的情况。</p>
+<h1>channel 和 connection 的区别？</h1>
+<p>Connection 表示的是到 rabbitmq broker 的一个物理连接，一般一个程序使用一个链接，或者使用一个连接池，可以使用心跳来维护一个链接，理论上应该在多个线程之间分享，很遗憾 python 的客户端 pika 并不是线程安全的。</p>
+<p>而channel 则应该是短时效的，在每个线程内部创建，不是线程安全的。</p>
+<ol>
+<li>https://stackoverflow.com/questions/18418936/rabbitmq-and-relationship-between-channel-and-connection</li>
+<li>https://www.rabbitmq.com/tutorials/amqp-concepts.html</li>
+</ol>
+<h2>如果客户端重启，之前的匿名队列会被删除吗？如果没有别删除，还能连接上之前的匿名队列吗？如果连不上是不是消息就都丢了？</h2>
+<p>To be answered</p>
+<h1>UI管理工具</h1>
+<p>在向队列中发消息的过程中，尤其是在学习或者排查错误的时候，可以通过 rabbitmq 的管理工具来查看当前消息队列中的消息。</p>
+<p>首先，激活管理工具插件：</p>
+<div class="highlight"><pre><span></span>rabbitmq-plugins enable rabbitmq_management
+</pre></div>
+
+
+<p>然后添加用户</p>
+<div class="highlight"><pre><span></span>rabbitmqctl add_user username password
+rabbitmqctl set_user_tags username administrator
+rabbitmqctl set_permissions -p / username &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;
+</pre></div>
+
+
+<p>然后可以打开：http://server-name:15672/ 查看，使用刚刚设置的密码登录</p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/0069RVTdly1fu228vp43hj31kw0v9jyg.jpg"></p>
+<h1>参考：</h1>
+<ol>
+<li>http://www.rabbitmq.com/management.html</li>
+<li>https://www.rabbitmq.com/tutorials/tutorial-three-python.html</li>
+<li>https://github.com/pika/pika/issues/196</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/rabbitmq-jiao-cheng.html">posted at 17:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

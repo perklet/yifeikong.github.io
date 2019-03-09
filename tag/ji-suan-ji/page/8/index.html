@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "计算机" | Page 8</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/ji-suan-ji/page/8/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-jing-tai-wen-jian.html" rel="bookmark" title="Permanent Link to &quot;django 静态文件&quot;">django 静态文件</a>
+                </h2>
+
+                
+                
+
+                <h1>settings.py 中的相关配置</h1>
+<div class="highlight"><pre><span></span>STATIC_URL = &#39;/static/&#39;
+STATIC_ROOT = os.path.join(BASE_DIR,&#39;static&#39;)
+</pre></div>
+
+
+<p>一般来说我们只要把静态文件放在 APP 中的 static 目录下，部署时用 <code>python manage.py collectstatic</code> 就可以把静态文件收集到（复制到） STATIC_ROOT 目录，但是有时我们有一些共用的静态文件，这时候可以设置 STATICFILES_DIRS 另外弄一个文件夹，如下：</p>
+<div class="highlight"><pre><span></span>STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, &quot;common_static&quot;),
+    &#39;/var/www/static/&#39;,
+)
+</pre></div>
+
+
+<p>这样我们就可以把静态文件放在 common_static 和 /var/www/static/中了，Django也能找到它们。</p>
+<div class="highlight"><pre><span></span>MEDIA_URL = &#39;/media/&#39;
+MEDIA_ROOT …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-jing-tai-wen-jian.html">posted at 12:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-views-shi-tu.html" rel="bookmark" title="Permanent Link to &quot;Django views 视图&quot;">Django views 视图</a>
+                </h2>
+
+                
+                
+
+                <p>django 使用正则指定路径，然后使用一个函数来处理对应的请求。</p>
+<h1>定义响应函数</h1>
+<p>响应函数如下：</p>
+<div class="highlight"><pre><span></span><span class="c1"># views.py</span>
+
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">add2</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="nb">str …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-views-shi-tu.html">posted at 08:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-docker-compose-bian-pai-rong-qi-yun-xing.html" rel="bookmark" title="Permanent Link to &quot;使用 docker-compose 编排容器运行&quot;">使用 docker-compose 编排容器运行</a>
+                </h2>
+
+                
+                
+
+                <p>使用 docker run 运行容器的时候经常需要加很多的参数，每次都输入这么多参数很容易出
+错。另外我们经常需要同时运行若干个容器来构成一个服务，此时还是涉及到网络的联通等
+操作。docker compose 可以把docker执行时的参数写成yaml文件，运行的时候只需要
+<code>docker-compose up</code> 一下就可以了。</p>
+<p>话不多说，下面通过一个例子来学习一下 docker-compose.yml 文件的语法。</p>
+<div class="highlight"><pre><span></span>version: &quot;3&quot;
+services:
+  web:
+    build: .
+    depends_on:
+      - db
+      - redis
+  redis:
+    image: redis
+    ports:
+     - &quot;3000&quot;
+     - &quot;3000-3005&quot;
+     - &quot;8000:8000&quot;
+     - &quot;9090-9091:8080-8081&quot;
+     - &quot;49100:22&quot;
+     - &quot;127.0.0.1:8001:8001&quot;
+     - &quot;127.0.0 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-docker-compose-bian-pai-rong-qi-yun-xing.html">posted at 02:11</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags">Docker</a>
+                </div>
+            </article>            <h4 class="date">Jun 13, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-python-ti-qu-zi-mu-wen-jian.html" rel="bookmark" title="Permanent Link to &quot;使用 Python 提取字幕文件&quot;">使用 Python 提取字幕文件</a>
+                </h2>
+
+                
+                
+
+                <p>最近打算做一个字幕相关的 app，需要从字幕文件中提取出单词。对比了几个库之后，发现 PySubs2 还不错，主要原因是他支持三种主流的字幕文件 <code>.srt</code>, <code>.ass</code>, <code>.ssa</code>。而其他的库往往只支持其中一个，实际使用还需要两个库配合，所以不如直接使用 PySubs 2.</p>
+<h1>用法</h1>
+<p>因为我的需求主要是解析提取字幕文件，所以这里只讨论相关问题。对于字幕时间轴和样式的编译，可以查看 pysubs2 的官方文档。</p>
+<p>因为字幕文件本身结构也比较简单，PySubs2 使用也非常简单，核心只有两个类： SSAFile 和 SSAEvent。其中 SSAFile 指的是一个字幕文件，它像一个数组一样，包含了多个 SSAEvent。下面直接看代码吧：</p>
+<h2>安装</h2>
+<p>使用 pip</p>
+<div class="highlight"><pre><span></span>pip install pysubs2
+</pre></div>
+
+
+<p>比如我们有一个srt格式的字幕文件 subtitles.srt：</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; SIMPLE_FILE = &quot;&quot;&quot;\
+... 1
+... 00:00 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-python-ti-qu-zi-mu-wen-jian.html">posted at 01:07</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pa-chong-li-qi-chrome-headless-he-puppeteer-zui-jia-shi-jian.html" rel="bookmark" title="Permanent Link to &quot;爬虫利器 Chrome Headless 和 Puppeteer 最佳实践&quot;">爬虫利器 Chrome Headless 和 Puppeteer 最佳实践</a>
+                </h2>
+
+                
+                
+
+                <blockquote>
+<p>翻译自：https://docs.browserless.io/blog/2018/06/04/puppeteer-best-practices.html</p>
+</blockquote>
+<p>browserless 已经运行了200万次的 chrome headless 请求，下面是他们总结出来的最佳实践：</p>
+<h1>一、不要使用无头浏览器</h1>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tNc79gy1fs056p3uvaj319w0fcacy.jpg"></p>
+<p>无头 Chrome 占用的大量资源</p>
+<p>无论如何，只要可以的话，不要运行无头浏览器。特别是千万别在你跑其他应用的服务器上跑。无头浏览器的行为难以预测，对资源占用非常多，就像是 Rick and Morty 里面的 Meseeks（美国动画片《瑞克和莫蒂》中，召唤出了过多的 Meseeks 导致出了大问题）。几乎所有你想通过浏览器用的事情（比如说运行 JavaScript）都可以使用简单的 Linux 工具来实现。<code>Cheerio</code> 和其他的库提供了优雅的 Node API …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pa-chong-li-qi-chrome-headless-he-puppeteer-zui-jia-shi-jian.html">posted at 19:04</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Jun 02, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pythonpa-chong-li-qi-lxml-he-xpath-biao-da-shi.html" rel="bookmark" title="Permanent Link to &quot;Python爬虫利器——lxml 和 xpath 表达式&quot;">Python爬虫利器——lxml 和 xpath 表达式</a>
+                </h2>
+
+                
+                
+
+                <p>最近要做下微信爬虫，之前写个小东西都是直接用正则提取数据就算了，如果需要更稳定的提取数据，还是使用 xpath 定位元素比较可靠。周末没事，从爬虫的角度研究了一下 python xml/html 相关的库。</p>
+<p>Python 标准库中自带了 xml 模块，但是性能不够好，而且缺乏一些人性化的 API。相比之下，第三方库 lxml 是用 Cython 实现的，而且增加了很多实用的功能，可谓爬虫处理网页数据的一件利器。</p>
+<p>严格来说，html 并不是 xml 的一种，不过 lxml 对于 xml 和 html 都有很好的支持，分别使用 <code>lxml.etree</code> 和 <code>lxml.html</code>两个模块。</p>
+<h1>解析</h1>
+<p>网页下载下来以后是个 bytes 的形式 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pythonpa-chong-li-qi-lxml-he-xpath-biao-da-shi.html">posted at 16:29</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">May 24, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-supervisord-bu-shu-fu-wu.html" rel="bookmark" title="Permanent Link to &quot;使用 supervisord 部署服务&quot;">使用 supervisord 部署服务</a>
+                </h2>
+
+                
+                
+
+                <p>在某一刻你会意识到你需要写一个长期运行的服务。如果有错误，这些脚本不应该停止运行，而且当系统重启的时候应该自动把这些脚本拉起来。</p>
+<p>为了实现这一点，我们需要一些东西来监控脚本。这些工具在脚本挂掉的时候重启他们，并且在系统启动的时候拉起他们。</p>
+<h1>脚本</h1>
+<p>这样的工具应该是怎样的呢？我们安装的大多数东西都带了某种进程监控的机制。比如说Upstart和Systemd。这些工具被许多系统用力啊监控重要的进程。当我们安装php5-fpm，Apache 和nginx的时候，他们通常已经和系统集成好了，以便于他们不会默默挂掉。</p>
+<p>然而，我们有时候需要一些简单点儿的解决方案。比如说我经常写一些 nodejs 的脚本来监控github上的某个动态并作相应的动作。node可以处理 http请求并且同时处理他们，也就是很适合作为一个一次性运行的服务。</p>
+<p>这些小的脚本可能不值得使用 Upstart 或者 Systemd 这种重量级的东西。</p>
+<p>下面是我们用来举例的脚本 我们把它放在 /srv/http.js 中</p>
+<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">serve</span><span class="p">(</span><span class="nx">ip</span><span class="p">,</span> <span class="nx">port</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-supervisord-bu-shu-fu-wu.html">posted at 00:32</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 20, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-7-json-zi-duan.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(7) - JSON 字段&quot;">mysql 基础知识(7) - JSON 字段</a>
+                </h2>
+
+                
+                
+
+                <p>在前公司的时候，大家习惯在每个表加一个 extra 字段来表示一些额外的字段，然后在 ORM 中使用的时候再解析出来，方便了扩展字段，但是缺点也很明显，extra 字段只能读取而无法进行查询。MySQL 5.7 终于支持了 json 字段，相当于加入了一些 NoSQL 的特性，这样就可以很方便得查询了。</p>
+<h1>json 字段的使用</h1>
+<p>建表：</p>
+<div class="highlight"><pre><span></span>CREATE TABLE `book` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) NOT NULL,
+  `tags` json DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+</pre></div>
+
+
+<p>直接使用 json …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-7-json-zi-duan.html">posted at 03:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 19, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-fa-bu-python-dai-ma-dao-pypi-shang-2018.html" rel="bookmark" title="Permanent Link to &quot;如何发布 Python 代码到 PyPI 上（2018）&quot;">如何发布 Python 代码到 PyPI 上（2018）</a>
+                </h2>
+
+                
+                
+
+                <p>PyPI 是 Python 的集中仓库。通过把代码上传到 PyPI，其他人就可以使用使用 <code>pip install xxx</code> 安装代码了。</p>
+<p>Python 的安装工具一直在不断演变，PyPI 的地址也从 pypi.python.org 变到了 pypi.org，因此网上的教程大多数都过时了，官方文档更新比较及时，但是也略过繁琐，这里写一篇简要的教程以飨读者。</p>
+<p>本文以作者的库 <a href="https://github.com/yifeikong/aioify">aioify</a> 为例</p>
+<h1>文件结构</h1>
+<div class="highlight"><pre><span></span>.
+├── LICENSE.txt
+├── MANIFEST.in
+├── README.md
+├── aioify
+│   └── __init__.py
+├── setup.cfg
+└── setup.py
+</pre></div>
+
+
+<h2>LICENSE.txt</h2>
+<p>库的开源协议，建议使用 Apache、MIT 等</p>
+<h2>MANIFEST …</h2>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-fa-bu-python-dai-ma-dao-pypi-shang-2018.html">posted at 11:01</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 02, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/go-yu-yan-chu-ti-yan.html" rel="bookmark" title="Permanent Link to &quot;Go 语言初体验&quot;">Go 语言初体验</a>
+                </h2>
+
+                
+                
+
+                <h1>安装</h1>
+<p>安装 go 很简单，在 mac 上直接使用 <code>brew install go</code> 就可以了。注意的是需要设定GOPATH这个环境变量，这里设定到了 ~/.go 这个目录。</p>
+<div class="highlight"><pre><span></span>export GOPATH=$HOME/.go
+</pre></div>
+
+
+<h1>语法和风格</h1>
+<p>Golang的整个语法还是极其简单的，基本是 C 和 Python 的混合体。Go 语言详尽地规定了代码的风格，所以就不用为了大括号究竟是放在哪儿而开始圣战了。Go 语言对程序员的约束很强，不容易犯错</p>
+<p>Go 语言官方提供了一个工具 goimports 用来管理 import 语句，还不错。</p>
+<p>比如import进来的包必须使用，声明的变量也必须使用。import 语句必须在 package 语句后面.虽然有大括号，但是大括号的位置也是指定的。</p>
+<h1>类型</h1>
+<p>几乎所有的值提供了默认都会初始化到对应的零值，即使没有初始化 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/go-yu-yan-chu-ti-yan.html">posted at 02:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/7" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/9" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 8 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Python 的单元测试</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Dec 17, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-dan-yuan-ce-shi.html" rel="bookmark" title="Permanent Link to &quot;Python 的单元测试&quot;">Python 的单元测试</a>
+                </h2>
+
+                
+                
+
+                <h1>编写测试的基本原则</h1>
+<p>每一个测试单元必须是完全独立的。每一个必须能够独立运行以及在其他的测试组中运行，不管他们的顺序如何。加载和清空数据应该使用 setUp() 和 tearDown() 方法（如果使用unittest）。</p>
+<p><strong>sans-io</strong>。也就是把逻辑和 IO 分开来，这样在测试的时候方便指定输入，以及捕获输出。</p>
+<p>尽量让测试跑的快一点。如果一个测试在几毫秒之内跑不完的话，开发就会慢下来，以至于没有人再去跑这些测试了。如果实在有很花时间的测试，把他们单独放在一起定期执行。</p>
+<p>如果你正在开发某样东西的过程中被打断的话，可以写一个测试，这样当你回过头来的时候还能很快想起来需要做什么。</p>
+<p>使用有描述性的长名字。实际代码中你可能使用 <code>square()</code> 这样的名字，但是在测试用你要用 <code>test_square_of_number_2</code> 这样的名字。</p>
+<p>测试代码的另一个用途是作为新手的介绍。让别人来看你的代码的时候，看看测试就知道他是干什么的了。</p>
+<h1>编写测试的思路</h1>
+<p>按照代码逻辑分支测试，把代码的每一个分支的</p>
+<ol>
+<li>入口参数是什么</li>
+<li>出口参数是什么</li>
+<li>副作用是什么</li>
+<li>产生的异常是什么</li>
+</ol>
+<p>都测试到。</p>
+<h1>工具选择</h1>
+<p>Python 常用的测试工具有三种：</p>
+<ol>
+<li>标准库自带的 unittest</li>
+<li>nose[2]</li>
+<li>pytest</li>
+</ol>
+<p>其中 unittest 完全是从 JUnit 移植过来的，用起来稍微有些别扭。nose 和 pytest 相比的话，网友大多推荐 pytest。详细的比较可一件参考文档。</p>
+<h1>pytest</h1>
+<p>测试函数使用test_开头, pytest 默认会查找当前目录中的 <code>test_</code> 开头或者 <code>_test</code> 结尾的文件中的测试并运行。使用assert来验证语句。</p>
+<h2>测试某个异常抛出：</h2>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+ 
+<span class="k">def</span> <span class="nf">test_mytest</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">SystemExit</span><span class="p">):</span>
+        <span class="n">f</span><span class="p">()</span>
+</pre></div>
+
+
+<h2>执行顺序</h2>
+<p>如果在一个文件中定义了多个测试函数，那么 pytest 将按照函数定义的顺序执行。</p>
+<h2>setup 和 teardown</h2>
+<p>setup 和 teardown 用来在测试开始前加载资源，并在测试结束后卸载资源。</p>
+<ol>
+<li>可以在文件中定义 setup_module 和 teardown_module 中</li>
+<li>可以在类中定义 setup_class 和 teardown_class 中定义加载和卸载方法。</li>
+</ol>
+<h2>pytest 命令行选项</h2>
+<p><code>pytest some_mod.py</code> 运行某个文件中的中的测试</p>
+<p><code>pytest tests/</code> 运行某个目录中的测试</p>
+<p><code>pytest -x</code> 在第一个错误的地方结束</p>
+<p>pytest --pdb，当出现异常的时候, 打开pdb</p>
+<h2>mock 和 patch</h2>
+<h1>unittest</h1>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="k">class</span> <span class="nc">MyTest</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># bootstrapping</span>
+    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1">#clean up</span>
+    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">fun</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Unittest 中的 assert 方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>assertEqual(a, b)</td>
+<td>a == b</td>
+</tr>
+<tr>
+<td>assertNotEqual(a, b)</td>
+<td>a != b</td>
+</tr>
+<tr>
+<td>assertTrue(x)</td>
+<td>bool(x) is True</td>
+</tr>
+<tr>
+<td>assertFalse(x)</td>
+<td>bool(x) is False</td>
+</tr>
+<tr>
+<td>assertIs(a, b)</td>
+<td>a is b</td>
+</tr>
+<tr>
+<td>assertIsNot(a, b)</td>
+<td>a is not b</td>
+</tr>
+<tr>
+<td>assertIsNone(x)</td>
+<td>x is None</td>
+</tr>
+<tr>
+<td>assertIsNotNone(x)</td>
+<td>x is not None</td>
+</tr>
+<tr>
+<td>assertIn(a, b)</td>
+<td>a in b</td>
+</tr>
+<tr>
+<td>assertNotIn(a, b)</td>
+<td>a not in b</td>
+</tr>
+<tr>
+<td>assertIsInstance(a, b)</td>
+<td>isinstance(a, b)</td>
+</tr>
+<tr>
+<td>assertNotIsInstance(a, b)</td>
+<td>not isinstance(a, b)</td>
+</tr>
+</tbody>
+</table>
+<p>save it as fun_test.py and run it by:</p>
+<div class="highlight"><pre><span></span>python -m unittest fun_test
+</pre></div>
+
+
+<h1>doctest</h1>
+<p>Note: only method starts with test is run by unittest module</p>
+<p>unittest这个库没有按照PEP8来, 看着就不爽</p>
+<p>注意docstring</p>
+<p>需要用 unicode, 需要用u prefix</p>
+<p>需要转义 \n</p>
+<p>需要使用<BLANKLINE>来代表空行</p>
+<h1>参考文档</h1>
+<ol>
+<li>https://www.reddit.com/r/Python/comments/50nqlp/is_nose_still_relevant_how_about_unittest/</li>
+<li>https://agopian.info/presentations/2015_06_djangocon_europe/?full#pythonic</li>
+<li>http://docs.python-guide.org/en/latest/writing/tests/</li>
+<li>https://realpython.com/python-testing/</li>
+<li>https://pytest-benchmark.readthedocs.io/en/latest/</li>
+<li>https://medium.com/@yeraydiazdiaz/what-the-mock-cheatsheet-mocking-in-python-6a71db997832</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-dan-yuan-ce-shi.html">posted at 20:26</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

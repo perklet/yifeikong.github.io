@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | cross compiling on android</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="大前端,Android,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/cross-compiling-on-android.html" rel="bookmark" title="Permanent Link to &quot;cross compiling on android&quot;">cross compiling on android</a>
+                </h2>
+
+                
+                
+
+                <h2>basic knowledge</h2>
+<p>first, we need a cross compiler, which you can download from the source or somewhere.</p>
+<p>second, when we use gcc to build stuff, actually we are implicitly linking to the stdlib of c, if we are cross compiling programs for another platform, then we need another platform's filesystem to be accessible to us. However, we only need the target's /usr directory, because that's where the header files lives in. </p>
+<p>we place target's header files in a directory called <em>sysroot</em>, and gcc supports the argument <code>--sysroot</code></p>
+<h2>gcc config parameters</h2>
+<div class="highlight"><pre><span></span>|options  | explaination                                    |
+|---------|-------------------------------------------------|
+|--build  |the machine which you build on                   |
+|--host   |the machine which your binary will be running on |
+|--target |the machine that GCC will produce code for       |
+
+|--build |--host |--target|result |
+|--------|-------|--------|-------|
+|-   |-  | -      |native |
+|-   |-      | x      |cross complie|
+</pre></div>
+
+
+<p><code>LDFLAGS="$LDFLAGS -m32 ?</code>
+Argument <code>--target</code> makes sense only when building compiler (e.g. GCC).</p>
+<h2>How to</h2>
+<p>Let's assume you have directory called ~/x-compile</p>
+<ol>
+<li>You have your tool-chain installed, that it is the correct tool-chain and the PATH environment variable is correctly set, so that the cross-compiler and all other cross-tools binaries can be called from any folder.</li>
+<li>You have the sysroot installed in ~/x-compile/sysroot</li>
+<li>Your code depends on a library for which you have the source code in ~/x-compile/depsrc/</li>
+<li>
+<p>You have the source code to be cross-compiled in ~/x-compile/src</p>
+</li>
+<li>
+<p>compile you dependency lib, if your dependency lib don't need stdlib</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span>./configure CC=arm-linux-gnueabihf-gcc --prefix=~/x-compile/deps --host=arm-linux-gnueabihf
+make
+make install
+</pre></div>
+
+
+<p>if your dependency needs system libs, then you need <code>--sysroot</code> as below</p>
+<ol>
+<li>compile your program</li>
+</ol>
+<h2>compile python on android</h2>
+<p>在安卓上编译python</p>
+<p>compiling 2.7.2</p>
+<p>https://mdqinc.com/blog/2011/09/cross-compiling-python-for-android/</p>
+<p>another tutorial</p>
+<p>http://www.srplab.com/en/files/others/compile/cross_compiling_python_for_android.html</p>
+<p>best tutorial</p>
+<p>http://joaoventura.net/blog/2014/python-android-5/</p>
+<h2>Reference</h2>
+<p>http://www.fabriziodini.eu/posts/cross_compile_tutorial/
+https://landley.net/writing/docs/cross-compiling.html
+http://stackoverflow.com/questions/5139403/whats-the-difference-of-configure-option-build-host-and-target  </p>
+<p>very confusing, the second answer is better</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/cross-compiling-on-android.html">posted at 13:27</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

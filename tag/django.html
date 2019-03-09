@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "Django"</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/django.html">Django</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 23, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-de-wait_timeout-wen-ti.html" rel="bookmark" title="Permanent Link to &quot;Mysql 的 wait_timeout 问题&quot;">Mysql 的 wait_timeout 问题</a>
+                </h2>
+
+                
+                
+
+                <p>Mysql 中默认的 wait_timeout 和 interactive_timeout 的值是八小时，也就是一个连接（交互式和非交互式的）只有在 8 小时没有活动之后才会被关闭掉。对于互联网公司来说，这个值实在太大了，一个库可能被很多脚本和服务访问，可能只是一个简短的查询就不需要数据库了，如果每个查询都占据了8小时的时间，那么 mysql 很快连接数就会满了，报出 too many connections 错误。</p>
+<p>mysql 默认的连接数可以修改 max_connections 参数，但是一个服务器能支撑的连接数显然是由硬件决定的。</p>
+<p>设置 wait_timeout 过短可能会造成一些问题，如果在 django 中两次查询的之间时间大于 wait_timeout，就会报 (2006, 'MySQL server has gone away')。django 官方给的建议是：</p>
+<ol>
+<li>当你的脚本不需要使用数据库的时候，主动关闭连接 <code>from django.db …</code></li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-de-wait_timeout-wen-ti.html">posted at 02:28</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/django.html" class="tags selected">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-dan-yuan-ce-shi.html" rel="bookmark" title="Permanent Link to &quot;django 单元测试&quot;">django 单元测试</a>
+                </h2>
+
+                
+                
+
+                <p>和普通的单元测试不同的是，django 单独提供了一个测试模块，所有的 TestCase 需要继承 django.test.TestCase。</p>
+<h2>简单的测试</h2>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Animal</span>
+
+
+<span class="k">class</span> <span class="nc">AnimalTestCase</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Animal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;lion&quot;</span><span class="p">,</span> <span class="n">sound</span><span class="o">=</span><span class="s2">&quot;roar&quot;</span><span class="p">)</span>
+        <span class="n">Animal</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;cat&quot;</span><span class="p">,</span> <span class="n">sound</span><span class="o">=</span><span class="s2">&quot;meow&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_animals_can_speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Animals that can speak are correctly identified …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-dan-yuan-ce-shi.html">posted at 23:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags selected">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-guo-ji-hua.html" rel="bookmark" title="Permanent Link to &quot;django 国际化&quot;">django 国际化</a>
+                </h2>
+
+                
+                
+
+                <p>settings.py 中的设置：</p>
+<div class="highlight"><pre><span></span>MIDDLEWARE_CLASSES = (
+    ...
+    &#39;django.middleware.locale.LocaleMiddleware&#39;,
+)
+
+
+LANGUAGE_CODE = &#39;en&#39;
+TIME_ZONE = &#39;UTC&#39;
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
+LANGUAGES = (
+    (&#39;en&#39;, (&#39;English&#39;)),
+    (&#39;zh-hans&#39;, (&#39;中文简体&#39;)),
+    (&#39;zh-hant&#39;, (&#39;中文繁體&#39;)),
+)
+
+#翻译文件所在目录，需要手工创建
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, &#39;locale&#39;),
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    ...
+    &quot;django.core.context_processors.i18n&quot;,
+)
+</pre></div>
+
+
+<p>生成需要翻译的文件：</p>
+<div class="highlight"><pre><span></span>python manage.py makemessages -l zh_hans
+python manage.py makemessages -l …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-guo-ji-hua.html">posted at 23:07</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags selected">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-ye-mian-huan-cun.html" rel="bookmark" title="Permanent Link to &quot;django 页面缓存&quot;">django 页面缓存</a>
+                </h2>
+
+                
+                
+
+                <p>django 作为一个动态的网站系统，在并发访问量大的时候会遇到性能问题，这时候可以使用缓存来显著提高性能。</p>
+<p>settings.py 中的配置</p>
+<p>可以使用 django-redis 来使用redis作为缓存。</p>
+<div class="highlight"><pre><span></span>pip install django-redis
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>CACHES = {
+    &quot;default&quot;: {
+        &quot;BACKEND&quot;: &quot;django_redis.cache.RedisCache&quot;,
+        &quot;LOCATION&quot;: &quot;redis://127.0.0.1:6379/1&quot;,
+        &quot;OPTIONS&quot;: {
+            &quot;CLIENT_CLASS&quot;: &quot;django_redis.client.DefaultClient&quot;,
+        }
+    }
+}
+</pre></div>
+
+
+<p>配置需要缓存的函数</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.views.decorators.cache</span> <span class="kn">import</span> <span class="n">cache_page</span>
+
+<span class="nd">@cache_page</span><span class="p">(</span><span class="mi">60</span> <span class="o">*</span> <span class="mi">15</span><span class="p">)</span> <span class="c1"># 秒数，这里指缓存 15 分钟，不直接写900是为了提高可读性</span>
+<span class="k">def</span> <span class="nf">index …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-ye-mian-huan-cun.html">posted at 15:08</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags selected">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-jing-tai-wen-jian.html" rel="bookmark" title="Permanent Link to &quot;django 静态文件&quot;">django 静态文件</a>
+                </h2>
+
+                
+                
+
+                <h1>settings.py 中的相关配置</h1>
+<div class="highlight"><pre><span></span>STATIC_URL = &#39;/static/&#39;
+STATIC_ROOT = os.path.join(BASE_DIR,&#39;static&#39;)
+</pre></div>
+
+
+<p>一般来说我们只要把静态文件放在 APP 中的 static 目录下，部署时用 <code>python manage.py collectstatic</code> 就可以把静态文件收集到（复制到） STATIC_ROOT 目录，但是有时我们有一些共用的静态文件，这时候可以设置 STATICFILES_DIRS 另外弄一个文件夹，如下：</p>
+<div class="highlight"><pre><span></span>STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, &quot;common_static&quot;),
+    &#39;/var/www/static/&#39;,
+)
+</pre></div>
+
+
+<p>这样我们就可以把静态文件放在 common_static 和 /var/www/static/中了，Django也能找到它们。</p>
+<div class="highlight"><pre><span></span>MEDIA_URL = &#39;/media/&#39;
+MEDIA_ROOT …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-jing-tai-wen-jian.html">posted at 12:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags selected">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-views-shi-tu.html" rel="bookmark" title="Permanent Link to &quot;Django views 视图&quot;">Django views 视图</a>
+                </h2>
+
+                
+                
+
+                <p>django 使用正则指定路径，然后使用一个函数来处理对应的请求。</p>
+<h1>定义响应函数</h1>
+<p>响应函数如下：</p>
+<div class="highlight"><pre><span></span><span class="c1"># views.py</span>
+
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">add2</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="nb">str …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-views-shi-tu.html">posted at 08:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags selected">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-forms.html" rel="bookmark" title="Permanent Link to &quot;django forms&quot;">django forms</a>
+                </h2>
+
+                
+                
+
+                <p>django 中的 form 和 model 的用法很像，都是定义一个类，然后指定一些字段就可以了</p>
+<p>最简单的form</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+
+<span class="k">class</span> <span class="nc">ContactForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clean_message</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span>
+        <span class="n">num_words</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">num_words</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-forms.html">posted at 04:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags selected">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-dump-to-csv.html" rel="bookmark" title="Permanent Link to &quot;django dump to csv&quot;">django dump to csv</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">django.db.models.loading</span> <span class="kn">import</span> <span class="n">get_model</span>
+
+<span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="n">qs</span><span class="p">,</span> <span class="n">outfile_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Takes in a Django queryset and spits out a CSV file.</span>
+
+<span class="sd">    Usage::</span>
+
+<span class="sd">        &gt;&gt; from utils import dump2csv</span>
+<span class="sd">        &gt;&gt; from dummy_app.models import *</span>
+<span class="sd">        &gt;&gt; qs = DummyModel.objects.all()</span>
+<span class="sd">        &gt;&gt; dump2csv.dump(qs, &#39;./data/dump.csv&#39;)</span>
+
+<span class="sd">    Based on a snippet by zbyte64::</span>
+
+<span class="sd">        http …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-dump-to-csv.html">posted at 09:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags selected">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jan 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-auth-and-user.html" rel="bookmark" title="Permanent Link to &quot;django auth and user&quot;">django auth and user</a>
+                </h2>
+
+                
+                
+
+                <h1>激活</h1>
+<p>django 自带的 auth 模块需要收先创建数据库才能够使用：</p>
+<div class="highlight"><pre><span></span>python manage.py migrate auth
+python manage.py migrate
+</pre></div>
+
+
+<p>request.user.is_anonymous 检查用户是否</p>
+<p>django comes with login/logout forms and views</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">views</span> <span class="k">as</span> <span class="n">auth_views</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^login/$&#39;</span><span class="p">,</span> <span class="n">auth_views …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-auth-and-user.html">posted at 22:53</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags selected">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 13, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-templates.html" rel="bookmark" title="Permanent Link to &quot;django templates&quot;">django templates</a>
+                </h2>
+
+                
+                
+
+                <h1>marco</h1>
+<p>there is no marco in django template, you just have to use include with parameters</p>
+<div class="highlight"><pre><span></span>{% include &quot;marco.html&quot; with arg=parameter %}
+</pre></div>
+
+
+<h1>variable</h1>
+<div class="highlight"><pre><span></span><span class="cp">{{</span> <span class="nv">my_dict.key</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">my_object.attribute</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">my_list.0</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+
+
+<p>If a variable resolves to a callable, the template system will call it with no arguments and use its result instead …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-templates.html">posted at 11:34</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags selected">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/2" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 1 of 2</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

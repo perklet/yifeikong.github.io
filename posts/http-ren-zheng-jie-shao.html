@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | HTTP 认证介绍</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="HTTP,计算机,网络" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Sep 04, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/http-ren-zheng-jie-shao.html" rel="bookmark" title="Permanent Link to &quot;HTTP 认证介绍&quot;">HTTP 认证介绍</a>
+                </h2>
+
+                
+                
+
+                <p>周末给一个库添加http代理的支持，发现对http basic auth不甚了解，阅读了一下相关的文档，写篇备忘。</p>
+<p>http 中的认证主要是 basic auth 和 digest auth 两种，其中 digest auth 比较复杂，而且也没有提升安全性，已经不建议使用了。</p>
+<p>RFC 7235 [1] 描述了客户端（通常是浏览器）和服务器如何通过http进行身份认证的一些机制。客户端和 http代理之间也可以使用 http auth 来做验证。
+  </p>
+<h1>验证流程</h1>
+<ol>
+<li>当客户端访问一个页面时，如果只有验证后才能访问，或者验证后有更多内容，服务器应该发送 401 Unauthorized，提出一个chanllenge，设定 <code>WWW-Authenticate</code> header，并指定验证的 type 和 realm，具体定义下文有讲。</li>
+<li>客户端这时通常应该提示用户输入密钥，一般是浏览器弹出用户名密码对话框供用户填写，然后使用<code>Authorization</code> header发送验证的密钥。如果验证通过的话，应该正常访问（200 OK），验证通过但是没有权限的话应该返回 403 Forbidden。</li>
+<li>如果验证不通过，应该服务器返回401，客户端可以重试。</li>
+</ol>
+<p>注意，如果客户端已经知道需要密钥访问，那么可以在第一个请求直接发送对应的密钥，这样就避免了 401 Unauthorized。</p>
+<p><img alt="MDN上的流程图" src="https://mdn.mozillademos.org/files/14689/HTTPAuth.png">
+ </p>
+<h1>代理验证的不同</h1>
+<p>如果代理服务器需要验证的话，流程是类似的，有两点细节不同：</p>
+<ol>
+<li>代理服务器应该发送407 Proxy Authentication Required 而不是 401。使用的headers也变成了 Proxy-Authenticate 和 Proxy-Authorization 。</li>
+<li>服务器的头部 WWW-Authenticate 是 end-to-end 的，也就是代理服务器不应该篡改，应该原样传递。而代理服务器的Proxy-头部是 hop-by-hop 的，也就是不能向下传递。</li>
+</ol>
+<h1>实现细节</h1>
+<p>服务器或者代理服务器随着4XX发送的头部为</p>
+<div class="highlight"><pre><span></span>WWW-Authenticate: &lt;type&gt; realm=&lt;realm&gt;
+or
+Proxy-Authenticate: &lt;type&gt; realm=&lt;realm&gt;
+</pre></div>
+
+
+<p>其中 type 指定了使用的验证的类型，也就是用户名和密码加密方式的不同，IANA钦定了一批方法[2]。然鹅，一般来说常用的只有两个 Basic 和 Digest。而其中 Digest 的实现可能会要求服务器明文存储密码，于是大家又angry了[3]，这里也不推荐使用。所以这里只介绍 Basic类型。</p>
+<p>realm 指定了验证的领域，也就是说相同realm下的用户名和密码是一样的，如果你访问的两个页面在同一个realm，那么浏览器在第二次访问就不会问你密码了。</p>
+<p>客户端发送对应的头部和密钥来获得访问权限</p>
+<div class="highlight"><pre><span></span>Authorization: &lt;type&gt; &lt;credentials&gt;
+or
+Proxy-Authorization: &lt;type&gt; &lt;credentials&gt;
+</pre></div>
+
+
+<p>其中，type就是刚刚的那个 Basic 或者 Digest。credentials 按照对应的方法计算。对于Basic类型 <code>credentials = base64(username + ':' + password)</code></p>
+<p>一个例子，假设用户名和密码分别是：aladdin和opensesame。那么客户端应该发送的header是：<code>Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l</code></p>
+<h1>需要注意的地方</h1>
+<ol>
+<li>因为http协议本身是无状态的，所以Auth应该是无状态的，所以每次请求都应该携带。
+ </li>
+<li>
+<p>如果是http协议的话，对于Basic Auth，那么密码都是明文发送的，可以使用https来避免这个问题。</p>
+</li>
+<li>
+<p>可以使用：https://username:password@www.example.com/ 这种形式来预先输入账号密码，但是这种形式已经不鼓励了。不过在设定一些环境变量时，比如 http_proxy，也只能用这种方法来制定用户名和密码</p>
+</li>
+</ol>
+<p>参考：</p>
+<ol>
+<li>对应的RFC https://tools.ietf.org/html/rfc7235</li>
+<li>IANA 注册的auth类型 http://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml</li>
+<li>为什么不要使用digest验证  https://stackoverflow.com/questions/2384230/what-is-digest-authentication</li>
+<li>MDN的文章还提供了如何让apache和nginx使用basic auth https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/http-ren-zheng-jie-shao.html">posted at 03:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

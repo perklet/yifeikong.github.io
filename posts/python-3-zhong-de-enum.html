@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Python 3 中的 Enum</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-3-zhong-de-enum.html" rel="bookmark" title="Permanent Link to &quot;Python 3 中的 Enum&quot;">Python 3 中的 Enum</a>
+                </h2>
+
+                
+                
+
+                <p>enum 模块是 Python 3 中新引入的一个用于定义枚举常量的模块。</p>
+<h1>基本使用</h1>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="o">...</span>     <span class="n">RED</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">...</span>     <span class="n">GREEN</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="o">...</span>     <span class="n">BLUE</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">)</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">enum</span> <span class="s1">&#39;Color&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">GREEN</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span>
+<span class="bp">True</span>
+
+<span class="c1"># 可以遍历</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">Color</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">color</span>
+<span class="o">...</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">GREEN</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">BLUE</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">Shape</span><span class="p">)</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">Shape</span><span class="o">.</span><span class="n">SQUARE</span><span class="p">:</span> <span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Shape</span><span class="o">.</span><span class="n">DIAMOND</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Shape</span><span class="o">.</span><span class="n">CIRCLE</span><span class="p">:</span> <span class="mi">3</span><span class="o">&gt;</span><span class="p">]</span>
+
+<span class="c1"># 可以当做字典使用</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Color</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Color</span><span class="p">[</span><span class="s1">&#39;RED&#39;</span><span class="p">]</span>
+<span class="o">&lt;</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span>
+
+<span class="c1"># 可以访问 Enum 的 name 和 value 属性</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">red</span> <span class="o">=</span> <span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">red</span><span class="o">.</span><span class="n">name</span>
+<span class="s1">&#39;RED&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">red</span><span class="o">.</span><span class="n">value</span>
+<span class="mi">1</span>
+</pre></div>
+
+
+<h2>自动值</h2>
+<p>如果枚举的值无关紧要，可以使用 auto，不过一般来说还是不要使用 auto，以免后续存储的数据出问题。</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="o">...</span>     <span class="n">RED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="o">...</span>     <span class="n">BLUE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="o">...</span>     <span class="n">GREEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">Color</span><span class="p">)</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Color</span><span class="o">.</span><span class="n">BLUE</span><span class="p">:</span> <span class="mi">2</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Color</span><span class="o">.</span><span class="n">GREEN</span><span class="p">:</span> <span class="mi">3</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+
+
+<h2>保证值是唯一的</h2>
+<p>使用 <code>enum.unique</code> 装饰器</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">unique</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nd">@unique</span>
+<span class="o">...</span> <span class="k">class</span> <span class="nc">Mistake</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="o">...</span>     <span class="n">ONE</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">...</span>     <span class="n">TWO</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="o">...</span>     <span class="n">THREE</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">...</span>     <span class="n">FOUR</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">...</span>
+<span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">):</span>
+<span class="o">...</span>
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">duplicate</span> <span class="n">values</span> <span class="n">found</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">enum</span> <span class="s1">&#39;Mistake&#39;</span><span class="o">&gt;</span><span class="p">:</span> <span class="n">FOUR</span> <span class="o">-&gt;</span> <span class="n">THREE</span>
+</pre></div>
+
+
+<h2>比较</h2>
+<p>注意 <code>enum.Enum</code> 并不是 int, 所以并不能比较大小。如果你想要把 enum 当做 int 使用，可以继承 <code>enum.IntEnum</code>。</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; Color.RED is Color.RED
+True
+&gt;&gt;&gt; Color.RED is Color.BLUE
+False
+&gt;&gt;&gt; Color.RED &lt; Color.BLUE
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: &#39;&lt;&#39; not supported between instances of &#39;Color&#39; and &#39;Color&#39;
+
+# 使用 IntEnum 可以比较大小
+&gt;&gt;&gt; class IntColor(IntEnum):
+...     RED = 1
+...     GREEN = 2
+...     BLUE = 3
+...
+&gt;&gt;&gt; IntColor.RED &lt; IntColor.GREEN
+True
+</pre></div>
+
+
+<h1>子类</h1>
+<p>只有没定义值的类才可以被继承。</p>
+<div class="highlight"><pre><span></span>不可以
+&gt;&gt;&gt; class MoreColor(Color):
+...     PINK = 17
+...
+Traceback (most recent call last):
+...
+TypeError: Cannot extend enumerations
+
+
+可以
+&gt;&gt;&gt; class Foo(Enum):
+...     def some_behavior(self):
+...         pass
+...
+&gt;&gt;&gt; class Bar(Foo):
+...     HAPPY = 1
+...     SAD = 2
+...
+</pre></div>
+
+
+<h1>利用函数来生成 enum 对象</h1>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; Color = Enum(&#39;Color&#39;, &#39;RED GREEN BLUE&#39;)
+</pre></div>
+
+
+<h1>IntFlag 和 Flag</h1>
+<p>IntFlag 也会 Enum 和 int 的子类，可以设置每一个 bit 位。</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">IntFlag</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">Perm</span><span class="p">(</span><span class="n">IntFlag</span><span class="p">):</span>
+<span class="o">...</span>     <span class="n">R</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="o">...</span>     <span class="n">W</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="o">...</span>     <span class="n">X</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Perm</span><span class="o">.</span><span class="n">R</span> <span class="o">|</span> <span class="n">Perm</span><span class="o">.</span><span class="n">W</span>
+<span class="o">&lt;</span><span class="n">Perm</span><span class="o">.</span><span class="n">R</span><span class="o">|</span><span class="n">W</span><span class="p">:</span> <span class="mi">6</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Perm</span><span class="o">.</span><span class="n">R</span> <span class="o">+</span> <span class="n">Perm</span><span class="o">.</span><span class="n">W</span>
+<span class="mi">6</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">RW</span> <span class="o">=</span> <span class="n">Perm</span><span class="o">.</span><span class="n">R</span> <span class="o">|</span> <span class="n">Perm</span><span class="o">.</span><span class="n">W</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Perm</span><span class="o">.</span><span class="n">R</span> <span class="ow">in</span> <span class="n">RW</span>
+<span class="bp">True</span>
+</pre></div>
+
+
+<p>还可以个给组合起来的变量命名</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; class Perm(IntFlag):
+...     R = 4
+...     W = 2
+...     X = 1
+...     RWX = 7
+&gt;&gt;&gt; Perm.RWX
+&lt;Perm.RWX: 7&gt;
+&gt;&gt;&gt; ~Perm.RWX
+&lt;Perm.-8: -8&gt;
+</pre></div>
+
+
+<p>另外，如果 IntFlag 每个位都没有设定，那么恰好是 0 ，会被当做 False 看待。</p>
+<h1>在 django 模型中使用</h1>
+<p>如果数据库的某一个字段应该是一个枚举，那么使用 enum 再合适不过了。可以这样用：</p>
+<p>```
+class Color(IntEnum</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-3-zhong-de-enum.html">posted at 16:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

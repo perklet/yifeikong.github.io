@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | sklearn 入门笔记</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机,机器学习" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 24, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/sklearn-ru-men-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;sklearn 入门笔记&quot;">sklearn 入门笔记</a>
+                </h2>
+
+                
+                
+
+                <p>前一阵看了一个叫做 <a href="https://morvanzhou.github.io/tutorials/machine-learning/sklearn/1-1-why/">莫烦Python</a> 的教程，还有 <a href="http://scikit-learn.org/stable/tutorial/basic/tutorial.html">sklearn的官方教程</a> 初步了解了一下 sklearn 的基本概念，不过教程毕竟有些啰嗦，还是自己记录一下关键要点备忘。</p>
+<h1>机器学习要解决的问题</h1>
+<h2>什么是机器学习？</h2>
+<p>sklearn 给了一个定义</p>
+<blockquote>
+<p>In general, a learning problem considers a set of n samples of data and then tries to predict properties of unknown data. If each sample is more than a single number and, for instance, a multi-dimensional entry (aka multivariate data), it is said to have several attributes or features.</p>
+</blockquote>
+<p>翻译过来：</p>
+<p>总的来说，“学习问题”通过研究一组 n 个样本的数据来预测未知数据的属性。比如说，如果每个样本都不止包含一个数字，而是多维的向量，那么就称它为有多个feature属性。</p>
+<h2>问题</h2>
+<p>机器学习的方法不外乎这几类，现在自己用到的应该是分类比较多。</p>
+<ol>
+<li>Classification 分类，也就是离散的</li>
+<li>Regression 回归，也就是连续的</li>
+<li>Clustering 聚类</li>
+<li>Dimensionality reduction 数据降维</li>
+</ol>
+<p>要实现上面几个目标，可能需要下面的步骤</p>
+<ol>
+<li>Model Selection 模型选择</li>
+<li>Preprocessing 数据预处理</li>
+</ol>
+<p>要去判定自己的任务需要用哪种方法，优先参考 sklearn 官方推出的 <a href="http://scikit-learn.org/stable/tutorial/machine_learning_map/index.html">cheatsheet</a>（小抄）</p>
+<p><img alt="sklearn-leanr cheatsheet" src="http://scikit-learn.org/stable/_static/ml_map.png"></p>
+<h1>sklearn 的数据库</h1>
+<p>sklearn 为了方便学习自带了一些数据库，可以说是非常方便了。包括了 iris 花瓣数据库，手写数字数据库等。这些例子可以说相当于编程语言的 hello world 或者是图形学届的 utah teapot 了。</p>
+<p>除了真实的数据集，还可以使用<code>datasets.make_*</code>系列函数来直接生成一些数据集用来测试。</p>
+<p>代码：</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">iris</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>          <span class="c1"># iris 花瓣数据库</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">digits</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_digits</span><span class="p">()</span>      <span class="c1"># 手写数字数据库</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>                   <span class="c1"># 数据库的输入</span>
+<span class="p">[[</span>  <span class="mf">0.</span>   <span class="mf">0.</span>   <span class="mf">5.</span> <span class="o">...</span><span class="p">,</span>   <span class="mf">0.</span>   <span class="mf">0.</span>   <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span>  <span class="mf">0.</span>   <span class="mf">0.</span>   <span class="mf">0.</span> <span class="o">...</span><span class="p">,</span>  <span class="mf">10.</span>   <span class="mf">0.</span>   <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span>  <span class="mf">0.</span>   <span class="mf">0.</span>   <span class="mf">0.</span> <span class="o">...</span><span class="p">,</span>  <span class="mf">16.</span>   <span class="mf">9.</span>   <span class="mf">0.</span><span class="p">]</span>
+ <span class="o">...</span><span class="p">,</span>
+ <span class="p">[</span>  <span class="mf">0.</span>   <span class="mf">0.</span>   <span class="mf">1.</span> <span class="o">...</span><span class="p">,</span>   <span class="mf">6.</span>   <span class="mf">0.</span>   <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span>  <span class="mf">0.</span>   <span class="mf">0.</span>   <span class="mf">2.</span> <span class="o">...</span><span class="p">,</span>  <span class="mf">12.</span>   <span class="mf">0.</span>   <span class="mf">0.</span><span class="p">]</span>
+ <span class="p">[</span>  <span class="mf">0.</span>   <span class="mf">0.</span>  <span class="mf">10.</span> <span class="o">...</span><span class="p">,</span>  <span class="mf">12.</span>   <span class="mf">1.</span>   <span class="mf">0.</span><span class="p">]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">digits</span><span class="o">.</span><span class="n">target</span>                        <span class="c1"># 数据库的输出</span>
+<span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+</pre></div>
+
+
+<p>其中data属性是一个二维数组，格式是<code>(n_samples, n_features)</code>.</p>
+<p>关于如何载入外部数据库，可以看这里，实际上我也还没看，科科</p>
+<h1>学习与预测</h1>
+<p>以识别手写数字为例，我们要做的是根据图像识别出数字是什么来。我们需要 <em>fit</em> （训练）出来一个 estimator，然后用来 <em>predict</em> （预测）未知数据的类型。在 sklearn 中，一个 <code>estimator</code> 就是一个实现了 <code>fit</code> 和 <code>predict</code> 方法的 object。estimator 常用的属性还有 <code>get_params</code>, <code>score</code> 等。</p>
+<p>比如我们使用支持向量机模型：</p>
+<div class="highlight"><pre><span></span><span class="s s-Atom">&gt;&gt;&gt;</span> <span class="s s-Atom">from</span> <span class="s s-Atom">sklearn</span> <span class="s s-Atom">import</span> <span class="s s-Atom">svm</span>
+<span class="s s-Atom">&gt;&gt;&gt;</span> <span class="s s-Atom">classifier</span> <span class="o">=</span> <span class="s s-Atom">svm</span><span class="p">.</span><span class="nv">SVC</span><span class="p">(</span><span class="s s-Atom">gamma</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="nv">C</span><span class="o">=</span><span class="mf">100.</span><span class="p">)</span>
+
+<span class="s s-Atom">&gt;&gt;&gt;</span> <span class="s s-Atom">classifier</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="s s-Atom">digits</span><span class="p">.</span><span class="s s-Atom">data</span><span class="p">[:-</span><span class="mi">1</span><span class="p">],</span> <span class="s s-Atom">digits</span><span class="p">.</span><span class="s s-Atom">target</span><span class="p">[:-</span><span class="mi">1</span><span class="p">])</span>  <span class="s s-Atom">#</span> <span class="s s-Atom">注意第一个参数是数据，第二个参数是结果</span>
+<span class="nv">SVC</span><span class="p">(</span><span class="nv">C</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="s s-Atom">cache_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="s s-Atom">class_weight</span><span class="o">=</span><span class="nv">None</span><span class="p">,</span> <span class="s s-Atom">coef0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+  <span class="s s-Atom">decision_function_shape=&#39;ovr&#39;</span><span class="p">,</span> <span class="s s-Atom">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="s s-Atom">gamma</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="s s-Atom">kernel=&#39;rbf&#39;</span><span class="p">,</span>
+  <span class="s s-Atom">max_iter=-</span><span class="mi">1</span><span class="p">,</span> <span class="s s-Atom">probability</span><span class="o">=</span><span class="nv">False</span><span class="p">,</span> <span class="s s-Atom">random_state</span><span class="o">=</span><span class="nv">None</span><span class="p">,</span> <span class="s s-Atom">shrinking</span><span class="o">=</span><span class="nv">True</span><span class="p">,</span>
+  <span class="s s-Atom">tol</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="s s-Atom">verbose</span><span class="o">=</span><span class="nv">False</span><span class="p">)</span>
+
+<span class="c1"># 现在我们开始预测最后一个数据</span>
+<span class="s s-Atom">&gt;&gt;&gt;</span> <span class="s s-Atom">classifier</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="s s-Atom">digits</span><span class="p">.</span><span class="s s-Atom">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="s s-Atom">:</span><span class="p">])</span>
+<span class="nf">array</span><span class="p">([</span><span class="mi">8</span><span class="p">])</span>  <span class="s s-Atom">#</span> <span class="s s-Atom">得出的结果是</span> <span class="mi">8</span>
+</pre></div>
+
+
+<p>实际上的图像是</p>
+<p><img alt="last digit" src="http://scikit-learn.org/stable/_images/sphx_glr_plot_digits_last_image_001.png"></p>
+<p>刚刚的例子是使用前面的数据做训练，然后识别了最后一个数字，其实我们还可以使用 sklearn 自带的 <code>train_test_split</code> 函数来分割数据</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">iris_X</span><span class="p">,</span> <span class="n">iris_y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># 注意其中训练数据被sklearn打乱了. 在机器学习中, 数据比较乱是比较好的, 算法其实也一样, 数组是乱的最好.</span>
+</pre></div>
+
+
+<p>完整的例子在这里：http://scikit-learn.org/stable/auto_examples/classification/plot_digits_classification.html</p>
+<h2>保存模型</h2>
+<p>训练模型还是很花费时间的，我们不可能每次都去训练一个模型，所以一般都是离线训练好了之后，保存下模型来，然后在线调用。保存模型可是直接使用 Python 内置的 pickle 模块，但是一般模型数据都比较大，pickle 对大文件支持不好，最好采用 sklearn 自带的 joblib.</p>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">sklearn.externals</span> <span class="kn">import</span> <span class="n">joblib</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="s1">&#39;filename.pkl&#39;</span><span class="p">)</span> 
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">clf</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;filename.pkl&#39;</span><span class="p">)</span> 
+</pre></div>
+
+
+<p>很简单吧</p>
+<h1>其他的一些技巧</h1>
+<h2>一些约定</h2>
+<p>上面说到 sklearn 约定了 fit 和 predict 方法，还有一些其他的约定</p>
+<ol>
+<li>所有的输入都会被转化为 float64 类型</li>
+<li>一半习惯用 <code>X</code> 表示样本数据, <code>y</code> 表示预测结果</li>
+</ol>
+<h2>可视化</h2>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; X, y = datasets.make_regression(n_samples=100, n_features=1, n_targets=1, noise=10)
+&gt;&gt;&gt; plt.scatter(X, y)
+&gt;&gt;&gt; plt.show()
+</pre></div>
+
+
+<p>会有下面的图</p>
+<p><img alt="" src="https://morvanzhou.github.io/static/results/sklearn/2_3_3.png"></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/sklearn-ru-men-bi-ji.html">posted at 19:35</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/ji-qi-xue-xi.html" class="tags">机器学习</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "爬虫"</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/pa-chong.html">爬虫</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 13, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wang-ye-geng-xin-yu-zhong-zhua-ce-lue.html" rel="bookmark" title="Permanent Link to &quot;网页更新与重抓策略&quot;">网页更新与重抓策略</a>
+                </h2>
+
+                
+                
+
+                <p>我们知道网页总是会更新的。在大规模的网络爬取中，一个很重要的问题是重抓策略，也就是在什么时候去重新访问同一个网页已获得更新。要获得这个问题的解，需要满足如下两个条件：</p>
+<ol>
+<li>尽可能地少访问，以减少自身和对方站点的资源占用</li>
+<li>尽可能快的更新，以便获得最新结果</li>
+</ol>
+<p>这两个条件几乎是对立的，所以我们必须找到一种算法，并获得一个尽可能优的折衷。</p>
+<p>可以使用泊松过程：https://stackoverflow.com/questions/10331738/strategy-for-how-to-crawl-index-frequently-updated-webpages</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wang-ye-geng-xin-yu-zhong-zhua-ce-lue.html">posted at 00:56</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Sep 27, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/requests-cookies-wei-kong-de-yi-ge-keng.html" rel="bookmark" title="Permanent Link to &quot;requests cookies 为空的一个坑&quot;">requests cookies 为空的一个坑</a>
+                </h2>
+
+                
+                
+
+                <p>有时候，requests 返回的 cookies 会为空，原因是链接发生了 301/302 跳转，而 cookies 是跟着第一个响应返回的，第二个响应没有返回 Set-Cookie header。所以直接读取 r.cookies 是空的，而在 session.cookies 中是有数据的。</p>
+<p>解决方法是直接读 s.cookies。</p>
+<div class="highlight"><pre><span></span>s = requests.Session()
+r = s.get(&#39;http://httpbin.org/cookies/set?foo=bar&#39;)
+cookies = requests.utils.dict_from_cookiejar(s.cookies)
+s.cookies.clear()
+</pre></div>
+
+
+<p>不过需要注意的是如果在多线程环境中使用 session …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/requests-cookies-wei-kong-de-yi-ge-keng.html">posted at 19:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Sep 05, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-shi-yao-bu-shi-yong-scrapy.html" rel="bookmark" title="Permanent Link to &quot;为什么不使用 scrapy？&quot;">为什么不使用 scrapy？</a>
+                </h2>
+
+                
+                
+
+                <p>最近面了几家公司，每当我提到头条的爬虫都是自己写的时候，对方一个下意识的问题就是“为什么不使用开源的 scrapy？”。实际上我在头条的 lead 就是 scrapy 的 contributor，而他自己也不用自己的框架，显然说明 scrapy 不适合大型项目，那么具体问题在哪儿呢？今天终于有时间了，详细写写这个问题。</p>
+<h1>爬虫并不需要一个框架</h1>
+<p>Web 服务器是一个爬虫可以抽象出来的是各种组件。而 scrapy 太简陋了，比如说去重，直接用的是内存中的一个集合。如果要依赖 scrapy 写一个大型的爬虫，几乎每个组件都要自己实现，那有何必用 scrapy 呢？</p>
+<h1>scrapy 不是完整的爬虫框架</h1>
+<p>一个完整的爬虫至少需要两部分，fetcher 和 frontier。其中 fetcher 用于下载网页，而 frontier 用于调度。scrapy 重点实现的是 fetcher 部分，也就是下载部分 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-shi-yao-bu-shi-yong-scrapy.html">posted at 19:50</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/zhi-hu-yi-dong-duan-jie-kou-fen-xi.html" rel="bookmark" title="Permanent Link to &quot;知乎移动端接口分析&quot;">知乎移动端接口分析</a>
+                </h2>
+
+                
+                
+
+                <p>最近想注册一些知乎的机器人玩玩儿，比如给自己点赞之类的，通过抓包分析，获得了完整注册登录流程。</p>
+<h1>抓包</h1>
+<div class="highlight"><pre><span></span>1 POST https://api.zhihu.com/auth/digits
+      ← 401 application/json 97b 246ms
+2 GET https://api.zhihu.com/captcha
+     ← 200 application/json 22b 233ms
+3 PUT https://api.zhihu.com/captcha
+     ← 202 application/json 5.46k 323ms
+4 POST https://api.zhihu.com/captcha …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/zhi-hu-yi-dong-duan-jie-kou-fen-xi.html">posted at 04:58</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-po-jie-bei-js-jia-mi-de-shu-ju.html" rel="bookmark" title="Permanent Link to &quot;如何破解被 JS 加密的数据&quot;">如何破解被 JS 加密的数据</a>
+                </h2>
+
+                
+                
+
+                <p>由于网页和JavaScript都是明文的，导致很多API接口都直接暴露在爬虫的眼里，所以好多
+网站选择使用混淆后的 JavaScript 来加密接口。其中有分为两大类：</p>
+<ol>
+<li>通过 JavaScript 计算一个参数或者 Cookie 作为接口的签名验证</li>
+<li>返回的数据是加密的，需要使用 JavaScript 解密</li>
+</ol>
+<p>不过总的来说，这两种加密的破解思路都是一样的。</p>
+<ol>
+<li>找到相关的网络请求。如果找不到，清空缓存，尝试触发</li>
+<li>打断点找到相关代码，可以是 ajax 断点或者 js 断点。或者直接看网络请求的
+   initiator</li>
+<li>逐层分析，找到加密函数</li>
+<li>使用 node 执行js代码获得数据</li>
+</ol>
+<h1>具体步骤</h1>
+<p>有空了再写。。</p>
+<p>参考：</p>
+<ol>
+<li><a href="https://cuiqingcai.com/5024.html">中国天气质量网返回结果加密的破解</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/32139007">破解 Google 翻译的token</a></li>
+<li><a href="https://github.com/jhao104/spider/tree/master/PyV8%E7%A0%B4%E8%A7%A3JS%E5%8A%A0%E5%AF%86Cookie">JavaScript 生成 Cookie</a></li>
+<li><a href="http://liehu.tass.com.cn/archives/1016">常见加密算法</a></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-po-jie-bei-js-jia-mi-de-shu-ju.html">posted at 04:32</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Jun 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pa-chong-li-qi-chrome-headless-he-puppeteer-zui-jia-shi-jian.html" rel="bookmark" title="Permanent Link to &quot;爬虫利器 Chrome Headless 和 Puppeteer 最佳实践&quot;">爬虫利器 Chrome Headless 和 Puppeteer 最佳实践</a>
+                </h2>
+
+                
+                
+
+                <blockquote>
+<p>翻译自：https://docs.browserless.io/blog/2018/06/04/puppeteer-best-practices.html</p>
+</blockquote>
+<p>browserless 已经运行了200万次的 chrome headless 请求，下面是他们总结出来的最佳实践：</p>
+<h1>一、不要使用无头浏览器</h1>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tNc79gy1fs056p3uvaj319w0fcacy.jpg"></p>
+<p>无头 Chrome 占用的大量资源</p>
+<p>无论如何，只要可以的话，不要运行无头浏览器。特别是千万别在你跑其他应用的服务器上跑。无头浏览器的行为难以预测，对资源占用非常多，就像是 Rick and Morty 里面的 Meseeks（美国动画片《瑞克和莫蒂》中，召唤出了过多的 Meseeks 导致出了大问题）。几乎所有你想通过浏览器用的事情（比如说运行 JavaScript）都可以使用简单的 Linux 工具来实现。<code>Cheerio</code> 和其他的库提供了优雅的 Node API …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pa-chong-li-qi-chrome-headless-he-puppeteer-zui-jia-shi-jian.html">posted at 19:04</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Jun 02, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pythonpa-chong-li-qi-lxml-he-xpath-biao-da-shi.html" rel="bookmark" title="Permanent Link to &quot;Python爬虫利器——lxml 和 xpath 表达式&quot;">Python爬虫利器——lxml 和 xpath 表达式</a>
+                </h2>
+
+                
+                
+
+                <p>最近要做下微信爬虫，之前写个小东西都是直接用正则提取数据就算了，如果需要更稳定的提取数据，还是使用 xpath 定位元素比较可靠。周末没事，从爬虫的角度研究了一下 python xml/html 相关的库。</p>
+<p>Python 标准库中自带了 xml 模块，但是性能不够好，而且缺乏一些人性化的 API。相比之下，第三方库 lxml 是用 Cython 实现的，而且增加了很多实用的功能，可谓爬虫处理网页数据的一件利器。</p>
+<p>严格来说，html 并不是 xml 的一种，不过 lxml 对于 xml 和 html 都有很好的支持，分别使用 <code>lxml.etree</code> 和 <code>lxml.html</code>两个模块。</p>
+<h1>解析</h1>
+<p>网页下载下来以后是个 bytes 的形式 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pythonpa-chong-li-qi-lxml-he-xpath-biao-da-shi.html">posted at 16:29</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Apr 13, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/du-the-anatomy-of-a-large-scale-hypertextual-web-search-engine.html" rel="bookmark" title="Permanent Link to &quot;读《The Anatomy of a large-scale hypertextual Web search engine》&quot;">读《The Anatomy of a large-scale hypertextual Web search engine》</a>
+                </h2>
+
+                
+                
+
+                <p>Google 在1997年的论文[1], 到现在(2017)的话, 已经有二十年的历史了, 然而对于编写一个小的搜索引擎, 依然有好多具有指导意义的地方.</p>
+<p>The Anatomy of a large-scale hypertextual Web search engine 这篇论文应该是一片总结性质的论文, 而且论文并没有多少的关于数据结构等的实现细节. 只是大体描绘了一下架构.</p>
+<h1>Google的算法</h1>
+<p>首先, Google大量使用了在超文本也就是网页中存在的结构, 也就是锚文本和链接. 还有就是如何有效的处理在网页上, 所有人都可以任意发布任何文字的问题, Google在这片文章里给的解决方案是PageRank.</p>
+<p>在20年前, 主要问题是, 网页已经开始快速增长, 然而当时的所有搜索引擎给出的结果只是搜索结果的数量也增长了, 却没能把最相关的结果放在首页. 因为人们并不会因为给出结果多而去多看几页, 所以这样的结果是不可取的. 在设计Google的过程中, Google还考虑了随着web规模的增长, 会对现有的体系造成的影响以及如何应对.</p>
+<p>Google 还表达了对当时的搜索引擎都是商业化的, 因而一些诸如用户查询之类的结果无法共学术应用的情况表达了不满. (呵呵, Google这不是打自己的脸么)</p>
+<p>对于 PageRank 算法, 提到了简单的公式:</p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tKfTcly1fqazehy4zdj30im02mmxd.jpg"></p>
+<p>其中Tx表示的是指向A页面的所有页面, C表示的是一个页面上所有的外链. 对于这个公式的解释是这样的 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/du-the-anatomy-of-a-large-scale-hypertextual-web-search-engine.html">posted at 05:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Apr 13, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pa-chong-ip-feng-jin-yu-fan-feng-jin.html" rel="bookmark" title="Permanent Link to &quot;爬虫 IP 封禁与反封禁&quot;">爬虫 IP 封禁与反封禁</a>
+                </h2>
+
+                
+                
+
+                <p>反爬虫的核心在于区分开正常用户访问和恶意爬虫用户。来源 IP 是访问很重要的一个特征，我们可以从来源 IP 的角度来做出不少反爬虫策略。</p>
+<ul>
+<li>是否是代理IP</li>
+<li>是否是民用IP</li>
+<li>IP 地理信息</li>
+</ul>
+<p>一般来说，大规模的爬虫我们都会放到服务器上去跑，搭建代理集群也会在服务器上，而正常用户的IP地址则来自家用IP范围内。这就给反爬虫的一方提供了便利，对于来自数据中心的请求可以直接限制访问甚至直接屏蔽掉，而对于家用的IP地址则宽容一些。</p>
+<p>下面我们来看几个实例</p>
+<h1>直接爬取网站</h1>
+<p>一般正常用户的页面访问量很小，如果发现某个 IP 的访问量特别大，那么肯定是爬虫，直接封禁即可，或者每次都需要输入验证码访问。</p>
+<p>IP 被封禁后一般不会被解封，或者需要很长时间，这时候只有两种思路，要么降低频率，更改自己的行为特征，避免被封，要么更换 IP。一般来说，不管怎样更改自己的行为，访问量还是很难降下来的，这时候只能换一个 IP 继续爬。</p>
+<h1>使用代理网站提供的代理IP</h1>
+<p>一些黑客会使用端口扫描器扫描互联网上的开放代理，然后免费或者付费提供给其他用户使用，比如下面这些网站：</p>
+<p><img alt="免费代理" src="https://ws2.sinaimg.cn/large/006tNbRwly1fu6vtfrvgvj30zy0pgn3y.jpg"></p>
+<p>但是这些网站的代理中能直接使用的可能不到10%，而且失效时间很短。所以要使用这些代理 IP …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pa-chong-ip-feng-jin-yu-fan-feng-jin.html">posted at 00:26</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Apr 09, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/go-yu-yan-he-pa-chong.html" rel="bookmark" title="Permanent Link to &quot;Go 语言和爬虫&quot;">Go 语言和爬虫</a>
+                </h2>
+
+                
+                
+
+                <h1>爬虫的算法</h1>
+<h2>广度遍历</h2>
+<p>如果把每一个页面看做一个节点，把每个链接看做一个有向边，那么网页之间就构成了一个有向图。爬虫的核心就是对这个图做一个广度优先的遍历：</p>
+<div class="highlight"><pre><span></span>func breadthFirst(visit func(item, string) []string, worklist []string) {
+    seen := make(map[string]bool)
+    for len(worklist) &gt; 0 {
+        items := worklist
+        worklist = nil
+        for _, items := range items {
+            if !seen[item] {
+                seen[item] = true
+                worklist = append(worklist, visit(item)...)
+            }
+        }
+    }
+}
+</pre></div>
+
+
+<h2>终止条件</h2>
+<p>如果我们面对的是一个有限的图，那么用广度遍历一定可以停下来。但是对于互联网来说，甚至于对于某个网站来说，页面的数量都可能是无限的 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/go-yu-yan-he-pa-chong.html">posted at 08:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/2" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 1 of 2</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

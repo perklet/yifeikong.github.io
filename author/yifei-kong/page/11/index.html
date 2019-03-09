@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Articles by Yifei Kong</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/author/yifei-kong/page/11/index.html">Yifei Kong</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 29, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-coroutine-yi-ji-he-goroutine-de-dui-bi.html" rel="bookmark" title="Permanent Link to &quot;Python coroutine 以及和 Goroutine 的对比&quot;">Python coroutine 以及和 Goroutine 的对比</a>
+                </h2>
+
+                
+                
+
+                <h1>Python 中的 coroutine</h1>
+<p>Python 3.5 中终于引入了 <code>async</code> 和 <code>await</code> 关键字，算是在语言层次上支持了 coroutine。</p>
+<h2>coroutine 基础</h2>
+<p>coroutine 又被称为用户级线程，也就是可以在一个系统线程中模拟多个线程构成的并发操作，对于有 GIL 的 Python 来说，反正线程也是费了，不失为多了一种选择，使用 asyncio 来爬取网页可以这样写：</p>
+<p>首先，<code>pip install pulsar lxml</code>。pulsar 是一个异步版的 http 库。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">pulsar.apps</span> <span class="kn">import</span> <span class="n">http</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">HttpClient</span><span class="p">()</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">fetch …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-coroutine-yi-ji-he-goroutine-de-dui-bi.html">posted at 05:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 26, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/han-shu-shi-bian-cheng-zhong-de-pattern-matching-mo-shi-pi-pei.html" rel="bookmark" title="Permanent Link to &quot;函数式编程中的 Pattern Matching (模式匹配)&quot;">函数式编程中的 Pattern Matching (模式匹配)</a>
+                </h2>
+
+                
+                
+
+                <p>以 haskell 为例，简单来说，pattern 就像是数学中的分段函数。通过使用 pattern matching，就可以对不同的参数定义不同的函数体。当调用函数的时候，可以通过对比实参和形参的模式就可以选择正确的函数体。</p>
+<p>比较一下</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1fqq6q36pkij30aq02cglo.jpg" max-width="400px" /></p>
+<p>和对应的 haskell 代码：</p>
+<div class="highlight"><pre><span></span>fib 0 = 1
+fib 1 = 1
+fib n | n &gt;= 2 
+      = fib (n-1) + fib (n-2)
+</pre></div>
+
+
+<p>注意在分段函数中 "n ≥ 2" 这个条件在 haskell 中变成了一个 guard。但是另外两个条件就是简单的 pattern。Pattern 就是可以测试值和结构的条件，比如 <code>x:xs</code>, <code>(x, y, z)</code>, 或者 <code>x</code>。在一个分段函数定义中 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/han-shu-shi-bian-cheng-zhong-de-pattern-matching-mo-shi-pi-pei.html">posted at 09:18</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yi-yong-python-bian-xie-yi-ge-mo-ban-yin-qing.html" rel="bookmark" title="Permanent Link to &quot;[译] 用 Python 编写一个模板引擎&quot;">[译] 用 Python 编写一个模板引擎</a>
+                </h2>
+
+                
+                
+
+                <p>一直对模板引擎的实现很好奇，正好看到了<a href="http://alexmic.net/building-a-template-engine/">这篇</a>文章，翻译一下，供大家学习、参考。</p>
+<p>我们编写一个最简单的模板引擎，并且探索一下它的底层实现。如果你想直接看代码的话，<a href="https://github.com/alexmic/microtemplates">GitHub</a> 是你的好朋友</p>
+<h1>语言设计</h1>
+<p>这里设计的模板语言非常基础。使用两种标签，变量和块。</p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- 变量使用 `</span><span class="cp">{{</span><span class="err">`</span> <span class="err">和</span> <span class="err">`</span><span class="cp">}}</span><span class="c">` 作为标识--&gt;</span>
+<span class="nt">&lt;div&gt;</span><span class="cp">{{</span><span class="nv">my_var</span><span class="cp">}}</span><span class="nt">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- 块使用 `{%` 和 `%}` 作为标识--&gt;</span>
+<span class="cp">{%</span> <span class="k">each</span> <span class="nv">items</span> <span class="cp">%}</span>
+    <span class="nt">&lt;div&gt;</span><span class="cp">{{</span><span class="nv">it</span><span class="cp">}}</span><span class="nt">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">end</span> <span class="cp">%}</span>
+</pre></div>
+
+
+<p>大多数的块需要使用关闭标签，关闭标签使用<code>{% end %}</code>表示。</p>
+<p>这个模板引擎能够处理基本的循环和条件语句，而且也支持在块中使用 callable。在我看来，能够在模板中调用任意的 Python 函数非常方便。</p>
+<h1>循环</h1>
+<p>使用循环可以遍历集合或者 iterable。</p>
+<div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">each</span> <span class="nv">people</span> <span class="cp">%}</span>
+    <span class="nt">&lt;div&gt;</span><span class="cp">{{</span><span class="nv">it.name …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yi-yong-python-bian-xie-yi-ge-mo-ban-yin-qing.html">posted at 07:08</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 13, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-shang-de-dns-huan-cun.html" rel="bookmark" title="Permanent Link to &quot;Linux 上的 DNS 缓存&quot;">Linux 上的 DNS 缓存</a>
+                </h2>
+
+                
+                
+
+                <p>Linux 内核中没有 DNS 缓存</p>
+<p>Firefox 内置了 DNS 缓存</p>
+<p><code>nscd</code> 可以提供本地的 DNS 缓存，好多机器开了，但是据说这个服务有很多问题。</p>
+<p>Python 使用了 <code>getaddrinfo</code> 函数，会使用系统的 DNS 缓存</p>
+<p>像 <code>nslookup</code> 和是dig这样的工具会 bypass 掉 DNS 缓存。</p>
+<p>另外 Go 语言好像也不会使用本机的 DNS 缓存，即使开了</p>
+<p>https://wiki.archlinux.org/index.php/dnsmasq 可以用来做本地缓存</p>
+<p>还可以使用systemd提供的resolved</p>
+<p>1 https://stackoverflow.com/questions/11020027/dns-caching-in-linux …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-shang-de-dns-huan-cun.html">posted at 05:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>            <h4 class="date">Apr 13, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/du-the-anatomy-of-a-large-scale-hypertextual-web-search-engine.html" rel="bookmark" title="Permanent Link to &quot;读《The Anatomy of a large-scale hypertextual Web search engine》&quot;">读《The Anatomy of a large-scale hypertextual Web search engine》</a>
+                </h2>
+
+                
+                
+
+                <p>Google 在1997年的论文[1], 到现在(2017)的话, 已经有二十年的历史了, 然而对于编写一个小的搜索引擎, 依然有好多具有指导意义的地方.</p>
+<p>The Anatomy of a large-scale hypertextual Web search engine 这篇论文应该是一片总结性质的论文, 而且论文并没有多少的关于数据结构等的实现细节. 只是大体描绘了一下架构.</p>
+<h1>Google的算法</h1>
+<p>首先, Google大量使用了在超文本也就是网页中存在的结构, 也就是锚文本和链接. 还有就是如何有效的处理在网页上, 所有人都可以任意发布任何文字的问题, Google在这片文章里给的解决方案是PageRank.</p>
+<p>在20年前, 主要问题是, 网页已经开始快速增长, 然而当时的所有搜索引擎给出的结果只是搜索结果的数量也增长了, 却没能把最相关的结果放在首页. 因为人们并不会因为给出结果多而去多看几页, 所以这样的结果是不可取的. 在设计Google的过程中, Google还考虑了随着web规模的增长, 会对现有的体系造成的影响以及如何应对.</p>
+<p>Google 还表达了对当时的搜索引擎都是商业化的, 因而一些诸如用户查询之类的结果无法共学术应用的情况表达了不满. (呵呵, Google这不是打自己的脸么)</p>
+<p>对于 PageRank 算法, 提到了简单的公式:</p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tKfTcly1fqazehy4zdj30im02mmxd.jpg"></p>
+<p>其中Tx表示的是指向A页面的所有页面, C表示的是一个页面上所有的外链. 对于这个公式的解释是这样的 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/du-the-anatomy-of-a-large-scale-hypertextual-web-search-engine.html">posted at 05:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Apr 13, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pa-chong-ip-feng-jin-yu-fan-feng-jin.html" rel="bookmark" title="Permanent Link to &quot;爬虫 IP 封禁与反封禁&quot;">爬虫 IP 封禁与反封禁</a>
+                </h2>
+
+                
+                
+
+                <p>反爬虫的核心在于区分开正常用户访问和恶意爬虫用户。来源 IP 是访问很重要的一个特征，我们可以从来源 IP 的角度来做出不少反爬虫策略。</p>
+<ul>
+<li>是否是代理IP</li>
+<li>是否是民用IP</li>
+<li>IP 地理信息</li>
+</ul>
+<p>一般来说，大规模的爬虫我们都会放到服务器上去跑，搭建代理集群也会在服务器上，而正常用户的IP地址则来自家用IP范围内。这就给反爬虫的一方提供了便利，对于来自数据中心的请求可以直接限制访问甚至直接屏蔽掉，而对于家用的IP地址则宽容一些。</p>
+<p>下面我们来看几个实例</p>
+<h1>直接爬取网站</h1>
+<p>一般正常用户的页面访问量很小，如果发现某个 IP 的访问量特别大，那么肯定是爬虫，直接封禁即可，或者每次都需要输入验证码访问。</p>
+<p>IP 被封禁后一般不会被解封，或者需要很长时间，这时候只有两种思路，要么降低频率，更改自己的行为特征，避免被封，要么更换 IP。一般来说，不管怎样更改自己的行为，访问量还是很难降下来的，这时候只能换一个 IP 继续爬。</p>
+<h1>使用代理网站提供的代理IP</h1>
+<p>一些黑客会使用端口扫描器扫描互联网上的开放代理，然后免费或者付费提供给其他用户使用，比如下面这些网站：</p>
+<p><img alt="免费代理" src="https://ws2.sinaimg.cn/large/006tNbRwly1fu6vtfrvgvj30zy0pgn3y.jpg"></p>
+<p>但是这些网站的代理中能直接使用的可能不到10%，而且失效时间很短。所以要使用这些代理 IP …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pa-chong-ip-feng-jin-yu-fan-feng-jin.html">posted at 00:26</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Apr 12, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/the-problem-with-pocket.html" rel="bookmark" title="Permanent Link to &quot;The Problem with Pocket&quot;">The Problem with Pocket</a>
+                </h2>
+
+                
+                
+
+                <p>I started using Pocket about six years ago. Back then it's a Firefox plugin named Read It Later. I saved about 1000+ articles to read-it-later. But until now, when I quit my job, I finally got some time to read those articles. Then I got this:</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tKfTcly1fq9zaefzlnj31kw0zmdqu.jpg"></p>
+<p>I thought that pocket's …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/the-problem-with-pocket.html">posted at 08:50</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/chuang-ye.html" rel="tag">创业</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ta-shan-zhi-shi.html" class="tags">他山之石</a>
+                    &nbsp;<a href="/tag/chuang-ye.html" class="tags">创业</a>
+                </div>
+            </article>            <h4 class="date">Apr 12, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pv-zai-linux-xia-cha-kan-ming-ling-zhi-xing-jin-du.html" rel="bookmark" title="Permanent Link to &quot;pv - 在 Linux 下查看命令执行进度&quot;">pv - 在 Linux 下查看命令执行进度</a>
+                </h2>
+
+                
+                
+
+                <p>pv 是 Pipe Viewer 的缩写，也就是管道查看器。挡在命令行执行命令的时候，可以通过使用 pv 来指导当前的进度。</p>
+<h1>使用</h1>
+<h2>替换 cat</h2>
+<p>比如你要把一个日志打包好下载：</p>
+<div class="highlight"><pre><span></span><span class="c">% gzip -c access.log &gt; access.log.gz</span>
+</pre></div>
+
+
+<p>可以改成</p>
+<div class="highlight"><pre><span></span><span class="c">% cat access.log | gzip &gt; access.log.gz</span>
+</pre></div>
+
+
+<p>使用 pv</p>
+<div class="highlight"><pre><span></span><span class="c">% pv access.log | gzip &gt; access.log.gz</span>
+<span class="mi">611</span><span class="n">MB</span> <span class="mi">0</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">11</span> <span class="p">[</span><span class="mf">58.3</span><span class="n">MB</span><span class="o">/</span><span class="n">s</span><span class="p">]</span> <span class="p">[=</span><span class="o">&gt;</span>      <span class="p">]</span> <span class="mi">15</span><span class="c">% ETA 0 …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pv-zai-linux-xia-cha-kan-ming-ling-zhi-xing-jin-du.html">posted at 07:41</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 11, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yi-css-xuan-ze-qi-bei-wang-lu-cheatsheet.html" rel="bookmark" title="Permanent Link to &quot;[译] CSS 选择器备忘录（cheatsheet）&quot;">[译] CSS 选择器备忘录（cheatsheet）</a>
+                </h2>
+
+                
+                
+
+                <p>这两天打算写写爬虫，准备用 css 选择器来抽取内容，翻译了<a href="http://butlerccwebdev.net/support/css-selectors-cheatsheet.html">一篇文章</a>，正好复习一下，这篇文章遵守 CC-BY-NC-SA 协议。</p>
+<p>大多数的 web 开发者首先学会了 CSS。因为给 HTML 元素写样式规则的元素选择器都很容易理解和记忆。经过一点点练习之后，就会发现成组的 CSS 表达式非常的有必要，比如使用一个逗号分隔开选择器，就可以把同一个样式属性附加到不同的多个元素了。</p>
+<p>使用标签选择器和分组的选择器当然也有不足，那就是他们会应用到所有的标签。很快你就会意识到有时候需要给一个特定的元素加上样式。对于大多数开发者来说，最简单的选择当然是使用 class 和 id 选择器了。但是很遗憾的是这样下去的话，整个页面就会充满各种奇奇怪怪的类了。</p>
+<p>除了不管的给 HTML 添加纯粹用于应用样式的 class 和 id 之外，你也可以考虑使用高级的 CSS 选择器来给指定元素应用样式。高级的选择器大致可以分类为上下文选择器、属性选择器、伪元素选择器和伪类选择器。</p>
+<h1>元素选择器</h1>
+<p>元素选择器把样式应用到所有选中元素上，也是被使用最广泛的选择器 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yi-css-xuan-ze-qi-bei-wang-lu-cheatsheet.html">posted at 09:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/css.html" class="tags">CSS</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 11, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-6-join.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(6) - Join&quot;">mysql 基础知识(6) - Join</a>
+                </h2>
+
+                
+                
+
+                <p>看到网上<a href="https://blog.codinghorror.com/a-visual-explanation-of-sql-joins/">有篇文章</a>用韦恩图来讲解了一下 SQL 的 join 操作，但是感觉举的例子似乎不太实际，遂自己写了一篇，图是从那篇文章里面盗的（逃</p>
+<p>假设我们有下面两张表，上边的是表 user，下边的是 package，表示每个用户对应的包裹</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Luke</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Leia</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Anakin</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Padem</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>content</th>
+<th>user_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>droid</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>lightsaber</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>blaster</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>R2D2</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>创建这两个表的语句分别是：</p>
+<div class="highlight"><pre><span></span>create table user (id integer, name string …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-6-join.html">posted at 02:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/10" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/12" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 11 of 34</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

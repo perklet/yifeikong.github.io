@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | How to publish your game</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="创业" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/how-to-publish-your-game.html" rel="bookmark" title="Permanent Link to &quot;How to publish your game&quot;">How to publish your game</a>
+                </h2>
+
+                
+                
+
+                <p>A few thoughts as someone who has developed games for iOS, Android, and the web:
+In today's world, if you want to retain implicit ownership of your product's name, a simultaneous triple-platform release is not optional, it is required. It must be performed in precisely the following way, or your launch will fail:</p>
+<ul>
+<li>Register your game's domain before announcing it to the public.</li>
+<li>Next, upload your iOS app to iTunes Connect and wait for up to one week for the app to be approved.</li>
+<li>Next, upload your Android app to the Google Play store; approval only takes a few hours.</li>
+<li>Finally, make the web version public, and announce the game along with links to the mobile versions.</li>
+</ul>
+<p>If you deviate from this order, then you're screwed. One example: I released a game on the web and waited one day to upload the Android version to the Google Play store. I figured that gave me a little extra time to test and check for bugs, and what's the rush anyway? Nobody could steal a game in just 24 hours, right? Wrong. My app was rejected because Google insisted my app was attempting to impersonate another developer's app. <strong>The other developer's app was simply my own website, stolen line for line, tossed into Phonegap, and released the same day as my website. I explained this to Google in the appeal form, even including a link proving I owned the site the other developer stole it from, and they rejected my appeal without checking the link - I could clearly see in my server logs that they never clicked on it. Google does not allow you to file a second appeal, so I had to give my app an awful name no one would recognize it by, and the clone received all the downloads and glory thanks to the buzz my website's name was generating for it.</strong></p>
+<p>Another example: I was the first to publish an iOS app with the same name as my website. After the app had been waiting for review for four days, I figured it would be approved any moment now, and that it was safe for me to launch my website. I launched, and it turns out that Apple's app review process is not FIFO, because two days later, a clone with the same name and all the code stolen from my site was already approved for iOS, yet my own app was still waiting for review. My app was then rejected a few days later because it had the same name as an app that stole my code... again.
+Gabriele Cirulli is an extremely unlucky man stuck in an extremely unfair landscape, and I cannot fault him for wallowing in the first of the five stages of grief. If Flappy Bird's alleged $50,000/day income can safely be assumed to be the average earned by the ads on any given #1 iTunes free app, then the entity which first claimed the name "2048" in iTunes Connect is currently a millionaire, because 2048 was at the very top of the iTunes free app charts for weeks. Gabriele seems to believe or hope that the masses will see his "repost" of his own app and be stricken by the desire to do the ethically right thing and uninstall all of the rushed clones and install the legitimate version and play it with all the fervor and excitement as if the global 2048 hype still currently existed. Unfortunately this will NEVER happen.</p>
+<p>On a side note, Phonegap is only getting worse over time. Typical Adobe rot is setting in; the last version had a catastrophic bug causing the xml manifest to simply not be read during the build process, because a critical "for" loop was referencing the child element of a nonexistent variable. They swept this under the rug; countless hapless developers were mindlessly releasing broken apps during this period. Half of Phonegap's documentation refers to "Cordova" and executing "cordova" on the command line where it should say "Phonegap". Commands that have different names between Cordova and Phonegap are still documented as the Cordova equivalent, so one must use Google to find other people who searched for hours until they themselves came across the explanation that the same command in Phonegap requires the use of a completely different word. It is an absolute trainwreck, but aside from that, the primary issue for consumers now is that apps built with Phonegap no longer work correctly on newer versions of Android and haven't for months, which is why Gabriele's extremely simple and resource-minimal app is currently getting a bunch of 1- and 2-star reviews in the Google Play store with complaints about the speed.</p>
+<p>来源： <a href="https://news.ycombinator.com/item?id=7704800">https://news.ycombinator.com/item?id=7704800</a></p>
+<h2>翻译</h2>
+<p>作为一个曾经为iOS,android,web开发过游戏的人，下面是我的一些经验：
+在现在的世界里，如果你想获得你产品名字的所有权, 那么需要近乎同时的在三个平台发布, 并且你必须这么做. 而且你得严格的按照下面这几步做, 不然你的发布就失败了.</p>
+<p>在公之于众之前注册你游戏的域名
+接下来,上传你的 iOS 应用到 iTunes Connect 然后等待多达一周的时间知道通过审核
+然后上传你的 Android 应用到 Google Play, 大概只需要几小时就能通过
+最后公布你的 web 版本, 然后附带着移动版本的链接发布你的游戏</p>
+<p>如果你偏离的这个顺序, 那么你就完蛋了. 举个栗子, 我现在网上发布了一个游戏然后才在一天之后才上传到 Google Play 市场. 因为我觉得我需要更多的时间来测试和检查 bug, 而且着啥急啊? 总不能有人在24消失之内就把我的游戏偷了吧? 错了, 我的应用被 Google 拒绝了因为他们坚持认为我的应用正在模仿其他人的. 其他开发者的应用完全是把我的网站一行不差的包装了一下（用Phonegap）。我向google解释了这一切</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/how-to-publish-your-game.html">posted at 04:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/chuang-ye.html" rel="tag">创业</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/chuang-ye.html" class="tags">创业</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

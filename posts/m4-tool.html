@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | m4 tool</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/m4-tool.html" rel="bookmark" title="Permanent Link to &quot;m4 tool&quot;">m4 tool</a>
+                </h2>
+
+                
+                
+
+                <p>m4 macro language  http://mbreen.com/m4.html</p>
+<h2>comman line invoking</h2>
+<p>m4 -D<MACRO></p>
+<h2>builtins</h2>
+<p>define(<macro>, <value>)
+undefine(<macaro>)
+ifdef(<macro>, <then>, <else>)
+ifelse(<a>, <b>, <then>, <else>)
+eval(<expr>)
+len(<str>)
+include(<filename>)
+syscmd(<cmd>)
+`'are quotes</p>
+<h1>for comments</h1>
+<p>M4 rules
+    it reads in the macro's arguments (if any)
+    it determines the expansion of the macro and inserts this expansion at the beginning of its input
+    m4 continues scanning the input, starting with the expansion </p>
+<p>example:
+  define(<code>definenum',</code>define(<code>num',</code>99')')
+  num                      # -&gt; num
+  definenum num            # -&gt; define(<code>num',</code>99') num -&gt;  99</p>
+<p>Unless a nested macro is quoted, it is expanded immediately:</p>
+<p>define(<code>definenum', define(</code>num', `99'))
+  num                      # -&gt; 99
+  definenum                # -&gt;</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/m4-tool.html">posted at 12:57</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ku.html" class="tags">库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

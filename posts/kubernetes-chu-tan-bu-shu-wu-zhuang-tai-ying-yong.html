@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | kubernetes 初探——部署无状态应用</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="架构,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Oct 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-wu-zhuang-tai-ying-yong.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——部署无状态应用&quot;">kubernetes 初探——部署无状态应用</a>
+                </h2>
+
+                
+                
+
+                <p>kubernetes 架构图</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tNbRwly1fvxa7izqb8j30mb0gcmzk.jpg"></p>
+<ul>
+<li>Master. 用于控制整个集群部署的机器, 为了高可用, 可以使用多台，一般至少三台为宜。</li>
+<li>Node. 工作节点, 用于部署服务. 一台机器可以既是 Master 也是 Worker，当然最好 Master 不要做 Worker。</li>
+<li>Pod. k8s 部署的最小单元, 一个 Pod 中可能包含多个 container. Pod 随时可能挂掉，也可能被替换。</li>
+<li>Label. Pod 的标签, 可以通过这些标签（组合）来选择对应的 Pod。</li>
+<li>Replica Set. 作为一个高可用的系统, 每个服务一般来说可能有多个 Pod. Replication Set 用来创建并保证有足够的 Pod 副本。RS 的名字总是 <Deployment的名字>-<pod template的hash值> 格式的。</li>
+<li>Deployment. 用户一般来说不会直接创建 Pod, 而是创建一个 Deployment 来部署服务. (在老版本中是创建 RC)</li>
+<li>Namespace. 命名空间, 默认情况下会有 kube-system 和 default 两个命名空间, kube-system 存放的是 k8s 系统的 pod 等资源, 而用户部署的资源会在 default 命名空间中.</li>
+<li>PersistendVolume. 如果把 Node 理解为抽象的 CPU 和内存资源，那么 PV 就可以理解为抽象的硬盘资源。我们通过 Pod 来使用 Node，因此我们也不直接使用 PV，而是通过 PersistentVolumeClaim 来使用 PV。</li>
+<li>PersistentVolumeClaim. 存储声明，用来声明需要使用的存储资源。</li>
+<li>Stateful Set. Deployment 对应的部署语义上没有状态的，而StatefulSet会充分运用 PV 和 PVC 实现 Pod 重启之间的状态保持。典型应用场景是数据库。</li>
+<li>Label 和 Selector. K8S 中的资源全部都通过 Label 来标识的选择。</li>
+</ul>
+<h1>deployment</h1>
+<p>deployment 是使用 k8s 部署服务直接操作的概念。其他的概念往往都是<strong>通过 deployment 来间接使用</strong>的，因此理解 deployment 至关重要。</p>
+<p>一个典型的 deployment 配置文件如下：</p>
+<div class="highlight"><pre><span></span><span class="n">apiVersion</span><span class="o">:</span> <span class="n">apps</span><span class="o">/</span><span class="n">v1</span>
+<span class="n">kind</span><span class="o">:</span> <span class="n">Deployment</span>
+<span class="n">metadata</span><span class="o">:</span>
+  <span class="n">name</span><span class="o">:</span> <span class="n">my</span><span class="o">-</span><span class="n">nginx</span>
+<span class="n">spec</span><span class="o">:</span>
+  <span class="n">selector</span><span class="o">:</span>
+    <span class="n">matchLabels</span><span class="o">:</span>
+      <span class="n">run</span><span class="o">:</span> <span class="n">my</span><span class="o">-</span><span class="n">nginx</span>
+  <span class="n">replicas</span><span class="o">:</span> <span class="mi">2</span>
+  <span class="n">template</span><span class="o">:</span>
+    <span class="n">metadata</span><span class="o">:</span>
+      <span class="n">labels</span><span class="o">:</span>
+        <span class="n">run</span><span class="o">:</span> <span class="n">my</span><span class="o">-</span><span class="n">nginx</span>
+    <span class="n">spec</span><span class="o">:</span>
+      <span class="n">containers</span><span class="o">:</span>
+      <span class="o">-</span> <span class="n">name</span><span class="o">:</span> <span class="n">my</span><span class="o">-</span><span class="n">nginx</span>
+        <span class="n">image</span><span class="o">:</span> <span class="n">nginx</span>
+        <span class="n">ports</span><span class="o">:</span>
+        <span class="o">-</span> <span class="n">containerPort</span><span class="o">:</span> <span class="mi">80</span>
+</pre></div>
+
+
+<p>deployment 的配置可以发生改变，如果只是 replica 的数目发生了改变，那么这只是一个简单的扩容或者缩容操作，k8s只会简单的打开或者杀死新的 Pod。如果镜像、命令等参数发生了改变，那么 K8S 会把这次操作视为升级，也就是开始一个 RollOut 操作，创建新的 ReplicaSet。在这个过程中，如果 deployment 中的 spec 指定了保留历史 revision 的次数大于零，那么原有的 ReplicaSet 不会被删除，只是会被 Scale 到 0 而已，方便回滚。</p>
+<p>文档：</p>
+<blockquote>
+<p>Note: a Deployment’s rollout is triggered if and only if the Deployment’s pod template (i.e. .spec.template) is changed, e.g. updating labels or container images of the template. Other updates, such as scaling the Deployment, will not trigger a rollout.</p>
+<p>https://stackoverflow.com/questions/42561791/right-way-to-update-deployments-on-kubernetes</p>
+</blockquote>
+<h1>服务</h1>
+<h2>相关概念</h2>
+<ul>
+<li>Service. 如果一个 Deployment 对外（pod 外）提供服务的话，可以暴露为 Service。它是服务的抽象, 通过 kube-proxy 和 DNS 等提供负载均衡给后端 RC 定义的 Pod。</li>
+<li>clusterIP. 服务暴露在集群内部的一个虚拟 IP，声明周期和服务相同</li>
+<li>nodePort. 暴露在 Node 上的服务端口，不建议在生产环境使用。</li>
+<li>Ingress Controller. Service 只是对集群内部暴露了服务，ingress controller 用于把 Service 再对外暴露。</li>
+</ul>
+<p>如果一个 deployment 需要对集群内部或者是外部提供服务的话，可以使用 service。</p>
+<p>这时将创建一个 clusterIP，需要特别注意的是，这个 clusterIP 也是虚拟的，并没有和任何 pod 绑定，而是绑定到了服务上，可以理解为绑定到了这个服务对应的内部负载均衡上，并且是不变的。即使你的 RC 中指定了多个副本，那么也只有这一个 clusterIP，pod 的创建和销毁也都不会影响到 clusterIP。</p>
+<h1>kubectl 使用</h1>
+<h2>kubectl get</h2>
+<p>常用参数 <code>-o wide</code> 用来现实更详细信息. 用来获取集群的各种信息:</p>
+<ul>
+<li><code>kubectl get pod</code> 显示所有 pod 信息</li>
+<li><code>kubectl get deployment</code> 显示所有部署信息</li>
+<li><code>kubectl get node</code> 显示所有节点信息</li>
+</ul>
+<h2>kubectl create &amp; apply</h2>
+<p>用来创建 pod, 部署等. 一般情况下都是使用 <code>-f</code> 参数来制定配置文件</p>
+<div class="highlight"><pre><span></span>kubectl create -f file.yml
+</pre></div>
+
+
+<p>和 kubectl create 还有一个类似的概念，kubectl apply 也可以用于创建资源。这两个的区别有以下几点：</p>
+<ul>
+<li>kubectl create 是过程性的，重点在于“创建”这个操作；而 kubectl apply 是声明性的，重点在于达成“应用”这个结果</li>
+<li>kubectl create 在创建重复资源的时候会报错，而 kubectl apply 可以用于更新。</li>
+</ul>
+<h2>kubectl run</h2>
+<p>类似于 docker run, 但是由 kubernetes 接管, 直接运行在集群上. 比如运行 hello world</p>
+<h2>kubectl delete</h2>
+<p>用来删除节点上的 pod, deployment 等信息</p>
+<h2>kubectl logs</h2>
+<p>类似于 docker logs, 用来显示打印到 stdout 的日志</p>
+<ol>
+<li><a href="https://stackoverflow.com/questions/41325087/in-kubernetes-what-is-the-difference-between-a-pod-and-a-deployment">deployment 和 pod 的区别</a></li>
+<li><a href="http://dockone.io/article/932">Kubernetes 基础概念</a></li>
+<li><a href="https://www.jianshu.com/p/1bf9a46efe7a">客户端和服务端服务发现</a></li>
+<li><a href="http://docs.kubernetes.org.cn/683.html">kubernetes 命令表</a></li>
+<li><a href="https://blog.csdn.net/liumiaocn/article/details/73913597">Kubernetes之kubectl常用命令使用指南:1:创建和删除</a></li>
+<li><a href="https://blog.csdn.net/xingwangc2014/article/details/51204224">Kubernetes之kubectl常用命令</a></li>
+<li><a href="https://blog.csdn.net/u010209217/article/details/78782353">Kubernetes基本概念以及术语</a></li>
+<li><a href="https://stackoverflow.com/questions/47369351/kubectl-apply-vs-kubectl-create">kubectl create 和 apply 的区别</a></li>
+<li>https://stackoverflow.com/questions/42561791/right-way-to-update-deployments-on-kubernetes</li>
+<li>https://kubernetes.io/docs/concepts/workloads/controllers/deployment/</li>
+<li><a href="https://blog.csdn.net/phantom_111/article/details/79427144">K8S YAML 文件基础</a></li>
+<li><a href="https://medium.com/google-cloud/kubernetes-nodeport-vs-loadbalancer-vs-ingress-when-should-i-use-what-922f010849e0">NodePort/LB/Ingress 三种方式的对比</a></li>
+<li>https://kubernetes.io/docs/tasks/access-application-cluster/service-access-application-cluster/</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-wu-zhuang-tai-ying-yong.html">posted at 17:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

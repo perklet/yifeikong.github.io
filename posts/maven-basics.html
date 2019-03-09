@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Maven Basics</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="大前端,Android,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/maven-basics.html" rel="bookmark" title="Permanent Link to &quot;Maven Basics&quot;">Maven Basics</a>
+                </h2>
+
+                
+                
+
+                <p>From: http://tutorials.jenkov.com/maven/maven-tutorial.html</p>
+<h1>Introduction</h1>
+<p>Maven is built around the pom.xml file. In Maven, how to build your project is predefined in the Maven Build Life Cycles, Phases and Goals.  The POM file describes <em>what to build</em>, but most often <em>not how to build it</em>. How to build it is up to the Maven build phases and goals.</p>
+<h1>Minimal POM file</h1>
+<p>Here is a minimal POM file: </p>
+<p><project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.jenkov</groupId>
+<artifactId>java-web-crawler</artifactId>
+<version>1.0.0</version>
+</project></p>
+<p>this outputs MAVEN_REPO/com/jenkov/java-web-crawler/1.0.0/java-web-crawler-1.0.0.jar</p>
+<h1>Super POM</h1>
+<p>You can make a POM file explicitly inherit from another POM file. That way you can change the settings across all inheriting POM's via their common super POM. You specify the super POM at the top of a POM file like this: </p>
+<p><project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion></p>
+<div class="highlight"><pre><span></span>&amp;lt;parent&amp;gt;
+    &amp;lt;groupId&amp;gt;org.codehaus.mojo&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;my-parent&amp;lt;/artifactId&amp;gt;
+    &amp;lt;version&amp;gt;2.0&amp;lt;/version&amp;gt;
+    &amp;lt;relativePath&amp;gt;../my-parent&amp;lt;/relativePath&amp;gt;
+&amp;lt;/parent&amp;gt;
+
+&amp;lt;artifactId&amp;gt;my-project&amp;lt;/artifactId&amp;gt;
+...
+</pre></div>
+
+
+<p></project></p>
+<p>mvn help:effective-pom shows the combined pom of parent and current</p>
+<h1>Running Maven</h1>
+<p>When executing the mvn command you pass the name of a build life cycle, phase or goal to it, which Maven then executes.</p>
+<p>syntax: mvn phase:goal</p>
+<h1>Directory Structure</h1>
+<p>You must follow the maven directory structure</p>
+<div class="highlight"><pre><span></span>- src
+  - main
+    - java
+    - resources
+    - webapp
+  - test
+    - java
+    - resources
+- target
+</pre></div>
+
+
+<p>more here: Introduction to the Maven Standard Directory Layout</p>
+<h1>Dependencies</h1>
+<div class="highlight"><pre><span></span><span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
+         <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0</span>
+<span class="s">   http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.jenkov.crawler<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>java-web-crawler<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
+
+ <span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.jsoup<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>jsoup<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>1.7.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+
+    <span class="nt">&lt;dependency&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>4.8.1<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;/dependencies&gt;</span>
+
+<span class="nt">&lt;build&gt;</span>
+<span class="nt">&lt;/build&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+</pre></div>
+
+
+<h2>external dependencies</h2>
+<div class="highlight"><pre><span></span><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>mydependency<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>mydependency<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;scope&gt;</span>system<span class="nt">&lt;/scope&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;systemPath&gt;</span><span class="cp">${</span><span class="n">basedir</span><span class="cp">}</span>\war\WEB-INF\lib\mydependency.jar<span class="nt">&lt;/systemPath&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+
+
+<h2>snapshot dependencies</h2>
+<p>Snapshot dependencies are dependencies (JAR files) which are under development. </p>
+<p><code>&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</code></p>
+<h1>Repositories</h1>
+<p>maven tries to pull dependencies from local, central, and remote repo</p>
+<h2>Local Repositores</h2>
+<p>it's defined in ~/.m2/settings.xml</p>
+<p><settings>
+    <localRepository>
+        d:\data\java\products\maven\repository
+    </localRepository>
+</settings></p>
+<h2>Central Repositories</h2>
+<p>Maintained by the maven community</p>
+<h2>Remote Repositories</h2>
+<p>A remote repository is often used for hosting projects internal to your organization, which are shared by multiple projects.</p>
+<p><repositories>
+   <repository>
+       <id>jenkov.code</id>
+       <url>http://maven.jenkov.com/maven2/lib</url>
+   </repository>
+</repositories></p>
+<h1>Maven Build Cycles</h1>
+<p>When Maven builds a software project it follows a build life cycle. The build life cycle is divided into build phases, and the build phases are divided into build goals.
+Since you cannot execute the default life cycle directly, you need to execute a build phase or goal from the default life cycle. </p>
+<div class="highlight"><pre><span></span>1. default 
+validate    Validates that the project is correct and all necessary information is available. This also makes sure the dependencies are downloaded.
+compile Compiles the source code of the project.
+test    Runs the tests against the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed.
+package Packs the compiled code in its distributable format, such as a JAR.
+install Install the package into the local repository, for use as a dependency in other projects locally.
+deploy  Copies the final package to the remote repository for sharing with other developers and projects.
+2. clean
+3. site
+</pre></div>
+
+
+<h1>Profiles</h1>
+<p>Profiles let you use differvent build settings</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/maven-basics.html">posted at 05:57</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

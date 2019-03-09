@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "Docker"</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/docker.html">Docker</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-docker-compose-bian-pai-rong-qi-yun-xing.html" rel="bookmark" title="Permanent Link to &quot;使用 docker-compose 编排容器运行&quot;">使用 docker-compose 编排容器运行</a>
+                </h2>
+
+                
+                
+
+                <p>使用 docker run 运行容器的时候经常需要加很多的参数，每次都输入这么多参数很容易出
+错。另外我们经常需要同时运行若干个容器来构成一个服务，此时还是涉及到网络的联通等
+操作。docker compose 可以把docker执行时的参数写成yaml文件，运行的时候只需要
+<code>docker-compose up</code> 一下就可以了。</p>
+<p>话不多说，下面通过一个例子来学习一下 docker-compose.yml 文件的语法。</p>
+<div class="highlight"><pre><span></span>version: &quot;3&quot;
+services:
+  web:
+    build: .
+    depends_on:
+      - db
+      - redis
+  redis:
+    image: redis
+    ports:
+     - &quot;3000&quot;
+     - &quot;3000-3005&quot;
+     - &quot;8000:8000&quot;
+     - &quot;9090-9091:8080-8081&quot;
+     - &quot;49100:22&quot;
+     - &quot;127.0.0.1:8001:8001&quot;
+     - &quot;127.0.0 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-docker-compose-bian-pai-rong-qi-yun-xing.html">posted at 02:11</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags selected">Docker</a>
+                </div>
+            </article>            <h4 class="date">Jan 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/tiller-for-docker.html" rel="bookmark" title="Permanent Link to &quot;tiller for docker&quot;">tiller for docker</a>
+                </h2>
+
+                
+                
+
+                <h1>Yifei's Notes</h1>
+<p>Tiller SUCKS</p>
+<p>The only good part of tiller is that it makes a docker image can read environment variables and generate config files based on predefined templates, this functionality should easily be achieved by python and jinja2</p>
+<h1>Tiller</h1>
+<p>tiller runs program such as nginx inside docker instead of …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/tiller-for-docker.html">posted at 20:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags selected">Docker</a>
+                </div>
+            </article>            <h4 class="date">Jul 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/docker-xiao-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;docker 小技巧&quot;">docker 小技巧</a>
+                </h2>
+
+                
+                
+
+                <h1>删除所有停止的容器</h1>
+<div class="highlight"><pre><span></span>docker rm `docker ps -aq`
+</pre></div>
+
+
+<h1>删除所有没有 tag 的镜像</h1>
+<div class="highlight"><pre><span></span>docker rmi `docker images | grep &quot;^&amp;lt;none&amp;gt;&quot; | awk &#39;{print $3}&#39;`
+</pre></div>
+
+
+<h1>进入运行中的镜像</h1>
+<div class="highlight"><pre><span></span>docker exec -it CONTAINER_NAME bash
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/docker-xiao-ji-qiao.html">posted at 21:04</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags selected">Docker</a>
+                </div>
+            </article>            <h4 class="date">Jun 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/docker-ji-chu-gai-nian.html" rel="bookmark" title="Permanent Link to &quot;docker 基础概念&quot;">docker 基础概念</a>
+                </h2>
+
+                
+                
+
+                <p>Docker 是一个进程的容器，<strong>不是虚拟机</strong>。他为一个进程隔离了文件系统、网络和环境变量。最好在其中运行一个且仅运行一个线程，而不是运行多个任务。</p>
+<p>docker 中最好运行的是无状态的服务，这样方便于横向扩展，对于有状态的服务，建议把状态 mount 出来。</p>
+<h1>使用场景</h1>
+<ol>
+<li>为有不同需求的应用创建不同的隔离环境， 比如部署两个脚本，一个需要用 Python 2.7，另一个需要用 Python 3.6</li>
+<li>Micro services. Micro services are easy to scale up. In this way, run only one process in a container, and use orchestration tools such as …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/docker-ji-chu-gai-nian.html">posted at 13:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags selected">Docker</a>
+                </div>
+            </article>            <h4 class="date">Jun 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/dockerfile-ji-chu.html" rel="bookmark" title="Permanent Link to &quot;dockerfile 基础&quot;">dockerfile 基础</a>
+                </h2>
+
+                
+                
+
+                <p>Dockerfile 列出了构建一个docker image 的<strong>可复现</strong>步骤。比起一步一步通过 docker commit 来制作一个镜像，dockerfile更适用于CI自动测试等系统。</p>
+<h1>Dockerfile 命令</h1>
+<ul>
+<li>FROM，指定基础镜像</li>
+<li>MAINTAINER，作者，建议格式（<code>Jon Snow &lt;jonsnow@westros.com&gt;</code>）</li>
+<li>EXPOSE，需要暴露的端口，但是一般也会使用 -p 来制定端口映射</li>
+<li>USER，运行的用户</li>
+<li>WORKDIR，进程的工作目录</li>
+<li>COPY，复制文件到</li>
+<li>RUN，运行shell命令</li>
+<li>CMD，启动进程使用的命令</li>
+<li>ENTRYPOINT，镜像启动的入口，默认是 bash -c</li>
+<li>ENV，设定环境变量</li>
+</ul>
+<h2>几个比较容易混淆的</h2>
+<h3>COPY vs ADD</h3>
+<p>ADD …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/dockerfile-ji-chu.html">posted at 03:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags selected">Docker</a>
+                </div>
+            </article>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

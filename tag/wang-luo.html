@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "网络"</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/wang-luo.html">网络</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/har-ge-shi-jie-xi.html" rel="bookmark" title="Permanent Link to &quot;HAR 格式解析&quot;">HAR 格式解析</a>
+                </h2>
+
+                
+                
+
+                <p>HAR(HTTP Archive) 文件是一种常见的用来保存 HTTP 请求和响应的格式。本质上，HAR 文件其实就是一个 JSON 文件。</p>
+<p>每一个 HAR Entry 都可以有以下记录存在：</p>
+<ul>
+<li>log</li>
+<li>creator</li>
+<li>browser</li>
+<li>pages<ul>
+<li>pageTimings</li>
+</ul>
+</li>
+<li>entries<ul>
+<li>request<ul>
+<li>queryString</li>
+<li>postData</li>
+<li>params</li>
+</ul>
+</li>
+<li>response<ul>
+<li>cookies</li>
+<li>headers</li>
+<li>content</li>
+</ul>
+</li>
+<li>cache</li>
+<li>timings</li>
+</ul>
+</li>
+</ul>
+<h1>log</h1>
+<p>这个是一个 HAR 文件的根字段，其他字段都是该字段的子字段</p>
+<div class="highlight"><pre><span></span>{
+    &quot;log&quot;: {
+        &quot;version&quot; : &quot;1.2&quot;,
+        &quot;creator&quot; : {},
+        &quot;browser&quot; : {},
+        &quot;pages&quot;: [],
+        &quot;entries&quot;: [],
+        &quot;comment&quot;: &quot;&quot;
+    }
+}
+</pre></div>
+
+
+<h1>creator</h1>
+<div class="highlight"><pre><span></span>&quot;creator&quot;: {
+    &quot;name&quot;: &quot;Firebug&quot;,
+    &quot;version …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/har-ge-shi-jie-xi.html">posted at 20:29</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags selected">网络</a>
+                </div>
+            </article>            <h4 class="date">Aug 02, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wang-luo-xie-yi-gai-shu.html" rel="bookmark" title="Permanent Link to &quot;网络协议概述&quot;">网络协议概述</a>
+                </h2>
+
+                
+                
+
+                <p>网络每层的头部基本上就是添加上本层的地址，还有一些校验和控制位</p>
+<p>运输层的 MAC 地址是点到点的，没传递一次就会把发送者和接受者用 ARP 转换，替换为经过的路由器的MAC地址。而 IP 层的地址和端口号是端到端，从发送到结束始终不变。除非经过上层协议改变了地址和端口号，比如代理服务器或者 NAPT 路由器。</p>
+<p>交换机没有任何地址，只有端口的概念。内部有一个转发表，记录了物理端口和MAC的对应关系，通过自主学习来建立。每台主机上都有自己的高速 ARP 地址缓存和路由表。可以通过 <code>ip n</code> 和 <code>ip r</code> 命令查看。</p>
+<p>VLAN 可以理解为逻辑上将一台交换机分割成数台虚拟交换机，且这些虚拟交换机互不相通。Vlan 是广播域，而通常两个广播域之间由路由器相连接，广播域之间来往的数据帧通过路由器中继。因此 Vlan间的通信也需要路由器（或者三层交换机）提供中继服务，即“Vlan间路由”。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wang-luo-xie-yi-gai-shu.html">posted at 17:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags selected">网络</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/oauth2-xie-yi-xiang-jie.html" rel="bookmark" title="Permanent Link to &quot;OAuth2 协议详解&quot;">OAuth2 协议详解</a>
+                </h2>
+
+                
+                
+
+                <p>今天有个项目需要用到 OAuth2 来处理一些东西，然而中文互联网有时候真是很难找到像样的文档，搜索 “OAuth 教程” 的到排名前两位的<a href="https://aaronparecki.com/oauth-2-simplified/">教</a><a href="https://aaronparecki.com/oauth-2-simplified/">程</a>都是翻译自一个英文教程，翻译质量奇差无比就不说了，这个英文教程本身就是有问题的，无奈只好搜索 “OAuth tutorial” 才找到几个看得过去的英文教程，总结一下放在这里，算是为中文互联网引入一些正确的知识。</p>
+<p>看到 OAuth2 这个词，一般人肯定会想，是不是还有个 OAuth 1 协议呢？是的，有 OAuth 1 协议，但是因为协议搞得太复杂了，所以没人用，市面上的基本都是根据 OAuth 2 来的。既然实际只有一个 OAuth，以下就简称 OAuth 了。</p>
+<h1>为什么要使用 OAuth —— 一个例子</h1>
+<p>大家最熟悉的例子就是第三方登录了。假设有个论坛叫做“91论坛”你没有注册过 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/oauth2-xie-yi-xiang-jie.html">posted at 04:41</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags selected">网络</a>
+                </div>
+            </article>            <h4 class="date">Jul 10, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/get-he-post-fang-fa-de-xuan-ze-he-urlde-she-ji.html" rel="bookmark" title="Permanent Link to &quot;Get 和 Post 方法的选择和URL的设计&quot;">Get 和 Post 方法的选择和URL的设计</a>
+                </h2>
+
+                
+                
+
+                <p>HTTP 中常用的方法有 GET/POST/PUT/DELETE 等，在设计API或者表单的时候我们需要选择合适的方法。一般有两种方案：</p>
+<ol>
+<li>只使用 GET 和 POST，GET 主要用来读取数据，POST 用来创建或者更新数据。</li>
+<li>RESTful的方法，GET/POST/PUT/DELETE 分别用来增删改查。</li>
+</ol>
+<h1>URL 的设计</h1>
+<p>为了探讨两种方案，首先我们来看一下 URL 的设计。URL 是 Universal Resource Locator 的缩写，也就是一个 URL 表示的是唯一的一个资源，所以这个资源的 id 或者说主键应该是放在 URL 路径中的。</p>
+<p>比如一个好的设计：</p>
+<div class="highlight"><pre><span></span>http://example.com/post/1234
+</pre></div>
+
+
+<p>不好的设计 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/get-he-post-fang-fa-de-xuan-ze-he-urlde-she-ji.html">posted at 08:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags selected">网络</a>
+                </div>
+            </article>            <h4 class="date">Apr 13, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-shang-de-dns-huan-cun.html" rel="bookmark" title="Permanent Link to &quot;Linux 上的 DNS 缓存&quot;">Linux 上的 DNS 缓存</a>
+                </h2>
+
+                
+                
+
+                <p>Linux 内核中没有 DNS 缓存</p>
+<p>Firefox 内置了 DNS 缓存</p>
+<p><code>nscd</code> 可以提供本地的 DNS 缓存，好多机器开了，但是据说这个服务有很多问题。</p>
+<p>Python 使用了 <code>getaddrinfo</code> 函数，会使用系统的 DNS 缓存</p>
+<p>像 <code>nslookup</code> 和是dig这样的工具会 bypass 掉 DNS 缓存。</p>
+<p>另外 Go 语言好像也不会使用本机的 DNS 缓存，即使开了</p>
+<p>https://wiki.archlinux.org/index.php/dnsmasq 可以用来做本地缓存</p>
+<p>还可以使用systemd提供的resolved</p>
+<p>1 https://stackoverflow.com/questions/11020027/dns-caching-in-linux …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-shang-de-dns-huan-cun.html">posted at 05:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags selected">网络</a>
+                </div>
+            </article>            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-zhong-de-epoll-he-nginx-zhong-de-ying-yong.html" rel="bookmark" title="Permanent Link to &quot;Linux 中的 epoll 和 nginx 中的应用&quot;">Linux 中的 epoll 和 nginx 中的应用</a>
+                </h2>
+
+                
+                
+
+                <h1>epoll 的优势</h1>
+<p>select 和 poll 每次获取可读写的描述符都需要遍历所有的文件描述符，它们的时间复杂度都是 O(n)，而 epoll 是基于回调的，每个 socket 上有事件发生都会调用回调函数放到 epoll 的就序列表中，因此 epoll_wait 只需要简单地读取这个列表，所以epoll的时间复杂度是 O(1) 的。</p>
+<p>添加监控的socket只需要使用 epoll_ctl 添加一次，而获取消息 epoll 使用 mmap 加速内核与用户态的消息传递，不需要每次都把 socket 在内核态和用户态之间考来考取。</p>
+<h2>epoll 的工作模式</h2>
+<p>epoll 中有两个模式，水平触发（LT）和边缘触发（ET）。其中水平触发如果不做任何操作，就会一直触发，而边缘触发只会触发一次。就好比电工电子里面的两种触发模式。默认模式是 LT</p>
+<p>Level …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-zhong-de-epoll-he-nginx-zhong-de-ying-yong.html">posted at 05:15</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags selected">网络</a>
+                </div>
+            </article>            <h4 class="date">Sep 04, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/http-ren-zheng-jie-shao.html" rel="bookmark" title="Permanent Link to &quot;HTTP 认证介绍&quot;">HTTP 认证介绍</a>
+                </h2>
+
+                
+                
+
+                <p>周末给一个库添加http代理的支持，发现对http basic auth不甚了解，阅读了一下相关的文档，写篇备忘。</p>
+<p>http 中的认证主要是 basic auth 和 digest auth 两种，其中 digest auth 比较复杂，而且也没有提升安全性，已经不建议使用了。</p>
+<p>RFC 7235 [1] 描述了客户端（通常是浏览器）和服务器如何通过http进行身份认证的一些机制。客户端和 http代理之间也可以使用 http auth 来做验证。
+  </p>
+<h1>验证流程</h1>
+<ol>
+<li>当客户端访问一个页面时，如果只有验证后才能访问，或者验证后有更多内容，服务器应该发送 401 Unauthorized，提出一个chanllenge，设定 <code>WWW-Authenticate</code> header，并指定验证的 type 和 realm，具体定义下文有讲。</li>
+<li>客户端这时通常应该提示用户输入密钥，一般是浏览器弹出用户名密码对话框供用户填写，然后使用 …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/http-ren-zheng-jie-shao.html">posted at 03:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags selected">网络</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/https-he-ssl-xiang-guan-xin-xi.html" rel="bookmark" title="Permanent Link to &quot;HTTPS 和 SSL 相关信息&quot;">HTTPS 和 SSL 相关信息</a>
+                </h2>
+
+                
+                
+
+                <h1>证书文件</h1>
+<p>the de facto SSL certs format is X.509 v3</p>
+<p>it contains:</p>
+<ul>
+<li>version   </li>
+<li>serial number </li>
+<li>algoirthm </li>
+<li>authority </li>
+<li>validate date </li>
+<li>orgnisation   </li>
+<li>pubkey    </li>
+<li>etc.  </li>
+<li>sign, the ca signs the cert using its private key</li>
+</ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/https-he-ssl-xiang-guan-xin-xi.html">posted at 03:38</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags selected">网络</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ji-chu-socket-bian-cheng.html" rel="bookmark" title="Permanent Link to &quot;基础 socket 编程&quot;">基础 socket 编程</a>
+                </h2>
+
+                
+                
+
+                <p>创建与使用 socket, 一个 echo server 和 client</p>
+<p>socket 客户端的四个步骤: </p>
+<ol>
+<li>使用 socket 函数创建连接</li>
+<li>使用 connect 连接到服务器</li>
+<li>使用 send 和 recv 接收和发送消息</li>
+<li>使用 close 关闭连接</li>
+</ol>
+<p>第一步 创建一个 TCP socket
+int sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+返回的 sock 可以看做一个 handle, 本质上是一个文件描述符( file descriptor) , 小于0表示错误</p>
+<p>表示 socket 地址的结构 sockaddr_in, 其中 in 表示 internet, 不是input …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ji-chu-socket-bian-cheng.html">posted at 03:28</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags selected">网络</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/http-huan-cun-jie-shao.html" rel="bookmark" title="Permanent Link to &quot;HTTP 缓存介绍&quot;">HTTP 缓存介绍</a>
+                </h2>
+
+                
+                
+
+                <p>和缓存相关的 header 共有如下几种</p>
+<ul>
+<li><code>Pragma</code></li>
+<li><code>Cache-Control</code></li>
+<li><code>Expires</code></li>
+<li><code>Last-Modified</code></li>
+<li><code>Etag</code></li>
+<li><code>If-Modified-Since</code></li>
+<li><code>If-Non-Match</code></li>
+</ul>
+<p>Expires 由服务器返回，用于指定当前页面过期时间，使用绝对时间表示。</p>
+<p>Cache-Control 指定了相对过期的时间，由当前时间多久后过期的秒数表示。</p>
+<div class="highlight"><pre><span></span>Cache-Control: max-age=86400
+</pre></div>
+
+
+<p>Last-Modified 是由服务器给出了文档的过期时间，当第二次请求该文档的时候，浏览器可以使用 If-Modified-Since 头部指定该过期时间，如果文档还没有过期，那么服务器应该返回 304，否则返回 200 和新文档。</p>
+<p>Etag 是由服务器给出的文档的哈希值，当第二次请求该文档的时候，浏览器可以使用 If-None-Match 头部指定该哈希值，如果文档没有变动，那么服务器应该返回 304，如果有变动，那么哈希值也变了，应该返回 200 和新文档。</p>
+<p>可以看出 Etag 相比 Last-Modified …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/http-huan-cun-jie-shao.html">posted at 02:37</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags selected">网络</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/2" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 1 of 2</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

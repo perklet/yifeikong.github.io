@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "HTTP"</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/http.html">HTTP</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/oauth2-xie-yi-xiang-jie.html" rel="bookmark" title="Permanent Link to &quot;OAuth2 协议详解&quot;">OAuth2 协议详解</a>
+                </h2>
+
+                
+                
+
+                <p>今天有个项目需要用到 OAuth2 来处理一些东西，然而中文互联网有时候真是很难找到像样的文档，搜索 “OAuth 教程” 的到排名前两位的<a href="https://aaronparecki.com/oauth-2-simplified/">教</a><a href="https://aaronparecki.com/oauth-2-simplified/">程</a>都是翻译自一个英文教程，翻译质量奇差无比就不说了，这个英文教程本身就是有问题的，无奈只好搜索 “OAuth tutorial” 才找到几个看得过去的英文教程，总结一下放在这里，算是为中文互联网引入一些正确的知识。</p>
+<p>看到 OAuth2 这个词，一般人肯定会想，是不是还有个 OAuth 1 协议呢？是的，有 OAuth 1 协议，但是因为协议搞得太复杂了，所以没人用，市面上的基本都是根据 OAuth 2 来的。既然实际只有一个 OAuth，以下就简称 OAuth 了。</p>
+<h1>为什么要使用 OAuth —— 一个例子</h1>
+<p>大家最熟悉的例子就是第三方登录了。假设有个论坛叫做“91论坛”你没有注册过 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/oauth2-xie-yi-xiang-jie.html">posted at 04:41</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags selected">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>            <h4 class="date">Jul 10, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/get-he-post-fang-fa-de-xuan-ze-he-urlde-she-ji.html" rel="bookmark" title="Permanent Link to &quot;Get 和 Post 方法的选择和URL的设计&quot;">Get 和 Post 方法的选择和URL的设计</a>
+                </h2>
+
+                
+                
+
+                <p>HTTP 中常用的方法有 GET/POST/PUT/DELETE 等，在设计API或者表单的时候我们需要选择合适的方法。一般有两种方案：</p>
+<ol>
+<li>只使用 GET 和 POST，GET 主要用来读取数据，POST 用来创建或者更新数据。</li>
+<li>RESTful的方法，GET/POST/PUT/DELETE 分别用来增删改查。</li>
+</ol>
+<h1>URL 的设计</h1>
+<p>为了探讨两种方案，首先我们来看一下 URL 的设计。URL 是 Universal Resource Locator 的缩写，也就是一个 URL 表示的是唯一的一个资源，所以这个资源的 id 或者说主键应该是放在 URL 路径中的。</p>
+<p>比如一个好的设计：</p>
+<div class="highlight"><pre><span></span>http://example.com/post/1234
+</pre></div>
+
+
+<p>不好的设计 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/get-he-post-fang-fa-de-xuan-ze-he-urlde-she-ji.html">posted at 08:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags selected">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>            <h4 class="date">Sep 04, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/http-ren-zheng-jie-shao.html" rel="bookmark" title="Permanent Link to &quot;HTTP 认证介绍&quot;">HTTP 认证介绍</a>
+                </h2>
+
+                
+                
+
+                <p>周末给一个库添加http代理的支持，发现对http basic auth不甚了解，阅读了一下相关的文档，写篇备忘。</p>
+<p>http 中的认证主要是 basic auth 和 digest auth 两种，其中 digest auth 比较复杂，而且也没有提升安全性，已经不建议使用了。</p>
+<p>RFC 7235 [1] 描述了客户端（通常是浏览器）和服务器如何通过http进行身份认证的一些机制。客户端和 http代理之间也可以使用 http auth 来做验证。
+  </p>
+<h1>验证流程</h1>
+<ol>
+<li>当客户端访问一个页面时，如果只有验证后才能访问，或者验证后有更多内容，服务器应该发送 401 Unauthorized，提出一个chanllenge，设定 <code>WWW-Authenticate</code> header，并指定验证的 type 和 realm，具体定义下文有讲。</li>
+<li>客户端这时通常应该提示用户输入密钥，一般是浏览器弹出用户名密码对话框供用户填写，然后使用 …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/http-ren-zheng-jie-shao.html">posted at 03:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags selected">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/http-huan-cun-jie-shao.html" rel="bookmark" title="Permanent Link to &quot;HTTP 缓存介绍&quot;">HTTP 缓存介绍</a>
+                </h2>
+
+                
+                
+
+                <p>和缓存相关的 header 共有如下几种</p>
+<ul>
+<li><code>Pragma</code></li>
+<li><code>Cache-Control</code></li>
+<li><code>Expires</code></li>
+<li><code>Last-Modified</code></li>
+<li><code>Etag</code></li>
+<li><code>If-Modified-Since</code></li>
+<li><code>If-Non-Match</code></li>
+</ul>
+<p>Expires 由服务器返回，用于指定当前页面过期时间，使用绝对时间表示。</p>
+<p>Cache-Control 指定了相对过期的时间，由当前时间多久后过期的秒数表示。</p>
+<div class="highlight"><pre><span></span>Cache-Control: max-age=86400
+</pre></div>
+
+
+<p>Last-Modified 是由服务器给出了文档的过期时间，当第二次请求该文档的时候，浏览器可以使用 If-Modified-Since 头部指定该过期时间，如果文档还没有过期，那么服务器应该返回 304，否则返回 200 和新文档。</p>
+<p>Etag 是由服务器给出的文档的哈希值，当第二次请求该文档的时候，浏览器可以使用 If-None-Match 头部指定该哈希值，如果文档没有变动，那么服务器应该返回 304，如果有变动，那么哈希值也变了，应该返回 200 和新文档。</p>
+<p>可以看出 Etag 相比 Last-Modified …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/http-huan-cun-jie-shao.html">posted at 02:37</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags selected">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

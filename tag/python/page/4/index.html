@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "Python" | Page 4</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/python/page/4/index.html">Python</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Aug 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-import-xi-tong-yu-importlib.html" rel="bookmark" title="Permanent Link to &quot;Python 的 import 系统与 importlib&quot;">Python 的 import 系统与 importlib</a>
+                </h2>
+
+                
+                
+
+                <p>首先</p>
+<p><strong>init</strong>.py is first called before the actual import</p>
+<p>if you have  the following code:</p>
+<div class="highlight"><pre><span></span>foobar/
+    __init__.py
+    baz.py
+</pre></div>
+
+
+<p>runing import foobar will not make foobar.baz available
+you have to add from . import baz to <strong>init</strong>.py</p>
+<p>add <strong>all</strong> to <strong>init.</strong>.py to control which to be …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-import-xi-tong-yu-importlib.html">posted at 01:01</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-readability-yuan-ma-yue-du.html" rel="bookmark" title="Permanent Link to &quot;python-readability 源码阅读&quot;">python-readability 源码阅读</a>
+                </h2>
+
+                
+                
+
+                <p>readability 是一个可以从杂乱无章的网页中抽取出无特殊格式，适合再次排版阅读的文章的库，比如我们常见的手机浏览器的阅读模式很大程度上就是采用的这个库，还有 evernote 的 webclipper 之类的应用也都是利用了类似的库。readability 的各个版本都源自readability.js这个库，之前尝试阅读过js版本，无关的辅助函数太多了，而且 js 的 dom api 实在称不上优雅，读起来晦涩难通，星期天终于有时间拜读了一下python-readability的代码。</p>
+<p>readability核心是一个Document类，这个类代表了一个 HTML 文件，同时可以输出一个格式化的文件</p>
+<h1>几个核心方法和概念</h1>
+<p><em>summary，抽取一篇文章
+</em>get_article， 获得一篇文章</p>
+<h2>summary</h2>
+<p>summary 方法是核心方法，可以抽取出一篇文章。可能需要对文章抽取多次才能获得符合条件的文章，这个方法的核心思想是：</p>
+<div class="highlight"><pre><span></span>1. 第一次尝试抽取设定 ruthless，也就是强力模式，可能会误伤到一些标签
+2. 把给定的 input 解析一次并记录到 self.html，并去除所有的 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-readability-yuan-ma-yue-du.html">posted at 22:11</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mang-deng-dai.html" rel="bookmark" title="Permanent Link to &quot;忙等待&quot;">忙等待</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span>while True:
+    pass 
+</pre></div>
+
+
+<p>this is busy waiting</p>
+<div class="highlight"><pre><span></span>while True:
+    time.sleep(10)
+</pre></div>
+
+
+<p>this is not busy waiting, bucause cpu are free to do other things, and only need trivial cpu cycles</p>
+<p>http://stackoverflow.com/questions/529034/python-pass-or-sleep-for-long-running-processes</p>
+<p>busy waiting is considered as anti-pattern, but using it in spinning-lock is ok …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mang-deng-dai.html">posted at 23:34</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pep8-zhong-xu-yao-zhu-yi-de-di-fang.html" rel="bookmark" title="Permanent Link to &quot;PEP8 中需要注意的地方&quot;">PEP8 中需要注意的地方</a>
+                </h2>
+
+                
+                
+
+                <h1>spaces</h1>
+<p>If operators with different priorities are used, consider adding whitespace around the operators with the lowest priority(ies). Use your own judgment; however, never use more than one space, and always have the same amount of whitespace on both sides of a binary operator.</p>
+<div class="highlight"><pre><span></span><span class="n">Yes</span><span class="o">:</span>
+<span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">submitted …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pep8-zhong-xu-yao-zhu-yi-de-di-fang.html">posted at 01:04</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 24, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-signal.html" rel="bookmark" title="Permanent Link to &quot;python signal&quot;">python signal</a>
+                </h2>
+
+                
+                
+
+                <p>Any thread can perform an alarm(), getsignal(), pause(), setitimer() or getitimer(); only the main thread can set a new signal handler, and the main thread will be the only one to receive signals</p>
+<h1>default handlers:</h1>
+<p>signal.SIG_DFL</p>
+<p>This is one of two standard signal handling options; it will simply perform …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-signal.html">posted at 19:15</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/curio.html" rel="bookmark" title="Permanent Link to &quot;curio&quot;">curio</a>
+                </h2>
+
+                
+                
+
+                <p>curio 是一个神奇的 Python 库，它完全面向 Python 3.5 增加的 async/await 语法，从低层就没有使用 callback 的语法，因此相比 asyncio 来说设计更简单，API 更优雅，性能却更好。</p>
+<h1>一个例子</h1>
+<p>curio 的文档给了一个很好的例子，下面总结一下这个例子。这个例子模拟了孩子在玩Minecraft，而家长在催促孩子该出发了的情景。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">curio</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">countdonw</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;T-minus&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">await</span> <span class="n">cuiro</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 在异步编程中，不能使用同步代码中的 time.sleep</span>
+        <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+
+<span class="n">start_evt …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/curio.html">posted at 14:56</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 21, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/uwsgi-he-wsgi-xie-yi.html" rel="bookmark" title="Permanent Link to &quot;uwsgi 和 wsgi 协议&quot;">uwsgi 和 wsgi 协议</a>
+                </h2>
+
+                
+                
+
+                <p>uWSGI is a web server than runs python web frameworks. uwsgi(lower case) is the protocol it communicates with front end web servers(nginx)</p>
+<h1>wsgi 协议</h1>
+<p>YN:</p>
+<p>值得注意的是, wsgi实际上定义了一个同步的模型, 也就是每一个客户请求会调用一个同步的函数, 这样也就无法发挥异步的特性.</p>
+<h1>两个最简单的例子</h1>
+<p>其中实现 simple_app 函数也就是实现了wsgi协议.需要注意的有一下三点:</p>
+<ol>
+<li>environ字典中包含的变量</li>
+<li>start_response的参数</li>
+<li>simple_app的调用次序和返回值</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="nx">HELLO_WORLD</span> <span class="o">=</span> <span class="nx">b</span><span class="s2">&quot;Hello world!\n&quot;</span>
+
+<span class="nx">def</span> <span class="nx">simple_app</span><span class="p">(</span><span class="nx">environ</span><span class="p">,</span> <span class="nx">start_response</span><span class="p">)</span><span class="o">:</span>
+    <span class="s2">&quot;&quot;&quot;Simplest possible …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/uwsgi-he-wsgi-xie-yi.html">posted at 15:37</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 18, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/gracefully-shutdown-inside-a-event-loop.html" rel="bookmark" title="Permanent Link to &quot;Gracefully shutdown inside a event loop&quot;">Gracefully shutdown inside a event loop</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span><span class="k">try</span><span class="o">:</span>
+    <span class="n">loop</span><span class="o">.</span><span class="na">run_forever</span><span class="o">()</span>
+<span class="n">finally</span><span class="o">:</span>
+    <span class="n">loop</span><span class="o">.</span><span class="na">run_until_complete</span><span class="o">(</span><span class="n">loop</span><span class="o">.</span><span class="na">shutdown_asyncgens</span><span class="o">())</span>
+    <span class="n">loop</span><span class="o">.</span><span class="na">close</span><span class="o">()</span>
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/gracefully-shutdown-inside-a-event-loop.html">posted at 08:37</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-3-zhong-de-enum.html" rel="bookmark" title="Permanent Link to &quot;Python 3 中的 Enum&quot;">Python 3 中的 Enum</a>
+                </h2>
+
+                
+                
+
+                <p>enum 模块是 Python 3 中新引入的一个用于定义枚举常量的模块。</p>
+<h1>基本使用</h1>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="o">...</span>     <span class="n">RED</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">...</span>     <span class="n">GREEN</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="o">...</span>     <span class="n">BLUE</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">)</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">enum</span> <span class="s1">&#39;Color&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">GREEN</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span>
+<span class="bp">True</span>
+
+<span class="c1"># 可以遍历</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">Color</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">color</span>
+<span class="o">...</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">GREEN</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">BLUE</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">Shape</span><span class="p">)</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">Shape …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-3-zhong-de-enum.html">posted at 16:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 02, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-chardet-zi-dong-jian-ce-wen-ben-bian-ma.html" rel="bookmark" title="Permanent Link to &quot;使用 Chardet 自动检测文本编码&quot;">使用 Chardet 自动检测文本编码</a>
+                </h2>
+
+                
+                
+
+                <p>python 中的 chardet 库可以用来猜测文件的编码</p>
+<h1>usage</h1>
+<div class="highlight"><pre><span></span>pip install cchardet
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">cchardet</span> <span class="kn">as</span> <span class="nn">chardet</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">chinese_bytes</span> <span class="o">=</span> <span class="s1">&#39;中文&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">chardet</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">chinese_bytes</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="p">{</span><span class="s1">&#39;confidence&#39;</span><span class="p">:</span> <span class="mf">0.7524999976158142</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">}</span>
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-chardet-zi-dong-jian-ce-wen-ben-bian-ma.html">posted at 06:23</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/3" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/5" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 4 of 6</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

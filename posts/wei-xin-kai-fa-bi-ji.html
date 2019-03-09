@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 微信开发笔记</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="创业,机器人推广,运营与产品" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-xin-kai-fa-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;微信开发笔记&quot;">微信开发笔记</a>
+                </h2>
+
+                
+                
+
+                <p>可以使用微信的测试号学习如何开发
+http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login</p>
+<p>公众号对于消息的处理相当于使用了微信的服务器做转发代理, 发送到公众号的后端服务器, 而一旦进入网页就相当于直接同服务器通信了.  微信会使用 POST 发送消息到服务器</p>
+<p>对于消息的处理有一个签名的过程, 这样后端服务器可以判断消息是否来自微信, 从而防止 API 被恶意滥用盗用.</p>
+<p>所以这些繁杂的事情不如交个框架去处理</p>
+<p>APPID/APPSECRET 相当于公众号的账号和密码, 通过这两个组合获取一个 access_token 用于平时访问, access_token 是有有效期的, 即使明文传送被泄露了也问题不大</p>
+<p>问题是, 服务器需要记得去刷新这个 token, 所以这些东西应该交给框架最好了</p>
+<p>微信开放了 JS SDK 可以使用图片语音地图等一系列的应用, 不错</p>
+<p>常用的一些 meta 标签</p>
+<ol>
+<li><meta content=”width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;” name=”viewport” /> </li>
+<li><meta content=”yes” name=”apple-mobile-web-app-capable” />  <!--允许全屏模式浏览--></li>
+<li><meta content=”black” name=”apple-mobile-web-app-status-bar-style” />  <!--滚动条样式--></li>
+<li><meta content=”telephone=no” name=”format-detection” />  <!--禁止识别电话号码--></li>
+</ol>
+<p>iOS中浏览器直接访问站点时，navigator.standalone为false,从 主屏启动webapp 时，navigator.standalone为true
+移动版本webkit 为 input元素提供了autocapitalize属性，通过指定autocapitalize=”off”来关闭键盘默认首字母大写
+开发者指定 的 target属性就失效了，但是可以通过指定当前元素的-webkit-touch-callout样式属性为none来禁止iOS弹出这些按钮</p>
+<p>同样为一个img标签指定-webkit-touch-callout为none也会禁止设备弹出列表按钮，这样用户就无法保存＼复制你的图片了
+指定文字标签的-webkit-user-select属性为none便可以禁止iOS用户选中文字</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-xin-kai-fa-bi-ji.html">posted at 10:05</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/chuang-ye.html" rel="tag">创业</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/chuang-ye.html" class="tags">创业</a>
+                    &nbsp;<a href="/tag/ji-qi-ren-tui-yan.html" class="tags">机器人推广</a>
+                    &nbsp;<a href="/tag/yun-ying-yu-chan-pin.html" class="tags">运营与产品</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

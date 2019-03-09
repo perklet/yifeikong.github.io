@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | C语言中的 setjmp/longjmp</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="C 语言,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/cyu-yan-zhong-de-setjmplongjmp.html" rel="bookmark" title="Permanent Link to &quot;C语言中的 setjmp/longjmp&quot;">C语言中的 setjmp/longjmp</a>
+                </h2>
+
+                
+                
+
+                <p>首先吐槽一下这个缩写, 好好地 jump 单词才四个字母不用, 非要缩写成 jmp 三个字母, 每次都打错, 蛋疼</p>
+<p>在 C 中，goto 语句是不能跨越函数的，而执行这类跳转功能的是 <code>setjmp</code> 和 <code>longjmp</code> 宏。这两个宏对于处理发生在深层嵌套函数调用中的出错情况是非常有用的。</p>
+<p>此即为：非局部跳转。非局部指的是，这不是由普通 C 语言 goto 语句在一个函数内实施的跳转，而是在栈上跳过若干调用帧，返回到当前函数调用路径的某个函数中。</p>
+<div class="highlight"><pre><span></span>#include &amp;lt;setjmp.h&amp;gt;
+int  setjmp (jmp_buf env) ;  /*设置调转点*/
+void longjmp (jmp_buf env,  int val) ;  /*跳转*/
+</pre></div>
+
+
+<p><code>setjmp</code> 参数 env 的类型是一个特殊类型 <code>jmp_buf</code>。这一数据类型是某种形式的数组，其中存放 在调用 <code>longjmp</code> 时能用来恢复栈状态的所有信息。因为需在另一个函数中引用 env 变量，所以应该将 env 变量定义为全局变量。</p>
+<p><code>longjmp</code> 参数 val，它将成为从 setjmp 处返回的值。</p>
+<div class="highlight"><pre><span></span>#include &amp;lt;stdio.h&amp;gt;  
+#include &amp;lt;setjmp.h&amp;gt;  
+static jmp_buf buf;  
+void second(void){  
+    printf(&quot;second\n&quot;);  
+    longjmp(buf,1);              
+    // 跳回setjmp的调用处使得setjmp返回值为1  
+}  
+void first(void) {  
+    second();  
+    printf(&quot;first\n&quot;);            
+    // 不可能执行到此行  
+}  
+int main(){     
+    if (!setjmp(buf)) {  
+        // 进入此行前，setjmp返回0  
+        first();  
+    } else {     
+        // 当longjmp跳转回，setjmp返回1，因此进入此行  
+        printf(&quot;main\n&quot;);  
+    }  
+    return 0;  
+}
+</pre></div>
+
+
+<p>直接调用 setjmp 时，返回值为 0，这一般用于初始化（设置跳转点时）。以后再调用 longjmp 宏时用 env 变量进行跳转。程序会自动跳转到 setjmp 宏的返回语句处，此时 setjmp 的返回值为非 0，由 longjmp 的第二个参数指定。
+一般地，宏 <code>setjmp</code> 和 <code>longjmp</code> 是成对使用的，这样程序流程可以从一个深层嵌套的函数中返回。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/cyu-yan-zhong-de-setjmplongjmp.html">posted at 01:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

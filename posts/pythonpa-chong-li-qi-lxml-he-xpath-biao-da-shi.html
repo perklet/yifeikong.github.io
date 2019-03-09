@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Python爬虫利器——lxml 和 xpath 表达式</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机,爬虫" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 02, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pythonpa-chong-li-qi-lxml-he-xpath-biao-da-shi.html" rel="bookmark" title="Permanent Link to &quot;Python爬虫利器——lxml 和 xpath 表达式&quot;">Python爬虫利器——lxml 和 xpath 表达式</a>
+                </h2>
+
+                
+                
+
+                <p>最近要做下微信爬虫，之前写个小东西都是直接用正则提取数据就算了，如果需要更稳定的提取数据，还是使用 xpath 定位元素比较可靠。周末没事，从爬虫的角度研究了一下 python xml/html 相关的库。</p>
+<p>Python 标准库中自带了 xml 模块，但是性能不够好，而且缺乏一些人性化的 API。相比之下，第三方库 lxml 是用 Cython 实现的，而且增加了很多实用的功能，可谓爬虫处理网页数据的一件利器。</p>
+<p>严格来说，html 并不是 xml 的一种，不过 lxml 对于 xml 和 html 都有很好的支持，分别使用 <code>lxml.etree</code> 和 <code>lxml.html</code>两个模块。</p>
+<h1>解析</h1>
+<p>网页下载下来以后是个 bytes 的形式，需要构造 DOM 树：</p>
+<div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">html</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">   ...: &lt;p&gt;hello&lt;span id=&#39;world&#39;&gt;world&lt;/span&gt;&lt;/p&gt;</span>
+<span class="s1">   ...: &#39;&#39;&#39;</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">lxml.html</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">doc</span> <span class="o">=</span> <span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">doc</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="o">&lt;</span><span class="n">Element</span> <span class="n">p</span> <span class="n">at</span> <span class="mh">0x1059aa408</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<h1>Element 结构</h1>
+<p>生成的树是一个设计很精妙的结构，可以把它当做一个对象访问当前节点自身的文本节点，可以把他当做一个数组，元素就是他的子节点，可以把它当做一个字典，从而遍历它的属性，下面演示了 lxml 的常见用法：</p>
+<div class="highlight"><pre><span></span>In [5]: doc.text
+Out[5]: &#39;hello&#39;
+
+In [6]: doc.tag
+Out[6]: &#39;p&#39;
+
+In [7]: doc[0].tag
+Out[7]: &#39;span&#39;
+
+In [11]: for k, v in doc[0].items():
+    ...:     print(k, v)
+    ...:
+id world
+
+In [12]: doc[0].get(&#39;id&#39;)
+Out[12]: &#39;world&#39;
+
+In [13]: doc[0].attrib
+Out[13]: {&#39;id&#39;: &#39;world&#39;}
+</pre></div>
+
+
+<h1>遍历树的方法</h1>
+<p>doc 是一个树形结构，可以通过一些方法访问树中的其他节点：</p>
+<div class="highlight"><pre><span></span>In [14]: doc.getroottree()  # 返回树
+Out[14]: <span class="nt">&lt;lxml.etree._ElementTree</span> <span class="err">at</span> <span class="err">0x105360708</span><span class="nt">&gt;</span>
+
+In [19]: doc.getroottree().getroot()  # 返回根节点，这里是 lxml 自动生成的 html 节点
+Out[19]: <span class="nt">&lt;Element</span> <span class="err">html</span> <span class="err">at</span> <span class="err">0x10599da98</span><span class="nt">&gt;</span>
+
+In [20]: doc.getparent()  # lxml 自动生成的 body 节点
+Out[20]: <span class="nt">&lt;Element</span> <span class="err">body</span> <span class="err">at</span> <span class="err">0x1059a87c8</span><span class="nt">&gt;</span>
+
+In [21]: doc.getprevious()
+
+In [22]: doc.getnext()
+
+In [23]: doc.text_content()
+Out[23]: &#39;helloworld&#39;
+
+In [25]: lxml.html.tostring(doc, pretty_print=True, encoding=&#39;utf-8&#39;)
+Out[25]: b&#39;<span class="nt">&lt;p&gt;</span>hello<span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">&quot;world&quot;</span><span class="nt">&gt;</span>world<span class="nt">&lt;/span&gt;&lt;/p&gt;</span>\n&#39;
+</pre></div>
+
+
+<p>注意因为我们给的是一个 html 的片段（<code>&lt;p&gt;...&lt;/p&gt;</code>），所以 lxml 自动生成了 html 和 body 等节点已构成完整的 html 文档。</p>
+<p>如果需要显式地指定生成一个 html 片段文档还是完整文档，可以分别使用：lxml.html.fragment_fromstring 和 lxml.html.document_fromstring 两个方法。</p>
+<p>lxml 还有其他一些方法，都列在下面了：</p>
+<p>Element.tail    </p>
+<ul>
+<li>Element.append(Element)   添加一个子元素</li>
+<li>Element.set('attr', value) 设置属性</li>
+<li>Element.iter(tag_name) 遍历所有后系元素，可以使用 <code>*</code> </li>
+<li>ElementTree.getelementpath(Element)   </li>
+<li>Element.getroottree() 返回对应的树</li>
+<li>ElementTree.getpath(Element)  返回一个元素的 xpath</li>
+<li>ElementTree.getroot() 返回根节点</li>
+<li>HtmlElement.drop_tree() 删除当前节点下的所有节点，但是保留text</li>
+<li>HtmlElement.drop_tag() 删除当前节点，但是保留它的子节点和text</li>
+<li>HtmlElement.classes 返回类</li>
+<li>HtmlElement.find_class(class_name) 按照 class 查找 tag</li>
+<li>HtmlElement.get_element_by_id(id, *default) 按照 id 查找元素</li>
+<li>HtmlElement.iterlinks() 遍历所有连接</li>
+<li>HtmlElement.make_links_absolute(base_url=None, resolve_base_href=True) 把所有连接变成绝对链接</li>
+<li>HtmlElement.resolve_base_href() 解析 base 标签</li>
+<li>HtmlElement.rewrite_links(link_repl_func) 替换所有的链接</li>
+</ul>
+<h1>XPath</h1>
+<p>XPath 实在太强大了，在定位元素方面绝对是秒杀 CSS 选择器。在 lxml 中，节点和树分别具有xpath 函数。</p>
+<p>lxml 中的 xpath 方法，对于 xpath 表达式应该返回元素，总是返回一个数组，即使只有一个元素</p>
+<div class="highlight"><pre><span></span>In [24]: doc.xpath(&#39;//span/text()&#39;)
+Out[24]: [&#39;world&#39;]
+</pre></div>
+
+
+<p>lxml 中的 xpath 函数支持变量</p>
+<div class="highlight"><pre><span></span>print(root.xpath(&quot;$text&quot;, text = &quot;Hello World!&quot;))
+Hello World!
+</pre></div>
+
+
+<p>xpath may return _ElementStringResult, which is not picklable, use xpath(smart_strings=False) to avoid this http://lxml.de/xpathxslt.html#xpath-return-values</p>
+<p>lxml 还支持几个函数 <code>find/findall</code>，他们使用 ElementPath，是一种类似 xpath 的语言，感觉很是奇怪，lxml 的文档描述他是 xpath 的一个子集，暂时不看了。</p>
+<h1>常见问题</h1>
+<p>lxml 在遇到小于号的时候会出问题（按照标准，应该编码为 <code>&amp;lt;</code>），直接把后面的文档都丢了，但是浏览器兼容性比较好，不会有问题。</p>
+<p>by default, the lxml parser is not very error-proof, the html5parser lib is behaves more like your web browser.</p>
+<p>lxml.html.html5parser provides same interface with lxml.html</p>
+<p>tricks and traps</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pythonpa-chong-li-qi-lxml-he-xpath-biao-da-shi.html">posted at 16:29</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

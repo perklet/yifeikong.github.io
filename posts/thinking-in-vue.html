@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | thinking in vue</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="JavaScript,大前端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 10, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/thinking-in-vue.html" rel="bookmark" title="Permanent Link to &quot;thinking in vue&quot;">thinking in vue</a>
+                </h2>
+
+                
+                
+
+                <h1>basic usage</h1>
+<p>The created vue instance will proxy its data member </p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;app&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;ol&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">v-for=</span><span class="s">&quot;company in companies&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a</span> <span class="na">v-bind:href=</span><span class="s">&quot;company.link&quot;</span><span class="nt">&gt;</span><span class="cp">{{</span> <span class="nv">company.text</span> <span class="cp">}}</span><span class="nt">&lt;/a&gt;</span>  // bind 更新参数
+            <span class="nt">&lt;button</span> <span class="na">v-on:click=</span><span class="s">&quot;reverseText&quot;</span><span class="nt">&gt;</span>逆转消息<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;/ol&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+let vm = new Vue({
+    el: &#39;#app&#39;,
+        data: {
+            companies: [
+                    {text: &#39;Google&#39;, link: &#39;http://google.com&#39;},
+                        {text: &#39;fackbook&#39;, link: &#39;http://facebook.com&#39;},
+                        {text: &#39;apple&#39;, link: &#39;http://apple.com&#39;}
+                ]
+        },
+        methods: {
+            reverseText: function() {
+            // 注意 this 绑定到了触发这个事件的元素内部
+                    this.company.text = this.company.text.split(&#39;&#39;).reverse.join(&#39;&#39;);
+                }
+        }   
+});
+
+vm.companies.push({text: &#39;Amazon&#39;, link: &#39;http://amazon.com&#39;});
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>// computed 属性可以绑定一个虚拟的属性到几个不同的属性上, 有点类似python的@property
+// ...
+computed: {
+  fullName: {
+    // getter
+    get: function () {
+      return this.firstName + &#39; &#39; + this.lastName
+    },
+    // setter
+    set: function (newValue) {
+      var names = newValue.split(&#39; &#39;)
+      this.firstName = names[0]
+      this.lastName = names[names.length - 1]
+    }
+  }
+}
+// ...
+</pre></div>
+
+
+<div class="highlight"><pre><span></span># 适合用来做自动保存文档等工作
+&lt;script&gt;
+var watchExampleVM = new Vue({
+  el: &#39;#watch-example&#39;,
+  data: {
+    question: &#39;&#39;,
+    answer: &#39;I cannot give you an answer until you ask a question!&#39;
+  },
+  watch: {
+    // 如果 question 发生改变，这个函数就会运行
+    question: function (newQuestion) {
+      this.answer = &#39;Waiting for you to stop typing...&#39;
+      this.getAnswer()
+    }
+  },
+  methods: {
+    // _.debounce 是一个通过 lodash 限制操作频率的函数。
+    // 在这个例子中，我们希望限制访问 yesno.wtf/api 的频率
+    // ajax 请求直到用户输入完毕才会发出
+    // 学习更多关于 _.debounce function (and its cousin
+    // _.throttle)，参考：https://lodash.com/docs#debounce
+    getAnswer: _.debounce(
+      function () {
+        if (this.question.indexOf(&#39;?&#39;) === -1) {
+          this.answer = &#39;Questions usually contain a question mark. ;-)&#39;
+          return
+        }
+        this.answer = &#39;Thinking...&#39;
+        var vm = this
+        axios.get(&#39;https://yesno.wtf/api&#39;)
+          .then(function (response) {
+            vm.answer = _.capitalize(response.data.answer)
+          })
+          .catch(function (error) {
+            vm.answer = &#39;Error! Could not reach the API. &#39; + error
+          })
+      },
+      // 这是我们为用户停止输入等待的毫秒数
+      500
+    )
+  }
+})
+&lt;/script&gt;
+</pre></div>
+
+
+<h2>flow control</h2>
+<h3>v-if</h3>
+<p>v-else 元素必须紧跟在 v-if 或者 v-else-if 元素的后面——否则它将不会被识别。v-else-if 也是.</p>
+<p>可以使用template来包装多个元素:</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;template</span> <span class="na">v-if=</span><span class="s">&quot;ok&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;h1&gt;</span>Title<span class="nt">&lt;/h1&gt;</span>
+  <span class="nt">&lt;p&gt;</span>Paragraph 1<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;p&gt;</span>Paragraph 2<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/template&gt;</span>
+</pre></div>
+
+
+<h3>v-for</h3>
+<p>v-for的基本语法如前所述, 另外还可以采用可选参数 key. <code>&lt;li v-for="(item, index) in items"&gt;</code>.</p>
+<p>v-for还可以遍历对象, <code>&lt;li v-for="value in obj"&gt;</code></p>
+<p>v-for还可以直接遍历range, <code>&lt;li v-for="n in 10"&gt;</code></p>
+<h2>事件</h2>
+<p>在vue中, 绑定的事件如果需要参数, 可以使用</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;button</span> <span class="na">v-on:click=</span><span class="s">&quot;warn(&#39;Form cannot be submitted yet.&#39;, $event)&quot;</span><span class="nt">&gt;</span>
+  Submit
+<span class="nt">&lt;/button&gt;</span>
+</pre></div>
+
+
+<p>的形式, 其中 $event 指的是原声事件.</p>
+<h3>修饰符</h3>
+<p>vue中的事件绑定函数可以使用一些修饰符来指定一些附加的效果. 常用的有 <code>.prevent</code>, <code>.stop</code>, <code>.self</code>, <code>.once</code> 等.</p>
+<p>像这样: <code>&lt;a v-on:click.stop="doThis"&gt;&lt;/a&gt;</code></p>
+<p>对于键盘时间, 还可以使用修饰符来指定键值: <code>&lt;input v-on:keyup.enter="submit"&gt;</code></p>
+<h2>mustache vs <code>v-bind</code></h2>
+<p>mustache can only be used in textContent of an element, <code>v-bind</code> is used for attribute.</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;a</span> <span class="na">v-bind:href=</span><span class="s">&quot;url&quot;</span><span class="nt">&gt;</span><span class="cp">{{</span> <span class="nv">link_text</span> <span class="cp">}}</span><span class="nt">&lt;/a&gt;</span>
+</pre></div>
+
+
+<h2>shortcut</h2>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- 完整语法 --&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">v-bind:href=</span><span class="s">&quot;url&quot;</span><span class="nt">&gt;&lt;/a&gt;</span>
+<span class="c">&lt;!-- 缩写 --&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">:href=</span><span class="s">&quot;url&quot;</span><span class="nt">&gt;&lt;/a&gt;</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- 完整语法 --&gt;</span>
+<span class="nt">&lt;a</span> <span class="na">v-on:click=</span><span class="s">&quot;doSomething&quot;</span><span class="nt">&gt;&lt;/a&gt;</span>
+<span class="c">&lt;!-- 缩写 --&gt;</span>
+<span class="nt">&lt;a</span> <span class="err">@</span><span class="na">click=</span><span class="s">&quot;doSomething&quot;</span><span class="nt">&gt;&lt;/a&gt;</span>
+</pre></div>
+
+
+<h2>v-model 做双向绑定</h2>
+<p>use v-model to double bind data between input and js.</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;app-6&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;p&gt;</span><span class="cp">{{</span> <span class="nv">message</span> <span class="cp">}}</span><span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">v-model=</span><span class="s">&quot;message&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+var app6 = new Vue({
+  el: &#39;#app-6&#39;,
+  data: {
+    message: &#39;Hello Vue!&#39;
+  }
+})
+</pre></div>
+
+
+<p>值得注意的是, v-model 本质上只是一个语法糖. 
+<code>&lt;input v-model="something"&gt;</code> is just a syntax sugar to <code>&lt;input v-bind:value="something" v-on:input="something = $event.target.value"&gt;</code></p>
+<h3>text area</h3>
+<p>需要注意的是, textarea 时间上相当于一个input组件, 不能在testarea内部使用 {{value}} 的语法, 而应该使用 <code>v-model</code></p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;span&gt;</span>Multiline message is:<span class="nt">&lt;/span&gt;</span>
+<span class="nt">&lt;p</span> <span class="na">style=</span><span class="s">&quot;white-space: pre-line;&quot;</span><span class="nt">&gt;</span><span class="cp">{{</span> <span class="nv">message</span> <span class="cp">}}</span><span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;br&gt;</span>
+<span class="nt">&lt;textarea</span> <span class="na">v-model=</span><span class="s">&quot;message&quot;</span> <span class="na">placeholder=</span><span class="s">&quot;add multiple lines&quot;</span><span class="nt">&gt;&lt;/textarea&gt;</span>
+</pre></div>
+
+
+<h3>修饰符</h3>
+<p>就像事件一样, 也可以指定一些修饰符给 v-model, 常用的有 <code>.trim</code></p>
+<h1>vue-component</h1>
+<p><img src="https://cn.vuejs.org/images/components.png" width=360 /></p>
+<p>vue 的component中三个重要的概念: props, events, slots.</p>
+<p>其中props向下传递, 用于parent组件向child组件传递值. child组件对于props的访问只能是只读的. 在child组件中使用<code>v-bind:var="var"</code>来访问定义的props. 注意在组件中不能更改props, 如果需要更改他, 请把他赋值给其他变量, 或者使用 computed 属性.</p>
+<p>如果把模板直接放到dom中会有一些标签渲染不出来, 建议放到 <script type="text/x-template"></script> 中</p>
+<div class="highlight"><pre><span></span>// 在vue中注册一个组件, 大多数传递给vue实例的参数都可以使用, 除了 data 必须是一个函数
+
+Vue.component(&#39;todo-item&#39;, {
+  // todo-item 组件现在接受一个&quot;prop&quot;，类似于一个自定义属性. 这个属性名为 todo。
+  props: [&#39;todo&#39;],
+  template: &#39;<span class="nt">&lt;li&gt;</span><span class="cp">{{</span> <span class="nv">todo.text</span> <span class="cp">}}</span><span class="nt">&lt;/li&gt;</span>&#39;,
+  data: function() {},
+})
+
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;app-7&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;ol&gt;</span>
+    <span class="c">&lt;!-- 现在我们为每个todo-item提供待办项对象    --&gt;</span>
+    <span class="c">&lt;!-- 待办项对象是变量，即其内容可以是动态的 --&gt;</span>
+    <span class="nt">&lt;todo-item</span> <span class="na">v-for=</span><span class="s">&quot;item in groceryList&quot;</span> <span class="na">v-bind:todo=</span><span class="s">&quot;item&quot;</span><span class="nt">&gt;&lt;/todo-item&gt;</span>
+  <span class="nt">&lt;/ol&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+Vue.component(&#39;todo-item&#39;, {
+  props: [&#39;todo&#39;],
+  template: &#39;<span class="nt">&lt;li&gt;</span><span class="cp">{{</span> <span class="nv">todo.text</span> <span class="cp">}}</span><span class="nt">&lt;/li&gt;</span>&#39;
+})
+var app7 = new Vue({
+  el: &#39;#app-7&#39;,
+  data: {
+    groceryList: [
+      { text: &#39;蔬菜&#39; },
+      { text: &#39;奶酪&#39; },
+      { text: &#39;随便其他什么人吃的东西&#39; }
+    ]
+  }
+})
+</pre></div>
+
+
+<h3>事件</h3>
+<p>parent组件可以监听子组件的事件, 从而实现通信:</p>
+<p>这个例子中, 子组件通过$emit()函数发送increment事件. parent组件通过监听子组件的increment事件, 从而获得子组件的消息.</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;counter-event-example&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;p&gt;</span><span class="cp">{{</span> <span class="nv">total</span> <span class="cp">}}</span><span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;button-counter</span> <span class="na">v-on:increment=</span><span class="s">&quot;incrementTotal&quot;</span><span class="nt">&gt;&lt;/button-counter&gt;</span>
+  <span class="nt">&lt;button-counter</span> <span class="na">v-on:increment=</span><span class="s">&quot;incrementTotal&quot;</span><span class="nt">&gt;&lt;/button-counter&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+Vue.component(&#39;button-counter&#39;, {
+  template: &#39;<span class="nt">&lt;button</span> <span class="na">v-on:click=</span><span class="s">&quot;incrementCounter&quot;</span><span class="nt">&gt;</span><span class="cp">{{</span> <span class="nv">counter</span> <span class="cp">}}</span><span class="nt">&lt;/button&gt;</span>&#39;,
+  data: function () {
+    return {
+      counter: 0
+    }
+  },
+  methods: {
+    incrementCounter: function () {
+      this.counter += 1
+      this.$emit(&#39;increment&#39;)
+    }
+  },
+})
+new Vue({
+  el: &#39;#counter-event-example&#39;,
+  data: {
+    total: 0
+  },
+  methods: {
+    incrementTotal: function () {
+      this.total += 1
+    }
+  }
+})
+</pre></div>
+
+
+<h3>slots</h3>
+<p>slots vs props: slots 用于显示一大片的包含html代码的替换块, 而props 用于显示值, 有点类似 v-bind 和 {{}} 的区别.</p>
+<p>Props 允许外部环境传递数据给组件
+Events 允许从外部环境在组件内触发副作用
+Slots 允许外部环境将额外的内容组合在组件中。</p>
+<h1>vue router</h1>
+<p>basic: 将组件(components)映射到路由(routes)，然后告诉 vue-router 在哪里渲染它们。</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;app&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;p&gt;</span>
+    <span class="nt">&lt;router-link</span> <span class="na">to=</span><span class="s">&quot;/user/foo&quot;</span><span class="nt">&gt;</span>/user/foo<span class="nt">&lt;/router-link&gt;</span>
+    <span class="nt">&lt;router-link</span> <span class="na">to=</span><span class="s">&quot;/user/bar&quot;</span><span class="nt">&gt;</span>/user/bar<span class="nt">&lt;/router-link&gt;</span>
+  <span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;router-view&gt;&lt;/router-view&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+const User = {
+  template: `<span class="nt">&lt;div&gt;</span>User <span class="cp">{{</span> <span class="err">$</span><span class="nv">route.params.id</span> <span class="cp">}}</span><span class="nt">&lt;/div&gt;</span>`
+}
+
+const router = new VueRouter({
+  mode: &#39;history&#39;,  // 这样才能使用 html5 的history api
+  routes: [
+    { path: &#39;/user/:id&#39;, component: User }
+  ]
+})
+
+const app = new Vue({ router }).$mount(&#39;#app&#39;)
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+
+<h1>vue lifecycle</h1>
+<p><img src="https://cn.vuejs.org/images/lifecycle.png" width=640 /></p>
+<h1>using in chrome extension</h1>
+<p>chrome does not allow <code>eval</code> and <code>new Function()</code> in extensions, vue relies on it. you need to use CSP version of vue or relax the restriction by chrome.</p>
+<p>See also: </p>
+<ul>
+<li>https://developer.chrome.com/extensions/contentSecurityPolicy#relaxing-eval</li>
+<li>https://stackoverflow.com/questions/34615503/vue-js-in-chrome-extension</li>
+<li>https://vuejs.org/v2/guide/installation.html#CSP-environments</li>
+</ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/thinking-in-vue.html">posted at 04:03</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

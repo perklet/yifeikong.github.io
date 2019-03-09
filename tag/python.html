@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "Python"</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/python.html">Python</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 13, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-huan-jing-bian-liang-de-yi-ge-keng.html" rel="bookmark" title="Permanent Link to &quot;Python 环境变量的一个坑&quot;">Python 环境变量的一个坑</a>
+                </h2>
+
+                
+                
+
+                <p>Python 中可以使用 os.environ 操作环境变量，前几天看到了其他几个函数 os.getenv 和 os.putenv。然而 os.putenv 是一个大坑，os.putenv 之后，在后面的 os.getenv 中并不能读出来。囧</p>
+<h1>参考</h1>
+<ol>
+<li>https://mail.python.org/pipermail/python-list/2013-June/650294.html</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-huan-jing-bian-liang-de-yi-ge-keng.html">posted at 19:26</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 12, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-diao-shi-python-de-core-dump.html" rel="bookmark" title="Permanent Link to &quot;如何调试 Python 的 Core Dump&quot;">如何调试 Python 的 Core Dump</a>
+                </h2>
+
+                
+                
+
+                <p>如果需要记录 Core Dump 的原因，首先需要使用 faulthandler 参数启动 Python</p>
+<div class="highlight"><pre><span></span>python -X faulthandler main.py
+</pre></div>
+
+
+<p>出 core 之后，可以使用 gdb 调试</p>
+<div class="highlight"><pre><span></span>gdb python core
+</pre></div>
+
+
+<p>参考</p>
+<ol>
+<li>https://stackoverflow.com/questions/2663841/python-tracing-a-segmentation-fault/2664232#2664232</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-diao-shi-python-de-core-dump.html">posted at 18:47</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Oct 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-prctl-zai-fu-jin-cheng-tui-chu-de-shi-hou-an-quan-tui-chu-zi-jin-cheng.html" rel="bookmark" title="Permanent Link to &quot;使用 prctl 在父进程退出的时候安全退出子进程&quot;">使用 prctl 在父进程退出的时候安全退出子进程</a>
+                </h2>
+
+                
+                
+
+                <p>在 Linux 中, 当子进程退出的时候, 父进程可以收到信号, 但是当父进程退出的时候, 子进程并不会受到信号. 这样就造成了在父进程崩溃的时候, 子进程并不能同时退出, 而是一直会在后台运行, 比如下面的例子:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">loop_print</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;child alive, </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">if</span> <span class="n">pid</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># parent</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;parent sleep for 2&#39;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">print …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-prctl-zai-fu-jin-cheng-tui-chu-de-shi-hou-an-quan-tui-chu-zi-jin-cheng.html">posted at 23:50</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Oct 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/tu-cao-yi-xia-python-hun-luan-de-threading-he-multiprocessing.html" rel="bookmark" title="Permanent Link to &quot;吐槽一下 Python 混乱的 threading 和 multiprocessing&quot;">吐槽一下 Python 混乱的 threading 和 multiprocessing</a>
+                </h2>
+
+                
+                
+
+                <p>最近要写一个库往 influxdb 中打点, 因为要被很多程序使用, 而又要创建新的进程, 为了避免引起使用方的异常, 简单深入了解了下 Python 的并发控制, 这才发现标准库真是坑. 之前没过多考虑过, 只是凭感觉在 CPU 密集的时候使用 multiprocessing, 而默认使用 threading, 其实两个还是有很多不一样的, 除了都是并发执行以外还有很大的不同. Python 中试图用 threading 和 multiprocessing 实现类似的接口来统一两方面, 结果导致更混乱了. 本文探讨几个坑.</p>
+<h1>在多线程环境中 fork</h1>
+<p>首先不谈 Python, 我们思考一下, 在多线程环境下如果执行 fork 会怎样? 在新的进程中, 会不会所有线程都在运行? 答案是否定的, <strong>在 fork 之后, 只有执行 fork 的线程在运行</strong>, 而其他线程都不会运行. 这是 POSIX 标准规定的:</p>
+<blockquote>
+<p>A process …</p></blockquote>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/tu-cao-yi-xia-python-hun-luan-de-threading-he-multiprocessing.html">posted at 03:21</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Oct 13, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-gao-xing-neng-qing-qiu-ku-aiohttp-de-ji-ben-yong-fa.html" rel="bookmark" title="Permanent Link to &quot;Python 高性能请求库 aiohttp 的基本用法&quot;">Python 高性能请求库 aiohttp 的基本用法</a>
+                </h2>
+
+                
+                
+
+                <p>aiohttp 是 Python 异步编程最常用的一个 web 请求库了, 依托于 asyncio, 性能非常吓人. 下面列举几个常见的用法:</p>
+<h1>最基础: 并发下载网页</h1>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">aiohttp</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="n">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">urls</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;http://python.org&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;https://google.com&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;http://yifei.me&#39;</span>
+        <span class="p">]</span>
+    <span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">async</span> <span class="k">with</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientSession …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-gao-xing-neng-qing-qiu-ku-aiohttp-de-ji-ben-yong-fa.html">posted at 17:05</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Sep 27, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/requests-cookies-wei-kong-de-yi-ge-keng.html" rel="bookmark" title="Permanent Link to &quot;requests cookies 为空的一个坑&quot;">requests cookies 为空的一个坑</a>
+                </h2>
+
+                
+                
+
+                <p>有时候，requests 返回的 cookies 会为空，原因是链接发生了 301/302 跳转，而 cookies 是跟着第一个响应返回的，第二个响应没有返回 Set-Cookie header。所以直接读取 r.cookies 是空的，而在 session.cookies 中是有数据的。</p>
+<p>解决方法是直接读 s.cookies。</p>
+<div class="highlight"><pre><span></span>s = requests.Session()
+r = s.get(&#39;http://httpbin.org/cookies/set?foo=bar&#39;)
+cookies = requests.utils.dict_from_cookiejar(s.cookies)
+s.cookies.clear()
+</pre></div>
+
+
+<p>不过需要注意的是如果在多线程环境中使用 session …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/requests-cookies-wei-kong-de-yi-ge-keng.html">posted at 19:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Jul 19, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-de-gcla-ji-hui-shou.html" rel="bookmark" title="Permanent Link to &quot;Python 中的 GC（垃圾回收）&quot;">Python 中的 GC（垃圾回收）</a>
+                </h2>
+
+                
+                
+
+                <h1>引用计数（reference counting）</h1>
+<p>CPython 中默认使用的垃圾回收算法是 Reference Counting。也就是对每个元素标记有多少个其他元素引用了它，当引用数降到零的时候就删除。</p>
+<ol>
+<li>当对象增加一个引用，比如赋值给变量，属性或者传入一个方法，引用计数执行加1运算。</li>
+<li>当对象减少一个引用，比如变量离开作用域，属性被赋值为另一个对象引用，属性所在的对象被回收或者之前传入参数的方法返回，引用计数执行减1操作。</li>
+<li>当引用计数变为0，代表该对象不被引用，可以标记成垃圾进行回收。</li>
+</ol>
+<p>为了解决循环引用的问题，CPython 使用了 Cyclic GC，遍历所有的环，并且把每一个元素的引用减一，来检测每一个引用环是不是循环应用。</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tKfTcly1ftg5mu2087j30we0i6gv5.jpg"></p>
+<h1>标记删除（Mark and Sweep）</h1>
+<ol>
+<li>从某一个已知的还活着的对象开始，便利对象，如果经过了某个对象就认为是活着的</li>
+<li>如果没有被标记的就删除</li>
+</ol>
+<p>避免了循环引用的问题</p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tKfTcly1ftf9x2kejlj30wo0ic11s.jpg"></p>
+<p>实际的处理过程</p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tKfTcly1ftfa55k2e7j30wi0ick3k.jpg"></p>
+<p><img alt="" src="https://ws3.sinaimg.cn/large/006tKfTcly1ftfa6amfmmj30wc0iedr8.jpg"></p>
+<p>Pluggable
+Generational
+Incremental</p>
+<p>参考资料：</p>
+<ol>
+<li>https://www.youtube.com/watch?v=iHVs_HkjdmI …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-de-gcla-ji-hui-shou.html">posted at 08:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 18, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/zai-python-zhong-you-ya-di-chu-li-sigterm-xin-hao.html" rel="bookmark" title="Permanent Link to &quot;在 Python 中优雅地处理 SIGTERM 信号&quot;">在 Python 中优雅地处理 SIGTERM 信号</a>
+                </h2>
+
+                
+                
+
+                <p>昨天写了一个服务，在本地运行很好，使用 Ctrl-C 结束运行之后会清理资源，然后取消注册，然而放到 Docker 中跑之后发现结束之后资源没有释放。查了查发现原来是下面是几个因素造成的：</p>
+<ol>
+<li>Ctrl-C 发送的是 SIGINT 信号，Python 会转化成 KeyboardInterrupt 异常，而我的资源是在 finally 释放资源，所以使用 Ctrl-C 可以优雅地退出</li>
+<li>Python 中对其他的信号（比如 SIGTERM、SIGHUP）都不会处理，而是直接退出</li>
+<li>Docker 在推出的时候默认发送的是 SIGTERM 信号</li>
+</ol>
+<p>所以在 docker stop 的时候服务并不能优雅的推出。</p>
+<h1>解决方法</h1>
+<p>使用 atexit 模块是不可以的，atexit 不会处理 SIGTERM。需要使用 signal 模块来，在网上找到了一份源码 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/zai-python-zhong-you-ya-di-chu-li-sigterm-xin-hao.html">posted at 01:46</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 09, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/fu-jin-cheng-tui-chu-hou-ru-he-tui-chu-zi-jin-cheng.html" rel="bookmark" title="Permanent Link to &quot;父进程退出后如何退出子进程&quot;">父进程退出后如何退出子进程</a>
+                </h2>
+
+                
+                
+
+                <p>我们知道当子进程推出的时候，父进程会收到 SIGCHLD 信号，从而可以采取相应的操作。但是当父进程退出的时候，系统会把子进程的父进程更改为pid=0的 init 进程，而且子进程不会收到任何信号。而我们经常想在父进程退出的时候，让子进程也推出。在 Python 中可以有如下几种做法。</p>
+<h1>设置子进程为 daemon</h1>
+<p>这里的 daemon 和系统的守护进程没有任何关系，是 quit_when_parent_dies 的意思。也就是当父进程退出的时候，会自动尝试关闭 daemon=True 的子进程。</p>
+<div class="highlight"><pre><span></span>p = multiprocessing.Process(target=foo)
+p.daemon = True
+p.start()
+</pre></div>
+
+
+<p><a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Process.daemon">官方文档</a></p>
+<h1>在子进程中设置 PDEATHSIG</h1>
+<p>在 Linux 中，进程可以要求内核在父进程退出的时候给自己发信号。使用系统调用 prctl。</p>
+<div class="highlight"><pre><span></span>prctl(PR_SET_PDEATHSIG …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/fu-jin-cheng-tui-chu-hou-ru-he-tui-chu-zi-jin-cheng.html">posted at 03:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-ru-he-ya-suo-wen-jian.html" rel="bookmark" title="Permanent Link to &quot;Python 中如何压缩文件&quot;">Python 中如何压缩文件</a>
+                </h2>
+
+                
+                
+
+                <p>basic usage</p>
+<p>import gzip/bz2
+with gzip.open('file.gz', 'rt') as f:
+    text = f.read()</p>
+<p>NOTE: the default mode is binary.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-ru-he-ya-suo-wen-jian.html">posted at 14:02</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/2" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 1 of 6</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

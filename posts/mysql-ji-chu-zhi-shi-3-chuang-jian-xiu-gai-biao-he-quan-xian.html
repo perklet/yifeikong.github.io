@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | mysql 基础知识(3) - 创建修改表和权限</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Aug 07, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-3-chuang-jian-xiu-gai-biao-he-quan-xian.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(3) - 创建修改表和权限&quot;">mysql 基础知识(3) - 创建修改表和权限</a>
+                </h2>
+
+                
+                
+
+                <h2>创建数据库</h2>
+<div class="highlight"><pre><span></span>CREATE DATABASE db_name
+    [[DEFAULT] CHARACTER SET charset_name]
+    [[DEFAULT] COLLATE collation_name]
+
+ALTER DATABASE db_name
+    [[DEFAULT] CHARACTER SET charset_name]
+    [[DEFAULT] COLLATE collation_name]
+</pre></div>
+
+
+<h2>创建表?</h2>
+<div class="highlight"><pre><span></span>CREATE TABLE table_name (
+    field_name type is_null default options,
+    ...
+    PRIMAR KEY (id),
+    INDEX/KEY index_name (field_name),
+) ENGINE=InnoDB;
+ 
+// 注意：KEY is normally a synonym for INDEX
+</pre></div>
+
+
+<p>设定 auto_increment</p>
+<p>注意 mysql 的关键字是 auto_increment, 而 sqlite 的是 autoincrement</p>
+<div class="highlight"><pre><span></span>CREATE TABLE(...) AUTO_INCREMENT=xxx;
+</pre></div>
+
+
+<p>更改已经存在的表</p>
+<div class="highlight"><pre><span></span>ALTER TABLE SET AUTO_INCREMENT=xxx;
+</pre></div>
+
+
+<h2>数据类型</h2>
+<h3>字符串</h3>
+<p>字符串分两种，定长和变长，MySQL处理定长数据比变长数据快得多。CHAR属于定长类型，VARCHAR和TEXT属于变长类型。</p>
+<ul>
+<li>CHAR的长度为1-255，默认为1，使用CHAR(n)指定长度</li>
+<li>VARCHAR为0-255，使用VARCHAR(n)指定长度</li>
+<li>TEXT为65536，MEDIUMTEXT为16k，LONGTEXT为4GB</li>
+</ul>
+<p><img alt="" src="https://ws3.sinaimg.cn/large/006tNc79ly1ft17mebw0kj31900n6wkx.jpg"></p>
+<h3>数字</h3>
+<p>注意数字后面跟的数字，例如INT(5)，并不是限制数字的存储长度，而是限制数字的展示长度（显示时填充0）！可以使用UNSIGNED指定为非负值，默认为signed</p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tNc79ly1ft17lhmrv7j30wk0fswh3.jpg"></p>
+<h3>日期</h3>
+<p>使用DATETIME，不要使用TIMESTAMP，防止2038年溢出</p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tNc79ly1ft17luawbtj312w09kabw.jpg"></p>
+<h3>tips</h3>
+<h4>创建 modify_time/update_time 字段时使用自动更新时间</h4>
+<div class="highlight"><pre><span></span>`modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+</pre></div>
+
+
+<h4>设计表要注意每个字段的正交性，不要出现一个字段表示“xx且xx”的状态。</h4>
+<h2>更新表</h2>
+<div class="highlight"><pre><span></span>rename table &#39;old_name&#39; to &#39;new_name&#39;
+</pre></div>
+
+
+<p>添加一列，其中的 COLUMN 关键字是 optional 的。</p>
+<div class="highlight"><pre><span></span>ALTER TABLE table_name ADD COLUMN field_name type;
+</pre></div>
+
+
+<p>更新某个字段的数据类型</p>
+<div class="highlight"><pre><span></span>Alter TABLE `tableName` MODIFY COLUMN `ColumnName` datatype(length);
+</pre></div>
+
+
+<p>比如说：</p>
+<div class="highlight"><pre><span></span>Alter TABLE `tbl_users` MODIFY COLUMN `dup` VARCHAR(120);
+</pre></div>
+
+
+<p>重命名一列</p>
+<p>需要注意的是数据类型也需要带上</p>
+<div class="highlight"><pre><span></span>alter table `user` change `name` `first_name` varchar(128) default null;
+</pre></div>
+
+
+<p>添加不同类型的索引</p>
+<div class="highlight"><pre><span></span>ALTER TABLE table_name ADD INDEX index_name (column_list)
+
+ALTER TABLE table_name ADD UNIQUE index_name (column_list)
+
+ALTER TABLE table_name ADD PRIMARY KEY index_name (column_list)
+</pre></div>
+
+
+<p>需要注意的是 mysql 索引的最大长度是 255，也就是在 VARCHAR(255) 以上的列是不能添加索引的，一个改进方法就是另外添加一列存储这一列的 hash 值。</p>
+<h2>删除字段</h2>
+<p>删除索引</p>
+<div class="highlight"><pre><span></span>alter table TABLENAME drop index xxxx
+</pre></div>
+
+
+<p>------------------之前笔记的分割线------------------------
+ 
+ </p>
+<h2>组合索引</h2>
+<p>如果有一个组合索引(col_a,col_b,col_c)
+ 
+下面的情况都会用到这个索引：</p>
+<div class="highlight"><pre><span></span>col_a = &quot;some value&quot;;
+col_a = &quot;some value&quot; and col_b = &quot;some value&quot;;
+col_a = &quot;some value&quot; and col_b = &quot;some value&quot; and col_c = &quot;some value&quot;;
+col_b = &quot;some value&quot; and col_a = &quot;some value&quot; and col_c = &quot;some value&quot;;
+</pre></div>
+
+
+<p>对于最后一条语句，mysql会自动优化成第三条的样子
+ 
+下面的情况就不会用到索引：</p>
+<div class="highlight"><pre><span></span>col_b = &quot;aaaaaa&quot;;
+col_b = &quot;aaaa&quot; and col_c = &quot;cccccc&quot;;
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-3-chuang-jian-xiu-gai-biao-he-quan-xian.html">posted at 15:47</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

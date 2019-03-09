@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "计算机" | Page 28</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/ji-suan-ji/page/28/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ming-ling-xing-ya-suo-tu-pian-de-gong-ju.html" rel="bookmark" title="Permanent Link to &quot;命令行压缩图片的工具&quot;">命令行压缩图片的工具</a>
+                </h2>
+
+                
+                
+
+                <p>加载速度对于网页的体验还是很重要的, 而每个页面比较耗费带宽的资源就是图片了, 所以在页面发布后对图像做适当的压缩是很有必要的.</p>
+<p>常用的图片格式基本有三种: jpg, png 和 gif, 分别有不同的压缩工具</p>
+<p>JPG 压缩建议使用 jpegoptim, 实测压缩比在40%左右, 最常用的语法是</p>
+<p><code>jpegoptim -p -m&lt;dd&gt;  &lt;imagefile&gt;</code></p>
+<p>其中 -p 是保留 mtime 的意思, 也可以用 --perserve, -m 后面跟两个数字表示, 压缩的比例, 一般用90即可, 肉眼无法分辨, 且能够压缩掉40%左右</p>
+<p>png 压缩有两个选项, 常规的 optipng 和另一个新一点 pngquant, 测试了一下, 发现 optipng 速度慢而且压缩效率低, pngquant 则表现相当优秀, 但是需要注意 pngquant 是有损压缩.</p>
+<p>pngquant …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ming-ling-xing-ya-suo-tu-pian-de-gong-ju.html">posted at 01:42</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/converting-mp4-to-gif.html" rel="bookmark" title="Permanent Link to &quot;converting mp4 to gif&quot;">converting mp4 to gif</a>
+                </h2>
+
+                
+                
+
+                <h2>Converting MP4 to gif</h2>
+<p>To convert the entire video to GIF, use the following command:</p>
+<p><code>ffmpeg -i small.mp4 small.gif</code></p>
+<p>To convert just a portion of a video clip to GIF, use the following command:</p>
+<p><code>ffmpeg -t 3 -ss 00:00:02 -i small.webm small-clip.gif</code></p>
+<p>The snippet …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/converting-mp4-to-gif.html">posted at 01:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/crontab-de-yu-fa-he-shi-yong.html" rel="bookmark" title="Permanent Link to &quot;Crontab 的语法和使用&quot;">Crontab 的语法和使用</a>
+                </h2>
+
+                
+                
+
+                <p>Crontab 时间的语法:</p>
+<div class="highlight"><pre><span></span>Minute Hour Day Month DoW
+</pre></div>
+
+
+<p>每一个选项默认都是第几的意思</p>
+<ul>
+<li>Minute, 每小时的第几分, 可选值 0-59</li>
+<li>Hour, 每天的第几个小时, 可选值 0-23</li>
+<li>Day, 每月的第几天, 可选值 1-31</li>
+<li>Month, 每年的第几个月, 可选值 1-12</li>
+<li>DoW, 每周的第几天, 可选值 0-7, 0 和 7 都代表 Sunday</li>
+<li>Command, 要执行的命令</li>
+</ul>
+<p>另外:</p>
+<ul>
+<li>用 * 表示所有</li>
+<li>可以用逗号分隔指定多个</li>
+<li>用 <code>*/xx</code> 表示每 xx 一次</li>
+</ul>
+<p>比如</p>
+<div class="highlight"><pre><span></span>5 * * * * echo &quot;hello world&quot;
+</pre></div>
+
+
+<p>每小时的第五分钟打印 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/crontab-de-yu-fa-he-shi-yong.html">posted at 15:41</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/cc-zhong-de-raii.html" rel="bookmark" title="Permanent Link to &quot;C/C++ 中的 RAII&quot;">C/C++ 中的 RAII</a>
+                </h2>
+
+                
+                
+
+                <h1>RAII 的好处</h1>
+<ul>
+<li>异常安全</li>
+<li>保证匹配</li>
+<li>防止内存泄露</li>
+</ul>
+<h1>RAII in C</h1>
+<p>This is inherent implementation dependent, since the Standard doesn't include such a possibility. For GCC, the cleanup attribute runs a function when a variable goes out of scope:</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">scoped</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span> <span class="n">pvariable</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;variable (%d) goes out of scope …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/cc-zhong-de-raii.html">posted at 15:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xue-xi-greasemonkey-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;学习 greasemonkey 教程&quot;">学习 greasemonkey 教程</a>
+                </h2>
+
+                
+                
+
+                <p>GreaseMonkey/TamperMonkey 学习</p>
+<h1>头部命令</h1>
+<ul>
+<li>@name | 脚本名字| </li>
+<li>@namespace|命名空间|  </li>
+<li>@version| 版本| </li>
+<li>@author|作者|       </li>
+<li>@description      </li>
+<li>@homepage     </li>
+<li>@icon     </li>
+<li>@updateURL        </li>
+<li>@downloadURL      </li>
+<li>@include      </li>
+<li>@exclude      </li>
+<li>@resource key url     </li>
+<li>@require  include scripts </li>
+<li>@connect  reach cross origin domains  self, current domain, localhost,  or *</li>
+<li>@run-at   when to run the script  document-start/document-body/document-end/document-idle/context-menu</li>
+<li>@grant    whitelist GM_* functions …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xue-xi-greasemonkey-jiao-cheng.html">posted at 15:23</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/knn-algorithm.html" rel="bookmark" title="Permanent Link to &quot;kNN algorithm&quot;">kNN algorithm</a>
+                </h2>
+
+                
+                
+
+                <p>kNN是一个有监督的分类算法，目的是把给定的数据的类型确定出来。具体做法是通过把给定数据与已知训练集中的数据之间计算距离（欧氏距离，曼哈顿距离。。。）来找出距离给定数据 X 最近的 k 个数据，然后取这 k 个数据中出现最多的分类作为 X 的分类，如果给定数据的维度是两维的话，在平面笛卡尔坐标系里表示出来就是这样的</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/knn-algorithm.html">posted at 15:22</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/ji-qi-xue-xi.html" class="tags">机器学习</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yaml-yu-yan-he-python-zhong-de-shi-yong.html" rel="bookmark" title="Permanent Link to &quot;YAML 语言和 Python 中的使用&quot;">YAML 语言和 Python 中的使用</a>
+                </h2>
+
+                
+                
+
+                <h2>Install</h2>
+<div class="highlight"><pre><span></span>pip install pyyaml
+</pre></div>
+
+
+<h2>Basic Example</h2>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yaml</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">yaml_string</span><span class="p">)</span> <span class="c1"># to python list or dict</span>
+<span class="n">string</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">py_object</span><span class="p">)</span>
+<span class="c1"># NOTE: unlike the json module, the method here is load/dump, not loads/dumps</span>
+</pre></div>
+
+
+<h2>Yaml</h2>
+<p>YAML uses three dashes (“---”) to separate documents within a stream. Three dots ( “...”) indicate the …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yaml-yu-yan-he-python-zhong-de-shi-yong.html">posted at 15:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/cyu-yan-zhong-de-vargs.html" rel="bookmark" title="Permanent Link to &quot;C语言中的 vargs&quot;">C语言中的 vargs</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span>int max(int n, ...) {
+    va_list arg_pointer;
+    int result = INT_MIN;
+
+    va_start(arg_pointer, n);
+    for (int i = 0; i &lt; n; i++) {
+        int arg = va_arg(arg_pointer, int);
+        if (arg &gt; result)
+            result = arg;
+    }
+    va_end(arg_pointer);
+
+    return result;
+}     
+</pre></div>
+
+
+<h2>Reference</h2>
+<ol>
+<li>
+<p>http://www.cnblogs.com/chinazhangjie/archive/2012/08/18/2645475.html</p>
+</li>
+<li>
+<p>http://wiki.jikexueyuan.com/project …</p></li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/cyu-yan-zhong-de-vargs.html">posted at 15:02</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/get-and-change-android-device-id.html" rel="bookmark" title="Permanent Link to &quot;get and change android device id&quot;">get and change android device id</a>
+                </h2>
+
+                
+                
+
+                <h2>get device id</h2>
+<p><code>String id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);</code></p>
+<h2>set device id</h2>
+<p>As far as Settings.Secure.ANDROID_ID goes, this should do the trick:</p>
+<p><code>adb shell sqlite3 /data/data/com.android.providers.settings/databases/settings.db "UPDATE secure SET value='newid' WHERE name='android_id'"</code></p>
+<p>Where newid is usually the …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/get-and-change-android-device-id.html">posted at 14:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/image-hashing-with-python.html" rel="bookmark" title="Permanent Link to &quot;Image Hashing with Python&quot;">Image Hashing with Python</a>
+                </h2>
+
+                
+                
+
+                <h2>dhash</h2>
+<p>http://www.hackerfactor.com/blog/index.php?/archives/529-Kind-of-Like-That.html
+http://blog.iconfinder.com/detecting-duplicate-images-using-python/</p>
+<h2>ahash</h2>
+<p>http://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html</p>
+<h2>phash</h2>
+<p>https://zh.wikipedia.org/wiki/%E7%A6%BB%E6%95%A3%E4%BD%99%E5%BC%A6%E5%8F%98%E6%8D …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/image-hashing-with-python.html">posted at 14:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/27" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/29" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 28 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

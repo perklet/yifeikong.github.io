@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | docker 基础概念</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机,Docker" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/docker-ji-chu-gai-nian.html" rel="bookmark" title="Permanent Link to &quot;docker 基础概念&quot;">docker 基础概念</a>
+                </h2>
+
+                
+                
+
+                <p>Docker 是一个进程的容器，<strong>不是虚拟机</strong>。他为一个进程隔离了文件系统、网络和环境变量。最好在其中运行一个且仅运行一个线程，而不是运行多个任务。</p>
+<p>docker 中最好运行的是无状态的服务，这样方便于横向扩展，对于有状态的服务，建议把状态 mount 出来。</p>
+<h1>使用场景</h1>
+<ol>
+<li>为有不同需求的应用创建不同的隔离环境， 比如部署两个脚本，一个需要用 Python 2.7，另一个需要用 Python 3.6</li>
+<li>Micro services. Micro services are easy to scale up. In this way, run only one process in a container, and use orchestration tools such as compose, kubernetes, swarm.</li>
+<li>Daemon Process Manager. Docker is very simple to use as a daemon process manager, to start and list daemon processes has never been this simple</li>
+<li>A jail for apps. Docker is good to jail you application, prevent it from hurting your system, especially when you run code from other people(e.g. uploaded by a client)</li>
+</ol>
+<p>Docker is so-called kernel containerization, in contrary to user-space containerization such as rkt. Docker stores images in a central base on your machine.</p>
+<h1>Image vs Container（镜像与容器）</h1>
+<p>Container is a running instance of image, each time you run an image, a new container is created. You can commit a container back as an image, however, it's a little controversial</p>
+<p>Image name format: user/image:tag</p>
+<h1>basic usage</h1>
+<ul>
+<li><code>docker run OPTIONS IMAGE COMMAND</code> to generate a container based on given image and start it.</li>
+<li>most used command is -d </li>
+<li>and -it</li>
+<li>--restart=always to always restart the container</li>
+<li>--name=NAME to name the container</li>
+<li><code>docker start CONTAINER_ID</code> to restart stopped container, note that this will reuse the options and command when <code>docker run</code> is issued</li>
+<li>then use <code>docker attach CONTAINER_ID</code> to reattach to the given container</li>
+<li><code>docker exec OPTIONS CONTAINER COMMAND</code> to run an extra command in container</li>
+</ul>
+<p>Note, docker is all about stdio, and if you would like to read something, read it from stdin, if you would like to output something, write to stdout</p>
+<h1>building docker images</h1>
+<p>two ways:
+<em> commit each change
+</em> using dockerfiles</p>
+<h1>Commands</h1>
+<h2>Container related</h2>
+<h3>run</h3>
+<p>每次执行 <code>docker run</code>, 都会根据镜像来创建一个全新的 container, 可以使用 <code>docker start</code> 或者 <code>docker attach</code> 来连接上已经创建的 container。image 和 container 的关系大概类似于程序和进程之间的关系。</p>
+<p>Syntax: </p>
+<p><code>docker run [options] [image name] [command]</code>
+<code>docker exec -it [container] bash</code> can be used as a ssh equivalent
+<code>-d</code> detach the container and runs in background
+<code>-p</code> set ports [host:container]
+<code>--name</code> set the name
+<code>--rm</code> clean the container after running
+<code>--net</code> sets the network connected to
+<code>-w</code> sets working dir
+<code>-e</code> sets env variable
+<code>-u</code> sets user
+<code>-v</code> sets volume host_file:container_file:options</p>
+<h3>status</h3>
+<p><code>docker ps -a</code> shows which container is running</p>
+<h2>Image ralated</h2>
+<p><code>docker pull</code> <br>
+<code>docker images</code>   <br>
+<code>docker search</code> 
+<code>docker build</code>   docker build -t user/image [dir]</p>
+<h2>网络相关</h2>
+<p>基础命令</p>
+<div class="highlight"><pre><span></span>docker network ls   ls the network interfaces
+docker network inspect  inspect the network for details
+docker network create/rm    create network interface
+docker network connect/disconnect [net] [container] connect a container to a network
+</pre></div>
+
+
+<p>by setting network, docker automatically create /etc/hosts file inside the image, and you can use the name of the container to access the others.</p>
+<p>docker 有两个网络模式</p>
+<h3>桥接模式</h3>
+<p>使用 `docker run --net="bridge"，这种模式会使用虚拟网卡 docker0 做了一层 NAT 转发，所以效率比较低，优点是不用改变应用分配固定端口的代码，docker会在宿主机上随机分配一个端口，避免冲突。</p>
+<h3>Host 模式</h3>
+<p>使用 `docker run --net="host"，宿主机和docker内部使用的都是同一个网络，比如说 eth0</p>
+<h2>卷</h2>
+<p>Docker 容器一般来说是无状态的，除了保存到数据库之外，还可以使用卷来把容器中的状态保存出来。</p>
+<p>docker volume create --name hello
+docker run -d -v hello:/container/path/for/volume container_image my_command</p>
+<h2>日志</h2>
+<p>You could use <code>docker logs [contianer]</code>  to view stdout logs. But the logs sent to /var/logs/*.log are by default inside the container. </p>
+<p>Remove stopped images
+docker rm $(docker ps -aq)</p>
+<p>使用docker的时候不使用 sudo</p>
+<div class="highlight"><pre><span></span>sudo gpasswd -a <span class="cp">${</span><span class="n">USER</span><span class="cp">}</span> docker
+</pre></div>
+
+
+<p>然后登出再登录当前用户即可</p>
+<h1>参考</h1>
+<p>https://blog.talpor.com/2015/01/docker-beginners-tutorial/</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/docker-ji-chu-gai-nian.html">posted at 13:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags">Docker</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

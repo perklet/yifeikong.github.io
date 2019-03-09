@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | fd - 更好的 find 命令（fd - A nicer find command）</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="命令行,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/fd-geng-hao-de-find-ming-ling-fd-a-nicer-find-command.html" rel="bookmark" title="Permanent Link to &quot;fd - 更好的 find 命令（fd - A nicer find command）&quot;">fd - 更好的 find 命令（fd - A nicer find command）</a>
+                </h2>
+
+                
+                
+
+                <p><code>fd</code>（https://github.com/sharkdp/fd） 是 <code>find</code> 命令的一个更现代的替换。</p>
+<p><code>fd</code>（https://github.com/sharkdp/fd）is a modern and nicer replacement to the traditional <code>find</code> command.</p>
+<h1>对比一下 Some comparisons</h1>
+<h2>查找名字含有某个字符的文件 Find a filename with certain string</h2>
+<p>OLD</p>
+<div class="highlight"><pre><span></span>-&gt; % find . -name &quot;*hello*&quot;
+./courses/hello_world.go
+./courses/chapter_01/hello_world.go
+./courses/chapter_01/hello_world
+./examples/01_hello_world.go
+</pre></div>
+
+
+<p>NEW</p>
+<div class="highlight"><pre><span></span>-&gt; % fd hello
+courses/chapter_01/hello_world
+courses/chapter_01/hello_world.go
+courses/hello_world.go
+examples/01_hello_world.go
+</pre></div>
+
+
+<h2>使用正则表达式查找 Find files using regular expression</h2>
+<p>比如说查找符合 <code>\d{2}_ti</code> 模式的文件。<code>find</code> 使用的正则表达式非常古老，比如说在这里我们不能使用 <code>\d</code>，也不能使用 <code>{x}</code>  这种语法。因此我们需要对我们的正则表达式做一些改写。关于<code>find</code>支持的正则表达式这里就不展开了。</p>
+<p><code>fd</code> 默认就是使用的正则表达式作为模式，并且默认匹配的是文件名；而 <code>find</code> 默认匹配的是完整路径。另外 </p>
+<p>For example, let's find a file whose name matches <code>\d{2}_ti</code>. <code>find</code> uses a very ancient form of regular expression. Neither can we use <code>\d</code>, nor can we use <code>{x}</code>. So we have to adjust our expression to these kind of limitations.</p>
+<p><code>fd</code>, by default, uses regular expression as patter, and matches filenames; on the other hand, <code>find</code> uses the <code>-regex</code> option to specify a regular expression, and it matches the whole path.</p>
+<p>OLD </p>
+<div class="highlight"><pre><span></span>-&gt; % find . -regex &quot;.*[0-9][0-9]_ti.*&quot;
+./examples/33_tickers.go
+./examples/48_time.go
+./examples/28_timeouts.go
+./examples/50_time_format.go
+./examples/32_timers.go
+</pre></div>
+
+
+<p>NEW</p>
+<div class="highlight"><pre><span></span>-&gt; % fd &#39;\d{2}_ti&#39;
+examples/28_timeouts.go
+examples/32_timers.go
+examples/33_tickers.go
+examples/48_time.go
+examples/50_time_format.go
+</pre></div>
+
+
+<h2>指定目录 Find in a specific directory</h2>
+<p><code>find</code> 的语法是 <code>find DIRECTORY OPTIONS</code>；而 <code>fd</code> 的语法是 <code>fd PATTERN [DIRECTORY]</code>。注意其中目录是可选的。这点个人认为非常好，因为大多数情况下，我们是在当前目录查找，每次都要写 <code>.</code> 非常烦。</p>
+<p><code>find</code> follows the syntax <code>find &lt;directory&gt; &lt;options&gt;</code>; meanwhile, <code>fd</code> uses <code>fd &lt;pattern&gt; [&lt;directory&gt;]</code>. Note that the directory part is optional. AFAIK, this is very convenient. Most of the times, we are just trying to find something in the working directory, typing <code>.</code> each time is very annoying.</p>
+<p>OLD</p>
+<div class="highlight"><pre><span></span>-&gt; % find examples -name &quot;*hello*&quot;
+examples/01_hello_world.go
+</pre></div>
+
+
+<p>NEW</p>
+<div class="highlight"><pre><span></span>-&gt; % fd hello examples
+examples/01_hello_world.go
+</pre></div>
+
+
+<h2>直接执行命令 Execute the command without arguments</h2>
+<p>find 会打印帮助信息，而 fd 则会显示当前目录的所有文件。</p>
+<p><code>find</code> will print help message, <code>fd</code> will print all the files in current directory</p>
+<p>OLD</p>
+<div class="highlight"><pre><span></span>-&gt; % find
+usage: find [-H | -L | -P] [-EXdsx] [-f path] path ... [expression]
+       find [-H | -L | -P] [-EXdsx] -f path [path ...] [expression]
+</pre></div>
+
+
+<p>NEW</p>
+<div class="highlight"><pre><span></span>-&gt; % fd
+courses
+courses/chapter_01
+courses/chapter_01/chapter_1.md
+courses/chapter_01/chapter_1.pdf
+courses/chapter_01/hello_world
+courses/chapter_01/hello_world.go
+</pre></div>
+
+
+<h2>按后缀名查找文件 Find files by extension</h2>
+<p>这是一个很常见的需求，<code>find</code> 中需要使用 <code>-name "*.xxx"</code> 来过滤，而 <code>fd</code> 直接提供了 <code>-e</code> 选项。</p>
+<p>It's a very common use case. With <code>find</code>, you have to use <code>-name "*.xxx"</code>, while <code>fd</code> provides <code>-e</code> option directly.</p>
+<p>OLD</p>
+<div class="highlight"><pre><span></span>-&gt; % find . -name &quot;*.md&quot;
+./courses/chapter_01/chapter_1.md
+./courses/chapter_1.md
+</pre></div>
+
+
+<p>NEW</p>
+<div class="highlight"><pre><span></span>-&gt; % fd -e md
+courses/chapter_01/chapter_1.md
+courses/chapter_1.md
+</pre></div>
+
+
+<h2>查找中过滤掉 <code>.gitignore</code> 中的文件 Exclude files listed in <code>.gitignore</code></h2>
+<p><code>find</code> 并没有提供对 <code>.gitingnore</code> 文件的原生支持，更好的方法可能是使用 <code>git ls-files</code>。而作为一个现代工具，<code>fd</code> 则默认情况下就会过滤 <code>gitignore</code> 文件，更多情况请查阅文档。</p>
+<p>可以使用 <code>-I</code> 来包含这些文件，使用 <code>-H</code> 添加隐藏文件。</p>
+<p><code>find</code> does not natively support <code>.gitignore</code> files, a practical way would be using <code>git ls-files</code>. As a modern tool, <code>fd</code> ignores files listed in <code>.gitignore</code> and hidden files by default.</p>
+<p>You could use <code>-I</code> to include those files, <code>-H</code> to also include hidden files.</p>
+<p>OLD</p>
+<div class="highlight"><pre><span></span>-&gt; % git ls-files | grep xxx
+</pre></div>
+
+
+<p>NEW</p>
+<div class="highlight"><pre><span></span>-&gt; % fd xxx
+</pre></div>
+
+
+<h2>排除某个文件夹 Exclude a directory</h2>
+<p><code>fd</code> provides a <code>-E</code> option to exclude directories. You could put the directories in <code>.fdignore</code>, too.</p>
+<p>OLD</p>
+<div class="highlight"><pre><span></span>-&gt; % find . -path ./examples -prune -o -name &#39;*.go&#39;
+./courses/hello_world.go
+./courses/chapter_01/hello_world.go
+./examples
+</pre></div>
+
+
+<p>NEW</p>
+<div class="highlight"><pre><span></span>-&gt; % fd -E examples &#39;.go$&#39;
+courses/chapter_01/hello_world.go
+courses/hello_world.go
+</pre></div>
+
+
+<h2>使用 xargs Using xargs</h2>
+<p>一般来说，如果使用管道过滤的话，需要使用 '\0' 来作为字符串结尾，避免一些潜在的空格引起的问题。</p>
+<p>在 <code>find</code> 中需要使用 <code>-print0</code> 来调整输出 '\0' 结尾的字符串，在 <code>xargs</code> 中需要使用 <code>-0</code> 表示接收这种字符串。而在 <code>fd</code> 中，和 <code>xargs</code> 保持了一直，使用 <code>-0</code> 参数就可以了。</p>
+<p>If you are using pipes to filter results, using <code>\0</code> other than <code>\n</code> would be a better option to avoid some potential problems.</p>
+<p><code>find</code> with <code>-print0</code> will output <code>\0</code>-terminated strings, and <code>xargs</code>'s option is <code>-0</code> to process them. <code>fd</code> chooses <code>-0</code> as its option, which is consistent with <code>xargs</code>.</p>
+<p>OLD</p>
+<div class="highlight"><pre><span></span>-&gt; % find . -name &quot;*.go&quot; -print0 | xargs -0 wc -l
+       7 ./courses/hello_world.go
+       7 ./courses/chapter_01/hello_world.go
+      50 ./examples/07_switch.go
+...
+</pre></div>
+
+
+<p>NEW</p>
+<div class="highlight"><pre><span></span>-&gt; % fd -0 -e go | xargs -0 wc -l
+       7 courses/chapter_01/hello_world.go
+       7 courses/hello_world.go
+       7 examples/01_hello_world.go
+...
+</pre></div>
+
+
+<p>总之，fd 命令相对于 find 来说相当简单易用了</p>
+<p>As you can see, using <code>fd</code> can save you a lot of keystrokes.</p>
+<h1>PS</h1>
+<h2>使用 exec Using exec</h2>
+<p>OLD</p>
+<div class="highlight"><pre><span></span>-&gt; % find . -name &quot;*.md&quot; -exec wc -l {} \;
+     114 ./courses/chapter_01/chapter_1.md
+     114 ./courses/chapter_1.md
+</pre></div>
+
+
+<p>NEW</p>
+<p>You could also omit the <code>{}</code></p>
+<div class="highlight"><pre><span></span>-&gt; % fd -e md --exec wc -l {}
+     114 courses/chapter_1.md
+     114 courses/chapter_01/chapter_1.md
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/fd-geng-hao-de-find-ming-ling-fd-a-nicer-find-command.html">posted at 04:33</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

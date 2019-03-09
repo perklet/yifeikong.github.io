@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 一些 vim 小技巧</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="vim,小技巧,计算机,通用工具" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jan 18, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yi-xie-vim-xiao-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;一些 vim 小技巧&quot;">一些 vim 小技巧</a>
+                </h2>
+
+                
+                
+
+                <h3>重新对齐文本到固定长度</h3>
+<div class="highlight"><pre><span></span>gq&lt;motion&gt;
+</pre></div>
+
+
+<h3>check if mapping is replaced</h3>
+<p><code>:verbose map &lt;Key&gt;</code></p>
+<p>using map may cause infinite recursion!</p>
+<h3>force set syntax</h3>
+<p><code># vim: set filetype=javascript</code></p>
+<h3>exit</h3>
+<p>使用 Ctrl-C 而不是esc
+使用ZZ而不是:wq</p>
+<h3>window management</h3>
+<p>use ctrl-w r to swap pane</p>
+<h3>folding</h3>
+<p><code>{selection}zf</code> or <code>zf{motion}</code> for manual folding</p>
+<h3>history</h3>
+<p>Ctrl-O to go back to files
+Ctrl-I to go to new files</p>
+<p>:%s/pattern//gn</p>
+<h3>delete blank lines</h3>
+<p>:g/^$/d</p>
+<h3>run python from vim</h3>
+<p>:w !python</p>
+<h3>nerdtree的使用</h3>
+<p>使用i和s分别在split中打开文件</p>
+<p>不要使用chardet来检测过长的网页，可以检测前一千个字符 chardet.detect(text[:1000])</p>
+<h3>交换两列</h3>
+<p>:%!awk '{print $2, $1}'</p>
+<p>:set fileencoding=utf8
+:w myfilename</p>
+<h3>add utf-8 BOM</h3>
+<p>:set bomb  # add BOMB</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yi-xie-vim-xiao-ji-qiao.html">posted at 06:26</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/vim.html" class="tags">vim</a>
+                    &nbsp;<a href="/tag/xiao-ji-qiao.html" class="tags">小技巧</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

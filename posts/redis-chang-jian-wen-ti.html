@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | redis 常见问题</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 20, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/redis-chang-jian-wen-ti.html" rel="bookmark" title="Permanent Link to &quot;redis 常见问题&quot;">redis 常见问题</a>
+                </h2>
+
+                
+                
+
+                <p>主要参考这篇文章：https://mp.weixin.qq.com/s/vS8IMgBIrfGpZYNUwtXrPQ</p>
+<h1>1. 集合操作避免范围过大</h1>
+<p>使用 sortedset、set、list、hash等集合类的O(N)操作时要评估当前元素个数的规模以及将来的增长规模，对于短期就可能变为大集合的key，要预估O(N)操作的元素数量，避免全量操作，可以使用HSCAN、SSCAN、ZSCAN进行渐进操作。集合元素数量过大在使用过程中会影响redis的实际性能，元素个数建议尽量不要超过5000，元素数量过大可考虑拆分成多个key进行处理。</p>
+<h1>2. 合理使用过期时间</h1>
+<p>如果key没有设置超时时间，会导致一直占用内存。对于可以预估使用生命周期的key应当设置合理的过期时间或在最后一次操作时进行清理，避免垃圾数据残留redis。redis 不是垃圾桶。</p>
+<h1>3. 利用批量操作命令</h1>
+<p>假设要给一个集合导入 5000 个元素：</p>
+<p>方案1：直接使用redis的HSET逐个设置</p>
+<div class="highlight"><pre><span></span>for _ in 0..5000
+    HSET hash, k，v
+</pre></div>
+
+
+<p>结果：失败。redis ops飙升，同时接口响应超时</p>
+<p>方案2：改用redis的 HMSET一次将所有元素设置到hash中</p>
+<div class="highlight"><pre><span></span>map&lt;k, v&gt; = 50000个元素
+HMSET hash map
+</pre></div>
+
+
+<p>结果：失败。出现redis慢日志</p>
+<p>方案3：依然使用 HMSET，只是每次设置500个，循环100次</p>
+<div class="highlight"><pre><span></span>map_chunk&lt;k, v&gt; = 500个元素
+for i in 0..100
+    HMSET hash map_chunk[i]
+</pre></div>
+
+
+<p>结果：成功</p>
+<p>MSET/HMSET等都支持一次输入多个key，LPUSH/RPUSH/SADD等命令都支持一次输入多个value,也要注意每次操作数量不要过多,建议控制在500个以内</p>
+<h1>4. 合理设置值的大小</h1>
+<p>String类型尽量控制在10KB以内。虽然redis对单个key可以缓存的对象长度能够支持的很大，但是实际使用场合一定要合理拆分过大的缓存项，1k 基本是redis性能的一个拐点。当缓存项超过10k、100k、1m性能下降会特别明显。关于吞吐量与数据大小的关系可见下面官方网站提供的示意图。</p>
+<p>在局域网环境下只要传输的包不超过一个 MTU（以太网下大约 1500 bytes），那么对于 10、100、1000 bytes不同包大小的处理吞吐能力实际结果差不多。</p>
+<h1>5. 禁用一些命令</h1>
+<p>keys、monitor、flushall、flushdb应当通过redis的rename机制禁掉命令，若没有禁用，开发人员要谨慎使用。其中flushall、flushdb会清空redis数据；keys命令可能会引起慢日志；monitor命令在开启的情况下会降低redis的吞吐量，根据压测结果大概会降低redis50%的吞吐量，越多客户端开启该命令，吞吐量下降会越多。</p>
+<p>keys和monitor在一些必要的情况下还是有助于排查线上问题的，建议可在重命名后在必要情况下由redis相关负责人员在redis备机使用，monitor命令可借助redis-faina等脚本工具进行辅助分析，能更快排查线上ops飙升等问题。</p>
+<h1>6. 避免大量 key 同时过期</h1>
+<p>如果大量的 key 过期时间设置得过于集中，到过期的时间点，redis 可能会出现短暂的卡顿现象。一般需要在时间上加一个随机值，使得过期时间分散一些。</p>
+<h1>7. Redis 如何做持久化</h1>
+<p>bgsave 做镜像全量持久化，aof 做增量持久化。因为 bgsave 会耗费较长时间，不够实时，在停机的时候回导致大量丢失数据，所以需要 aof 来配合使用。在 redis 实例重启时，优先使用 aof 来回复内存状态，如果没有 aof 日志，就会使用 rdb 来恢复。</p>
+<p>如果 aof 文件过大会导致恢复时间过长，不过 redis 会定期做 aof 重写，压缩 aof 文件日志大小。在 redis 4.0 之后还有了混合持久化的功能，将 bgsave 的全量和 aof 的增量做了融合处理，这样既保证了回复的效率有兼容了数据的安全性。</p>
+<p>为了避免断电时后丢失数据，还可以设置 aof 日志的 sync 属性，极端情况下，可以每次写入都执行，不过会对性能有影响，一般每秒一次就可以。</p>
+<h1>8. 保存失败</h1>
+<p>redis 报错：Can't save in background: fork: Cannot allocate memory。</p>
+<p>原因是 redis 在后台保存的时候会直接 fork 一下，然后保存。由于数据库过大，就会 fork 失败，但是实际上由于 copy-on-write 机制的存在，并不会产生问题。所以可以直接更改系统的配置，允许 fork。</p>
+<p>把 <code>/etc/sysctl.conf</code> 文件修改如下：</p>
+<div class="highlight"><pre><span></span>vm.overcommit_memory=1
+</pre></div>
+
+
+<p>然后重新加载：</p>
+<div class="highlight"><pre><span></span>sysctl -p /etc/sysctl.conf
+</pre></div>
+
+
+<p>参考资料：</p>
+<ol>
+<li>https://stackoverflow.com/questions/11752544/redis-bgsave-failed-because-fork-cannot-allocate-memory</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/redis-chang-jian-wen-ti.html">posted at 04:03</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

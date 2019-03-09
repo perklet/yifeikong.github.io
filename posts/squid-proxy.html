@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | squid proxy</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机,爬虫" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 20, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/squid-proxy.html" rel="bookmark" title="Permanent Link to &quot;squid proxy&quot;">squid proxy</a>
+                </h2>
+
+                
+                
+
+                <h1>Install squid</h1>
+<p>plain old <code>apt-get update &amp;&amp; apt-get install squid3 apache2-utils -y</code></p>
+<h1>Basic squid conf</h1>
+<p><code>/etc/squid3/squid.conf</code> instead of the super bloated default config file</p>
+<div class="highlight"><pre><span></span># note that on ubuntu 16.04, use squid instead of squid3
+auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid3/passwords
+auth_param basic realm proxy
+acl authenticated proxy_auth REQUIRED
+http_access allow authenticated
+forwarded_for delete
+http_port 0.0.0.0:3128
+</pre></div>
+
+
+<p>Please note the <code>basic_ncsa_auth</code> program instead of the old <code>ncsa_auth</code></p>
+<h1>Setting up a user</h1>
+<p><code>sudo htpasswd -c /etc/squid3/passwords username_you_like</code>, <em>on 16.04, it's squid, not squid3</em>
+and enter a password twice for the chosen username then
+<code>sudo service squid3 restart</code></p>
+<p>see: https://stackoverflow.com/questions/3297196/how-to-set-up-a-squid-proxy-with-basic-username-and-password-authentication</p>
+<h1>centos</h1>
+<p>I have to use centos, since adsl providers are not capable of providing ubuntu</p>
+<p>check out this wonderful article: https://hostpresto.com/community/tutorials/how-to-install-and-configure-squid-proxy-on-centos-7/</p>
+<div class="highlight"><pre><span></span>yum install -y epel-release
+yum install -y squid
+yum install -y httpd-tools
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>systemctl start squid
+systemctl enable squid
+touch /etc/squid/passwd &amp;&amp; chown squid /etc/squid/passwd
+htpasswd -c /etc/squid/passwd root
+</pre></div>
+
+
+<p>edit <code>/etc/squid/squid.conf</code></p>
+<div class="highlight"><pre><span></span>auth_param basic program /usr/lib64/squid/basic_ncsa_auth /etc/squid/passwd
+auth_param basic children 5
+auth_param basic realm Squid Basic Authentication
+auth_param basic credentialsttl 2 hours
+acl auth_users proxy_auth REQUIRED
+http_access allow auth_users
+http_port 3128
+</pre></div>
+
+
+<p>一个小问题</p>
+<p>squid 默认只允许代理 443 端口的https流量，而会拒绝对其他端口的connect请求。需要更改配置文件</p>
+<p>To fix this, add your port to the line in the config file:
+acl SSL_ports port 443
+so it becomes
+acl SSL_ports port 443 4444
+squid 默认还禁止了除了443之外的所有connect 
+deny CONNECT !SSL_Ports  # 删掉这一句</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/squid-proxy.html">posted at 15:22</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

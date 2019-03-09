@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | mysql 基础知识(5) - 聚合语句(group by)</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 09, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-5-ju-he-yu-ju-group-by.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(5) - 聚合语句(group by)&quot;">mysql 基础知识(5) - 聚合语句(group by)</a>
+                </h2>
+
+                
+                
+
+                <p><code>Group by</code> 用来按照某一列或者某几列的值聚合数据。<code>group by x</code> 按照 x 相同的值聚合，<code>group by x, y</code> 按照 x 和 y 都相同的值聚合。而查询的列要么是聚合的列，要么应该通过聚合函数来选取一列。而且所有的 null 会被聚合成一行</p>
+<p>比如说下面的数据表中</p>
+<p><img alt="" src="https://daks2k3a4ib2z.cloudfront.net/589e47d231ee752554896f1f/58dc686fb5bd4cf41639ef71_Screen%20Shot%202017-03-29%20at%207.07.17%20PM.png"></p>
+<div class="highlight"><pre><span></span>-- How many countries are in each continent?
+select
+  continent
+  , count(*)
+from 
+  countries
+group by 
+  continent
+</pre></div>
+
+
+<p>执行查询可以得到每个洲的国家的数量。</p>
+<h1>过滤</h1>
+<p>在 SQL 中，Where 子句是在 group 子句之前运行的，所以我们无法通过 where 来过滤 group 之后的结果，而应该使用 having 子句来过滤。</p>
+<div class="highlight"><pre><span></span>select
+ continent
+  , max(area)
+from 
+  countries
+group by 
+  1
+having
+  max(area) &gt;= 1e7
+</pre></div>
+
+
+<h1>隐式聚合</h1>
+<p>当你没有使用 <code>group by</code>，而使用了 max、min、count 等聚合函数的时候已经在聚合了</p>
+<div class="highlight"><pre><span></span>-- What is the largest and average country size in Europe?
+select
+  max(area) as largest_country
+  , avg(area) as avg_country_area
+from 
+  countries
+where 
+  continent = &#39;Europe&#39;
+</pre></div>
+
+
+<h1>MySQL 的特殊处理</h1>
+<p>如果在查询中有没有聚合的列，那么 MySQL 就会随机选取一个列，比如下面就会随机选取一个州。</p>
+<div class="highlight"><pre><span></span>select 
+  country
+  , state
+  , count(*)
+from
+  countries
+group by 
+  country
+</pre></div>
+
+
+<h1>ref</h1>
+<p>这篇文章主要参考这里：https://www.periscopedata.com/blog/everything-about-group-by</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-5-ju-he-yu-ju-group-by.html">posted at 01:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Django ORM的使用</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Django,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-ormde-shi-yong.html" rel="bookmark" title="Permanent Link to &quot;Django ORM的使用&quot;">Django ORM的使用</a>
+                </h2>
+
+                
+                
+
+                <h1>定义模型</h1>
+<p>继承 <code>models.Model</code> 并使用 <code>models.XXXField</code></p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">authors</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Author</span><span class="p">)</span>
+    <span class="n">publisher</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Publisher</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">DO_NOTHING</span><span class="p">)</span>
+    <span class="n">publication_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">f</span><span class="s2">&quot;&lt;Book {self.title}&gt;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+        <span class="n">db_table</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</pre></div>
+
+
+<p>注意其中的 <code>manytomanyfield</code> and <code>foreignkey</code> 字段。注意 ForeignKey 字段必须添加 on_delete 参数，参考<a href="https://stackoverflow.com/questions/38388423/what-does-on-delete-do-on-django-models">这里</a>。</p>
+<p>YN：on_delete 最好使用 models.DO_NOTHING，虽然会造成数据库的完整性缺失，但是没有丢失任何信息。另外，对于数据库来说，尽量少删除数据，而是用一个字段标记为已删除。</p>
+<p>指向自己的外键: <code>models.ForeignKey('self')</code></p>
+<h2>字段的参数</h2>
+<ul>
+<li><code>null</code> is the field nullable. default False.</li>
+<li><code>blank</code> could this filed be left blank, this is used for django validation, not database scheme, default False.</li>
+<li><code>db_index</code> create db index on this field, default False.</li>
+<li><code>choices</code> used to limit the choice to that field and the text shown. <code>choices = ((1, 'male'), (0, 'female'))</code></li>
+<li><code>default</code> value or a callable to set default value.</li>
+<li><code>help_text</code></li>
+<li><code>verbose</code> verbose name for the field</li>
+<li><code>unique</code> should this field be unique.</li>
+<li><code>primary_key</code> set this field as primary_key, if this is set, django will not generate id field</li>
+</ul>
+<h3>自动生成的 ID 字段</h3>
+<p>by default, django gives each model a primary key field. if primary_key=True is set on any other field, django will not generate this.</p>
+<h2>class meta</h2>
+<ul>
+<li><code>db_table</code>, the dafault is <code>APPNAME_MODEL</code></li>
+<li><code>ordering</code>, a list of fields to set order</li>
+<li><code>unique_together</code>, a tuple of unique fields tuples: <code>unique_together = (("driver", "restaurant"),)</code></li>
+<li><code>index_together</code>, a list of indexes, <code>index_together = [["pub_date", "deadline"],]</code></li>
+</ul>
+<h2>leave field blank</h2>
+<p>to make string field optional, just add <code>blank = True</code> if you want to allow blank values in a date field (e.g., DateField, TimeField, DateTimeField) or numeric field (e.g.,IntegerField, DecimalField, FloatField), you’ll need to use both <code>null=True</code> and <code>blank=True</code>.</p>
+<h1>Abstract base class</h1>
+<p>比如说有时候我们对于每一个模型都需要创建 <code>create_time</code>, <code>modify_time</code> 字段，在 meta 中设定 abstract 为 true。</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">CommonInfo</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PositiveIntegerField</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">abstract</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="k">class</span> <span class="nc">Student</span><span class="p">(</span><span class="n">CommonInfo</span><span class="p">):</span>
+    <span class="n">home_group</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>others</h2>
+<div class="highlight"><pre><span></span>如果你想覆盖 __init__ 方法, 记得
+
+def __init__(self, *args, **kwargs):
+    super().__init__(self, *args, **kwargs)
+    # your code here
+</pre></div>
+
+
+<h1>使用 Model</h1>
+<h2>Create</h2>
+<div class="highlight"><pre><span></span>Model.objects.create(**kwargs)
+</pre></div>
+
+
+<h2>Query</h2>
+<p>Model.objects.get(<strong>kwargs)  returns one object, may raise DoesNotExist or MultiOjbectsReturned
+Model.objects.all() 
+Model.objects.filter(</strong>kwargs)   returns a query set
+Model.objects.order_by(*colnames)   note, you could use "-" in the colnames, cool</p>
+<p>just use filter, <code>get</code> may raise Exceptions</p>
+<h1>查询条件</h1>
+<p>field__lookuptype=value</p>
+<p>lookups</p>
+<p><empty>/exact/iexact  <br>
+contains/icontains<br>
+(i)startswith/(i)endswith <br>
+range <br>
+in<br>
+gt/gte/lt/lte <br>
+year/month/day/week_day/hour/minute/second<br>
+isnull<br>
+regex/iregex    </p>
+<h2>save a model</h2>
+<p>model = Model()
+model.save()    note that all of the fields will be updated, not just the ones that have been changed.
+model/queryset.update() 
+model/queryset.delete() </p>
+<p>QuerySet slicing</p>
+<p>slicing will cause limit cause, brilliant, however, negative slicing is not supported</p>
+<p>Generally, slicing a QuerySet returns a new QuerySet – it doesn’t evaluate the query.An exception is if you use the step parameter of Python slice syntax. For example, this would actually execute the query in order to return a list of every second object of the first 10:</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; Entry.objects.all()[:10:2]
+</pre></div>
+
+
+<p>May raise IndexError</p>
+<p>Tricks</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; Publisher.objects.order_by(&#39;name&#39;)[-1]
+Traceback (most recent call last):
+  ...
+AssertionError: Negative indexing is not supported.
+This is easy to get around, though. Just change the order_by() statement, like this:
+&gt;&gt;&gt; Publisher.objects.order_by(&#39;-name&#39;)[0]
+</pre></div>
+
+
+<p>Model.objects.get().delete()</p>
+<p>column can be accessed as attribute</p>
+<p>django abstract base class is fun, but should be avoided, because we want to find-grain control the db</p>
+<p>django-admin makemigrations
+django-admin sqlmigrate
+don't worry about the numbers of migrations</p>
+<h2>复杂查询，使用 F 和 Q</h2>
+<p>https://docs.djangoproject.com/en/1.10/topics/db/queries/#complex-lookups-with-q</p>
+<p>Keyword argument queries – in filter(), etc. – are “AND”ed together. If you need to execute more complex queries (for example, queries with OR statements), you can use Q objects.</p>
+<p>F and Q
+F is for field
+Q is for query</p>
+<p>django queryset</p>
+<p>filter(<strong>kwargs)
+exclude(</strong>kwargs)
+count
+create
+get_or_create
+update
+delete
+iterate
+exists
+iterator</p>
+<p>QuerySets are lazy!</p>
+<p>Each QuerySet contains a cache to minimize database access. Understanding how it works will allow you to write the most efficient code. In a newly created QuerySet, the cache is empty. The first time a QuerySet is evaluated – and, hence, a database query happens – Django saves the query results in the QuerySet’s cache and returns the results that have been explicitly requested (e.g., the next element, if the QuerySet is being iterated over). Subsequent evaluations of the QuerySet reuse the cached results.</p>
+<h2>Using iterator vs directly</h2>
+<p>A QuerySet typically caches its results internally so that repeated evaluations do not result in additional queries. In contrast, iterator() will read results directly, without doing any caching at the QuerySet level (internally, the default iterator calls iterator() and caches the return value). Using iterator would probably save your memory.</p>
+<p>Keep this caching behavior in mind, because it may bite you if you don’t use your QuerySets correctly. For example, the following will create two QuerySets, evaluate them, and throw them away:</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; print([e.headline for e in Entry.objects.all()]) # two querysets created and evaluated and thrown
+&gt;&gt;&gt; print([e.pub_date for e in Entry.objects.all()])
+</pre></div>
+
+
+<p>That means the same database query will be executed twice, effectively doubling your database load. Also, there’s a possibility the two lists may not include the same database records, because an Entry may have been added or deleted in the split second between the two requests.
+To avoid this problem, simply save the QuerySet and reuse it:</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; queryset = Entry.objects.all()        # store the queryset to a variable
+&gt;&gt;&gt; print([p.headline for p in queryset]) # Evaluate the query set.
+&gt;&gt;&gt; print([p.pub_date for p in queryset]) # Re-use the cache from the evaluation.
+</pre></div>
+
+
+<h2>When querysets are not cached?</h2>
+<p>Querysets do not always cache their results. When evaluating only part of the queryset, the cache is checked, but if it is not populated then the items returned by the subsequent query are not cached. Specifically, this means that limiting the queryset using an array slice or an index will not populate the cache.</p>
+<p>For example, repeatedly getting a certain index in a queryset object will query the database each time:</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; queryset = Entry.objects.all()
+&gt;&gt;&gt; print queryset[5] # Queries the database
+&gt;&gt;&gt; print queryset[5] # Queries the database again 
+</pre></div>
+
+
+<p>However, if the entire queryset has already been evaluated, the cache will be checked instead:</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; queryset = Entry.objects.all()
+&gt;&gt;&gt; [entry for entry in queryset] # Queries the database
+&gt;&gt;&gt; print queryset[5] # Uses cache
+&gt;&gt;&gt; print queryset[5] # Uses cache 
+Here are some examples of other actions that will result in the entire queryset being evaluated and therefore populate the cache:
+&gt;&gt;&gt; [entry for entry in queryset]
+&gt;&gt;&gt; bool(queryset)
+&gt;&gt;&gt; entry in queryset
+&gt;&gt;&gt; list(queryset)
+</pre></div>
+
+
+<h2>F expressions</h2>
+<p>what if you want to compare the value of a model field with another field on the same model?
+use F(colname) to reference the column value</p>
+<h2>Q Expressions</h2>
+<p>encapsulate a collection of keyword arguments. Q objects can be combined using the &amp; and | operators. When an operator is used on two Qobjects, it yields a new Q object.</p>
+<p>by default, all the lookups passed to filter is AND</p>
+<div class="highlight"><pre><span></span>Q(question__startswith=&#39;Who&#39;) | Q(question__startswith=&#39;What&#39;)
+</pre></div>
+
+
+<p>Q supports &amp; / ~</p>
+<p>use Qs as args</p>
+<div class="highlight"><pre><span></span>Poll.objects.get(
+    Q(question__startswith=&#39;Who&#39;),
+    Q(pub_date=date(2005, 5, 2)) | Q(pub_date=date(2005, 5, 6))
+)
+</pre></div>
+
+
+<p>if a Q object is provided, it must precede the definition of any keyword arguments.</p>
+<p>if you want to add extra check in model save
+just override the defualt save method aorr add post save handlers</p>
+<p>fat models is not all that good, it may cause god object problem</p>
+<p>使用 only 来指定需要的字段。</p>
+<p>如果只需要一个或者几个值，可以使用 values_list 方法</p>
+<div class="highlight"><pre><span></span>In [6]: authors = Author.objects.values_list(&#39;name&#39;, &#39;qq&#39;)
+
+In [7]: authors
+
+Out[7]: &lt;QuerySet [(u&#39;WeizhongTu&#39;, u&#39;336643078&#39;), (u&#39;twz915&#39;, u&#39;915792575&#39;), (u&#39;wangdachui&#39;, u&#39;353506297&#39;), (u&#39;xiaoming&#39;, u&#39;004466315&#39;)]&gt;
+
+In [8]: list(authors)
+
+Out[8]: 
+
+[(u&#39;WeizhongTu&#39;, u&#39;336643078&#39;),
+
+ (u&#39;twz915&#39;, u&#39;915792575&#39;),
+
+ (u&#39;wangdachui&#39;, u&#39;353506297&#39;),
+
+ (u&#39;xiaoming&#39;, u&#39;004466315&#39;)]
+</pre></div>
+
+
+<p>如果只需要 1 个字段，可以指定 flat=True</p>
+<div class="highlight"><pre><span></span>In [9]: Author.objects.values_list(&#39;name&#39;, flat=True)
+
+Out[9]: &lt;QuerySet [u&#39;WeizhongTu&#39;, u&#39;twz915&#39;, u&#39;wangdachui&#39;, u&#39;xiaoming&#39;]&gt;
+
+In [10]: list(Author.objects.values_list(&#39;name&#39;, flat=True))
+
+Out[10]: [u&#39;WeizhongTu&#39;, u&#39;twz915&#39;, u&#39;wangdachui&#39;, u&#39;xiaoming&#39;]
+</pre></div>
+
+
+<h1>查看执行的 sql 语句和执行时间</h1>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">connection</span>
+<span class="k">print</span><span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">queries</span><span class="p">)</span>
+</pre></div>
+
+
+<h1>why not using foreign keys</h1>
+<p>you can not use foreign keys across two databases</p>
+<h1>如何在 django 外部单独使用</h1>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.apps</span> <span class="kn">import</span> <span class="n">apps</span>
+
+<span class="n">conf</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;INSTALLED_APPS&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s1">&#39;Demo&#39;</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;DATABASES&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s1">&#39;django.db.backends.sqlite3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;db.sqlite3&#39;</span><span class="p">),</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">settings</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="o">**</span><span class="n">conf</span><span class="p">)</span>
+<span class="n">apps</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">INSTALLED_APPS</span><span class="p">)</span>
+</pre></div>
+
+
+<blockquote>
+<p>https://stackoverflow.com/a/46050808/1061155</p>
+</blockquote>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-ormde-shi-yong.html">posted at 18:28</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

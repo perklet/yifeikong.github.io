@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 使用 Ansible 部署服务</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 18, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-ansible-bu-shu-fu-wu.html" rel="bookmark" title="Permanent Link to &quot;使用 Ansible 部署服务&quot;">使用 Ansible 部署服务</a>
+                </h2>
+
+                
+                
+
+                <p>ansible 的操作是幂等的，也就是说可以进行任意次操作而不会造成副作用。ansible 基于 ssh，不需要在目标机器上运行任何特殊的 agent。</p>
+<h1>安装</h1>
+<div class="highlight"><pre><span></span>sudo pip3 install ansible
+</pre></div>
+
+
+<h1>Hosts 文件</h1>
+<p>ansible 使用 <code>hosts</code> 文件来管理主机，每个Hosts中定义多个 Inventory，可以认为是分组的主机</p>
+<p>默认位置: <code>/etc/ansible/hosts</code>。可以使用 <code>-i</code> 来指定 Inventory 文件</p>
+<p>format</p>
+<div class="highlight"><pre><span></span><span class="k">[inventory_name]</span>
+<span class="na">192.168.0.1</span>
+<span class="c1"># 或者域名</span>
+</pre></div>
+
+
+<p>如果需要改变登录使用的用户名，可以在当前目录的 <code>ansible.cfg</code> 或者 <code>$HOME/.ansible.cfg</code> 或者 <code>/etc/ansible/ansible.cfg</code> 中指定：</p>
+<div class="highlight"><pre><span></span><span class="k">[defaults]</span>
+<span class="na">remote_user</span><span class="o">=</span><span class="s">rabbit</span>
+</pre></div>
+
+
+<h2>动态 Inventory</h2>
+<p>see ec2.py</p>
+<h2>Builtin Variables</h2>
+<p>see https://github.com/lorin/ansible-quickref</p>
+<h1>运行命令</h1>
+<p>ansible 使用module来组织命令。</p>
+<h2>选项</h2>
+<div class="highlight"><pre><span></span>-m  module to run
+-s  use sudo
+-k  ask for key/password
+-u  user
+-a  传递给 module 的参数
+</pre></div>
+
+
+<h2>例子</h2>
+<div class="highlight"><pre><span></span>ansible -i ./hosts all -m ping 
+ansible -i ./hosts all -m shell -a &#39;apt-get install nginx&#39;
+ansible -i ./hosts all -s -m apt -a &#39;pkg=nginx state=installed update_cache=true&#39;
+</pre></div>
+
+
+<p>响应</p>
+<div class="highlight"><pre><span></span>host | state &gt;&gt; {
+    &quot;changed&quot;: false # whether the host is affected by the command
+}
+</pre></div>
+
+
+<p>ansible 内置的 module 有: ping, shell</p>
+<h1>Playbook</h1>
+<p>ansible 可以直接在命令行使用，但是最终需要的命令可能很长，不过最好的方式还是使用 playbook 来把需要运行的命令写成 yaml 文件。就像是 docker 相关的命令可以写成 docker-compose 的配置文件一样。</p>
+<div class="highlight"><pre><span></span><span class="x">- hosts: local</span>
+<span class="x">  # define variables</span>
+<span class="x">  vars:</span>
+<span class="x">   - docroot: /var/www/serversforhackers.com/public</span>
+<span class="x">  # more options goes here</span>
+<span class="x">  # ...</span>
+
+<span class="x">  # tasks are the basic action unit</span>
+<span class="x">  tasks:</span>
+<span class="x">   - name: Add Nginx Repository</span>
+<span class="x">     # module apt_repository</span>
+<span class="x">     apt_repository: repo=&#39;ppa:nginx/stable&#39; state=present</span>
+<span class="x">     # register an event</span>
+<span class="x">     register: ppastable</span>
+
+<span class="x">   - name: Install Nginx</span>
+<span class="x">     apt: pkg=nginx state=installed update_cache=true</span>
+<span class="x">     # listen an event, run only it happens</span>
+<span class="x">     when: ppastable|success</span>
+<span class="x">     register: nginxinstalled</span>
+<span class="x">    # notify calles handlers</span>
+<span class="x">     notify:</span>
+<span class="x">      - Start Nginx</span>
+
+<span class="x">   - name: Create Web Root</span>
+<span class="x">     when: nginxinstalled|success</span>
+<span class="x">     file: dest=</span><span class="cp">{{</span> <span class="s1">&#39;{{&#39;</span> <span class="cp">}}</span><span class="x"> docroot </span><span class="cp">{{</span> <span class="s1">&#39;}}&#39;</span> <span class="cp">}}</span><span class="x"> mode=775 state=directory owner=www-data group=www-data</span>
+<span class="x">     notify:</span>
+<span class="x">      - Reload Nginx</span>
+
+<span class="x">  # handlers are like functions, called by `notify`</span>
+<span class="x">  handlers:</span>
+<span class="x">   - name: Start Nginx</span>
+<span class="x">     service: name=nginx state=started</span>
+
+<span class="x">    - name: Reload Nginx</span>
+<span class="x">      service: name=nginx state=reloaded</span>
+</pre></div>
+
+
+<h1>部署 docker</h1>
+<p><a href="http://yifei.me/note/569">使用 ansible 部署 docker 镜像</a></p>
+<h1>REF</h1>
+<p>这篇文章主要参考<a href="https://serversforhackers.com/c/an-ansible2-tutorial">这里</a></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-ansible-bu-shu-fu-wu.html">posted at 03:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

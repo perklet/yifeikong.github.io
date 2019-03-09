@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 使用 Gson 解析 json 文档</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="大前端,Android,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-gson-jie-xi-json-wen-dang.html" rel="bookmark" title="Permanent Link to &quot;使用 Gson 解析 json 文档&quot;">使用 Gson 解析 json 文档</a>
+                </h2>
+
+                
+                
+
+                <p>解析 json 有两种流派：</p>
+<ol>
+<li>event-driven json parse: iterate the document, not loading all into memory</li>
+<li>document-based json parse: load the full document into memory once for all.</li>
+</ol>
+<p>在 Python 中可以很容易的解析json文件，Python 中的 json.loads 是 document-based。而在 java 中可以使用 event-driven的。个人感觉这种 event-driven 的解析方式是多此一举，json本来定位就是小型的数据传输和配置存储，如果生成了一个很大的 json，应该考虑换用xml了。</p>
+<p>在 Java 中需要生成和 JSON 文档意义对应的 JavaBean 文件，这样才能解析到 Java Class。</p>
+<p>把你的 json 文件的例子首先编写好，然后可以通过这个网站生成 JavaBean：http://www.jsonschema2pojo.org/</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/0069RVTdly1fu2lsahbklj31880ni77y.jpg"></p>
+<p>在 Android Studio build.gradle 文件中添加依赖：</p>
+<div class="highlight"><pre><span></span>dependencies {
+  compile &#39;com.google.code.gson:gson:2.3.1&#39;
+}
+</pre></div>
+
+
+<p>解析</p>
+<div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">com</span><span class="o">.</span><span class="n">example</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">com.google.gson.annotations.Expose</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.google.gson.annotations.SerializedName</span><span class="p">;</span>
+
+<span class="n">public</span> <span class="k">class</span> <span class="nc">Example</span> <span class="p">{</span>
+
+<span class="nd">@SerializedName</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+<span class="nd">@Expose</span>
+<span class="n">private</span> <span class="n">String</span> <span class="n">foo</span><span class="p">;</span>
+
+<span class="n">public</span> <span class="n">String</span> <span class="n">getFoo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">foo</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">public</span> <span class="n">void</span> <span class="n">setFoo</span><span class="p">(</span><span class="n">String</span> <span class="n">foo</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">this</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="n">foo</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>Gson gson = new Gson();
+
+String json = &quot;{\&quot;foo\&quot;: \&quot;bar\&quot;}&quot;;
+Example example = gson.fromJson(json, Example.class);
+// 解析：JavaBean对象 = gson.fromJson(json, JavaBean.class);
+</pre></div>
+
+
+<p>参考资料：</p>
+<ol>
+<li>http://www.jianshu.com/p/b87fee2f7a23</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-gson-jie-xi-json-wen-dang.html">posted at 05:56</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

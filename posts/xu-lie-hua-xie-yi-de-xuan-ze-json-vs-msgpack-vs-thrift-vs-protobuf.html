@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 序列化协议的选择 json vs msgpack vs thrift vs protobuf</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 14, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xu-lie-hua-xie-yi-de-xuan-ze-json-vs-msgpack-vs-thrift-vs-protobuf.html" rel="bookmark" title="Permanent Link to &quot;序列化协议的选择 json vs msgpack vs thrift vs protobuf&quot;">序列化协议的选择 json vs msgpack vs thrift vs protobuf</a>
+                </h2>
+
+                
+                
+
+                <p>当我们的程序需要保存一些对象到硬盘上供下次运行时使用，或者需要和其他程序交换数据
+的时候，需要把对象用某种方式编程二进制字符串然后保存到硬盘上或者发送出去，这种方
+法我们一般称作序列化。序列化有很多不同的方法, 一般考虑三个方面：</p>
+<ol>
+<li>速度，序列化和反序列化的速度越快越好</li>
+<li>体积，序列化之后的文件体积越小越好</li>
+<li>跨语言，序列化能够支持的语言越多越好</li>
+</ol>
+<p>下面考察几种序列化的方法</p>
+<ol>
+<li>语言内置的序列化。比如 Python 的 pickle，显然这种协议只能在一种语言内部使用，
+   而且对于Python来说，甚至不同版本的 pickle 协议都是不兼容的。</li>
+<li>json / xml。这两个都可以把对象序列化成人类可读的字符串的形式，但是序列化后之
+   后体积都变大不少，而且性能也不好，适合于简单的场景。另外一点就是 json 不能定
+   义 schema（接口规范），<em>在大型项目中 schema 是必须的</em>。</li>
+<li>msgpack 序列化之后的体积也比较紧致，但是同样不能定义 schema。</li>
+<li>专门的序列化库。比如 protobuf/thrift。这些库都支持多个语言，需要预先定义
+   schema, 并且把对象序列化成二进制的模式，性能也都不错，所以我们重点关注一下。</li>
+</ol>
+<p>考虑到需要定义接口规范，所以我们只考虑 thrift 和 protobuf 两种</p>
+<p>Thrift 的缺点：</p>
+<ul>
+<li>不支持 uint64。</li>
+<li>查过一些文档之后，发现 thrift 的性能差于 pb。</li>
+</ul>
+<p>所以先淘汰了 thrift。我们选择 protobuf</p>
+<h2>编译步骤放在哪里？</h2>
+<p>protobuf 和 thrift 两个的用法都是先定义 IDL（接口）文件，然后由编译器编译生成对应的语言
+的代码。对于 C++ 这样的编译语言来说问题不大，我们可以把 IDL 编译的过程放到
+makefile 里面去，但是对于 Python 这种没有编译的动态语言就尴尬了。具体来说，IDL
+文件是需要提交到代码仓库的，但是生成的 Python 代码需不需要呢?</p>
+<ol>
+<li>不提交，在运行之前多一个编译步骤，不过可以把编译这一步写到 dockerfile 里面</li>
+<li>提交，这样会造成提交的代码冗余，相当于把二进制文件提交到了仓库</li>
+</ol>
+<p>所以我还是倾向于只向代码库中提交 <code>*.proto</code> 或者 <code>*.thrift</code> 源文件，而不提交编译过后的文件。</p>
+<h1>Protobuf</h1>
+<h2>基本语法</h2>
+<p>protobuf 现在有两个主流版本，显然 proto2 要被逐渐废弃，本文使用的是 proto3。</p>
+<div class="highlight"><pre><span></span><span class="n">syntax</span> <span class="o">=</span> <span class="s2">&quot;proto3&quot;</span><span class="p">;</span>
+<span class="n">package</span> <span class="n">foo</span><span class="o">.</span><span class="n">bar</span><span class="p">;</span>
+<span class="kn">import</span> <span class="s2">&quot;myproject/other_protos.proto&quot;</span><span class="p">;</span>
+
+<span class="n">message</span> <span class="n">SearchRequest</span> <span class="p">{</span>
+  <span class="n">string</span> <span class="n">query</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">int32</span> <span class="n">page_number</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">int32</span> <span class="n">result_per_page</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="n">enum</span> <span class="n">Corpus</span> <span class="p">{</span>
+    <span class="n">UNIVERSAL</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">WEB</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">IMAGES</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">LOCAL</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="n">NEWS</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="n">PRODUCTS</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="n">VIDEO</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">Corpus</span> <span class="n">corpus</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">message</span> <span class="n">SearchResponse</span> <span class="p">{</span>
+  <span class="n">repeated</span> <span class="n">Result</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">message</span> <span class="n">Result</span> <span class="p">{</span>
+  <span class="n">string</span> <span class="n">url</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">string</span> <span class="n">title</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">repeated</span> <span class="n">string</span> <span class="n">snippets</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>上面的结构和 C 语言的 struct 定义很像。</p>
+<ol>
+<li>message 关键字用于声明一个结构，后面加结构的名字</li>
+<li>protobuf 3 不支持默认值。</li>
+<li>类型。protobuf 中定义的标量类型有 double/float/int32(64)/uint32(64)/bool/string/bytes.
+   其中 bytes 用来表示任意的二进制字符串</li>
+<li>序号，每个字段后面的数字表示的是序号。protobuf 用这个序号来进行高效编码，需要
+   注意的是，如果要增添字段不能复用已有的序号。</li>
+<li>枚举。可以使用 enum 关键字定义枚举。枚举可以定义在 message 的外面或者里面</li>
+<li>在一个文件中可以定义多个 message。像是 enum 一样，message 也可以嵌套在另一个
+   message中。比如可以把上面的 Result 嵌套在 SearchResponse 中。不过这时候再引用
+   Result，需要使用 SearchResponse.Result</li>
+<li>message 中可以使用另一个 message 作为类型。</li>
+<li>使用 import 语句来引入其他的 proto 文件。这样就可以直接使用引入</li>
+<li>package 语句用来声明定义的 message 所处的命名空间（namespace)</li>
+</ol>
+<h2>编译</h2>
+<h3>在 Python 中使用</h3>
+<p>ParseFromString: 从字符串中解析protobuf对象. 虽然这个方法名字中包含了string，但是实际上使用的是 bytes。</p>
+<div class="highlight"><pre><span></span>r = SearchResponse()
+r.ParseFromString(data)
+</pre></div>
+
+
+<p>SerializeToString: 序列化成字符串。同样使用 bytes。</p>
+<div class="highlight"><pre><span></span>data = r.SerializeToString()
+</pre></div>
+
+
+<p>属性可以直接访问和设置，如果属性名或者类型出错会抛出异常。</p>
+<p>repeated 类型的基础类型属性可以像一个数组一样访问，map 类型可以像字典一样访问。但是赋值必须通过 append 和 extend 赋值，而不能直接赋值.</p>
+<p>repeated 类型的 message 类型不能使用 append，而必须使用 add 或者 extend 方法。这样可以确保 message 类型被拷贝进去。</p>
+<h1>REF</h1>
+<ol>
+<li>https://tech.meituan.com/serialization_vs_deserialization.html</li>
+<li>https://my.oschina.net/fir01/blog/468123</li>
+<li>http://colobu.com/2015/01/07/Protobuf-language-guide/</li>
+<li>https://developers.google.com/protocol-buffers/docs/pythontutorial</li>
+<li><a href="https://blog.csdn.net/losophy/article/details/17006573">在 Python 中使用 ProtoBuf</a></li>
+<li>https://developers.google.com/protocol-buffers/docs/reference/python-generated</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xu-lie-hua-xie-yi-de-xuan-ze-json-vs-msgpack-vs-thrift-vs-protobuf.html">posted at 19:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

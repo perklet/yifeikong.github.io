@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "计算机" | Page 29</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/ji-suan-ji/page/29/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-shi-yao-yao-xie-pa-chong.html" rel="bookmark" title="Permanent Link to &quot;为什么要写爬虫？&quot;">为什么要写爬虫？</a>
+                </h2>
+
+                
+                
+
+                <p>为什么要爬数据？</p>
+<p>To quote Wikipedia</p>
+<blockquote>
+<p>The key element that distinguishes data scraping from regular parsing is that the output being scraped was intended for display to and <em>end-user</em>, rather than as input to another program, and is therefore usually <em>neither documented nor structured</em> for convenient parsing.</p>
+</blockquote>
+<ul>
+<li>爬取整站思路：使用图遍历算法</li>
+<li>爬取更新思路：找列表页，不断刷新获得更新 …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-shi-yao-yao-xie-pa-chong.html">posted at 14:24</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-du-xie-csv-wen-jian.html" rel="bookmark" title="Permanent Link to &quot;Python 读写 CSV 文件&quot;">Python 读写 CSV 文件</a>
+                </h2>
+
+                
+                
+
+                <h2>typical usage</h2>
+<p>注意dictwriter需要提供fieldnames</p>
+<div class="highlight"><pre><span></span>with open(&#39;csvfile&#39;, &#39;wt&#39;, newline=&#39;&#39;) as f:
+    writer = csv.DictWriter(f, fieldnames=[], extrasaction=&#39;ignore&#39;)
+    writer.writeheader()
+    writer.writerow(d) # list of dict if writerows
+
+with open(&#39;csvfile&#39;, &#39;wt&#39;, newline=&#39;&#39;) as f:
+    writer = csv.writer(f)
+    writer.writerow(l) # list of list if writerows
+
+with open(&#39;csvfile&#39;, &#39;rt …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-du-xie-csv-wen-jian.html">posted at 14:14</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/okhttp.html" rel="bookmark" title="Permanent Link to &quot;okhttp&quot;">okhttp</a>
+                </h2>
+
+                
+                
+
+                <p>Good tutorial: http://www.vogella.com/tutorials/JavaLibrary-OkHttp/article.html#creating-request-objects-for-make-network-calls</p>
+<p>注意：很多国产ROM 会限制应用的后台联网，需要把应用加入白名单</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/okhttp.html">posted at 14:08</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/vysorio.html" rel="bookmark" title="Permanent Link to &quot;vysor.io&quot;">vysor.io</a>
+                </h2>
+
+                
+                
+
+                <p>download from here: https://vysornuts.clockworkmod.com/download/osx, basically it's an electorn app</p>
+<h2>How it works</h2>
+<p>http://zke1ev3n.me/2016/07/02/vysor%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8AAndroid%E5%90%8C%E5%B1%8F%E6%96%B9%E6%A1%88/</p>
+<h2>How to …</h2>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/vysorio.html">posted at 13:50</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/an-zhuo-de-wen-jian-xi-tong.html" rel="bookmark" title="Permanent Link to &quot;安卓的文件系统&quot;">安卓的文件系统</a>
+                </h2>
+
+                
+                
+
+                <p>let's assume <code>/system</code> is the rom folder</p>
+<table>
+<thead>
+<tr>
+<th>Partition</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/boot</td>
+<td>kernel &amp; Co.</td>
+</tr>
+<tr>
+<td>/cache</td>
+<td>app cache</td>
+</tr>
+<tr>
+<td>/data</td>
+<td>user data partition¹</td>
+</tr>
+<tr>
+<td>/data/data</td>
+<td>app data¹</td>
+</tr>
+<tr>
+<td>/dev</td>
+<td>devices, virtual fs</td>
+</tr>
+<tr>
+<td>/mnt/asec</td>
+<td>encrypted apps (App2SD)</td>
+</tr>
+<tr>
+<td>/mnt/emmc</td>
+<td>internal sdcard³</td>
+</tr>
+<tr>
+<td>/mnt/sdcard</td>
+<td>external sdcard³</td>
+</tr>
+<tr>
+<td>/proc</td>
+<td>process information²</td>
+</tr>
+<tr>
+<td>/recovery</td>
+<td>used in recovery mode</td>
+</tr>
+<tr>
+<td>/system</td>
+<td>system …</td></tr></tbody></table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/an-zhuo-de-wen-jian-xi-tong.html">posted at 13:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/cross-compiling-on-android.html" rel="bookmark" title="Permanent Link to &quot;cross compiling on android&quot;">cross compiling on android</a>
+                </h2>
+
+                
+                
+
+                <h2>basic knowledge</h2>
+<p>first, we need a cross compiler, which you can download from the source or somewhere.</p>
+<p>second, when we use gcc to build stuff, actually we are implicitly linking to the stdlib of c, if we are cross compiling programs for another platform, then we need another platform's filesystem …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/cross-compiling-on-android.html">posted at 13:27</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/an-zhuo-de-adbgong-ju-yu-ming-ling-xing.html" rel="bookmark" title="Permanent Link to &quot;安卓的adb工具与命令行&quot;">安卓的adb工具与命令行</a>
+                </h2>
+
+                
+                
+
+                <h1>Yifei's Notes</h1>
+<p>adb is pretty unstable, it's meant for debug usage, NOT for a long-running service.</p>
+<h1>Install</h1>
+<p>install on ubuntu: <code>apt-get install android-tools-adb android-tools-fastboot</code></p>
+<p>install on mac: <code>brew install android-platform-tools</code></p>
+<h1>Connect model</h1>
+<p>there is a server on PC called adb server, if not started, will be started on first adb …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/an-zhuo-de-adbgong-ju-yu-ming-ling-xing.html">posted at 12:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-zhang-hu-guan-li.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行账户管理&quot;">Linux 命令行账户管理</a>
+                </h2>
+
+                
+                
+
+                <p>执行 <code>sudo vi /etc/suduers</code>, 然后输入：</p>
+<p><code>username ALL=(ALL) NOPASSWD: ALL</code></p>
+<div class="highlight"><pre><span></span>useradd -m USERNAME  # add a user
+userdel USERNAME  # delete a user
+passwd -e  # password expire next time user login
+
+groups username  # view username groups
+usermod -G groupname username  # add user to a group
+usermod -g groupname username # set user …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-zhang-hu-guan-li.html">posted at 12:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/tcp-wo-shou-chang-jian-kao-dian.html" rel="bookmark" title="Permanent Link to &quot;TCP 握手常见考点&quot;">TCP 握手常见考点</a>
+                </h2>
+
+                
+                
+
+                <h1>连接建立</h1>
+<p><img alt="" src="https://ws3.sinaimg.cn/large/006tKfTcly1ftppcaaoz7j30i40bdgn0.jpg"></p>
+<p>上面的图说的已经很好了，不再赘述。</p>
+<h2>为什么需要三次握手</h2>
+<p>这主要是为了防止已失效的连接请求报文段突然又传送到了服务端，服务端建立一个新的连接，因而产生错误。 </p>
+<p>所谓已失效的连接请求报文段是这样产生的。A发送连接请求，但因连接请求报文丢失而未收到确认，于是A重发一次连接请求，成功后建立了连接。数据传输完毕后就释放了连接。</p>
+<p>现在假定A发出的第一个请求报文段并未丢失，而是在某个网络节点长时间滞留了，以致延误到连接释放以后的某个时间才到达B。本来这是一个早已失效的报文段。但B收到此失效的连接请求报文段后，就误以为A又发了一次新的连接请求，于是向A发出确认报文段，同意建立连接。假如不采用三次握手，那么只要B发出确认，新的连接就建立了。 </p>
+<p>由于A并未发出建立连接的请求，因此不会理睬B的确认，也不会向B发送数据。但B却以为新的运输连接已经建立了，并一直等待A发来数据，因此白白浪费了许多资源。 </p>
+<p>采用TCP三次握手的方法可以防止上述现象发生。例如在刚才的情况下，由于A不会向B的确认发出确认，连接就不会建立。</p>
+<h2>如果在TCP第三次握手中的报文段丢失了会发生什么情况?</h2>
+<p>Client认为这个连接已经建立，如果Client端向Server写数据，Server端将以RST包响应，方能感知到Server的错误。</p>
+<h1>链接释放</h1>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tKfTcly1ftppdqkfzij311g0rok0s.jpg"></p>
+<p>需要注意的是，TCP 是全双工的协议，因此链接建立之后就没有客户端服务器的概念了，两边是对等的，都可以释放链接</p>
+<p>MSS（最长报文长度）, 由两端的较短值决定, 在以太网中的典型值为1460 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/tcp-wo-shou-chang-jian-kao-dian.html">posted at 11:47</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/bi-ji-sheng-ya.html" rel="bookmark" title="Permanent Link to &quot;笔记生涯&quot;">笔记生涯</a>
+                </h2>
+
+                
+                
+
+                <p>写笔记也有几年时间了，最开始自然用的是开山鼻祖 Evernote，当时并没有什么独立思考的能力，大概是看到有什么好的文章，一时消化不了或者想着会回头来看，便用 Evernote Webclipper 剪辑下来，到最后这些『笔记』自然是没有看过多少，翻了翻，仅剩下几篇还算是自己写的其余便都删了。</p>
+<p>后来开始读研，国内的笔记软件也多了起来，听说 wiz 对 markdown 的支持是最好的，又是一个小团队出品，甚和我心，用了一年有余，记笔记也不多，然而总是感觉有些不顺手，遂弃之</p>
+<p>虽然从大三开始便用 ubuntu 做主力系统，然而竟直到研二才算是习惯 vi 的操作方式，甚至用熟悉 shell 竟是第一份工作之后的事，当然这是后话了。用熟了 vi，直接用一个命令(vilog)写 markdown 文件好了，半年有余，算是日志，也是笔记吧，唯一的不满就是表格太不方便表达了。</p>
+<p>再后来用半年挣来的外快终于有闲钱够得一天 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/bi-ji-sheng-ya.html">posted at 01:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/28" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/30" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 29 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

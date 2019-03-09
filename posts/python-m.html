@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Python `-m`</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-m.html" rel="bookmark" title="Permanent Link to &quot;Python `-m`&quot;">Python `-m`</a>
+                </h2>
+
+                
+                
+
+                <h2>How <code>-m</code> is invoked</h2>
+<p>if you have a module foo</p>
+<p>write
+foo/
+    <strong>init</strong>.py
+    <strong>main</strong>.py</p>
+<p>then python -m foo will execute <strong>main</strong>.py</p>
+<p>https://pythonwise.blogspot.sg/2015/01/python-m.html</p>
+<p>json pretty print</p>
+<p>cat some_json_file | python -m json.tool</p>
+<p>zipfile</p>
+<p>zipfile.py -l zipfile.zip        # Show listing of a zipfile
+zipfile.py -t zipfile.zip        # Test if a zipfile is valid
+zipfile.py -e zipfile.zip target # Extract zipfile into target dir
+zipfile.py -c zipfile.zip src ... # Create zipfile from sources</p>
+<p>gzip</p>
+<p>python -m gzip wordlist.txt  # Will create wordlist.txt.gz
+python -m gzip -d wordlist.txt.gz  # Will extract to wordlist.txt</p>
+<p>filecmp</p>
+<p>compare two directories</p>
+<p>$ python -m filecmp /tmp/a /tmp/b
+diff /tmp/a /tmp/b
+Only in /tmp/a : ['1']
+Only in /tmp/b : ['2']
+Identical files : ['4']
+Differing files : ['3']</p>
+<p>Several modules lets you encode/decode in various formats:
+    • base64
+    • uu
+    • encodings.rot_13
+    • binhex
+    • mimify
+    • quopri
+For example
+$ echo 'secertpassword' | python -m encodings.rot_13
+frpregcnffjbeq</p>
+<p>servers</p>
+<p>python -m SimpleHTTPServer # 2
+python -m http.server #3</p>
+<p>python -m pydoc {module/func}</p>
+<p>Profiling</p>
+<p>python -m cProfile script.py
+python -m timeit script.py
+python -m pstats script.py
+python -m trace script.py</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-m.html">posted at 13:19</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

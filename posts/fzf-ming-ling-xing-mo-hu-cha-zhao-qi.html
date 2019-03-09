@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | fzf - 命令行模糊查找器</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/fzf-ming-ling-xing-mo-hu-cha-zhao-qi.html" rel="bookmark" title="Permanent Link to &quot;fzf - 命令行模糊查找器&quot;">fzf - 命令行模糊查找器</a>
+                </h2>
+
+                
+                
+
+                <p>fzf 可以替代 ag 等等工具</p>
+<h1>安装</h1>
+<p>在 mac 上直接 <code>brew install fzf</code> 就好了</p>
+<h1>使用</h1>
+<h2>调用 fzf 命令</h2>
+<p>直接在命令行输入 fzf 开始模糊查找</p>
+<table>
+<thead>
+<tr>
+<th>查找命令</th>
+<th>匹配类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sbtrkt</td>
+<td>模糊匹配</td>
+<td>匹配sbtrkt</td>
+</tr>
+<tr>
+<td>^music</td>
+<td>前缀精确匹配</td>
+<td>以music开头</td>
+</tr>
+<tr>
+<td>.mp3^</td>
+<td>后缀精确匹配</td>
+<td>以.mp3结尾</td>
+</tr>
+<tr>
+<td>'wild</td>
+<td>精确匹配(quoted)</td>
+<td>精确包含wild</td>
+</tr>
+<tr>
+<td>!fire</td>
+<td>inverse-exact-match</td>
+<td>不包含fire</td>
+</tr>
+<tr>
+<td>!.mp3$</td>
+<td>inverse-suffix-exact-match</td>
+<td>不以.mp3结尾</td>
+</tr>
+</tbody>
+</table>
+<p><code>|</code>可以做or匹配， 比如 <code>^core go$|rb$|py$</code> 表示以core开头，以go或rb或py结尾的</p>
+<h2>按键</h2>
+<div class="highlight"><pre><span></span>ctrl-j/k 或者 ctrl-n/p 或者箭头来上下选择
+ctrl-c 或者 Esc 退出
+Enter 选择
+在多行模式，tab 和 Shift-tab 来标记文件
+</pre></div>
+
+
+<p>除了这些按键之外，还可以使用 <code>--bind</code> 绑定自己的按键，见下文</p>
+<p>选中之后，fzf 的默认操作是打印这个文件名，这样我们还得打开，所以可以直接 <code>vim $(fzf)</code> 也就是使用 vim 打开我们选中的文件。</p>
+<h2>使用快捷键</h2>
+<div class="highlight"><pre><span></span>Ctrl-T 快速选择当前目录文件，并把文件名打印出来
+Ctrl-R 使用fzf来过滤history命令
+ALT-C cd 进入选中的目录
+</pre></div>
+
+
+<h2>自动补全</h2>
+<p>fzf 支持不少命令的自动补全功能，通过 **<tab> 来触发。如果没有特殊支持某个命令的话，fzf会用文件来补全。</p>
+<div class="highlight"><pre><span></span>vim **&lt;tab&gt;
+cd **&lt;tab&gt;
+ssh **&lt;tab&gt;  从 /etc/hosts 中读取主机列表
+unset **&lt;tab&gt;
+export **&lt;tab&gt;
+unalias **&lt;tab&gt;
+
+kill -s TERM &lt;tab&gt;
+</pre></div>
+
+
+<p>这里我把触发按键设置成了 Ctrl-Y 比原生的触发更方便一点，如何配置见下文。</p>
+<h1>选项</h1>
+<div class="highlight"><pre><span></span>--height xx% 默认情况下 fzf 占据了 100% 的屏幕
+--reverse 提示符在上面
+--bind 绑定命令
+--preview 指定预览命令
+</pre></div>
+
+
+<p>默认情况下，在fzf中选中文件之后知识打印出这个文件名，可以使用bind来指定一些快捷键，来对文件的一些操作。</p>
+<p>比如：</p>
+<div class="highlight"><pre><span></span># Press F1 to open the file with less without leaving fzf
+# Press CTRL-Y to copy the line to clipboard and aborts fzf (requires pbcopy)
+fzf --bind &#39;f1:execute(less -f {}),ctrl-y:execute-silent(echo {} | pbcopy)+abort&#39;
+</pre></div>
+
+
+<p>默认情况下，fzf 不会预览文件的内容，可以使用 --preview 指定，</p>
+<div class="highlight"><pre><span></span># Use head instead of cat so that the command doesn&#39;t take too long to finish
+fzf --preview &#39;head -100 {}&#39;
+</pre></div>
+
+
+<p>语法高亮</p>
+<div class="highlight"><pre><span></span>fzf --preview &#39;[[ $(file --mime {}) =~ binary ]] &amp;&amp;
+                 echo {} is a binary file ||
+                 (highlight -O ansi -l {} ||
+                  coderay {} ||
+                  rougify {} ||
+                  cat {}) 2&gt; /dev/null&#39;
+</pre></div>
+
+
+<h2>相关的环境变量</h2>
+<p>默认情况下，fzf 从 <code>find * -type f</code> 中读取文件列表，可以使用更好用的 fd 来替换。</p>
+<div class="highlight"><pre><span></span>export FZF_DEFAULT_OPTS=&#39;--height 40% --reverse --border&#39; 这个变量来指定默认选项。
+export FZF_DEFAULT_COMMAND=&#39;fd --type f&#39; 来指定
+export FZF_CTRL_T_COMMAND=&quot;$FZF_DEFAULT_COMMAND&quot;
+</pre></div>
+
+
+<h2>我的最终配置</h2>
+<div class="highlight"><pre><span></span>[ -f ~/.fzf.zsh ] &amp;&amp; source ~/.fzf.zsh
+
+export FZF_DEFAULT_COMMAND=&#39;fd --type f&#39;
+export FZF_CTRL_T_COMMAND=&#39;fd --type f&#39;
+export FZF_ALT_C_COMMAND=&#39;fd --type d&#39;
+export FZF_COMPLETION_TRIGGER=&#39;&#39;
+export FZF_DEFAULT_OPTS=&quot;--height 40% --reverse --border --prompt &#39;&gt;&gt;&gt;&#39; \
+    --bind &#39;alt-j:preview-down,alt-k:preview-up,alt-v:execute(vi {})+abort,ctrl-y:execute-silent(cat {} | pbcopy)+abort,?:toggle-preview&#39; \
+    --header &#39;A-j/k: preview down/up, A-v: open in vim, C-y: copy, ?: toggle preview&#39; \
+    --preview &#39;(highlight -O ansi -l {} 2&gt; /dev/null || cat {} || tree -C {}) 2&gt; /dev/null&#39;&quot;
+export FZF_CTRL_T_OPTS=$FZF_DEFAULT_OPTS
+export FZF_CTRL_R_OPTS=&quot;--preview &#39;echo {}&#39; --preview-window hidden:wrap --bind &#39;?:toggle-preview&#39;&quot;
+export FZF_ALT_C_OPTS=&quot;--height 40% --reverse --border --prompt &#39;&gt;&gt;&gt;&#39; \
+    --bind &#39;alt-j:preview-down,alt-k:preview-up,?:toggle-preview&#39; \
+    --header &#39;A-j/k: preview down/up, A-v: open in vim, C-y: copy, ?: toggle preview&#39; \
+    --preview &#39;tree -C {}&#39;&quot;
+bindkey &#39;^Y&#39; fzf-completion
+bindkey &#39;^I&#39; $fzf_default_completion
+[ -f ~/.dotfiles/lib/fzf-extras.sh ] &amp;&amp; source ~/.dotfiles/lib/fzf-extras.sh
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/fzf-ming-ling-xing-mo-hu-cha-zhao-qi.html">posted at 04:38</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

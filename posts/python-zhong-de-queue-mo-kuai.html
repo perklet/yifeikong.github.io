@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Python 中的 queue 模块</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-de-queue-mo-kuai.html" rel="bookmark" title="Permanent Link to &quot;Python 中的 queue 模块&quot;">Python 中的 queue 模块</a>
+                </h2>
+
+                
+                
+
+                <p>在Python中多进程或者多线程之间通信可以使用队列，标准库中实现了一个线程安全的库 queue.Queue，和进程安全的库 multiprocessing.Queue</p>
+<p>There are 3 kind of queues: `Queue LifoQueue HeapQueue</p>
+<div class="highlight"><pre><span></span>q = Queue(size)
+
+get(block=True) return a object
+get_nowait()
+put(item, block=True) put a object 
+
+qsize()
+empty()
+full()
+
+task_done() # indicate one item process finished raise ValueError
+join() # wait until all item processed
+
+Queue.Empty
+Queue.Full
+</pre></div>
+
+
+<p>How to iterate a queue?</p>
+<p>by using <code>iter(q, None)</code>, note that you have to put a sentinel value manually</p>
+<p>Queue vs multiprocessing.Queue</p>
+<p>despite their similar api, their implementation is completely different</p>
+<p>http://stackoverflow.com/questions/925100</p>
+<p>如果在一个线程使用了异步代码，那么所有的操作都必须使用异步操作，但是并不是所有的操作都需要或者能够使用异步操作。</p>
+<p>在异步线程和同步线程之间分享数据需要使用一个共用的queue</p>
+<p>如果需要把异步操作分布式不熟使用，在异步的事件循环之间分享数据也需要使用一个queue</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-de-queue-mo-kuai.html">posted at 09:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

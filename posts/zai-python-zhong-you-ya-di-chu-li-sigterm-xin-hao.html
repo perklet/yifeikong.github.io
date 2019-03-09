@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 在 Python 中优雅地处理 SIGTERM 信号</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 18, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/zai-python-zhong-you-ya-di-chu-li-sigterm-xin-hao.html" rel="bookmark" title="Permanent Link to &quot;在 Python 中优雅地处理 SIGTERM 信号&quot;">在 Python 中优雅地处理 SIGTERM 信号</a>
+                </h2>
+
+                
+                
+
+                <p>昨天写了一个服务，在本地运行很好，使用 Ctrl-C 结束运行之后会清理资源，然后取消注册，然而放到 Docker 中跑之后发现结束之后资源没有释放。查了查发现原来是下面是几个因素造成的：</p>
+<ol>
+<li>Ctrl-C 发送的是 SIGINT 信号，Python 会转化成 KeyboardInterrupt 异常，而我的资源是在 finally 释放资源，所以使用 Ctrl-C 可以优雅地退出</li>
+<li>Python 中对其他的信号（比如 SIGTERM、SIGHUP）都不会处理，而是直接退出</li>
+<li>Docker 在推出的时候默认发送的是 SIGTERM 信号</li>
+</ol>
+<p>所以在 docker stop 的时候服务并不能优雅的推出。</p>
+<h1>解决方法</h1>
+<p>使用 atexit 模块是不可以的，atexit 不会处理 SIGTERM。需要使用 signal 模块来，在网上找到了一份源码。这个代码注册了一个 SIGTERM 的 handler，把 SIGTERM 转换成正常的 <code>sys.exit</code> 调用，当运行 <code>sys.exit</code> 的时候会运行 finally 子句中的语句。</p>
+<div class="highlight"><pre><span></span><span class="c1"># Author: Giampaolo Rodola&#39; &lt;g.rodola [AT] gmail [DOT] com&gt;</span>
+<span class="c1"># License: MIT</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">with_statement</span>
+<span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="k">def</span> <span class="nf">_sigterm_handler</span><span class="p">(</span><span class="n">signum</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">_sigterm_handler</span><span class="o">.</span><span class="n">__enter_ctx__</span> <span class="o">=</span> <span class="bp">False</span>
+
+
+<span class="nd">@contextlib.contextmanager</span>
+<span class="k">def</span> <span class="nf">handle_exit</span><span class="p">(</span><span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A context manager which properly handles SIGTERM and SIGINT</span>
+<span class="sd">    (KeyboardInterrupt) signals, registering a function which is</span>
+<span class="sd">    guaranteed to be called after signals are received.</span>
+<span class="sd">    Also, it makes sure to execute previously registered signal</span>
+<span class="sd">    handlers as well (if any).</span>
+
+<span class="sd">    &gt;&gt;&gt; app = App()</span>
+<span class="sd">    &gt;&gt;&gt; with handle_exit(app.stop):</span>
+<span class="sd">    ...     app.start()</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+
+<span class="sd">    If append == False raise RuntimeError if there&#39;s already a handler</span>
+<span class="sd">    registered for SIGTERM, otherwise both new and old handlers are</span>
+<span class="sd">    executed in this order.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">old_handler</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">,</span> <span class="n">_sigterm_handler</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">old_handler</span> <span class="o">!=</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIG_DFL</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">old_handler</span> <span class="o">!=</span> <span class="n">_sigterm_handler</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">append</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;there is already a handler registered for &quot;</span>
+                               <span class="s2">&quot;SIGTERM: </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">old_handler</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">signum</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">_sigterm_handler</span><span class="p">(</span><span class="n">signum</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">old_handler</span><span class="p">(</span><span class="n">signum</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+        <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">_sigterm_handler</span><span class="o">.</span><span class="n">__enter_ctx__</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;can&#39;t use nested contexts&quot;</span><span class="p">)</span>
+    <span class="n">_sigterm_handler</span><span class="o">.</span><span class="n">__enter_ctx__</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+        <span class="c1"># code != 0 refers to an application error (e.g. explicit</span>
+        <span class="c1"># sys.exit(&#39;some error&#39;) call).</span>
+        <span class="c1"># We don&#39;t want that to pass silently.</span>
+        <span class="c1"># Nevertheless, the &#39;finally&#39; clause below will always</span>
+        <span class="c1"># be executed.</span>
+        <span class="k">if</span> <span class="n">err</span><span class="o">.</span><span class="n">code</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">_sigterm_handler</span><span class="o">.</span><span class="n">__enter_ctx__</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="n">callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">callback</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># ===============================================================</span>
+    <span class="c1"># --- test suite</span>
+    <span class="c1"># ===============================================================</span>
+
+    <span class="kn">import</span> <span class="nn">unittest</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+
+    <span class="k">class</span> <span class="nc">TestOnExit</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+
+        <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="c1"># reset signal handlers</span>
+            <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIG_DFL</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="c1"># make sure we exited the ctx manager</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">test_base</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">handle_exit</span><span class="p">():</span>
+                <span class="k">pass</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">def</span> <span class="nf">test_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">with</span> <span class="n">handle_exit</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">callback</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">None</span><span class="p">)):</span>
+                <span class="k">pass</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="p">[</span><span class="bp">None</span><span class="p">])</span>
+
+        <span class="k">def</span> <span class="nf">test_kinterrupt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">handle_exit</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">KeyboardInterrupt</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">def</span> <span class="nf">test_sigterm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">handle_exit</span><span class="p">():</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">def</span> <span class="nf">test_sigint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">handle_exit</span><span class="p">():</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">def</span> <span class="nf">test_sigterm_old</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="c1"># make sure the old handler gets executed</span>
+            <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;old&#39;</span><span class="p">))</span>
+            <span class="k">with</span> <span class="n">handle_exit</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;new&#39;</span><span class="p">),</span> <span class="n">append</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">queue</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;old&#39;</span><span class="p">,</span> <span class="s1">&#39;new&#39;</span><span class="p">])</span>
+
+        <span class="k">def</span> <span class="nf">test_sigint_old</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="c1"># make sure the old handler gets executed</span>
+            <span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;old&#39;</span><span class="p">))</span>
+            <span class="k">with</span> <span class="n">handle_exit</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;new&#39;</span><span class="p">),</span> <span class="n">append</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">queue</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;old&#39;</span><span class="p">,</span> <span class="s1">&#39;new&#39;</span><span class="p">])</span>
+
+        <span class="k">def</span> <span class="nf">test_no_append</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="c1"># make sure we can&#39;t use the context manager if there&#39;s</span>
+            <span class="c1"># already a handler registered for SIGTERM</span>
+            <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">handle_exit</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">flag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">None</span><span class="p">)):</span>
+                    <span class="k">pass</span>
+            <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;exception not raised&quot;</span><span class="p">)</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">def</span> <span class="nf">test_nested_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">flag</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">handle_exit</span><span class="p">():</span>
+                    <span class="k">with</span> <span class="n">handle_exit</span><span class="p">():</span>
+                        <span class="k">pass</span>
+            <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;exception not raised&quot;</span><span class="p">)</span>
+
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<p>参考：</p>
+<ol>
+<li>docker 退出信号：https://www.ctl.io/developers/blog/post/gracefully-stopping-docker-containers/</li>
+<li>finally 中的语句并不总会执行：https://stackoverflow.com/questions/49262379/does-finally-always-execute-in-python</li>
+<li>Python 不处理 SIGTERM 信号 https://stackoverflow.com/questions/9930576/python-what-is-the-default-handling-of-sigterm</li>
+<li>sys.exit 也会运行 finally 中的语句 https://stackoverflow.com/questions/7709411/why-finally-block-is-executing-after-calling-sys-exit0-in-except-block</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/zai-python-zhong-you-ya-di-chu-li-sigterm-xin-hao.html">posted at 01:46</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

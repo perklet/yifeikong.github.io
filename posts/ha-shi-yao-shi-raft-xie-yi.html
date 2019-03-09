@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 蛤？什么是 raft 协议？</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="算法,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 31, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ha-shi-yao-shi-raft-xie-yi.html" rel="bookmark" title="Permanent Link to &quot;蛤？什么是 raft 协议？&quot;">蛤？什么是 raft 协议？</a>
+                </h2>
+
+                
+                
+
+                <p>Raft 协议是一个分布式的一致性协议，主要通过 Leader Election 和 Log Replication 两个步骤来实现高可用的一致性状态存储。</p>
+<p>这篇文章并不是 Raft 协议的一个完整介绍，只是其中核心概念的一个总结概括，要完全理解所有细节还是得看论文。</p>
+<h1>Leader 选举</h1>
+<ol>
+<li>每个节点有三种状态：follower、candidate、leader。</li>
+<li>作为 leader 有任期(term)的概念，根据基本法必须选举上台。Term 是一个自增的数字。</li>
+<li>作为 leader 要不断发送心跳给 follower，告诉他们一律不得经商。</li>
+<li>所有节点都有一个随机的定时器（150ms~300ms），当 follower 没有收到日志后就会升级为 candidate，term + 1，给自己投一票，并且发送 Request Vote RPC 给所有节点，也就是 apply for professor 啦。</li>
+<li>节点收到 Request Vote 后，如果自己还没有投票，而且比自己在的任期大，那就说明水平比自己高到不知道哪里去了，就投票出去，否则拒绝。</li>
+<li>如果节点发现自己的票超过了一半，就吟两句诗，认为自己是 leader 了</li>
+<li>新的 leader 上台后，继续发送日志昭告天下，其他的 candidate 自动灰溜溜的变为 follower 了。</li>
+</ol>
+<h1>日志复制（Log Replication）</h1>
+<ol>
+<li>所有的请求都发送给 leader，一律由中央负责。</li>
+<li>leader 把收到的请求首先添加到自己的日志当中</li>
+<li>然后发送 Append Entries RPC 给所有的 follower，要求他们也添加这条日志</li>
+<li>当大多数的节点都添加这条日志之后，leader 上这条日志就变为了 commited</li>
+<li>leader 再发送给所有的节点，告诉他们这条日志 commited</li>
+<li>leader 返回给客户端，告诉他请求成功</li>
+</ol>
+<h2>分区容忍</h2>
+<p>如果网络发生了分区，也就是另立中央了，那么 raft 的日志复制机制也可以保证一致性。</p>
+<p>比如下图中，由于中间的网络分区，出现了两个 leader，这之后如果给下面的 leader（Node B）中发送请求，因为它向一个节点中同步日志，所以只能获得两个节点的确认，因此提交失败。而如果向上面的leader 中发送请求，可以向两个节点中同步日志，也就是说一共三个节点都是同步的，那么就提交成功。不会出现两个 leader 分叉的情况。</p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tKfTcly1ftu1lfepqbj30zk0lmmz7.jpg"></p>
+<p>参考资料：</p>
+<ol>
+<li><a href="http://thesecretlivesofdata.com/raft/">Raft 动画演示</a></li>
+<li><a href="http://www.infoq.com/cn/articles/raft-paper">Raft 论文</a></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ha-shi-yao-shi-raft-xie-yi.html">posted at 18:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

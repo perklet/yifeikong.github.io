@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "Android" | Page 2</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/android/page/2/index.html">Android</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-public-key-pinning.html" rel="bookmark" title="Permanent Link to &quot;android public key pinning&quot;">android public key pinning</a>
+                </h2>
+
+                
+                
+
+                <h1>What is public key pinning?</h1>
+<p>to view https traffic, you could sign your own root CA, and perform mitm attack to view the traffic. HPKP (http public key pinning) stops this sniffing by only trust given CA, thus, your self-signed certs will be invalid. To let given app to trust …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-public-key-pinning.html">posted at 08:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags selected">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-intent.html" rel="bookmark" title="Permanent Link to &quot;android intent&quot;">android intent</a>
+                </h2>
+
+                
+                
+
+                <p>You should use intent to communicate between activities and services</p>
+<h1>intent extra</h1>
+<h2>package data from activity</h2>
+<p>create a intent instance</p>
+<p>Intent intent = new Intent(getBaseContext(), SignoutActivity.class);
+intent.putExtra("key", value);
+startActivity(intent);</p>
+<h2>package data from service</h2>
+<p>Intent intent = new Intent(context, SignoutActivity.class);
+intent.putExtra("key", value);
+startService(intent …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-intent.html">posted at 11:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags selected">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/androidoshandler.html" rel="bookmark" title="Permanent Link to &quot;android.os.handler&quot;">android.os.handler</a>
+                </h2>
+
+                
+                
+
+                <p>android.os.handler 用于向每个线程的 MessageQueue 发送消息。</p>
+<p>There are two main uses for a Handler: </p>
+<p>(1) to schedule messages and runnables to be executed as some point in the future; and </p>
+<p>(2) to enqueue an action to be performed on a different thread than your own.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/androidoshandler.html">posted at 10:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags selected">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-vpn-service.html" rel="bookmark" title="Permanent Link to &quot;android vpn service&quot;">android vpn service</a>
+                </h2>
+
+                
+                
+
+                <p>VPN Service 运行在 IP 层。它创建了一个虚拟的网络接口，可以配置地址和路由规则，并返回一个 file descriptor。每次读这个 fp 返回一个数据包，每次写发送一个数据包。</p>
+<p>两个最重要的方法分别是<code>prepare(Context)</code> 和 <code>establish()</code>。前者接受用户响应并关闭其他应用的 VPN 链接，后者使用 <code>VpnService.Builder</code> 的参数创建 VPN 接口。</p>
+<p>实现 VpnService 的类必须在 manifest 中声明：</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;service</span> <span class="na">android:name=</span><span class="s">&quot;.ExampleVpnService&quot;</span>
+         <span class="na">android:permission=</span><span class="s">&quot;android.permission.BIND_VPN_SERVICE&quot;</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;intent-filter&gt;</span>
+         <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">&quot;android.net.VpnService&quot;</span><span class="nt">/&gt;</span>
+     <span class="nt">&lt;/intent-filter …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-vpn-service.html">posted at 10:07</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags selected">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 03, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-am-command.html" rel="bookmark" title="Permanent Link to &quot;Android am command&quot;">Android am command</a>
+                </h2>
+
+                
+                
+
+                <p>am is short for activity manager, which is used to start and stop activity in android.</p>
+<h2>basic syntax</h2>
+<h3>start an activity</h3>
+<p>you can get the activity name by decompiling the apk and view the androidmanifest.xml file</p>
+<div class="highlight"><pre><span></span>am start -n &lt;package_name&gt;/&lt;activity_name&gt; [parameters]
+am start -n com.tencent.mm/com …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-am-command.html">posted at 15:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags selected">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/caputre-ios-traffic.html" rel="bookmark" title="Permanent Link to &quot;caputre iOS traffic&quot;">caputre iOS traffic</a>
+                </h2>
+
+                
+                
+
+                <p>RVI</p>
+<p>Step 1. Plug you iPhone with USB
+Step 2. go to pgyer.cn, and find the UDID
+Step 3. use rvi -x UDID
+Step 4. use  wireshark and select the rvi0 device</p>
+<p>http://useyourloaf.com/blog/remote-packet-capture-for-ios-devices/</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/caputre-ios-traffic.html">posted at 14:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags selected">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/java-notes.html" rel="bookmark" title="Permanent Link to &quot;Java Notes&quot;">Java Notes</a>
+                </h2>
+
+                
+                
+
+                <p>内部类
+OuterClassName.InnerClassName
+内部类可以直接访问其外围对象的成员，而不需要任何特殊条件
+OuterClass.this OuterClass.new  </p>
+<p>匿名内部类非常有用。 new ClassName() {} 创建一个继承自ClassName的匿名类的对象</p>
+<p>嵌套类是指使用了static class 的内部类</p>
+<p>java中不允许变量隐藏</p>
+<p>只有类成员才会默认初始化，普通变量不会</p>
+<p>int x = a.f()
+其中，消息是f(), 对象是a,面向对象就是「给对象发消息」</p>
+<p>java中不允许将其他类型用做bool值</p>
+<p>java会为你提供默认构造器（无参构造器）</p>
+<p>无法通过返回值来重载函数</p>
+<p>静态块</p>
+<p>static {
+    i = 47;
+}</p>
+<p>可变参数列表
+doGET(Object... args)</p>
+<p>默认访问权限是包访问权限</p>
+<p>.java 文件编译生成 .class 文件，jar文件是.class 文件的打包</p>
+<p>使用import时，默认去CLASSPATH …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/java-notes.html">posted at 13:46</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags selected">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/decompile-apk.html" rel="bookmark" title="Permanent Link to &quot;decompile apk&quot;">decompile apk</a>
+                </h2>
+
+                
+                
+
+                <h1>jadx[1]</h1>
+<h2>compile and install jadx</h2>
+<p>mkdir jadx
+git clone https://github.com/skylot/jadx.git
+cd jadx
+./gradlew dist   # you might need to wait on this</p>
+<h2>decompile apk</h2>
+<div class="highlight"><pre><span></span>1. change apk to zip file and unzip it
+2. copy out the class.dex file
+3. build/jadx/bin/jadx …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/decompile-apk.html">posted at 07:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags selected">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-rang-an-zhuo-shou-ji-cha-shang-dian-yuan-zi-dong-kai-ji.html" rel="bookmark" title="Permanent Link to &quot;如何让安卓手机插上电源自动开机&quot;">如何让安卓手机插上电源自动开机</a>
+                </h2>
+
+                
+                
+
+                <p>非常简单的原理，把充电电池动画文件替换成重启命令。</p>
+<p>比如说，对于红米 Note2，这个文件是 <code>/system/bin/kpoc_charger</code></p>
+<p>替换成如下文件</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/system/bin/sh</span>
+/system/bin/reboot
+</pre></div>
+</td></tr></table>
+
+<p>然后 <code>chmod +x /system/bin/kpoc_charger</code></p>
+<p>http://developwear.com/blog/2014/07/03/autobootstart-android-when-charger-is-connected/</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-rang-an-zhuo-shou-ji-cha-shang-dian-yuan-zi-dong-kai-ji.html">posted at 03:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags selected">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/get-and-change-android-device-id.html" rel="bookmark" title="Permanent Link to &quot;get and change android device id&quot;">get and change android device id</a>
+                </h2>
+
+                
+                
+
+                <h2>get device id</h2>
+<p><code>String id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);</code></p>
+<h2>set device id</h2>
+<p>As far as Settings.Secure.ANDROID_ID goes, this should do the trick:</p>
+<p><code>adb shell sqlite3 /data/data/com.android.providers.settings/databases/settings.db "UPDATE secure SET value='newid' WHERE name='android_id'"</code></p>
+<p>Where newid is usually the …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/get-and-change-android-device-id.html">posted at 14:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags selected">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/3" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 2 of 3</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

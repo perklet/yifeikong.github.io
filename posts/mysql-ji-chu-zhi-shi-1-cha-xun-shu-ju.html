@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | mysql 基础知识(1) - 查询数据</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-1-cha-xun-shu-ju.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(1) - 查询数据&quot;">mysql 基础知识(1) - 查询数据</a>
+                </h2>
+
+                
+                
+
+                <p><a href="https://mp.weixin.qq.com/s/87BoE2-0mW_3qALyNSpiTw">最全总结</a></p>
+<h1>显示操作</h1>
+<div class="highlight"><pre><span></span>show databases;
+show create database DB;
+show tables;
+show columns from TABLE;
+show create table TABLE;
+show status;
+shou grants;
+</pre></div>
+
+
+<h1>连接数据库</h1>
+<p><code>mysql -u root -p -h HOST -P 3306</code>, 其中的参数代表了用户, 机器地址和密码等, 注意其中的密码必须之后输入, 而不能直接带上, 这样是为了避免把密码记录在bash历史中.</p>
+<p>另一个更好的工具是Python写的mycli, 谁用谁知道~</p>
+<p>使用 <code>use DATABASE</code>来更改指定的数据库.</p>
+<h1>查询数据库</h1>
+<p>下面的部分都使用这个表, 方便讨论.</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>first_name</th>
+<th>last_name</th>
+<th>math_score</th>
+<th>english_score</th>
+<th>grade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>master</td>
+<td>yoda</td>
+<td>100</td>
+<td>100</td>
+<td>9</td>
+</tr>
+<tr>
+<td>2</td>
+<td>obiwan</td>
+<td>kenobi</td>
+<td>70</td>
+<td>100</td>
+<td>8</td>
+</tr>
+<tr>
+<td>3</td>
+<td>luke</td>
+<td>skywalker</td>
+<td>100</td>
+<td>70</td>
+<td>7</td>
+</tr>
+<tr>
+<td>4</td>
+<td>leia</td>
+<td>skywalker</td>
+<td>90</td>
+<td>90</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<p><code>select field from table</code>, 或者 <code>select * from table</code>. 好多时候往往犯懒直接写星号, 但是检索无关的列会降低数据库的效率.</p>
+<p>有一个比较有趣的关键字, 叫做<code>DISTINCT</code>, 顾名思义, 就是不同的意思, 如果使用这个关键字作为前缀的话, MYSQL会做一个去重的操作, 有点类似于<code>uniq</code>命令.</p>
+<div class="highlight"><pre><span></span>select distinct vendor_id from products
+</pre></div>
+
+
+<p>如果需要限定查询的结果, 使用 LIMIT 和 OFFSET 两个关键字. LIMIT 限定了返回的结果数量, OFFSET 指定了从那一条开始返回.</p>
+<div class="highlight"><pre><span></span>select name from students limit 5 offset 3;  -- 从所有学生中选出从第3个开始的5个学生
+</pre></div>
+
+
+<h2>排序</h2>
+<p>一般来说, mysql返回的结果是按照主键排序的, 如果要让结果按照某个键排序, 使用 <code>ORDER BY</code> 关键字来给他们排序</p>
+<div class="highlight"><pre><span></span>select name from students order by score
+</pre></div>
+
+
+<p>默认情况下, mysql是按照升序排列的, 也就是小的在前面, 如果需要大的在前面, 使用 <code>DESC</code> 关键字</p>
+<div class="highlight"><pre><span></span>select name from students order by score desc;
+</pre></div>
+
+
+<p>如果排序的字段相同怎么办呢, 还可以按多个字段排序, 这时候需要注意的是desc只对一个列生效.</p>
+<div class="highlight"><pre><span></span>select name from students order by score desc, name;
+</pre></div>
+
+
+<h2>过滤结果</h2>
+<p>可以使用 <code>WHERE</code> 子句过滤结果, 比如</p>
+<div class="highlight"><pre><span></span>select * from students where score &gt; 100;
+</pre></div>
+
+
+<p>值得注意的是, 如果要比较的是null, 那么不能使用 = 来比较, 需要使用 <code>IS</code></p>
+<div class="highlight"><pre><span></span>select * from students where name is null;
+</pre></div>
+
+
+<p>还可以使用 <code>AND</code>, <code>OR</code>, <code>NOT</code> 来计算复合表达式.</p>
+<p>使用 <code>IN</code> 来表达在某些值之间, 就像在Python中一样.</p>
+<div class="highlight"><pre><span></span>select * from students where name in (&#39;yoda&#39;, &#39;obiwan&#39;, &#39;luke&#39;);
+</pre></div>
+
+
+<p>使用 <code>LIKE</code> 来匹配结果, <code>%</code> 表示任意字符出现任意次数, <code>_</code> 表示任意一个字符出现一次.</p>
+<div class="highlight"><pre><span></span>select * from students where name like &#39;%walker&#39;;
+</pre></div>
+
+
+<h2>函数与计算字段</h2>
+<p>MySQL 中有一些常见的字符串处理函数, concat, trim 等等, 这些函数在常见的编程语言中都有, 在MySQL中作用大概也是相同的. 还可以使用 <code>AS</code> 来个计算出的字段来起一个别名, 这样方便输出. 如果是数字的话, 还可以做数学运算.</p>
+<div class="highlight"><pre><span></span>select concat(first_name, last_name) as name from students;
+
+select math_score + english_score as score from students;
+
+select * from students where year(enroll_time) = 2009;
+</pre></div>
+
+
+<h2>聚合与分组数据</h2>
+<p>之前说的一些函数都是把一个值变成了另一个值, 也就是使用或者不使用这些函数得到的都是相同行数的数据. 而使用聚合或者分组函数之后, 会改变得到的数据的大小.</p>
+<p>聚集函数常用的一共有五个: <code>AVG(), COUNT(), MAX(), MIN(), SUM()</code>. 这几个函数的意思看名字也应该知道了...直接上例子了.</p>
+<div class="highlight"><pre><span></span>select avg(math_score) as average_math_score from students;  -- 90, null 会被忽略
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>select count(*) from students; -- 3, null会被忽略
+</pre></div>
+
+
+<h3>分组函数</h3>
+<p>使用 group by 关键字可以让所有的行按照某个值, 聚合成相应的行, 比如在我们的数据中有3个年纪(grade), 那么group by(grade) 之后就会变成3行.</p>
+<div class="highlight"><pre><span></span>select grade, count(*) as num_students from students group by grade;
+</pre></div>
+
+
+<p>需要注意的是SQL的计算顺序是先计算 WHERE 子句, 然后才回去使用 <code>GROUP BY</code> 聚合, 那么如果想要过滤GROUP BY 分组之后的数据呢, 这时候可以使用 HAVING 子句.</p>
+<div class="highlight"><pre><span></span>select grade, count(*) as num_students from students group by grade having count(*) &gt; 1;
+</pre></div>
+
+
+<h2>子查询</h2>
+<p>子查询其实很简单, 就是一个查询的结果是另一个查询的数据基础. 和函数调用有一些相似.</p>
+<p>第一种常见用法, 把子查询的结果用在 IN 中.</p>
+<div class="highlight"><pre><span></span>select * from students where id in (select sudent_id from student_awards);
+</pre></div>
+
+
+<p>第二种使用子查询来作为结果列的数值.</p>
+<div class="highlight"><pre><span></span>select id, (select count(*) from student_awards where students.id = student_awards.student_id) from students;
+</pre></div>
+
+
+<h2>Join</h2>
+<p>Join 太复杂了, 未完待续</p>
+<h2>数据类型</h2>
+<div class="highlight"><pre><span></span>TINYBLOB, TINYTEXT       L + 1 bytes, where L &lt; 2^8    (255 Bytes)
+BLOB, TEXT               L + 2 bytes, where L &lt; 2^16   (64 Kibibytes)
+MEDIUMBLOB, MEDIUMTEXT   L + 3 bytes, where L &lt; 2^24   (16 Mebibytes)
+LONGBLOB, LONGTEXT       L + 4 bytes, where L &lt; 2^32   (4 Gibibytes)
+</pre></div>
+
+
+<p>史上最全的 mysql 总结：https://mp.weixin.qq.com/s/87BoE2-0mW_3qALyNSpiTw</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-1-cha-xun-shu-ju.html">posted at 01:22</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

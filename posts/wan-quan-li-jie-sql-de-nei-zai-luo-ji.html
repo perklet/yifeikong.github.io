@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 完全理解 SQL 的内在逻辑</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 08, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wan-quan-li-jie-sql-de-nei-zai-luo-ji.html" rel="bookmark" title="Permanent Link to &quot;完全理解 SQL 的内在逻辑&quot;">完全理解 SQL 的内在逻辑</a>
+                </h2>
+
+                
+                
+
+                <p>太多的程序员认为SQL像是洪水猛兽一样。它是少有的几种声明式的语言，和其他的命令似的面向对象的甚至函数使得语言大相径庭。
+我每天都会写SQL而且在我的开源项目中大量的使用SQL，因此我非常地想要把SQL的美展现给你们这些还在挣扎着使用它的渣渣们。下面的教程适合</p>
+<ol>
+<li>使用过SQL但是从来没有完全理解他的人</li>
+<li>很了解SQL，但是从来没有思考过他的语法的人</li>
+<li>想要把SQL交给其他人的人</li>
+</ol>
+<p>这个教程将会这关注SELECT语句，其他的DML将会在另一篇文章中介绍</p>
+<h1>SQL是声明式的</h1>
+<p>首先要记住，声明式。唯一的一种范式就是你可以只是声明你想要的结果就得到了他。而不是告诉你的电脑怎样去把这个结果计算出来，不错吧？</p>
+<div class="highlight"><pre><span></span>Select first_name, last_name FROM employees WHERE salary &amp;gt; 100000
+</pre></div>
+
+
+<p>很简单，你不需要关心employee的记录是存在哪里的，你只想要知道那些薪水还不错的人。</p>
+<p>如此简单，那么问题在哪里呢？问题在于我们大部分时候是在按照命令式的编程思维在思考,比如“机器，干这个，然后干那个，但是在这之前检查一下，如果是这样或者那样就不行”。这其中包括了存储临时结果在变量里，循环，迭代，调用函数等等。</p>
+<p>忘掉那些东西，思考如何声明东西，而不是告诉机器怎样去计算。</p>
+<h1>SQL语法的顺序有些问题</h1>
+<p>常见的混乱的来源可能是SQL语法并不是按他们的执行顺序来排序的，词法（Lexical）排序是</p>
+<ol>
+<li>SELECT [DISTINCT]</li>
+<li>FROM</li>
+<li>WHERE</li>
+<li>GROUP BY</li>
+<li>HAVING</li>
+<li>UNION</li>
+<li>ORDER BY</li>
+</ol>
+<p>简洁起见，并没有列出所有语句，而从逻辑上来说，真正的逻辑执行顺序是这样的：</p>
+<ol>
+<li>
+<p><strong>FROM</strong>。FROM后面的表标识了这条语句要查询的数据源。和一些子句如，（1-J1）笛卡尔积，（1-J2）ON过滤，（1-J3）添加外部列，所要应用的对象。FROM过程之后会生成一个虚拟表VT1。</p>
+<ol>
+<li><strong>(1-J1)笛卡尔积</strong> 这个步骤会计算两个相关联表的笛卡尔积(CROSS JOIN) ，生成虚拟表VT1-J1。</li>
+<li><strong>(1-J2)ON过滤</strong> 这个步骤基于虚拟表VT1-J1这一个虚拟表进行过滤，过滤出所有满足ON 谓词条件的列，生成虚拟表VT1-J2。</li>
+<li><strong>(1-J3)添加外部行</strong>  如果使用了外连接，保留表中的不符合ON条件的列也会被加入到VT1-J2中，作为外部行，生成虚拟表VT1-J3。</li>
+</ol>
+</li>
+<li>
+<p><strong>WHERE</strong> 对VT1过程中生成的临时表进行过滤，满足where子句的列被插入到VT2表中。</p>
+</li>
+<li>
+<p><strong>GROUP BY</strong> 这个子句会把VT2中生成的表按照GROUP BY中的列进行分组。生成VT3表。</p>
+</li>
+<li>
+<p><strong>HAVING</strong> 这个子句对VT3表中的不同的组进行过滤，满足HAVING条件的子句被加入到VT4表中。</p>
+</li>
+<li>
+<p><strong>SELECT</strong> 这个子句对SELECT子句中的元素进行处理，生成VT5表。</p>
+<ol>
+<li><strong>(5-1)计算表达式</strong> 计算SELECT 子句中的表达式，生成VT5-1</li>
+<li><strong>(5-2)DISTINCT</strong> 寻找VT5-1中的重复列，并删掉，生成VT5-2</li>
+<li><strong>(5-3)TOP</strong> 从ORDER BY子句定义的结果中，筛选出符合条件的列。生成VT5-3表</li>
+</ol>
+</li>
+<li>
+<p><strong>ORDER BY</strong> 从VT5-3中的表中，根据 ORDER BY 子句的条件对结果进行排序，生成VC6表。</p>
+</li>
+</ol>
+<p>当然强大的 SQL 执行引擎在实际执行过程用会有各种优化，不一定严格按照这个顺序来。但是在写和看 SQL 的时候可以按照这个逻辑思考。</p>
+<h2>例子</h2>
+<p>可以思考一下下面这个语句的执行过程</p>
+<div class="highlight"><pre><span></span>SELECT C.customerid, COUNT(O.orderid) AS numorders
+FROM dbo.Customers AS C
+  LEFT OUTER JOIN dbo.Orders AS O
+    ON C.customerid = O.customerid
+WHERE C.city = &#39;Madrid&#39;
+GROUP BY C.customerid
+HAVING COUNT(O.orderid) &lt; 3
+ORDER BY numorders
+</pre></div>
+
+
+<h1>SQL是关于表的（而不是列）</h1>
+<p>因为词法排序和逻辑排序上的不同，很多的初学者认为列的值是SQL中的一等公民，实际上，不是。最重要的是表的引用。</p>
+<p>比如说</p>
+<div class="highlight"><pre><span></span>FROM a,b
+</pre></div>
+
+
+<p>这个语句实际上是 <code>a cross join b</code>，也就是笛卡尔乘积。比如说，a 中有3列3行数据，b中有5列5行数据。上面的一句产生的结果是一个3+5=8列，3x5=15行的数据。</p>
+<p>不过，尽量显式 join 的表，而不要使用逗号。</p>
+<p>SQL 中衍生的表可以看做表的变量。</p>
+<div class="highlight"><pre><span></span>-- A derived table
+FROM (SELECT * FROM author) a -- 后边这个变量是可选的
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>-- Get authors&#39; first and last names, and their age in days
+SELECT first_name, last_name, age
+FROM (
+  SELECT first_name, last_name, current_date - date_of_birth age
+  FROM author
+)
+-- If the age is greater than 10000 days
+WHERE age &gt; 10000
+</pre></div>
+
+
+<p>在 MySQL 8.0 中还可以使用 with 语句</p>
+<div class="highlight"><pre><span></span>WITH a AS (
+  SELECT first_name, last_name, current_date - date_of_birth age
+  FROM author
+)
+SELECT *
+FROM a
+WHERE age &gt; 10000
+</pre></div>
+
+
+<p>SQL 中的 Select 语句在关系代数中被称作投影（projection）。一旦你生成了表的引用，然后过滤，转换，接着你就可以把它投影成另一种形式。在 select 语句中，你终于可以按列操作生成的表了。也就是说其他的语句都是按表，或者说按照行操作的，只有到了 select 语句中你才可以操作列。</p>
+<p>执行完了 select 语句之后，你就可以执行其他的集合排序等等操作了。</p>
+<ul>
+<li>distinct 删除重复的行</li>
+<li>union 把两个查询组合起来，并且删除重复的行</li>
+<li>union all 把两个查询组合起来，并且不删除重复</li>
+<li>except 做差集并且删除重复的行</li>
+<li>intersect 求交集</li>
+</ul>
+<p>ORDER BY 排序</p>
+<p>Ref：</p>
+<ol>
+<li>https://web.archive.org/web/20150424213133/http://tech.pro:80/tutorial/1555/10-easy-steps-to-a-complete-understanding-of-sql</li>
+<li>http://www.cnblogs.com/myprogram/archive/2013/01/24/2874666.html</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wan-quan-li-jie-sql-de-nei-zai-luo-ji.html">posted at 14:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

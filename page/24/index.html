@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Page 24</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/javascript-snippets.html" rel="bookmark" title="Permanent Link to &quot;JavaScript snippets&quot;">JavaScript snippets</a>
+                </h2>
+
+                
+                
+
+                <h1>get parameter from url</h1>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">getParameterByName</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">url</span><span class="p">)</span> <span class="nx">url</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">;</span>
+    <span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[\[\]]/g</span><span class="p">,</span> <span class="s2">&quot;\\$&amp;&quot;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">regex</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&quot;[?&amp;]&quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;(=([^&amp;#]*)|&amp;|#|$)&quot;</span><span class="p">),</span>
+        <span class="nx">results</span> <span class="o">=</span> <span class="nx">regex</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">url</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">results</span><span class="p">)</span> <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">results</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">decodeURIComponent</span><span class="p">(</span><span class="nx">results</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\+/g</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/javascript-snippets.html">posted at 12:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/chrome-extension-cookies.html" rel="bookmark" title="Permanent Link to &quot;Chrome extension cookies&quot;">Chrome extension cookies</a>
+                </h2>
+
+                
+                
+
+                <h1>permissions</h1>
+<p>set the cookies permission and the domain you would like to access cookies.</p>
+<div class="highlight"><pre><span></span>&quot;permissions&quot;: {
+    &quot;cookies&quot;,
+    &quot;*://*.example.com/&quot;
+}
+</pre></div>
+
+
+<h1>type</h1>
+<h2>cookie</h2>
+<p>just a simple object with <code>{name, value, domain...}</code></p>
+<h2>CookieStore</h2>
+<p>normal mode and incognito mode use different cookie stores.</p>
+<h1>read</h1>
+<p>get: <code>chrome.cookies.get({url: URL, name: COOKIE_NAME, storeId: COOKIE_STORE_ID}, function …</code></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/chrome-extension-cookies.html">posted at 08:01</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ecmascript-set.html" rel="bookmark" title="Permanent Link to &quot;EcmaScript Set&quot;">EcmaScript Set</a>
+                </h2>
+
+                
+                
+
+                <h1>basic usage</h1>
+<div class="highlight"><pre><span></span>let set = new Set();
+let set = new Set([a, b, c]);
+
+set.size  // the size of set
+set.add(a)
+set.delete(a)
+set.clear()
+set.has(value)
+set.keys()  // the same as keys
+set.values()  // return the values as a iterator
+</pre></div>
+
+
+<p>reference:</p>
+<p><a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Set">MDN set</a></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ecmascript-set.html">posted at 00:14</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 11, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/javascript-move-element-by-draging.html" rel="bookmark" title="Permanent Link to &quot;JavaScript Move Element by Draging&quot;">JavaScript Move Element by Draging</a>
+                </h2>
+
+                
+                
+
+                <p>see: https://stackoverflow.com/questions/6230834/html5-drag-and-drop-anywhere-on-the-screen</p>
+<p>but you also need to set <code>-webkit-user-drag: element;</code> to the element.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/javascript-move-element-by-draging.html">posted at 11:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 10, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/thinking-in-vue.html" rel="bookmark" title="Permanent Link to &quot;thinking in vue&quot;">thinking in vue</a>
+                </h2>
+
+                
+                
+
+                <h1>basic usage</h1>
+<p>The created vue instance will proxy its data member </p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;app&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;ol&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">v-for=</span><span class="s">&quot;company in companies&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a</span> <span class="na">v-bind:href=</span><span class="s">&quot;company.link&quot;</span><span class="nt">&gt;</span><span class="cp">{{</span> <span class="nv">company.text</span> <span class="cp">}}</span><span class="nt">&lt;/a&gt;</span>  // bind 更新参数
+            <span class="nt">&lt;button</span> <span class="na">v-on:click=</span><span class="s">&quot;reverseText&quot;</span><span class="nt">&gt;</span>逆转消息<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;/ol&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+let vm = new Vue({
+    el: &#39;#app&#39;,
+        data: {
+            companies: [
+                    {text: &#39;Google&#39;, link …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/thinking-in-vue.html">posted at 04:03</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 09, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/chrome-kuo-zhan-cha-jian-kai-fa.html" rel="bookmark" title="Permanent Link to &quot;Chrome 扩展插件开发&quot;">Chrome 扩展插件开发</a>
+                </h2>
+
+                
+                
+
+                <p>A chrome extension can inject script into the page, this is called content script.</p>
+<p>https://developer.chrome.com/extensions/getstarted
+https://developer.chrome.com/extensions/content_scripts
+https://developer.chrome.com/extensions/messaging</p>
+<p>图标变灰的问题</p>
+<p>Add browser_action.default_icon in your manifest.json file</p>
+<div class="highlight"><pre><span></span>{
+  ...
+
+  &quot;browser_action&quot;: {
+    &quot;default_icon&quot;: &quot;icons/icon-32.png&quot;
+  },
+
+  ...
+}
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/chrome-kuo-zhan-cha-jian-kai-fa.html">posted at 05:11</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 09, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/zai-mac-shang-an-zhuang-neovim.html" rel="bookmark" title="Permanent Link to &quot;在 Mac 上安装 neovim&quot;">在 Mac 上安装 neovim</a>
+                </h2>
+
+                
+                
+
+                <p>首先通过 homebrew 安装:</p>
+<p><code>brew install neovim</code></p>
+<p>然后安装 python 支持，好多 vim 插件都需要</p>
+<p><code>pip install neovim</code></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/zai-mac-shang-an-zhuang-neovim.html">posted at 02:42</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/vim.html" class="tags">vim</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>            <h4 class="date">Jun 08, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xue-xi-redis-de-ji-chu-ming-ling.html" rel="bookmark" title="Permanent Link to &quot;学习 redis 的基础命令&quot;">学习 redis 的基础命令</a>
+                </h2>
+
+                
+                
+
+                <p>basically, redis is a data structure server</p>
+<p>string list set sorted set hash</p>
+<h2>key related</h2>
+<div class="highlight"><pre><span></span>keys &lt;pattern&gt;  list all keys share the pattern
+exists key  
+del key 
+expire key expiration   
+expireat key timestamp  
+ttl key 
+rename key  
+type key    
+</pre></div>
+
+
+<h2>string related</h2>
+<div class="highlight"><pre><span></span>set key value   set mystr &quot;hello world&quot;
+setex key …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xue-xi-redis-de-ji-chu-ming-ling.html">posted at 10:19</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 08, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/javascript-selection-and-range.html" rel="bookmark" title="Permanent Link to &quot;JavaScript Selection and Range&quot;">JavaScript Selection and Range</a>
+                </h2>
+
+                
+                
+
+                <h1>basics</h1>
+<p><code>window.getSelection</code> and <code>document.getSelection</code> all returns the <code>Selection</code> object, the selection object is almost useless.</p>
+<p><code>window.getSelection.getRangeAt(0)</code> returns a Range object. for history reasons, there is only one range in each selection.</p>
+<p><code>rangeAncestor = range.commonAncestorContainer;</code> commonAncestorContainer is the common ancestor of the range elements.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/javascript-selection-and-range.html">posted at 09:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 08, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/unicode.html" rel="bookmark" title="Permanent Link to &quot;Unicode&quot;">Unicode</a>
+                </h2>
+
+                
+                
+
+                <h1>Plane（平面）</h1>
+<p>from wikipedia</p>
+<blockquote>
+<p>In the Unicode standard, a plane is a continuous group of 65536 code points. There are 17 planes, identified by the numbers 0 to 16, which corresponds with the possible values 00–10 hexadecimal of the first two positions in six position format (hhhhhh). </p>
+<p>Plane 0 …</p></blockquote>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/unicode.html">posted at 07:17</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/23" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/25" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 24 of 34</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

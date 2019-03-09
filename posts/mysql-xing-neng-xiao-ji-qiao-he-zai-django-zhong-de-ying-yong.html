@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | MySQL 性能小技巧和在 Django 中的应用</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 24, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-xing-neng-xiao-ji-qiao-he-zai-django-zhong-de-ying-yong.html" rel="bookmark" title="Permanent Link to &quot;MySQL 性能小技巧和在 Django 中的应用&quot;">MySQL 性能小技巧和在 Django 中的应用</a>
+                </h2>
+
+                
+                
+
+                <h1>1. 拆分影响很多行的语句</h1>
+<p>对于 delete update insert 等语句一定要使用 limit 子句限制影响的行数，避免一次更改特别多的行，造成数据库假死</p>
+<div class="highlight"><pre><span></span>while (1) {
+    //每次只做1000条
+    mysql_query(&quot;DELETE FROM logs WHERE log_date &lt;= &#39;2009-11-01&#39; LIMIT 1000&quot;);
+    if (mysql_affected_rows() == 0) {
+        // 没得可删了，退出！
+        break;
+    }
+    // 每次都要休息一会儿
+    usleep(50000);
+}
+</pre></div>
+
+
+<h1>2. 垂直分割</h1>
+<p>把不会用作索引的，或者是过长的字段可以考虑使用其他存储引擎，比如 rocksdb 等。</p>
+<h1>3. IPv4 地址可以存为 uint32</h1>
+<p>使用 uint32 存储 IP 地址不光可以节省空间，而且可以按区间查询。</p>
+<h1>4. 避免 select *</h1>
+<p>从数据库里读出越多的数据，那么查询就会变得越慢。并且，如果你的数据库服务器和应用服务器是两台独立的服务器的话，这还会增加网络传输的负载。</p>
+<p>所以，你应该养成一个需要什么就取什么的好的习惯。</p>
+<p>不要使用：</p>
+<div class="highlight"><pre><span></span>SELECT * FROM user WHERE user_id = 1
+</pre></div>
+
+
+<p>使用：</p>
+<div class="highlight"><pre><span></span>SELECT username FROM user WHERE user_id = 1
+</pre></div>
+
+
+<p>在 django 中，可以使用 <code>only</code>：</p>
+<div class="highlight"><pre><span></span>books = Book.objects.filter(author=&quot;Jim&quot;).only(&#39;book_name&#39;)
+</pre></div>
+
+
+<h1>5. 当只要一行数据时使用 LIMIT 1</h1>
+<p>当你查询表的有些时候，你已经知道结果只会有一条结果，但因为你可能需要去fetch游标，或是你也许会去检查返回的记录数。</p>
+<p>在这种情况下，加上 LIMIT 1 可以增加性能。这样一样，MySQL数据库引擎会在找到一条数据后停止搜索，而不是继续往后查少下一条符合记录的数据。</p>
+<p>下面的示例，只是为了找一下是否有“中国”的用户，很明显，后面的会比前面的更有效率。（请注意，第一条中是Select *，第二条是Select 1）</p>
+<div class="highlight"><pre><span></span>SELECT * FROM user WHERE country = &#39;China&#39;
+SELECT 1 FROM user WHERE country = &#39;China&#39; LIMIT 1
+</pre></div>
+
+
+<p>在 Django 中可以使用 <code>[:1]</code> 来添加 limit 1</p>
+<h1>6. EXPLAIN 你的 SELECT 查询</h1>
+<p>使用 EXPLAIN 关键字可以让你知道MySQL是如何处理你的SQL语句的。这可以帮你分析你的查询语句或是表结构的性能瓶颈。</p>
+<h1>7. 尽量让查询能 fit 进内存中</h1>
+<p>参考：</p>
+<ol>
+<li>https://coolshell.cn/articles/1846.html</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-xing-neng-xiao-ji-qiao-he-zai-django-zhong-de-ying-yong.html">posted at 08:11</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

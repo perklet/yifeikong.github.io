@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | mysql 基础知识(6) - Join</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 11, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-6-join.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(6) - Join&quot;">mysql 基础知识(6) - Join</a>
+                </h2>
+
+                
+                
+
+                <p>看到网上<a href="https://blog.codinghorror.com/a-visual-explanation-of-sql-joins/">有篇文章</a>用韦恩图来讲解了一下 SQL 的 join 操作，但是感觉举的例子似乎不太实际，遂自己写了一篇，图是从那篇文章里面盗的（逃</p>
+<p>假设我们有下面两张表，上边的是表 user，下边的是 package，表示每个用户对应的包裹</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Luke</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Leia</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Anakin</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Padem</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>content</th>
+<th>user_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>droid</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>lightsaber</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>blaster</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>R2D2</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>创建这两个表的语句分别是：</p>
+<div class="highlight"><pre><span></span>create table user (id integer, name string);
+create table package (id integer, content string, user_id integer);
+insert into user (id, name) values (1, &#39;Luke&#39;);
+insert into user (id, name) values (2, &#39;Leia&#39;);
+insert into user (id, name) values (3, &#39;Anakin&#39;);
+insert into user (id, name) values (4, &#39;Padme&#39;);
+insert into package (id, content, user_id) values (1, &#39;droid&#39;, 3);
+insert into package (id, content, user_id) values (2, &#39;lightsaber&#39;, 2);
+insert into package (id, content, user_id) values (3, &#39;blaster&#39;, 1);
+insert into package (id, content, user_id) values (4, &#39;R2D2&#39;, 5);
+</pre></div>
+
+
+<p>Veen diagram（韦恩图）是一种表示集合的图形语言。SQL 的 join 本质上也是从集合论里面来的，可以从集合论的角度来学习和记忆 Join 的语法。</p>
+<h1>Inner Join</h1>
+<p>如果我们要选出每个有包裹的人，以及对应的包裹，可以使用 inner join。内连接（inner join）计算的是两个表的交集，也就是 <code>A ∩ B</code>。</p>
+<div class="highlight"><pre><span></span>select
+user.id, user.name, package.id, package.content 
+from
+user inner join package
+on user.id == package.user_id;
+</pre></div>
+
+
+<p><img alt="" src="https://blog.codinghorror.com/content/images/uploads/2007/10/6a0120a85dcdae970b012877702708970c-pi.png"></p>
+<p>结果一共有3列，每个表中的第四列都因为在对方表中没有而没有出现在结果里。</p>
+<div class="highlight"><pre><span></span>id          name        id          content
+----------  ----------  ----------  ----------
+1           Luke        3           blaster
+2           Leia        2           lightsaber
+3           Anakin      1           droid
+</pre></div>
+
+
+<h1>Full Outer Join</h1>
+<p>如果我们想要选出所有的任何包裹的对应关系，哪怕是对应得人或者包裹不存在的话，可以使用 full outer join。全连接计算的是两个表的并集，也就是 <code>A ∪ B</code>。</p>
+<div class="highlight"><pre><span></span>select
+user.id, user.name, package.id, package.content
+from
+user full outer join package
+on user.id == package.user_id;
+</pre></div>
+
+
+<p><img alt="" src="https://blog.codinghorror.com/content/images/uploads/2007/10/6a0120a85dcdae970b012877702725970c-pi.png"></p>
+<p>结果一共有6列，注意其中缺字段的地方被补上了 null。另外 SQLite 不支持 full outer join。感觉这个 Join 似乎用的不是太多，因为实际情况中，往往 package.user_id 是 user.id 的外键，所以不会出现 user_id 不存在的情况。</p>
+<div class="highlight"><pre><span></span>// 结果省略
+</pre></div>
+
+
+<h1>Left Outer Join</h1>
+<p>如果我们要取出每个人的包裹情况，没有包裹的也写上 null，那么这用情况下应该使用 left outer join。</p>
+<div class="highlight"><pre><span></span>select
+user.id, user.name, package.id, package.content
+from
+user left outer join package
+on user.id == package.user_id;
+</pre></div>
+
+
+<p><img alt="" src="https://blog.codinghorror.com/content/images/uploads/2007/10/6a0120a85dcdae970b01287770273e970c-pi.png"></p>
+<div class="highlight"><pre><span></span>id          name        id          content
+----------  ----------  ----------  ----------
+1           Luke        3           blaster
+2           Leia        2           lightsaber
+3           Anakin      1           droid
+4           Padme       NULL        NULL
+</pre></div>
+
+
+<h1>Cross Join</h1>
+<p>要获得A表和B表左右可能的交叉组合的话，可以使用 cross join，也就是笛卡尔乘积。</p>
+<div class="highlight"><pre><span></span>select
+user.id, user.name, package.id, package.content
+from
+user cross join package;
+</pre></div>
+
+
+<p>结果如下</p>
+<div class="highlight"><pre><span></span>id          name        id          content
+----------  ----------  ----------  ----------
+1           Luke        1           droid
+1           Luke        2           lightsaber
+1           Luke        3           blaster
+1           Luke        4           R2D2
+2           Leia        1           droid
+2           Leia        2           lightsaber
+2           Leia        3           blaster
+2           Leia        4           R2D2
+3           Anakin      1           droid
+3           Anakin      2           lightsaber
+3           Anakin      3           blaster
+3           Anakin      4           R2D2
+4           Padme       1           droid
+4           Padme       2           lightsaber
+4           Padme       3           blaster
+4           Padme       4           R2D2
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-6-join.html">posted at 02:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

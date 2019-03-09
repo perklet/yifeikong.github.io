@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "爬虫" | Page 2</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/pa-chong/page/2/index.html">爬虫</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 17, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wang-ye-yu-apide-chang-jian-pin-ci-xian-zhi-yu-po-jie.html" rel="bookmark" title="Permanent Link to &quot;网页与API的常见频次限制与破解&quot;">网页与API的常见频次限制与破解</a>
+                </h2>
+
+                
+                
+
+                <p>上线一个新的页面或者接口的时候都需要考虑被爬取，滥用的情况。这篇文章总结一下常见的限制与反制方法。</p>
+<p>从接口的角度来说，匿名的接口一定是可以滥用的，只是破解成本的问题；而有登录状态的接口一般不容易被滥用。</p>
+<h1>第一个例子，自增ID被滥用</h1>
+<p>什么值得买的评测页面，https://test.smzdm.com/pingce/p/40205/，这个链接的最后一个数字就是评测的问题ID，大小才不过几万，也就是说，我只要遍历一下这个数字，就可以把“什么值得买”这个网站的所有评测都爬取一遍，这个是在太容易被利用了。</p>
+<p>对于这个问题，可以不要直接使用数据库的主键作为页面的ID，而是尽量使用没有规律的数字（比如UUID）或者至少大一点的数字作为ID，避免被穷举遍历。</p>
+<h1>第二个例子，列表页面被滥用</h1>
+<p>链家的二手房页面，https://bj.lianjia.com/ershoufang/101102279987.html，这个页面的ID就比较大了，但是我们没办法去遍历这样一个数字。这时候可以从列表页入手，https://bj.lianjia.com/ershoufang/rs …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wang-ye-yu-apide-chang-jian-pin-ci-xian-zhi-yu-po-jie.html">posted at 20:28</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Aug 16, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pa-chong-pa-lai-de-shu-ju-shi-fou-ke-xin.html" rel="bookmark" title="Permanent Link to &quot;爬虫爬来的数据是否可信&quot;">爬虫爬来的数据是否可信</a>
+                </h2>
+
+                
+                
+
+                <p>如果用来分析的数据本来就是错的，那么得出的结论必然也是有问题的。比如2016年美国大选中，由于川普的支持者经常被侮辱，导致在电话调查选民中，大家都声称自己支持希拉里，可是实际上大家都投给了川普。电话调查的结果本来就是错的，所以大家都认为希拉里会赢。川普团队则采取的是问选民你认为你的邻居会投谁，从而得到了正确结果。</p>
+<p>爬虫爬到的数据中也有可能是有问题的，比如租房网站的假房源，招聘网站上的虚假职位，用户故意不填写真实信息以保护隐私等等；微信文章被刷多的阅读数；而且编写不良的爬虫很可能误入蜜罐，得到的数据更有问题。</p>
+<p>比如说借助爬来的新闻分析房产数据，实际上住建部禁止发布涨价相关预测，也就是对于市场的情绪表达是有影响的，那么我们如果按照这个数据来做预测显然是不对的。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pa-chong-pa-lai-de-shu-ju-shi-fou-ke-xin.html">posted at 23:25</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Aug 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pa-chong-ru-he-jin-liang-mo-ni-liu-lan-qi.html" rel="bookmark" title="Permanent Link to &quot;爬虫如何尽量模拟浏览器&quot;">爬虫如何尽量模拟浏览器</a>
+                </h2>
+
+                
+                
+
+                <h1>http headers</h1>
+<p>发送http请求时，Host, Connection, Accept, User-Agent, Referer, Accept-Encoding, Accept-Language这七个头必须添加，因为正常的浏览器都会有这7个头。
+ 
+其中：</p>
+<ol>
+<li>Host一般各种库都已经填充了</li>
+<li>Connection填Keep-Alive</li>
+<li>Accept一般填text/html 或者application/json</li>
+<li>User-Agent使用自己的爬虫或者伪造浏览器的UA</li>
+<li>Referer一般填当前URL即可，考虑按照真是访问顺序添加referer，初始的referer可以使用google。</li>
+<li>Accept-Encoding 从gzip和deflate中选，好多网站会强行返回gzip的结果</li>
+<li>Aceept-Language根据情况选择，比如zh-CN, en-US</li>
+</ol>
+<h1>cookies</h1>
+<p>cookie是需要更新的
+ </p>
+<h1>others</h1>
+<p>可能有一些人类不可见的陷阱链接，不要访问这些链接</p>
+<h1>爬取间隔自适应</h1>
+<p>就是已经限制了你这个IP的抓取，就不要傻傻重复试，怎么也得休息一会。网易云音乐操作起来比较简单，sleep一下就好了。其实sleep的间隔应该按情况累加，比如第一次sleep 10秒，发现还是被约束。那么久sleep 20秒... 这个间隔的设置已经自适应的最终效果是经验值。</p>
+<p>ref</p>
+<ol>
+<li>http://www.cnblogs …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pa-chong-ru-he-jin-liang-mo-ni-liu-lan-qi.html">posted at 22:21</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Jun 28, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-pa-chong-da-jian-dai-li-ji-qun.html" rel="bookmark" title="Permanent Link to &quot;为爬虫搭建代理集群&quot;">为爬虫搭建代理集群</a>
+                </h2>
+
+                
+                
+
+                <p>爬虫如果只用固定的同一个或者同一组 IP 的话，很容易被封禁，轻者弹验证码，重者直接无法访问。</p>
+<p>这里主要探讨如何构架一个代理 IP 池，从而能够频繁更换代理 IP。</p>
+<p>按照代理 IP 的来源，主要有几个方法：</p>
+<ol>
+<li>去免费代理的网站上爬</li>
+<li>利用 ADSL 重拨会更换 IP 的原理，使用 ADSL 机器搭建集群</li>
+<li>利用云提供商的 API，自动更换 IP</li>
+</ol>
+<h1>搭建一个自己的 adsl 集群</h1>
+<h2>找代理商</h2>
+<p>首先找到一个靠谱的网站就实属不易，这些 adsl 提供商的技术水平普遍不高，往往只能提供 centos 镜像，有 centos 7.1就算不错的了，其中有一家竟然提供了 ubuntu 14.04，结果还是各种问题，坑了我大概半天的时间。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-pa-chong-da-jian-dai-li-ji-qun.html">posted at 02:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Jun 20, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/squid-proxy.html" rel="bookmark" title="Permanent Link to &quot;squid proxy&quot;">squid proxy</a>
+                </h2>
+
+                
+                
+
+                <h1>Install squid</h1>
+<p>plain old <code>apt-get update &amp;&amp; apt-get install squid3 apache2-utils -y</code></p>
+<h1>Basic squid conf</h1>
+<p><code>/etc/squid3/squid.conf</code> instead of the super bloated default config file</p>
+<div class="highlight"><pre><span></span># note that on ubuntu 16.04, use squid instead of squid3
+auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid3/passwords
+auth_param basic realm …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/squid-proxy.html">posted at 15:22</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/image-hashing-with-python.html" rel="bookmark" title="Permanent Link to &quot;Image Hashing with Python&quot;">Image Hashing with Python</a>
+                </h2>
+
+                
+                
+
+                <h2>dhash</h2>
+<p>http://www.hackerfactor.com/blog/index.php?/archives/529-Kind-of-Like-That.html
+http://blog.iconfinder.com/detecting-duplicate-images-using-python/</p>
+<h2>ahash</h2>
+<p>http://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html</p>
+<h2>phash</h2>
+<p>https://zh.wikipedia.org/wiki/%E7%A6%BB%E6%95%A3%E4%BD%99%E5%BC%A6%E5%8F%98%E6%8D …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/image-hashing-with-python.html">posted at 14:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-shi-yao-yao-xie-pa-chong.html" rel="bookmark" title="Permanent Link to &quot;为什么要写爬虫？&quot;">为什么要写爬虫？</a>
+                </h2>
+
+                
+                
+
+                <p>为什么要爬数据？</p>
+<p>To quote Wikipedia</p>
+<blockquote>
+<p>The key element that distinguishes data scraping from regular parsing is that the output being scraped was intended for display to and <em>end-user</em>, rather than as input to another program, and is therefore usually <em>neither documented nor structured</em> for convenient parsing.</p>
+</blockquote>
+<ul>
+<li>爬取整站思路：使用图遍历算法</li>
+<li>爬取更新思路：找列表页，不断刷新获得更新 …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-shi-yao-yao-xie-pa-chong.html">posted at 14:24</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags selected">爬虫</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/" class="prev_page">&larr;&nbsp;Previous</a>
+                    <span>Page 2 of 2</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

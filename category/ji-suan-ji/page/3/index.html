@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles in the "计算机" category | Page 3</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/category/ji-suan-ji/page/3/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Oct 05, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-you-zhuang-tai-fu-wu.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——部署有状态服务&quot;">kubernetes 初探——部署有状态服务</a>
+                </h2>
+
+                
+                
+
+                <p>为了部署我们自己的应用, 首先需要把基础设施部署上去, 其中数据库就占了大头. 有人说数据库等应用不是和容器化部署, 但是也有人认为所有的应用都适合容器化部署. 在这里我们不讨论这些观点，仅以部署 MySQL 为例说明一下如何在 K8S 上部署有状态服务。</p>
+<h1>相关概念</h1>
+<ul>
+<li>PersistentVolume(PV) 是集群之中的一块网络存储。跟 Node 一样，也是集群的资源。PV 跟 Volume 类似，不过会有独立于 Pod 的生命周期。这一 API 对象包含了存储的实现细节，例如 NFS、iSCSI 或者其他的云提供商的存储系统。</li>
+<li>PersistentVolumeClaim (PVC) 是用户的一个请求。他跟 Pod 类似。Pod 消费 Node 的资源，PVC 消费 PV 的资源。Pod 能够申请特定的资源（CPU …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-you-zhuang-tai-fu-wu.html">posted at 08:02</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Oct 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-wu-zhuang-tai-ying-yong.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——部署无状态应用&quot;">kubernetes 初探——部署无状态应用</a>
+                </h2>
+
+                
+                
+
+                <p>kubernetes 架构图</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tNbRwly1fvxa7izqb8j30mb0gcmzk.jpg"></p>
+<ul>
+<li>Master. 用于控制整个集群部署的机器, 为了高可用, 可以使用多台，一般至少三台为宜。</li>
+<li>Node. 工作节点, 用于部署服务. 一台机器可以既是 Master 也是 Worker，当然最好 Master 不要做 Worker。</li>
+<li>Pod. k8s 部署的最小单元, 一个 Pod 中可能包含多个 container. Pod 随时可能挂掉，也可能被替换。</li>
+<li>Label. Pod 的标签, 可以通过这些标签（组合）来选择对应的 Pod。</li>
+<li>Replica Set. 作为一个高可用的系统, 每个服务一般来说可能有多个 Pod. Replication Set 用来创建并保证有足够的 Pod 副本。RS 的名字总是 <Deployment的名字>-<pod template的hash值> 格式的。</li>
+<li>Deployment. 用户一般来说不会直接创建 …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-wu-zhuang-tai-ying-yong.html">posted at 17:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Sep 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-ji-qun.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——部署集群&quot;">kubernetes 初探——部署集群</a>
+                </h2>
+
+                
+                
+
+                <p>随着 docker cloud 的关闭，容器的编排工具之争似乎已经结束了，Docker Swarm 上算是完了，Kubernetes 笑到了最后。然而 k8s 的组件众多，因此部署起来也很麻烦。为此，网上有不少的网上有不少的部署教程和脚本，包括但不限于：</p>
+<ul>
+<li>kubesaz</li>
+<li>minikube</li>
+<li>kubespray</li>
+<li>rke</li>
+<li>kubernetes: the hard way</li>
+</ul>
+<p>有的出于教学目的的单机版本，有的是可以在生产环境部署的版本。研究了一番，发现 rke 这个工具应该是最简单的了。不过 rke 还不太稳定，目前看来，kubespray 声明了可以在生产环境使用</p>
+<p>本文基于 ubuntu 16.04. CentOS 上好多默认设置都需要修改，因此建议大家基于 Ubuntu 部署 k8s。</p>
+<h1>使用 kubespray 安装 …</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-ji-qun.html">posted at 04:58</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Sep 27, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/requests-cookies-wei-kong-de-yi-ge-keng.html" rel="bookmark" title="Permanent Link to &quot;requests cookies 为空的一个坑&quot;">requests cookies 为空的一个坑</a>
+                </h2>
+
+                
+                
+
+                <p>有时候，requests 返回的 cookies 会为空，原因是链接发生了 301/302 跳转，而 cookies 是跟着第一个响应返回的，第二个响应没有返回 Set-Cookie header。所以直接读取 r.cookies 是空的，而在 session.cookies 中是有数据的。</p>
+<p>解决方法是直接读 s.cookies。</p>
+<div class="highlight"><pre><span></span>s = requests.Session()
+r = s.get(&#39;http://httpbin.org/cookies/set?foo=bar&#39;)
+cookies = requests.utils.dict_from_cookiejar(s.cookies)
+s.cookies.clear()
+</pre></div>
+
+
+<p>不过需要注意的是如果在多线程环境中使用 session …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/requests-cookies-wei-kong-de-yi-ge-keng.html">posted at 19:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Sep 20, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/influxdbgrafanatelegraf-jian-kong-xi-tong-da-jian.html" rel="bookmark" title="Permanent Link to &quot;influxdb+grafana+telegraf 监控系统搭建&quot;">influxdb+grafana+telegraf 监控系统搭建</a>
+                </h2>
+
+                
+                
+
+                <p>本文基于 ubuntu 18.04</p>
+<h1>要不要用 docker？</h1>
+<p>这是一个哲学问题，用不用其实都有各自的好处。不过在这里我倾向于不用。因为 influxdb 和 grafana 都有好多的状态，而且不是都可以写到 mysql 中的，所以既然还得 mount 出来，何苦用 docker 呢？telegraf 需要采集系统的相关信息，更不适合放在 docker 里面。</p>
+<h1>搭建过程</h1>
+<h2>influxdb &amp;&amp; telegraf</h2>
+<p>因为这两个都是一家的产品，所以安装步骤都是一样的。按照<a href="https://docs.influxdata.com/influxdb/v1.6/introduction/installation/">官网</a>给的安装步骤，其实很简单的。</p>
+<div class="highlight"><pre><span></span>curl -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+source /etc …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/influxdbgrafanatelegraf-jian-kong-xi-tong-da-jian.html">posted at 19:05</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Sep 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/jian-kong-xi-tong-xuan-xing.html" rel="bookmark" title="Permanent Link to &quot;监控系统选型&quot;">监控系统选型</a>
+                </h2>
+
+                
+                
+
+                <p>现代的监控系统一般都有如下几部分组成：</p>
+<p>时序数据库 + 前端显示 + 报警系统 + 指标收集</p>
+<p>一般需要实现的功能:</p>
+<ul>
+<li>度量数据收集和可视化</li>
+<li>收集尽可能多的性能和状态数据</li>
+<li>图形化做有意义的展示</li>
+<li>如果发现可疑问题,可以关联其他图表找到原因</li>
+<li>错误检测</li>
+<li>按需告警, 触发条件越宽松则告警应该越少</li>
+<li>避免误报</li>
+</ul>
+<p>从监控的层次划分的话,一般包含三层监控:</p>
+<ul>
+<li>基础层: 主机的CPU,内存,网络及IO等</li>
+<li>中间层: 应用运行的中间件层, Nginx, Tomcat, MySQL, Redis</li>
+<li>应用层: 服务端及客户端性能数据,如API访问次数和响应时间等</li>
+</ul>
+<p>现代的监控越来越关注应用层和其他层数据的整合能力, 具有快速找到系统瓶颈, 方便扩容或代码优化.</p>
+<h1>时序数据库的选择</h1>
+<p>监控数据往往都带有时间戳，其实就是一种典型时间序列数据，而这方面已经有很多专门的存储系统，如 opentsdb，influxdb，prometheus 等。相比 mysql 这样的传统数据库，这类系统在存储、查询上针对时间序列数据都做了特别的优化。</p>
+<p>其中 opentsdb 基于 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/jian-kong-xi-tong-xuan-xing.html">posted at 23:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Sep 05, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-shi-yao-bu-shi-yong-scrapy.html" rel="bookmark" title="Permanent Link to &quot;为什么不使用 scrapy？&quot;">为什么不使用 scrapy？</a>
+                </h2>
+
+                
+                
+
+                <p>最近面了几家公司，每当我提到头条的爬虫都是自己写的时候，对方一个下意识的问题就是“为什么不使用开源的 scrapy？”。实际上我在头条的 lead 就是 scrapy 的 contributor，而他自己也不用自己的框架，显然说明 scrapy 不适合大型项目，那么具体问题在哪儿呢？今天终于有时间了，详细写写这个问题。</p>
+<h1>爬虫并不需要一个框架</h1>
+<p>Web 服务器是一个爬虫可以抽象出来的是各种组件。而 scrapy 太简陋了，比如说去重，直接用的是内存中的一个集合。如果要依赖 scrapy 写一个大型的爬虫，几乎每个组件都要自己实现，那有何必用 scrapy 呢？</p>
+<h1>scrapy 不是完整的爬虫框架</h1>
+<p>一个完整的爬虫至少需要两部分，fetcher 和 frontier。其中 fetcher 用于下载网页，而 frontier 用于调度。scrapy 重点实现的是 fetcher 部分，也就是下载部分 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-shi-yao-bu-shi-yong-scrapy.html">posted at 19:50</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Aug 07, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/rabbitmq-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;rabbitmq 教程&quot;">rabbitmq 教程</a>
+                </h2>
+
+                
+                
+
+                <p>更新：弃坑了，rabbitmq 在我这里总是崩溃，实在没法正常使用</p>
+<p>评估了几款 Message Queue，发现还是 rabbitmq 比较简单一些，各种特性也支持地很好。网上好多教程说“rabbitmq 非常重量级，适合企业应用开发”，这些话可以说是人云亦云，瞎扯了。实际上 rabbitmq 采用 erlang 开发，不光性能强大，而且从操作和运维上来说都是非常轻量级的。</p>
+<h1>基础概念</h1>
+<p>rabbitmq 实现的是 AMQP 0.9.1 协议，其中重要概念有：</p>
+<ul>
+<li>producer：生产者，生产消息</li>
+<li>consumer：消费者，消费消息</li>
+<li>routing-key: 每个消息中决定消息如何分发的参数</li>
+<li>exchange：类似路由，消息实际发送给 exchange，可以指定几种不同的分发算法，然后用 routing-key 作为参数计算出该发送到哪个队列中 …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/rabbitmq-jiao-cheng.html">posted at 17:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 07, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-3-chuang-jian-xiu-gai-biao-he-quan-xian.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(3) - 创建修改表和权限&quot;">mysql 基础知识(3) - 创建修改表和权限</a>
+                </h2>
+
+                
+                
+
+                <h2>创建数据库</h2>
+<div class="highlight"><pre><span></span>CREATE DATABASE db_name
+    [[DEFAULT] CHARACTER SET charset_name]
+    [[DEFAULT] COLLATE collation_name]
+
+ALTER DATABASE db_name
+    [[DEFAULT] CHARACTER SET charset_name]
+    [[DEFAULT] COLLATE collation_name]
+</pre></div>
+
+
+<h2>创建表?</h2>
+<div class="highlight"><pre><span></span>CREATE TABLE table_name (
+    field_name type is_null default options,
+    ...
+    PRIMAR KEY (id),
+    INDEX/KEY index_name (field_name),
+) ENGINE=InnoDB;
+ 
+// 注意：KEY is normally a synonym for INDEX
+</pre></div>
+
+
+<p>设定 auto_increment</p>
+<p>注意 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-3-chuang-jian-xiu-gai-biao-he-quan-xian.html">posted at 15:47</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 02, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wang-luo-xie-yi-gai-shu.html" rel="bookmark" title="Permanent Link to &quot;网络协议概述&quot;">网络协议概述</a>
+                </h2>
+
+                
+                
+
+                <p>网络每层的头部基本上就是添加上本层的地址，还有一些校验和控制位</p>
+<p>运输层的 MAC 地址是点到点的，没传递一次就会把发送者和接受者用 ARP 转换，替换为经过的路由器的MAC地址。而 IP 层的地址和端口号是端到端，从发送到结束始终不变。除非经过上层协议改变了地址和端口号，比如代理服务器或者 NAPT 路由器。</p>
+<p>交换机没有任何地址，只有端口的概念。内部有一个转发表，记录了物理端口和MAC的对应关系，通过自主学习来建立。每台主机上都有自己的高速 ARP 地址缓存和路由表。可以通过 <code>ip n</code> 和 <code>ip r</code> 命令查看。</p>
+<p>VLAN 可以理解为逻辑上将一台交换机分割成数台虚拟交换机，且这些虚拟交换机互不相通。Vlan 是广播域，而通常两个广播域之间由路由器相连接，广播域之间来往的数据帧通过路由器中继。因此 Vlan间的通信也需要路由器（或者三层交换机）提供中继服务，即“Vlan间路由”。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wang-luo-xie-yi-gai-shu.html">posted at 17:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/2" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/4" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 3 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "bitcoin"</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/bitcoin.html">bitcoin</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/bi-te-bi-xiang-guan-ji-zhu-diao-yan.html" rel="bookmark" title="Permanent Link to &quot;比特币相关技术调研&quot;">比特币相关技术调研</a>
+                </h2>
+
+                
+                
+
+                <h1>挖矿</h1>
+<p>比特币的挖矿算法是CPU密集型的，所以可以使用特殊的硬件，比如 FPGA 或者 ASIC 来加速。后续的好多加密货币，比如ETH 等，都特意选择了不是CPU密集型的算法，从而避免这种使用特殊硬件挖矿造成的不公平。<a href="http://cseweb.ucsd.edu/~mbtaylor/papers/Taylor_Bitcoin_IEEE_Computer_2017.pdf">挖矿硬件的发展</a></p>
+<p>比特币的挖矿算法就核心来言就是下面几句：</p>
+<div class="highlight"><pre><span></span>while (1)
+ HDR[kNoncePos]++;
+ IF (SHA256(SHA256(HDR)) &lt; (65535 &lt;&lt; 208)/ DIFFICULTY) return;
+</pre></div>
+
+
+<p>monero 使用了适合于现代CPU的AES算法，参见<a href="https://monero.stackexchange.com/questions/1110/where-can-i-find-a-description-of-the-cryptonight-hash-algorithm">这里</a></p>
+<h1>货币</h1>
+<p>USDT：风险就在于这家公司随时可能跑路。。
+Siacoin: 用于分布式文件存储的货币，但是因为加密算法被比特大陆做出了矿机，所以价格一路狂泻。。(2018-02-04)
+Filecoin: 
+比特股：https://www.zhihu.com/question/28812361
+比特股还衍生出了 bitcny 和 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/bi-te-bi-xiang-guan-ji-zhu-diao-yan.html">posted at 05:28</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/bitcoin.html" class="tags selected">bitcoin</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

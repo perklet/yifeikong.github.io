@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | python-readability 源码阅读</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-readability-yuan-ma-yue-du.html" rel="bookmark" title="Permanent Link to &quot;python-readability 源码阅读&quot;">python-readability 源码阅读</a>
+                </h2>
+
+                
+                
+
+                <p>readability 是一个可以从杂乱无章的网页中抽取出无特殊格式，适合再次排版阅读的文章的库，比如我们常见的手机浏览器的阅读模式很大程度上就是采用的这个库，还有 evernote 的 webclipper 之类的应用也都是利用了类似的库。readability 的各个版本都源自readability.js这个库，之前尝试阅读过js版本，无关的辅助函数太多了，而且 js 的 dom api 实在称不上优雅，读起来晦涩难通，星期天终于有时间拜读了一下python-readability的代码。</p>
+<p>readability核心是一个Document类，这个类代表了一个 HTML 文件，同时可以输出一个格式化的文件</p>
+<h1>几个核心方法和概念</h1>
+<p><em>summary，抽取一篇文章
+</em>get_article， 获得一篇文章</p>
+<h2>summary</h2>
+<p>summary 方法是核心方法，可以抽取出一篇文章。可能需要对文章抽取多次才能获得符合条件的文章，这个方法的核心思想是：</p>
+<div class="highlight"><pre><span></span>1. 第一次尝试抽取设定 ruthless，也就是强力模式，可能会误伤到一些标签
+2. 把给定的 input 解析一次并记录到 self.html，并去除所有的 script，sytle 标签，因为这些标签并不贡献文章内容
+3. 如果在强力模式，使用remove_unlikely_candidates去掉不太可能的候选
+4. transform_misused_divs_into_ps把错误使用的 div 转换成 p 标签，这样就不用考虑 div 标签了，其实这步挺关键的。其实还有一些其他的处理需要使用。
+5. 使用score_paragraphs给每段（paragraph）打分
+6. 使用select_best_candidates获得最佳候选（candidates）
+7. 选出最佳候选，如果选出的话，调用 get_article 抽取文章
+8. 如果没有选出，恢复到非强力模式再试一次，还不行的话就直接把 html 返回
+9. 清理文章，使用 sanitize 方法
+10. 如果得到的文章太短了，尝试恢复到费强力模式重试一次
+
+强力模式和非强力模式的区别就在于是否调用了 remove_unlikely_candidates
+</pre></div>
+
+
+<h2>Yifei's Notes</h2>
+<p>公司的做法在于： 1）transform那一步修正了更多的错误。2）在得到best node之后记录了xpath，方便抽取下一页内容。3）抽取后检查文章长度。4）如果抽取失败，不是返回文章，而是返回空</p>
+<p>下面按照在 summary 出场顺序依次介绍~</p>
+<h2>remove_unlikely_candidates</h2>
+<p>匹配标签的 class 和 id，根据unlikelyCandidatesRe和okMaybeItsACandidate这个两个表达式删除一部分节点。
+unlikelyCandidatesRe：combx|comment|community|disqus|extra|... 可以看出是一些边缘性的词汇
+okMaybeItsACandidateRe: and|article|body|column|main|shadow... 可以看出主要是制定正文的词汇</p>
+<h2>transform_misused_divs_into_paragraphs</h2>
+<p>对所有的 div 节点，如果没有 divToPElementsRe 这个表达式里的标签，就把他转化为 p
+再对剩下的 div 标签中，如果有文字的话，就把文字转换成一个 p 标签，插入到当前节点，如果子标签有 tail节点的话，也把他作为 p 标签插入到当前节点中
+把 br 标签删掉</p>
+<h2>socore_node</h2>
+<p>按照tag、 class 和 id 如果符合负面词汇的正则，就剪掉25分，如果符合正面词汇的正则，就加上25分
+div +5 分， pre、td、backquote +3 分
+address、ol、ul、dl、dd、dt、li、form -3分
+h1-h6 th -5 分</p>
+<h2>score_paragraphs</h2>
+<p>首先定义常量，MIN_LEN 最小成段文本长度
+对于所有的 p，pre，td 标签，找到他们的父标签和祖父标签，文本长度小于 MIN_LEN 的直接忽略
+对父标签打分（score_node），并放入排序队列
+祖父标签也打分，并放入排序队列
+开始计算当前节点的内容分（content_socre) 基础分1分，按照逗号断句，每句一分，每100字母+1分，至少三分
+父元素加上当前元素的分，祖先元素加上1/2
+链接密度 链接 / (文本 + 链接)
+最终得分 之前的分 * （1 - 链接密度）</p>
+<p>注意，当期标签并没有加入 candidates，父标签和祖父标签才加入
+累计加分，如果一个元素有多个 p，那么会把所有子元素的content score都加上</p>
+<h2>select_best_candidate</h2>
+<p>就是 ordered 中找出最大的</p>
+<h2>get_article</h2>
+<p>对于最佳候选周围的标签，给予复活的机会，以避免被广告分开的部分被去掉，阈值是10分或者最佳候选分数的五分之一。如果是 p 的话，node_length &gt; 80 and link_density &lt; 0.25 或者 长度小于80，但是没有连接，而且最后是句号</p>
+<h1>思考</h1>
+<p>readability之所以能够work的原因，很大程度上是基于html本身是一篇文档，数据都已将在html里了，然后通过操作DOM获得文章。而在前端框架飞速发展的今天，随着react和vue等的崛起，越来越多的网站采用了动态加载，真正的文章存在了页面的js中甚至需要ajax加载，这时在浏览器中使用readability.js虽然依然可以（因为浏览器已经加载出了DOM），但是如果用于抓取目的的话，需要执行一遍js，得到渲染过的DOM才能提取文章，如果能够有一个算法，直接识别出大段的文字，而不是依赖DOM提取文章就好了~</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-readability-yuan-ma-yue-du.html">posted at 22:11</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

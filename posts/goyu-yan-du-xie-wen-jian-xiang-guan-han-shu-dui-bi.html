@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Go语言读写文件相关函数对比</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="golang,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/goyu-yan-du-xie-wen-jian-xiang-guan-han-shu-dui-bi.html" rel="bookmark" title="Permanent Link to &quot;Go语言读写文件相关函数对比&quot;">Go语言读写文件相关函数对比</a>
+                </h2>
+
+                
+                
+
+                <h1>文件 IO</h1>
+<p><code>io.Reader</code> 和 <code>io.Writer</code>。这两个是两个特别重要的 interface。一般来说凡是可以抽象为输入的 IO 操作都会使用 io.Reader。凡是可以抽象为输出的 IO 操作都会使用 io.Writer。</p>
+<h1>io/ioutil</h1>
+<p>对于配置文件等等比较小的常规文件，一般来说我们可以使用 io/ioutil 包中的辅助函数操作就好了，比较快捷方便。</p>
+<table>
+<thead>
+<tr>
+<th>函数签名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>func NopCloser(r io.Reader) io.ReadCloser</code></td>
+<td>把 io.Reader 包装成一个 io.ReadWriter</td>
+</tr>
+<tr>
+<td><code>func ReadAll(r io.Reader) ([]byte, error)</code></td>
+<td>读取所有字符，成功的话 err == nil</td>
+</tr>
+<tr>
+<td><code>func ReadDir(dirname string) ([]os.FileInfo, error)</code></td>
+<td>读取当前目录的所有文件</td>
+</tr>
+<tr>
+<td><code>func ReadFile(filename string) ([]byte, error)</code></td>
+<td>读取文件的所有内容</td>
+</tr>
+<tr>
+<td><code>func TempDir(dir, prefix string) (name string, err error)</code></td>
+<td>创建临时目录</td>
+</tr>
+<tr>
+<td><code>func TempFile(dir, prefix string) (f *os.File, err error)</code></td>
+<td>创建临时文件</td>
+</tr>
+<tr>
+<td><code>func WriteFile(filename string, data []byte, perm os.FileMode) error</code></td>
+<td>写入文件</td>
+</tr>
+</tbody>
+</table>
+<p>对于比较大的文件，直接使用 <code>ioutil.ReadFile</code> 读到内存里显然是不现实的，这时候应该使用 <code>os</code> 模块中的函数。</p>
+<h2>文件操作</h2>
+<p>其他语言中一般统一通过 open(filename, rw) 这个函数来打开文件，而 golang 中有所
+不同，一般来说是通过 os.Open(filename) 打开文件用于读取，使用 os.Create(filename) 
+打开文件用于写入。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/goyu-yan-du-xie-wen-jian-xiang-guan-han-shu-dui-bi.html">posted at 05:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

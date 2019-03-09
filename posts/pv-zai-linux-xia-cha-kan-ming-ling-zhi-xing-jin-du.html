@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | pv - 在 Linux 下查看命令执行进度</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 12, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pv-zai-linux-xia-cha-kan-ming-ling-zhi-xing-jin-du.html" rel="bookmark" title="Permanent Link to &quot;pv - 在 Linux 下查看命令执行进度&quot;">pv - 在 Linux 下查看命令执行进度</a>
+                </h2>
+
+                
+                
+
+                <p>pv 是 Pipe Viewer 的缩写，也就是管道查看器。挡在命令行执行命令的时候，可以通过使用 pv 来指导当前的进度。</p>
+<h1>使用</h1>
+<h2>替换 cat</h2>
+<p>比如你要把一个日志打包好下载：</p>
+<div class="highlight"><pre><span></span><span class="c">% gzip -c access.log &gt; access.log.gz</span>
+</pre></div>
+
+
+<p>可以改成</p>
+<div class="highlight"><pre><span></span><span class="c">% cat access.log | gzip &gt; access.log.gz</span>
+</pre></div>
+
+
+<p>使用 pv</p>
+<div class="highlight"><pre><span></span><span class="c">% pv access.log | gzip &gt; access.log.gz</span>
+<span class="mi">611</span><span class="n">MB</span> <span class="mi">0</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">11</span> <span class="p">[</span><span class="mf">58.3</span><span class="n">MB</span><span class="o">/</span><span class="n">s</span><span class="p">]</span> <span class="p">[=</span><span class="o">&gt;</span>      <span class="p">]</span> <span class="mi">15</span><span class="c">% ETA 0:00:59</span>
+</pre></div>
+
+
+<h2>使用多个 pv</h2>
+<p>可以使用多个 pv 来查看在不同阶段的速率</p>
+<div class="highlight"><pre><span></span>$ pv -cN <span class="nb">source</span> access.log <span class="p">|</span> gzip <span class="p">|</span> pv -cN gzip &gt; access.log.gz
+source:  760MB <span class="m">0</span>:00:15 <span class="o">[</span><span class="m">37</span>.4MB/s<span class="o">]</span> <span class="o">[=</span>&gt;     <span class="o">]</span> <span class="m">19</span>% ETA <span class="m">0</span>:01:02
+  gzip: <span class="m">34</span>.5MB <span class="m">0</span>:00:15 <span class="o">[</span><span class="m">1</span>.74MB/s<span class="o">]</span> <span class="o">[</span>  &lt;<span class="o">=</span>&gt;  <span class="o">]</span>
+</pre></div>
+
+
+<p>在上面的命令中，<code>-c</code> 是为了防止两个 pv 的显示混在一起。<code>-N</code> 表示名字。可以看到读取 access.log 的速率是 37.4 MB/s，而写入 gzip 文件的速率大概是 1.74 MB/s，我们大概也可以得出压缩率大概是21倍。</p>
+<h2>指定文件的大小</h2>
+<p>可以用下面这个命令压缩一个文件夹。</p>
+<div class="highlight"><pre><span></span>$ tar -czf - . <span class="p">|</span> pv &gt; out.tgz
+ 117MB <span class="m">0</span>:00:55 <span class="o">[</span><span class="m">2</span>.7MB/s<span class="o">]</span> <span class="o">[</span>&gt;         <span class="o">]</span>
+</pre></div>
+
+
+<p>在上面的例子中我们可以看到下面 gzip 一行的输出中没有百分比，因为 pv 没法知道 gzip 之后的最终大小，所以没有办法计算进度。可以使用 <code>-s</code> 指定大小。</p>
+<div class="highlight"><pre><span></span>$ tar -cf - . <span class="p">|</span> pv -s <span class="k">$(</span>du -sb . <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span> <span class="p">|</span> gzip &gt; out.tgz
+ 253MB <span class="m">0</span>:00:05 <span class="o">[</span><span class="m">46</span>.7MB/s<span class="o">]</span> <span class="o">[</span>&gt;     <span class="o">]</span>  <span class="m">1</span>% ETA <span class="m">0</span>:04:49
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pv-zai-linux-xia-cha-kan-ming-ling-zhi-xing-jin-du.html">posted at 07:41</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles in the "计算机" category | Page 17</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/category/ji-suan-ji/page/17/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mang-deng-dai.html" rel="bookmark" title="Permanent Link to &quot;忙等待&quot;">忙等待</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span>while True:
+    pass 
+</pre></div>
+
+
+<p>this is busy waiting</p>
+<div class="highlight"><pre><span></span>while True:
+    time.sleep(10)
+</pre></div>
+
+
+<p>this is not busy waiting, bucause cpu are free to do other things, and only need trivial cpu cycles</p>
+<p>http://stackoverflow.com/questions/529034/python-pass-or-sleep-for-long-running-processes</p>
+<p>busy waiting is considered as anti-pattern, but using it in spinning-lock is ok …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mang-deng-dai.html">posted at 23:34</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/html-node-vs-element.html" rel="bookmark" title="Permanent Link to &quot;html Node vs Element&quot;">html Node vs Element</a>
+                </h2>
+
+                
+                
+
+                <ul>
+<li>Node vs Element</li>
+</ul>
+<p>HTML Document consists of different node, element is one type of node.</p>
+<ul>
+<li>NodeList vs HTMLCollection</li>
+</ul>
+<p>NodeList is a collection of node, HTMLCollection is a collection of element.</p>
+<ul>
+<li>HTMLCollection vs NodeList vs Array</li>
+</ul>
+<p>HTMLCollection 和 NodeList 都是动态的,会随着 DOM 的变化而变化</p>
+<p>Array 是静态的数据结构</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/html-node-vs-element.html">posted at 02:41</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/make-he-premake.html" rel="bookmark" title="Permanent Link to &quot;make 和 premake&quot;">make 和 premake</a>
+                </h2>
+
+                
+                
+
+                <h1>Rule</h1>
+<div class="highlight"><pre><span></span><span class="n">target</span><span class="o">:</span> <span class="n">dependencies</span><span class="o">(</span><span class="n">sepreated</span> <span class="n">by</span> <span class="n">spaces</span><span class="o">)</span>
+    <span class="n">command</span><span class="o">(</span><span class="n">s</span><span class="o">)</span> <span class="n">to</span> <span class="n">run</span> <span class="n">to</span> <span class="n">build</span> <span class="n">the</span> <span class="n">target</span> <span class="n">from</span> <span class="n">dependencies</span>
+</pre></div>
+
+
+<h1>Basic usage</h1>
+<p>in most projects, we have a <code>.h</code> file for functiont interfaces, and the whole program depends on it.
+typically, all <code>.o</code> files are compiled from corresponding <code>.c</code> source files</p>
+<div class="highlight"><pre><span></span><span class="nv">cc</span> <span class="o">=</span> gcc              <span class="c1"># marco …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/make-he-premake.html">posted at 01:21</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/cde-bian-yi-diao-shi-yu-jing-tai-jian-cha.html" rel="bookmark" title="Permanent Link to &quot;C的编译、调试与静态检查&quot;">C的编译、调试与静态检查</a>
+                </h2>
+
+                
+                
+
+                <h1>使用Clang/gcc 常用的选项</h1>
+<div class="highlight"><pre><span></span>-std=c11     设定标准为 c11
+-Wall   显示所有警告
+-O2 二级优化, 通常够用了
+-march=native   释放本地CPU所有指令
+-g  如果需要使用 gdb 调试的话
+
+-Dmarco=value    定义宏
+-Umarco undef 宏
+-Ipath   添加到 include
+-llibrary   链接到 liblibbrary.a 文件
+-Lpath   添加到链接 
+
+-c  只编译而不链接
+-S  生成汇编代码, 但是不生成机器代码
+-E   只预处理
+
+-fopenmp     打开 OpenMP 支持
+-pthread     添加 pthread 支持 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/cde-bian-yi-diao-shi-yu-jing-tai-jian-cha.html">posted at 01:14</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pep8-zhong-xu-yao-zhu-yi-de-di-fang.html" rel="bookmark" title="Permanent Link to &quot;PEP8 中需要注意的地方&quot;">PEP8 中需要注意的地方</a>
+                </h2>
+
+                
+                
+
+                <h1>spaces</h1>
+<p>If operators with different priorities are used, consider adding whitespace around the operators with the lowest priority(ies). Use your own judgment; however, never use more than one space, and always have the same amount of whitespace on both sides of a binary operator.</p>
+<div class="highlight"><pre><span></span><span class="n">Yes</span><span class="o">:</span>
+<span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">submitted …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pep8-zhong-xu-yao-zhu-yi-de-di-fang.html">posted at 01:04</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 24, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-signal.html" rel="bookmark" title="Permanent Link to &quot;python signal&quot;">python signal</a>
+                </h2>
+
+                
+                
+
+                <p>Any thread can perform an alarm(), getsignal(), pause(), setitimer() or getitimer(); only the main thread can set a new signal handler, and the main thread will be the only one to receive signals</p>
+<h1>default handlers:</h1>
+<p>signal.SIG_DFL</p>
+<p>This is one of two standard signal handling options; it will simply perform …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-signal.html">posted at 19:15</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 16, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shell-bian-cheng-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;shell 编程教程&quot;">shell 编程教程</a>
+                </h2>
+
+                
+                
+
+                <h1>变量和值</h1>
+<p>variables are referenced by $var or ${var}. Global variables are visible to all sub bash sessions, and are often called env variables, local variables are only visible to local session, not subsessions.</p>
+<p>Global variables can be viewed as <code>env</code>, and can be created by <code>export</code>.</p>
+<div class="highlight"><pre><span></span>TEST=testing; export $TEST …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shell-bian-cheng-jiao-cheng.html">posted at 01:38</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/docker-xiao-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;docker 小技巧&quot;">docker 小技巧</a>
+                </h2>
+
+                
+                
+
+                <h1>删除所有停止的容器</h1>
+<div class="highlight"><pre><span></span>docker rm `docker ps -aq`
+</pre></div>
+
+
+<h1>删除所有没有 tag 的镜像</h1>
+<div class="highlight"><pre><span></span>docker rmi `docker images | grep &quot;^&amp;lt;none&amp;gt;&quot; | awk &#39;{print $3}&#39;`
+</pre></div>
+
+
+<h1>进入运行中的镜像</h1>
+<div class="highlight"><pre><span></span>docker exec -it CONTAINER_NAME bash
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/docker-xiao-ji-qiao.html">posted at 21:04</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags">Docker</a>
+                </div>
+            </article>            <h4 class="date">Jul 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/open-sourcing-a-django-project.html" rel="bookmark" title="Permanent Link to &quot;open sourcing a django project&quot;">open sourcing a django project</a>
+                </h2>
+
+                
+                
+
+                <h1>remove sensetive data</h1>
+<ul>
+<li>move settings to seperate settings_secret.py file, and import it in the settings.py</li>
+</ul>
+<p>or</p>
+<ul>
+<li>read all secrets from environment</li>
+</ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/open-sourcing-a-django-project.html">posted at 20:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/curio.html" rel="bookmark" title="Permanent Link to &quot;curio&quot;">curio</a>
+                </h2>
+
+                
+                
+
+                <p>curio 是一个神奇的 Python 库，它完全面向 Python 3.5 增加的 async/await 语法，从低层就没有使用 callback 的语法，因此相比 asyncio 来说设计更简单，API 更优雅，性能却更好。</p>
+<h1>一个例子</h1>
+<p>curio 的文档给了一个很好的例子，下面总结一下这个例子。这个例子模拟了孩子在玩Minecraft，而家长在催促孩子该出发了的情景。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">curio</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">countdonw</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;T-minus&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">await</span> <span class="n">cuiro</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 在异步编程中，不能使用同步代码中的 time.sleep</span>
+        <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+
+<span class="n">start_evt …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/curio.html">posted at 14:56</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/16" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/18" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 17 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

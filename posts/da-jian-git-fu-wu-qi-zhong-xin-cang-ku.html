@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 搭建 git 服务器（中心仓库）</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jan 20, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/da-jian-git-fu-wu-qi-zhong-xin-cang-ku.html" rel="bookmark" title="Permanent Link to &quot;搭建 git 服务器（中心仓库）&quot;">搭建 git 服务器（中心仓库）</a>
+                </h2>
+
+                
+                
+
+                <h1>gitlab</h1>
+<p>建议使用 gitlab 搭建，只需要一个命令就可以了</p>
+<div class="highlight"><pre><span></span>docker run --detach \
+    --hostname gitlab.example.com \
+    --publish 443:443 --publish 80:80 --publish 22:22 \
+    --name gitlab \
+    --restart always \
+    --volume /srv/gitlab/config:/etc/gitlab \
+    --volume /srv/gitlab/logs:/var/log/gitlab \
+    --volume /srv/gitlab/data:/var/opt/gitlab \
+    gitlab/gitlab-ce:latest
+</pre></div>
+
+
+<p>source: https://docs.gitlab.com/omnibus/docker/README.html</p>
+<h1>手工搭建 git 服务器</h1>
+<p>假设服务器的名字是 git.example.com.
+首先，添加一个叫做git的用户<code>adduser git</code>。</p>
+<p>然后如果不存在的话, 为这个用户新建一个主目录<code>mkdir /home/git</code>，然后把这个目录设为git所有<code>chown git ~git</code></p>
+<p>再在本地把你的ssh公钥拷贝到服务器上 
+    ssh-copy-id git@git.example.com</p>
+<p>服务器就这样搞好了</p>
+<h2>使用</h2>
+<ol>
+<li>在服务器上新建仓库</li>
+</ol>
+<p>首先，在服务器新建一个项目, 其中 new_project 是你的项目的名字.</p>
+<div class="highlight"><pre><span></span>ssh git@git.example.com &quot;mkdir &lt;new_project&gt;.git &amp;&amp; cd &lt;new_project&gt;.git &amp;&amp; git init -bare&quot;
+</pre></div>
+
+
+<p>当然这么一长串实在是太烦了, 我们可以把它写成一行脚本new_repo.sh</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+ssh git@git.example <span class="s2">&quot;mkdir </span><span class="nv">$1</span><span class="s2">\.git &amp;&amp; cd </span><span class="nv">$1</span><span class="s2">\.git &amp;&amp; git init --bare&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;New git repo git@git.example.com:</span><span class="nv">$1</span><span class="s2">.git&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<p>然后 chmod +x new_repo.sh
+以后就可以这样调用了 ./new_repo.sh foobar 就可以了</p>
+<ol>
+<li>和本地建立连接</li>
+</ol>
+<p>如果是新项目</p>
+<p>然后 clone 到本地就好了：</p>
+<p>git clone git@git.example.com:new_project.git</p>
+<p>如果是老项目</p>
+<p>如果你已经在本地有了项目, 并且初始化了 git 仓库, 不是采用clone，而是直接设置上游服务器，那就推送到服务器上</p>
+<div class="highlight"><pre><span></span>git remote add origin git@git.example.com:new_project.git
+git push -u origin master
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/da-jian-git-fu-wu-qi-zhong-xin-cang-ku.html">posted at 22:50</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

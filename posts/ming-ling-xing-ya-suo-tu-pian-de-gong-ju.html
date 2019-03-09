@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 命令行压缩图片的工具</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="命令行,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ming-ling-xing-ya-suo-tu-pian-de-gong-ju.html" rel="bookmark" title="Permanent Link to &quot;命令行压缩图片的工具&quot;">命令行压缩图片的工具</a>
+                </h2>
+
+                
+                
+
+                <p>加载速度对于网页的体验还是很重要的, 而每个页面比较耗费带宽的资源就是图片了, 所以在页面发布后对图像做适当的压缩是很有必要的.</p>
+<p>常用的图片格式基本有三种: jpg, png 和 gif, 分别有不同的压缩工具</p>
+<p>JPG 压缩建议使用 jpegoptim, 实测压缩比在40%左右, 最常用的语法是</p>
+<p><code>jpegoptim -p -m&lt;dd&gt;  &lt;imagefile&gt;</code></p>
+<p>其中 -p 是保留 mtime 的意思, 也可以用 --perserve, -m 后面跟两个数字表示, 压缩的比例, 一般用90即可, 肉眼无法分辨, 且能够压缩掉40%左右</p>
+<p>png 压缩有两个选项, 常规的 optipng 和另一个新一点 pngquant, 测试了一下, 发现 optipng 速度慢而且压缩效率低, pngquant 则表现相当优秀, 但是需要注意 pngquant 是有损压缩.</p>
+<p>pngquant 的用法也简单粗暴, 直接 pngquant <filename> 就好了, 如果嫌压缩不够可以使用 pngquant <numColors> <filename>. 指定一个较少的色彩数.</p>
+<p>gif 图像的压缩可以使用gifsicle</p>
+<p><code>gifsicle -O2 old.gif -o new.gif</code></p>
+<p>另外需要注意的是, jpegoptim 默认覆盖原图像, pngquant 会生成新的图像, gifsicle 需要制定新图像的名字.</p>
+<p>如果需要对一个目录下的所有文件都进行优化, 可以配合 find 命令使用, 比如</p>
+<div class="highlight"><pre><span></span>find . -name &quot;*.jpg&quot; -exec jpegoptim {} -m90 -p
+find . -name &quot;*.png&quot; -exec pngquant {}
+</pre></div>
+
+
+<p>通过以上命令就可以把降低一些图片的体积</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ming-ling-xing-ya-suo-tu-pian-de-gong-ju.html">posted at 01:42</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

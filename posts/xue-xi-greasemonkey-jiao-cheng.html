@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 学习 greasemonkey 教程</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="大前端,浏览器扩展,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xue-xi-greasemonkey-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;学习 greasemonkey 教程&quot;">学习 greasemonkey 教程</a>
+                </h2>
+
+                
+                
+
+                <p>GreaseMonkey/TamperMonkey 学习</p>
+<h1>头部命令</h1>
+<ul>
+<li>@name | 脚本名字| </li>
+<li>@namespace|命名空间|  </li>
+<li>@version| 版本| </li>
+<li>@author|作者|       </li>
+<li>@description      </li>
+<li>@homepage     </li>
+<li>@icon     </li>
+<li>@updateURL        </li>
+<li>@downloadURL      </li>
+<li>@include      </li>
+<li>@exclude      </li>
+<li>@resource key url     </li>
+<li>@require  include scripts </li>
+<li>@connect  reach cross origin domains  self, current domain, localhost,  or *</li>
+<li>@run-at   when to run the script  document-start/document-body/document-end/document-idle/context-menu</li>
+<li>@grant    whitelist GM_* functions    If no @grant tag is given TM guesses the scripts needs.</li>
+</ul>
+<h1>函数</h1>
+<div class="highlight"><pre><span></span>GM_addStyle(css)        
+GM_get/set/deleteValue      
+GM_listValues()     
+GM_getResourceText(name)        
+GM_getResourceURL(name) get base64 encoded urI  
+GM_openInTab(url)       
+GM_getTab(cb)   Get a object that is persistent as long as this tab is open.    
+GM_getTabs(cb)  Get all tab objects as a hash to communicate with other script instances.   
+GM_setClipboard(data, info) set the clipboard   
+
+
+GM_xmlhttprequest can do cross domain request
+</pre></div>
+
+
+<p>using it in $.ajax https://gist.github.com/yifeikong/9e93cc38297cce989ffbef5587ad2f39</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xue-xi-greasemonkey-jiao-cheng.html">posted at 15:23</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

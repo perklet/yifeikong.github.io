@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "计算机" | Page 22</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/ji-suan-ji/page/22/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-admin-hou-tai-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;Django Admin 后台教程&quot;">Django Admin 后台教程</a>
+                </h2>
+
+                
+                
+
+                <h1>Basics</h1>
+<p><code>./manage.py startapp APP_NAME</code> would create an <code>admin.py</code> file, you should define your admin classes in that file.</p>
+<p><code>./manage.py createsuperuser</code> creates a user, so that you could login into the admin site at http://youdomain.com/admin</p>
+<p>by default, the admin panel only contains user and group …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-admin-hou-tai-jiao-cheng.html">posted at 08:07</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/bootstrap-basics.html" rel="bookmark" title="Permanent Link to &quot;Bootstrap Basics&quot;">Bootstrap Basics</a>
+                </h2>
+
+                
+                
+
+                <h1>BootStrap适合做什么</h1>
+<p>Bootstrap适合做没有界面设计，只有功能或者草图，直接通过代码快速的生成一个可用的界面</p>
+<p>Bootstrap不适合</p>
+<ol>
+<li>已经有了良好的界面设计，包含了各种细节</li>
+<li>在已有的非Bootstrap的界面上进行改动的时候</li>
+</ol>
+<h1>headers</h1>
+<p>add this to headers <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"&gt;</code></p>
+<h1>grid system</h1>
+<h2>container</h2>
+<p><code>container</code> class should be added to the root element where you would like to use bootstrap.</p>
+<p><code>container-fluid</code> is for full-width container.</p>
+<h2>row …</h2>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/bootstrap-basics.html">posted at 07:04</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/css.html" class="tags">CSS</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/git-shi-yong-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;Git 使用技巧&quot;">Git 使用技巧</a>
+                </h2>
+
+                
+                
+
+                <p>最佳实践，每次提交前都使用git status查看已经更改的文件，然后使用git add逐条添加文件,然后再看git status提交的文件是不是都对的. 认真编写.gitignore文件，最好能够做到每次可以使用<code>git add .</code>是安全的。</p>
+<h1>取消与重置</h1>
+<p>当你的 commit 已经 push 之后就不能再撤销了，只能使用 revert。</p>
+<h2>取消上一个 commit</h2>
+<div class="highlight"><pre><span></span>git reset HEAD~1
+</pre></div>
+
+
+<ul>
+<li>reset --mixed will reset the index not the working dir</li>
+<li>reset --soft will only move the HEAD</li>
+<li>reset --hard will even reset the …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/git-shi-yong-ji-qiao.html">posted at 10:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/git.html" class="tags">git</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 03, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-am-command.html" rel="bookmark" title="Permanent Link to &quot;Android am command&quot;">Android am command</a>
+                </h2>
+
+                
+                
+
+                <p>am is short for activity manager, which is used to start and stop activity in android.</p>
+<h2>basic syntax</h2>
+<h3>start an activity</h3>
+<p>you can get the activity name by decompiling the apk and view the androidmanifest.xml file</p>
+<div class="highlight"><pre><span></span>am start -n &lt;package_name&gt;/&lt;activity_name&gt; [parameters]
+am start -n com.tencent.mm/com …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-am-command.html">posted at 15:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 02, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-chardet-zi-dong-jian-ce-wen-ben-bian-ma.html" rel="bookmark" title="Permanent Link to &quot;使用 Chardet 自动检测文本编码&quot;">使用 Chardet 自动检测文本编码</a>
+                </h2>
+
+                
+                
+
+                <p>python 中的 chardet 库可以用来猜测文件的编码</p>
+<h1>usage</h1>
+<div class="highlight"><pre><span></span>pip install cchardet
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">cchardet</span> <span class="kn">as</span> <span class="nn">chardet</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">chinese_bytes</span> <span class="o">=</span> <span class="s1">&#39;中文&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">chardet</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">chinese_bytes</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="p">{</span><span class="s1">&#39;confidence&#39;</span><span class="p">:</span> <span class="mf">0.7524999976158142</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">}</span>
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-chardet-zi-dong-jian-ce-wen-ben-bian-ma.html">posted at 06:23</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 31, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/css-remove-spaces-between-inline-elements.html" rel="bookmark" title="Permanent Link to &quot;CSS remove spaces between inline elements&quot;">CSS remove spaces between inline elements</a>
+                </h2>
+
+                
+                
+
+                <p>https://css-tricks.com/fighting-the-space-between-inline-block-elements/</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/css-remove-spaces-between-inline-elements.html">posted at 09:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/css.html" class="tags">CSS</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 31, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-wang-luo-xiang-guan-curlwgetnc.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行网络相关（curl/wget/nc...）&quot;">Linux 命令行网络相关（curl/wget/nc...）</a>
+                </h2>
+
+                
+                
+
+                <p>有待整理。。。</p>
+<h1>fuser</h1>
+<p>view which program is using which port.</p>
+<div class="highlight"><pre><span></span>fuser XXX/tcp  # see which program is using tcp port XXX
+fuser XXX/upd  # see which program is using udp port XXX
+fuser -k XXX/tcp  # kill the program, if you have right permissions
+</pre></div>
+
+
+<h1>curl</h1>
+<p>wget 功能很有限，httpie 虽然比较人性化但是有很多 bug，还是 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-wang-luo-xiang-guan-curlwgetnc.html">posted at 06:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/redis-shi-zhan-zong-jie.html" rel="bookmark" title="Permanent Link to &quot;redis 实战总结&quot;">redis 实战总结</a>
+                </h2>
+
+                
+                
+
+                <h2>redis是做什么的</h2>
+<p>一个数据结构存储器，数据驻留在内存里，可以在程序的两次之间保存数据</p>
+<h2>一些实现细节和比较好的地方</h2>
+<p>redis 的 string 是 binary-safe 的，可以存储任意的二进制数据（bytes），甚至可以把图片存储在 redis 中</p>
+<h2>经常用到的场合</h2>
+<ol>
+<li>用作缓存</li>
+<li>
+<p>最基础的，最经典的应用场合，当查询数据库或者ES等存储代价比较高的时候，直接用查询的语句做 key，查询结果用作缓存</p>
+</li>
+<li>
+<p>用做队列</p>
+</li>
+<li>
+<p>用做集合，也就是存储一批数据的池子。用作有序集合</p>
+</li>
+</ol>
+<h2>经常遇到的问题</h2>
+<p>过期之间只能指定到键级别，而不能指定到集合的键级别</p>
+<h2>pipeline</h2>
+<p>imporve performance by combining multi command into one and reduce TCP times</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; p = r.pipeline()        # 创建一个管道
+&gt;&gt;&gt; p.set …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/redis-shi-zhan-zong-jie.html">posted at 14:33</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linuxbrew.html" rel="bookmark" title="Permanent Link to &quot;linuxbrew&quot;">linuxbrew</a>
+                </h2>
+
+                
+                
+
+                <p>It can be installed in your home directory and does not require root access.</p>
+<p>ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
+PATH="$HOME/.linuxbrew/bin:$PATH"</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linuxbrew.html">posted at 14:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/caputre-ios-traffic.html" rel="bookmark" title="Permanent Link to &quot;caputre iOS traffic&quot;">caputre iOS traffic</a>
+                </h2>
+
+                
+                
+
+                <p>RVI</p>
+<p>Step 1. Plug you iPhone with USB
+Step 2. go to pgyer.cn, and find the UDID
+Step 3. use rvi -x UDID
+Step 4. use  wireshark and select the rvi0 device</p>
+<p>http://useyourloaf.com/blog/remote-packet-capture-for-ios-devices/</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/caputre-ios-traffic.html">posted at 14:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/21" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/23" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 22 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

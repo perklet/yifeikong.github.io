@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 故障排查记录</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="架构,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jan 25, 2019</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/gu-zhang-pai-cha-ji-lu.html" rel="bookmark" title="Permanent Link to &quot;故障排查记录&quot;">故障排查记录</a>
+                </h2>
+
+                
+                
+
+                <p>Case 1：</p>
+<p>CPU 和内存都被打满了，同时发现硬盘 IO 也很高。</p>
+<div class="highlight"><pre><span></span>ps -eo pid,ppid,cmd,%mem,mem,%cpu --sort=-%mem | head -n 50
+</pre></div>
+
+
+<p>发现 kswapd0 偶尔会占用很高的 CPU，而这个进程是在内存满的时候负责在内存和 swap 之间交换。也就是问题的根源是内存满了，而 kswapd0 开始在内存和 swap 之间反复读写文件，导致 CPU 和 IO 也涨了起来，这时候应该找到内存暴涨的根源，进而解决问题。</p>
+<p>[1] https://askubuntu.com/questions/259739/kswapd0-is-taking-a-lot-of-cpu</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/gu-zhang-pai-cha-ji-lu.html">posted at 18:03</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

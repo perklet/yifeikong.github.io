@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles in the "计算机" category</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/category/ji-suan-ji.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Feb 17, 2019</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/rust-de-sheng-ming-zhou-qi-guan-li-gai-shu.html" rel="bookmark" title="Permanent Link to &quot;Rust 的生命周期管理概述&quot;">Rust 的生命周期管理概述</a>
+                </h2>
+
+                
+                
+
+                <p>周末花些时间把 Rust 生命周期又翻了一遍，终于能写出一个可以编译通过的程序了😁。Rust 虽然学习曲线比较陡峭，但是掌握之后就发现这么设计确实是有道理的，尤其是对于编写正确的 C++ 程序也很有帮助。</p>
+<h1>可变与不可变</h1>
+<p>Rust 中使用 let 来绑定一个变量，默认是不可变的。也就是说默认就相当于 C++ 中 const 变量。但是实际上 C++ 中的 const 也只是只读而已。</p>
+<div class="highlight"><pre><span></span>let x = 5;
+x = 6;  // 非法
+</pre></div>
+
+
+<p>如果想要更改一个变量的值，在声明的时候，应该加上 mut（每次写 let mut 的时候，我心里都是读作“让TM的”）</p>
+<div class="highlight"><pre><span></span>let mut = 5;
+x = 6
+</pre></div>
+
+
+<h1>copy 和 move …</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/rust-de-sheng-ming-zhou-qi-guan-li-gai-shu.html">posted at 05:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/rust.html" class="tags">Rust</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Feb 16, 2019</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yun-shi-dai-de-ge-ren-cun-chu-da-jian.html" rel="bookmark" title="Permanent Link to &quot;云时代的个人存储搭建&quot;">云时代的个人存储搭建</a>
+                </h2>
+
+                
+                
+
+                <p>昨天想用 iPad 上的 GoodReader 看一本书，但是从 iCloud 同步的时候出了些问题，进度始终为零。由于国内糟糕的网络环境，这种同步失败的问题时有发生。虽然可以直接通过 WiFi 把书从电脑上传过来，但是因为偶尔需要在另一个 iPad 上查看，为了同步进度，还是最终决定还是自己搭建一套云存储设施。</p>
+<h1>ftp 与 webdav</h1>
+<p>ftp 协议有诸多问题，现在用的已经很少了。WebDav 协议基于 HTTP，相比 FTP 有不少有点，可以参见文章1。另外不少开源的网盘客户端也支持 webdav。NextCloud 支持 webdav，后面会讲到</p>
+<h1>sftp 和 sshfs</h1>
+<p>sftp 则和 ftp 是完全独立的两个东西，虽然最终目的是一样的。好比海豚和鲨鱼都是在海里的生物，但是一个是哺乳动物，而一个是鱼类。sftp …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yun-shi-dai-de-ge-ren-cun-chu-da-jian.html">posted at 22:27</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Feb 12, 2019</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-zai-master-jie-dian-bu-shu-pod.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——在 Master 节点部署 Pod&quot;">kubernetes 初探——在 Master 节点部署 Pod</a>
+                </h2>
+
+                
+                
+
+                <p>虽然 K8S 本身不建议在 Master 节点中部署 Pod，但是实际上也是可以的。</p>
+<div class="highlight"><pre><span></span>kubectl taint nodes --all node-role.kubernetes.io/master-
+</pre></div>
+
+
+<p>这行命令的意思是移除所有节点的 master taint，这样就可以在 master 节点部署 pod 啦~</p>
+<h1>原理解释——taint 和 toleration</h1>
+<ol>
+<li>https://www.ibm.com/support/knowledgecenter/en/SSCKRH_1.0.1/platform/install_pod_scheduling.html</li>
+<li>https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-zai-master-jie-dian-bu-shu-pod.html">posted at 19:57</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jan 25, 2019</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/gu-zhang-pai-cha-ji-lu.html" rel="bookmark" title="Permanent Link to &quot;故障排查记录&quot;">故障排查记录</a>
+                </h2>
+
+                
+                
+
+                <p>Case 1：</p>
+<p>CPU 和内存都被打满了，同时发现硬盘 IO 也很高。</p>
+<div class="highlight"><pre><span></span>ps -eo pid,ppid,cmd,%mem,mem,%cpu --sort=-%mem | head -n 50
+</pre></div>
+
+
+<p>发现 kswapd0 偶尔会占用很高的 CPU，而这个进程是在内存满的时候负责在内存和 swap 之间交换。也就是问题的根源是内存满了，而 kswapd0 开始在内存和 swap 之间反复读写文件，导致 CPU 和 IO 也涨了起来，这时候应该找到内存暴涨的根源，进而解决问题。</p>
+<p>[1] https://askubuntu.com/questions/259739/kswapd0-is-taking-a-lot-of-cpu</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/gu-zhang-pai-cha-ji-lu.html">posted at 18:03</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jan 25, 2019</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/github-shang-de-ding-ji-xiang-mu-du-shi-zuo-shi-yao-de-yi.html" rel="bookmark" title="Permanent Link to &quot;GitHub 上的顶级项目都是做什么的？（一）&quot;">GitHub 上的顶级项目都是做什么的？（一）</a>
+                </h2>
+
+                
+                
+
+                <p>前一阵看到同事在用一个名叫 AirFlow 的工具，而我竟然素未耳闻，一番搜索之后发现这个工具是 Apache 的顶级项目，而且在 GitHub 上有 1w+ 的 Star。震惊之余，感觉有必要把 GitHub 上常用工具捋一遍，以避免以后发生重复造轮子的情况。计划是把 GitHub 上 5k+ Star 的项目都知道是做什么用的，每周看 50 个，数据来源是这里：https://gitstar-ranking.com/repositories。</p>
+<p>下面是本周的记录：</p>
+<h1>教程资源类</h1>
+<ol>
+<li>
+<p>freeCodeCamp/freeCodeCamp 292180</p>
+<p>免费代码训练营</p>
+</li>
+<li>
+<p>EbookFoundation / free-programming-books 114236</p>
+<p>免费编程图书</p>
+</li>
+<li>
+<p>sindresorhus / awesome</p>
+<p>awesome 列表的列表。这个项目起源于某个人做了一个 awesome-php 的 php …</p></li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/github-shang-de-ding-ji-xiang-mu-du-shi-zuo-shi-yao-de-yi.html">posted at 03:29</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ku.html" class="tags">库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jan 18, 2019</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-fu-wu-zhi-li.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——服务治理&quot;">kubernetes 初探——服务治理</a>
+                </h2>
+
+                
+                
+
+                <p>服务治理有两种方式：</p>
+<ul>
+<li>一种是直接在服务中集成熔断降级等操作</li>
+<li>一种是使用 sidecar 模式，有公共组件来处理</li>
+</ul>
+<p>两种模式的区别如图：</p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tNc79ly1fzbu3a41c3j30gw09jabr.jpg"></p>
+<h1>参考资料</h1>
+<ol>
+<li><a href="https://mp.weixin.qq.com/s/1zAxecTzeZToaWFymeY-sw">Service Mesh 的本质、价值和应用探索 </a></li>
+<li><a href="https://www.kubernetes.org.cn/2350.html">Istio, K8S 的微服务支持</a></li>
+<li><a href="https://blog.csdn.net/aa1215018028/article/details/81700796">微服务之熔断、降级、限流</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzI1NzYzODk4OQ==&amp;mid=2247484925&amp;idx=1&amp;sn=5c15ba98fb03a2a0d9c823136f34e162">微服务化之服务拆分与服务发现</a></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-fu-wu-zhi-li.html">posted at 21:33</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Dec 28, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-cprofile-he-huo-yan-tu-diao-you-python-cheng-xu-xing-neng.html" rel="bookmark" title="Permanent Link to &quot;使用 cProfile 和火焰图调优 Python 程序性能&quot;">使用 cProfile 和火焰图调优 Python 程序性能</a>
+                </h2>
+
+                
+                
+
+                <p>本来想坐下来写篇 2018 年的总结，仔细想想这一年发生的事情太多了，还是写篇技术文章吧。</p>
+<p>前几天调试程序，发现 QPS 总是卡在 20 左右上不去。开始以为是 IO 问题，就多开了些并发，然并卵，这才想到可能是 CPU 的问题。看了看监控，发现程序某一步的延迟在 400ms 左右，而且这一步是 CPU 密集的。当时开了 4 台双核的机器：(1s / 400ms) * 2 * 4 = 20 啊。看来需要优化下这一步的代码了，那么第一步就是找到可以优化的地方。</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tNbRwly1fyqb4f5jhij30yc0pwtej.jpg"></p>
+<p>测量程序的性能之前并没有实际做过，Google 了一番，感觉标准库的 cProfile 似乎值得一试。</p>
+<p>要测量的代码逻辑也很简单，使用 lxml 解析 HTML，然后提取一些字段出来，这些基本都是调用的 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-cprofile-he-huo-yan-tu-diao-you-python-cheng-xu-xing-neng.html">posted at 00:17</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-nomad-bian-pai-fu-wu.html" rel="bookmark" title="Permanent Link to &quot;使用 Nomad 编排服务&quot;">使用 Nomad 编排服务</a>
+                </h2>
+
+                
+                
+
+                <p>2019-01-02 更新：相对于 Kubernetes 来说，Nomad 还是太简陋了，弃坑</p>
+<p>Nomad 是 HashiCorp 出品的一个容器编排服务，相较于重量级的 Kubernetes 来说，Nomad 的特点在于</p>
+<ol>
+<li>轻量级，只有一个二进制文件。K8s 的安装可能就要花上半天，在国内还有万恶的防火墙问题。</li>
+<li>概念也比较清晰，专注于任务的调度的编排，而不像 Kubernetes 一样引入了各种五花八门的概念。</li>
+<li>除了编排容器之外，Nomad 还可以直接编排普通应用，使用 cgroups 安全运行应用。</li>
+</ol>
+<h1>安装</h1>
+<p>从官网下载二进制文件，复制到 /usr/local/bin 就好了，不再赘述</p>
+<h1>使用</h1>
+<div class="highlight"><pre><span></span>$ sudo nomad agent -dev
+
+$ nomad node status
+ID …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-nomad-bian-pai-fu-wu.html">posted at 22:57</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 21, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-redis-ke-hu-duan-lian-jie-chi-jie-xi.html" rel="bookmark" title="Permanent Link to &quot;Python Redis 客户端连接池解析&quot;">Python Redis 客户端连接池解析</a>
+                </h2>
+
+                
+                
+
+                <p>Python Redis 的客户端使用了链接池机制，通过复用链接可以减低服务器的压力并在失败时重试。连接池其实是一种很通用的机制，在实现客户端是是一个经常需要（或许其实不需要）重复发明的轮子。</p>
+<p>Redis 客户端一共涉及到了三个类：</p>
+<ul>
+<li>Connection，表示一个到服务器的链接</li>
+<li>ConnectionPool，链接池</li>
+<li>Redis，使用连接池，并在失败时重试</li>
+</ul>
+<h1>Connection 类解析</h1>
+<p>Connection 类主要负责建立和 Redis 服务器的一个 Socket 链接，并且沟通相关信息。下面的代码是 Connection 类和 socket 处理相关的代码。</p>
+<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">Connection</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__del__</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">try</span><span class="o">:</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">disconnect</span><span class="p">()</span>
+        <span class="nx">except</span> <span class="nx">Exception</span>:
+            <span class="kt">pass</span>
+
+    <span class="nx">def</span> <span class="nx">connect</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        连接 Redis 服务器</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="k">if …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-redis-ke-hu-duan-lian-jie-chi-jie-xi.html">posted at 22:47</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/har-ge-shi-jie-xi.html" rel="bookmark" title="Permanent Link to &quot;HAR 格式解析&quot;">HAR 格式解析</a>
+                </h2>
+
+                
+                
+
+                <p>HAR(HTTP Archive) 文件是一种常见的用来保存 HTTP 请求和响应的格式。本质上，HAR 文件其实就是一个 JSON 文件。</p>
+<p>每一个 HAR Entry 都可以有以下记录存在：</p>
+<ul>
+<li>log</li>
+<li>creator</li>
+<li>browser</li>
+<li>pages<ul>
+<li>pageTimings</li>
+</ul>
+</li>
+<li>entries<ul>
+<li>request<ul>
+<li>queryString</li>
+<li>postData</li>
+<li>params</li>
+</ul>
+</li>
+<li>response<ul>
+<li>cookies</li>
+<li>headers</li>
+<li>content</li>
+</ul>
+</li>
+<li>cache</li>
+<li>timings</li>
+</ul>
+</li>
+</ul>
+<h1>log</h1>
+<p>这个是一个 HAR 文件的根字段，其他字段都是该字段的子字段</p>
+<div class="highlight"><pre><span></span>{
+    &quot;log&quot;: {
+        &quot;version&quot; : &quot;1.2&quot;,
+        &quot;creator&quot; : {},
+        &quot;browser&quot; : {},
+        &quot;pages&quot;: [],
+        &quot;entries&quot;: [],
+        &quot;comment&quot;: &quot;&quot;
+    }
+}
+</pre></div>
+
+
+<h1>creator</h1>
+<div class="highlight"><pre><span></span>&quot;creator&quot;: {
+    &quot;name&quot;: &quot;Firebug&quot;,
+    &quot;version …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/har-ge-shi-jie-xi.html">posted at 20:29</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/2" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 1 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

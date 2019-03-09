@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | python logging library</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-logging-library.html" rel="bookmark" title="Permanent Link to &quot;python logging library&quot;">python logging library</a>
+                </h2>
+
+                
+                
+
+                <h2>Yifei's Notes</h2>
+<p>Very sad, logging only supports %-style string formatting</p>
+<p><code>logging.exception</code> is the right way to log exceptions, not <code>logging.error</code></p>
+<h2>Basic Usage</h2>
+<p>库只应该定义自己的日志的格式, 而不应该定义自己的日志如何输出, 日志输出应该由最终的使用程序来定义.
+ 
+如果使用systemd来运行程序的话, 直接把所有日志打印到stdout就可以了</p>
+<p><code>logging.basicConfig(level=level, format=fmt_string, filename=file, datefmt=datefmt)</code></p>
+<p>if you don't supply filename, the log is printed to stdout</p>
+<div class="highlight"><pre><span></span>logging.debug(&#39;%string&#39;, args) # send to format string as message
+logging messages
+
+logging.getLogger.level = logging.DEBUG
+# reset logging level
+# basicConfig can only be called once in the main thread
+</pre></div>
+
+
+<h1>python 的 logging</h1>
+<h2>基本使用</h2>
+<div class="highlight"><pre><span></span><span class="c1"># myapp.py</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">mylib</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;myapp.log&#39;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Started&#39;</span><span class="p">)</span>
+    <span class="n">mylib</span><span class="o">.</span><span class="n">do_something</span><span class="p">()</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Finished&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="c1"># mylib.py</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="k">def</span> <span class="nf">do_something</span><span class="p">():</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Doing something&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>If you run myapp.py, you should see this in myapp.log:</p>
+<div class="highlight"><pre><span></span><span class="n">INFO</span><span class="o">:</span><span class="n">root</span><span class="o">:</span><span class="n">Started</span>
+<span class="n">INFO</span><span class="o">:</span><span class="n">root</span><span class="o">:</span><span class="n">Doing</span> <span class="n">something</span>
+<span class="n">INFO</span><span class="o">:</span><span class="n">root</span><span class="o">:</span><span class="n">Finished</span>
+</pre></div>
+
+
+<h2>进阶教程</h2>
+<p>logging 模块提供了四种不同的模块</p>
+<ul>
+<li>Loggers expose the interface that application code directly uses.</li>
+<li>Handlers send the log records (created by loggers) to the appropriate destination.</li>
+<li>Filters provide a finer grained facility for determining which log records to output.</li>
+<li>Formatters specify the layout of log records in the final output.</li>
+</ul>
+<p>logger 是一棵树，默认的logger 是 root logger，logging 模块的方法也都是在调用这个logger</p>
+<h2>Logging in a library</h2>
+<h3>get Logger</h3>
+<p>by defualt, the logger is called root logger.</p>
+<p>You should use the factory method logging.getLogger(name) to instaniate a logger object, the name is supposed to be foo.bar.baz, so the recommnend value is <strong>name</strong>，That’s because in a module, <strong>name</strong> is the module’s name in the Python package namespace.</p>
+<h3>in lib.py</h3>
+<p>logger = logging.getLogger(<strong>name</strong>)
+logger.addHandler(logging.NullHandler())</p>
+<p>logger.debug('')</p>
+<h3>in app.py</h3>
+<p>logging.basicConfig() # seems like logging.start... must be called to enable logging</p>
+<h2>turn off 3rd party logs</h2>
+<p>logging.getLogger("requests").setLevel(logging.WARNING)</p>
+<p>import logging</p>
+<p>log = logging.getLogger(<strong>name</strong>)</p>
+<p>log.setLevel(logging.INFO)  # 设置logger的级别</p>
+<p>handler = logging.NullHandler()
+handler.setLevel(logging.INFO)  # 设置handler的级别</p>
+<p>formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)</p>
+<p>log.addHandler(handler)</p>
+<h1>日志的作用</h1>
+<p>Logging serves two purposes: [1]
+    • Diagnostic logging records events related to the application’s operation. If a user calls in to report an error, for example, the logs can be searched for context.
+    • Audit logging records events for business analysis. A user’s transactions can be extracted and combined with other user details for reports or to optimize a business goal.</p>
+<h1>最佳实践</h1>
+<p>Here is an example of best practice from the requests source – place this in your <strong>init</strong>.py
+import logging
+logging.getLogger(<strong>name</strong>).addHandler(logging.NullHandler())</p>
+<p>日志应该看作是事件流, 不要自己管理日志, 把日志输出到stdout[2]</p>
+<p>[1] http://docs.python-guide.org/en/latest/writing/logging/</p>
+<p>logging模块是thread safe的, 至少理论上来说是的...</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-logging-library.html">posted at 03:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

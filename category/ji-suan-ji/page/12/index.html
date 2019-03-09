@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles in the "计算机" category | Page 12</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/category/ji-suan-ji/page/12/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ci-pan-guan-li-ming-ling.html" rel="bookmark" title="Permanent Link to &quot;Linux 磁盘管理命令&quot;">Linux 磁盘管理命令</a>
+                </h2>
+
+                
+                
+
+                <h1>挂载磁盘</h1>
+<p><code>mount</code> 命令，用于挂载磁盘以及显示相关信息</p>
+<div class="highlight"><pre><span></span>mount 显示挂载信息
+mount -t TYPE OPTIONS DEVICE DIRECTORY
+比如：
+     mount -t vfat /dev/sdb1 /mnt/media
+</pre></div>
+
+
+<p>常用的参数</p>
+<div class="highlight"><pre><span></span>-a 挂载/etc/fstab 中的所有文件
+-f 模拟挂载
+-r 只读挂载
+-w 读写挂载（默认）
+-L 指定 lebel
+-u 指定uuid
+-o 选项
+    ro 只读
+    rw 读写
+    user 允许普通用户挂载
+    check=none 不检查错误
+    loop …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ci-pan-guan-li-ming-ling.html">posted at 04:29</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/go-yu-yan-shu-ju-ku-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;Go 语言数据库教程&quot;">Go 语言数据库教程</a>
+                </h2>
+
+                
+                
+
+                <p>在学习 Go 的过程中重新思考了数据库相关的一些知识，之前认为数据库的驱动就是应该有一个 conn 对象表示连接， 然后再有一个 cursor 对象来具体操作。但是 Go 完全没有这么来，而是直接生成一个 db 对象来操作，开始觉得不适应，然而后来我也实在想不起来为什么需要用两个对象了。</p>
+<p>另外，为什么要用 ORM 呢？之前用 Django 的ORM比较多，因为生成后台非常方便，而且自己对 SQL 也不是很熟悉，对数据库的操作基本上都在使用这个ORM。然而，现在感觉到如果想要自己的代码性能比较高的话，自己手工写 SQL 几乎是不可避免的，而且 SQL 其实也没有那么吓人。</p>
+<p>Go语言中的 <code>database/sql</code> 包提供了一个数据库的访问接口，但是对于不同的数据库，还需要不同的驱动。</p>
+<p>一些常见的数据库的驱动参见这里：http://golang.org/s/sqldrivers。</p>
+<h1>连接数据库 …</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/go-yu-yan-shu-ju-ku-jiao-cheng.html">posted at 04:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/fzf-ming-ling-xing-mo-hu-cha-zhao-qi.html" rel="bookmark" title="Permanent Link to &quot;fzf - 命令行模糊查找器&quot;">fzf - 命令行模糊查找器</a>
+                </h2>
+
+                
+                
+
+                <p>fzf 可以替代 ag 等等工具</p>
+<h1>安装</h1>
+<p>在 mac 上直接 <code>brew install fzf</code> 就好了</p>
+<h1>使用</h1>
+<h2>调用 fzf 命令</h2>
+<p>直接在命令行输入 fzf 开始模糊查找</p>
+<table>
+<thead>
+<tr>
+<th>查找命令</th>
+<th>匹配类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sbtrkt</td>
+<td>模糊匹配</td>
+<td>匹配sbtrkt</td>
+</tr>
+<tr>
+<td>^music</td>
+<td>前缀精确匹配</td>
+<td>以music开头</td>
+</tr>
+<tr>
+<td>.mp3^</td>
+<td>后缀精确匹配</td>
+<td>以.mp3结尾</td>
+</tr>
+<tr>
+<td>'wild</td>
+<td>精确匹配(quoted)</td>
+<td>精确包含wild</td>
+</tr>
+<tr>
+<td>!fire</td>
+<td>inverse-exact-match</td>
+<td>不包含fire</td>
+</tr>
+<tr>
+<td>!.mp3$</td>
+<td>inverse-suffix-exact-match</td>
+<td>不以.mp3结尾</td>
+</tr>
+</tbody>
+</table>
+<p><code>|</code>可以做or匹配， 比如 <code>^core go$|rb$|py$</code> 表示以core开头 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/fzf-ming-ling-xing-mo-hu-cha-zhao-qi.html">posted at 04:38</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/fd-geng-hao-de-find-ming-ling-fd-a-nicer-find-command.html" rel="bookmark" title="Permanent Link to &quot;fd - 更好的 find 命令（fd - A nicer find command）&quot;">fd - 更好的 find 命令（fd - A nicer find command）</a>
+                </h2>
+
+                
+                
+
+                <p><code>fd</code>（https://github.com/sharkdp/fd） 是 <code>find</code> 命令的一个更现代的替换。</p>
+<p><code>fd</code>（https://github.com/sharkdp/fd）is a modern and nicer replacement to the traditional <code>find</code> command.</p>
+<h1>对比一下 Some comparisons</h1>
+<h2>查找名字含有某个字符的文件 Find a filename with certain string</h2>
+<p>OLD</p>
+<div class="highlight"><pre><span></span>-&gt; % find . -name &quot;*hello*&quot;
+./courses/hello_world.go
+./courses/chapter_01/hello_world.go
+./courses/chapter_01/hello_world …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/fd-geng-hao-de-find-ming-ling-fd-a-nicer-find-command.html">posted at 04:33</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Mar 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/myisam-vs-innodb-mysql-de-liang-chong-cun-chu-yin-qing-de-qu-bie.html" rel="bookmark" title="Permanent Link to &quot;MyISAM vs InnoDB: mysql 的两种存储引擎的区别&quot;">MyISAM vs InnoDB: mysql 的两种存储引擎的区别</a>
+                </h2>
+
+                
+                
+
+                <ul>
+<li>InnoDB 有行级别的锁，而 MyISAM 只能锁定到表级别。</li>
+<li>InnoDB 有更好的故障恢复机制.</li>
+<li>MyISAM 有全文索引，InnoDB 直到5.6(Feb 2013)才拥有。</li>
+<li>InnoDB 实现了事物、外键和关系限制, MyISAM 没有.</li>
+</ul>
+<p>ref: https://dba.stackexchange.com/questions/1/what-are-the-main-differences-between-innodb-and-myisam</p>
+<p>总的来说，引用完整性和事物才是数据库的本质，所以说：“MyISAM is a file system that understands SQL. There’s no comparison. If you want a database engine with …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/myisam-vs-innodb-mysql-de-liang-chong-cun-chu-yin-qing-de-qu-bie.html">posted at 22:11</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Mar 03, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-cha-kan-xi-tong-xin-xi.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行查看系统信息&quot;">Linux 命令行查看系统信息</a>
+                </h2>
+
+                
+                
+
+                <h1>查看机器名</h1>
+<p>uname -a # view system name
+arch # show arch</p>
+<h1>查看 ubuntu 版本</h1>
+<p>show ubuntu version</p>
+<p>cat /etc/*release</p>
+<h1>查看内存使用</h1>
+<p>free -mh</p>
+<div class="highlight"><pre><span></span>(master)kongyifei@localhost ~ $ free -mh
+             total       used       free     shared    buffers     cached
+Mem:          251G       241G       9.8G       5.9G       4.3G        76G
+-/+ buffers/cache:       161G        90G
+Swap:           0B         0B         0B …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-cha-kan-xi-tong-xin-xi.html">posted at 05:23</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Feb 24, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/an-zhuo-zheng-shu-yu-dai-li-zi-dong-pei-zhi.html" rel="bookmark" title="Permanent Link to &quot;安卓证书与代理自动配置&quot;">安卓证书与代理自动配置</a>
+                </h2>
+
+                
+                
+
+                <p>Go to Settings &gt; Security &gt; Install from storage.</p>
+<p>install programatically can be achived by from command line, by moving certs to </p>
+<p>replacing bks file solely is useless, it has to be combined with the password</p>
+<p>https://github.com/danzeeeman/meerkat-decompiled/blob/master/io/fabric/sdk/android/services/network/PinningInfoProvider.java</p>
+<p>set …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/an-zhuo-zheng-shu-yu-dai-li-zi-dong-pei-zhi.html">posted at 18:08</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jan 28, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ming-ling-xing-de-yi-xie-xiao-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;命令行的一些小技巧&quot;">命令行的一些小技巧</a>
+                </h2>
+
+                
+                
+
+                <p>最近工作中经常用到的一些组合命令，本来想提交到 commandlinefu.com 上，但是忘记了密码，怎么也登录不上去了，记到这里吧</p>
+<ul>
+<li>脚本所在的目录</li>
+</ul>
+<div class="highlight"><pre><span></span>dirname $0
+</pre></div>
+
+
+<ul>
+<li>文件夹下面按照占用空间大小排序</li>
+</ul>
+<div class="highlight"><pre><span></span>du -sh `ls` | sort -rh
+</pre></div>
+
+
+<ul>
+<li>返回上一个目录</li>
+</ul>
+<div class="highlight"><pre><span></span>cd -
+</pre></div>
+
+
+<ul>
+<li>显示所有的日志的最后几行</li>
+</ul>
+<div class="highlight"><pre><span></span>tail *
+</pre></div>
+
+
+<ul>
+<li>set</li>
+</ul>
+<div class="highlight"><pre><span></span>set -x # 显示每个执行的命令
+set -e # 当有程序返回非0值时直接退出，相当于抛出异常
+</pre></div>
+
+
+<ul>
+<li>here doc</li>
+</ul>
+<div class="highlight"><pre><span></span>cat &lt;&lt; EOF &gt; /tmp/yourfilehere
+These contents will be written to the file.
+        This line is indented.
+EOF
+</pre></div>
+
+
+<ul>
+<li>删除包含某个关键字的所有行</li>
+</ul>
+<div class="highlight"><pre><span></span>fd …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ming-ling-xing-de-yi-xie-xiao-ji-qiao.html">posted at 19:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jan 20, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/da-jian-git-fu-wu-qi-zhong-xin-cang-ku.html" rel="bookmark" title="Permanent Link to &quot;搭建 git 服务器（中心仓库）&quot;">搭建 git 服务器（中心仓库）</a>
+                </h2>
+
+                
+                
+
+                <h1>gitlab</h1>
+<p>建议使用 gitlab 搭建，只需要一个命令就可以了</p>
+<div class="highlight"><pre><span></span>docker run --detach \
+    --hostname gitlab.example.com \
+    --publish 443:443 --publish 80:80 --publish 22:22 \
+    --name gitlab \
+    --restart always \
+    --volume /srv/gitlab/config:/etc/gitlab \
+    --volume /srv/gitlab/logs:/var/log/gitlab \
+    --volume /srv/gitlab/data:/var/opt/gitlab \
+    gitlab/gitlab-ce:latest
+</pre></div>
+
+
+<p>source: https …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/da-jian-git-fu-wu-qi-zhong-xin-cang-ku.html">posted at 22:50</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jan 18, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yi-xie-vim-xiao-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;一些 vim 小技巧&quot;">一些 vim 小技巧</a>
+                </h2>
+
+                
+                
+
+                <h3>重新对齐文本到固定长度</h3>
+<div class="highlight"><pre><span></span>gq&lt;motion&gt;
+</pre></div>
+
+
+<h3>check if mapping is replaced</h3>
+<p><code>:verbose map &lt;Key&gt;</code></p>
+<p>using map may cause infinite recursion!</p>
+<h3>force set syntax</h3>
+<p><code># vim: set filetype=javascript</code></p>
+<h3>exit</h3>
+<p>使用 Ctrl-C 而不是esc
+使用ZZ而不是:wq</p>
+<h3>window management</h3>
+<p>use ctrl-w r to swap pane</p>
+<h3>folding</h3>
+<p><code>{selection}zf</code> or <code>zf{motion}</code> for manual folding</p>
+<h3>history</h3>
+<p>Ctrl-O to …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yi-xie-vim-xiao-ji-qiao.html">posted at 06:26</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/vim.html" class="tags">vim</a>
+                    &nbsp;<a href="/tag/xiao-ji-qiao.html" class="tags">小技巧</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/11" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/13" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 12 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

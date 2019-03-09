@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 使用 cProfile 和火焰图调优 Python 程序性能</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Dec 28, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-cprofile-he-huo-yan-tu-diao-you-python-cheng-xu-xing-neng.html" rel="bookmark" title="Permanent Link to &quot;使用 cProfile 和火焰图调优 Python 程序性能&quot;">使用 cProfile 和火焰图调优 Python 程序性能</a>
+                </h2>
+
+                
+                
+
+                <p>本来想坐下来写篇 2018 年的总结，仔细想想这一年发生的事情太多了，还是写篇技术文章吧。</p>
+<p>前几天调试程序，发现 QPS 总是卡在 20 左右上不去。开始以为是 IO 问题，就多开了些并发，然并卵，这才想到可能是 CPU 的问题。看了看监控，发现程序某一步的延迟在 400ms 左右，而且这一步是 CPU 密集的。当时开了 4 台双核的机器：(1s / 400ms) * 2 * 4 = 20 啊。看来需要优化下这一步的代码了，那么第一步就是找到可以优化的地方。</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tNbRwly1fyqb4f5jhij30yc0pwtej.jpg"></p>
+<p>测量程序的性能之前并没有实际做过，Google 了一番，感觉标准库的 cProfile 似乎值得一试。</p>
+<p>要测量的代码逻辑也很简单，使用 lxml 解析 HTML，然后提取一些字段出来，这些基本都是调用的 C 库了，解析的算法也不在 Python 中。看起来似乎没有什么能改进的地方，不管怎样，还是先跑一下吧。</p>
+<p>cProfile 有多种调用方法，可以直接从命令行调用：</p>
+<div class="highlight"><pre><span></span>python -m cProfile -s tottime your_program.py
+</pre></div>
+
+
+<p>其中的 <code>-s</code> 的意思是 sort。常用的 sort 类型有两个：</p>
+<ol>
+<li>tottime，指的是函数本身的运行时间，扣除了子函数的运行时间</li>
+<li>cumtime，指的是函数的累计运行时间，包含了子函数的运行时间</li>
+</ol>
+<p>要获得对程序性能的全面理解，经常需要两个指标都看一下。</p>
+<p>不过在这里，我们并不能直接使用命令行方式调用，因为我的代码中还需要一些比较繁重的配置加载，如果把这部分时间算进去了，多少有些干扰，那么我们也可以直接在代码中调用 cProfile。</p>
+<p>使用 cProfile 的代码如下：</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cProfile</span><span class="o">,</span> <span class="nn">pstats</span><span class="o">,</span> <span class="nn">io</span>
+
+<span class="n">pr</span> <span class="o">=</span> <span class="n">cProfile</span><span class="o">.</span><span class="n">Profile</span><span class="p">()</span>
+<span class="n">pr</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
+
+<span class="n">extractor</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">crawl_doc</span><span class="o">=</span><span class="n">doc</span><span class="p">,</span> <span class="n">composition</span><span class="o">=</span><span class="n">PageComposition</span><span class="o">.</span><span class="n">row</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="n">rule</span><span class="p">)</span>
+
+<span class="n">pr</span><span class="o">.</span><span class="n">disable</span><span class="p">()</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+<span class="n">sortby</span> <span class="o">=</span> <span class="s2">&quot;cumtime&quot;</span>  <span class="c1"># 仅适用于 3.6, 3.7 把这里改成常量了</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="n">pr</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="n">sortby</span><span class="p">)</span>
+<span class="n">ps</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+</pre></div>
+
+
+<p>把需要 profile 的代码放到 pr.enable 和 pr.disable 中间就好了。注意这里我们使用了 cumtime 排序，也就是累计运行时间。</p>
+<p>结果如下：</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tNbRwly1fyqc3j79mvj31o80lanbu.jpg"></p>
+<p>我们可以看到总的运行时间是 200ms，而其中红框内的部分就占了 100ms! 如果能够优化调的话，性能一下子就能提高一倍。红框内的代码是做什么的呢？我们知道解析一个 html 文档，第一步是建立 DOM 树，通常情况下，我们可能会从其中抽取一些链接。在网页中，链接不一定是绝对路径，也可能是 <code>/images/2018-12-31-xxx.jpg</code> 这样的相对路径。lxml 库帮我们做了一个贴心的默认值，那就是在构造 DOM 树的时候，根据传入的 url 来吧页面中的所有 url 都重写成绝对路径。看起来这是个很贴心的功能，但是在这里却成了性能瓶颈。为什么很耗时呢？大概是因为需要遍历整个 DOM 树，重写所有的链接吧。这显然不是我们需要的，我们只需要把抽取之后的链接还原成绝对路径就好了，而不是事先把所有链接都重写一遍。所以在这里我们直接去掉这个功能就好了。</p>
+<p>修改代码之后，再次运行 profile 脚本，时长变成了 100ms：</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tNbRwly1fyqcamiop3j31ly08sjwy.jpg"></p>
+<p>这时候我们接着看，程序中下一个比较大头的时间占用：jsonfinder 和 json decode/encode。</p>
+<p>jsonfinder 是一个有意思的库，它自动从 HTML 中查找 json 字符串并尝试解析，但是有时候也不太准。经常为了找到特定的值，还是需要使用正则。那么对于这个可有可无的功能，性能有这么差，还是删掉好了。</p>
+<p>通过删代码，现在性能已经是原来的四倍了。</p>
+<p>这时候发现代码里面有正则还挺花费时间的，不过还好，暂时先不管了。</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tNbRwly1fyqcja5bj5j31oi0kydva.jpg"></p>
+<p>刚刚都是只运行了一遍，测量结果难免有随机性，必定有失偏颇，实际上应该使用多个测试用例，成千上万次的跑，才能得到一个比较准确地结果。</p>
+<p>上面这个小步骤基本没有什么可以优化的了，下面我们把优化目标扩大一点，并把次数先定为100.</p>
+<p>下面这种图是按照 tottime 来排序的：</p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tNbRwly1fyqclx98l2j31lg0gu7ei.jpg"></p>
+<p>注意其中最耗时的步骤是 parseUnicodeDoc，也就是建树了，这是符合预期的，然而旁边的 ncalls 一栏却不太对劲了。我们明明只运行了 100 次，为什么这个函数调用了 300 次呢？显然代码中有重复建树的地方，也就是有隐藏的 bug。这种地方不经过 profile 很难浮现出来，因为程序本身的逻辑是对的，只是比较耗时而已。</p>
+<p><img alt="" src="https://ws3.sinaimg.cn/large/006tNbRwly1fyqcrdtifcj31lw0j2woi.jpg"></p>
+<p>优化之后，终于变成了 100. 从 cProfile 的表格现在已经看不出什么结果来了，下一步我们开始使用火焰图，可视化往往能让我们更容易注视到性能瓶颈。（为什么不一开始就用火焰图呢？因为我以为很麻烦。。实际很简单）</p>
+<p>Python 中有一个第三方包(见参考文献)可以直接从 cProfile 的结果生成火焰图:</p>
+<ol>
+<li>在原有的代码中加上一句: <code>pr.dump_stats("pipeline.prof")</code></li>
+<li>调用该工具：<code>flameprof  pipeline.prof &gt; pipeline.svg</code></li>
+</ol>
+<p>然后打开 SVG 文件就可以了：</p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tNbRwly1fyqcvj3ah8j30ys0jm42r.jpg"></p>
+<p>其中火焰的宽度代表了运行的时长，我们现在的优化目标就是这些耗时比较长的步骤。</p>
+<p>可以看大其中 mysql 的访问占了绝对的大头，按理说跑100次的话，不应该每次都花费时间在建立连接上啊，这里一定有问题。经过排查发现在某处链接是使用了 <code>close_old_connections</code> 来保证不会抛出数据库断开的异常，这还是在头条带来的习惯。。close_old_connections 的功能是关闭已经失效的链接，看来我的理解还是有误的。先把这块删掉，最终解决应该是这块放到一个队列里，统一存入数据库。</p>
+<p>去掉之后：</p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tNbRwly1fyqd1728dwj30xd0cvwgn.jpg"></p>
+<p>现在的大头又变成 lxml 的，又动了优化它的心思，lxml 是 libxml2 的一个 Python binding，查了下应该是最快的 html parser 了，这块真的没有什么优化空间。盯了一会儿，眼睛最终看到了一个小角落：</p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tNbRwly1fyqd351qyvj309v04omxm.jpg"></p>
+<p>一个正则匹配居然占用了 8% 的运行时间，太不像话了。老早之前就听说 Python 的标准库正则性能不行，现在才发现原来是真的挺差劲的。Python 标准库的 re 模块采用的是 PCRE 的处理方式，而采用 NFA 的处理方式的正则要快很多，这块还需要再看一下。不过眼下倒是可以直接换一个库来解决。regex 模块是 re 模块的一个 drop-in replacement. </p>
+<p><code>pip install regex</code> and <code>import regex as re</code>，就搞定了</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tNbRwly1fyqd8orglej30xi0dh410.jpg"></p>
+<p>可以看到正则那块直接消失了。提升还是很大的。时间不早了，当天的优化就到此结束了。上线之后，积压一下子就下去了：</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tNbRwly1fyqda1lv19j30sw0jmt9v.jpg"></p>
+<h1>后记</h1>
+<p>要想调试的时候方便，在写代码的时候就要注意，尽量使自己的代码 mock-friendly 一点。如果需要引入外部的数据库、服务、API等等各种资源，最好有一个开关或者选项能够不加载外部资源，或者至少能够很方便地 mock 这些外部服务，这样方便对每一个小单元进行 profile。</p>
+<p>总有人吐槽 Python 的性能低下，但是 Python 本来就不是做计算任务的呀，Python 是一门胶水语言，是用来写业务逻辑的，而不是用来写CPU密集的算法的。事实上复杂的解析一般都会用 C++ 这种硬核语言来写了，比如 numpy TensorFlow lxml。大多数程序员一天 90% 的工作除了和产品经理撕逼以外，也就是在写 CRUD，也就是调用这些包。所以瓶颈一般在 IO 上而不在 CPU 上，而解决 IO 的瓶颈手段就多了，Python 中至少有 多进程、多线程、AsyncIO、Gevent 等多种方法。不过方法多其实也是一个弊端，这几种方法可以说是基本互不兼容，对各种第三方库的支持也参差不齐。而 Go 在这方面就做地很好了，语言直接内置了 go 关键字，甚至都不支持多线程。所有的库都是支持一个统一的并发模型，对于使用者来说更简单。</p>
+<p>Zen of Python 中有一句：There should be one way -- preferably only one way -- to do a thing. 这点上 Python 本身没有做到，反倒是 Go 实践地非常好。</p>
+<p>扯远了，程序的瓶颈其实不外乎CPU、内存和 IO 三个方面，而 cProfile 和火焰图是判断 CPU 瓶颈的一把利器。</p>
+<p>后面还发现了一些性能瓶颈，也列在这里：</p>
+<ol>
+<li>
+<p>yaml 的反序列化时间过长。解决方法是添加了一个 Expiring LRU Cache，不要每次都去加载，当然牺牲的是一点点内存，以及当规则变更时会有一些延迟，不过都是可以接受的。之前早就听人说 Thrift 的序列化性能相比 Protobuf 太低，现在想想序列化和反序列化还真是一个很常见的性能瓶颈啊。</p>
+</li>
+<li>
+<p>存储使用了 360 的 pika，pika 可以理解为一个基于 rocksdb 的硬盘版 redis。最开始的时候没多想，随便找了台机器搭了起开，把上面的问题解决之后，pika 的延迟很快大了起来，机器的监控也显示 IO 基本被打满了。这时候才发现原来这台机器没有用 SSD，果断换了 SSD 问题基本解决了。如果再有问题可能就需要集群了。</p>
+</li>
+</ol>
+<p>性能这个问题其实是典型的木桶理论的场景，系统的整体性能是由最差的一块决定的。所以也是一个不断迭代的过程。</p>
+<p>祝大家新年快乐~</p>
+<h1>参考文献</h1>
+<ol>
+<li>https://toucantoco.com/en/tech-blog/tech/python-performance-optimization</li>
+<li>https://docs.python.org/3.6/library/profile.html</li>
+<li>https://medium.com/build-smarter/blazing-fast-python-40a2b25b0495</li>
+<li>https://swtch.com/~rsc/regexp/regexp1.html</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-cprofile-he-huo-yan-tu-diao-you-python-cheng-xu-xing-neng.html">posted at 00:17</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

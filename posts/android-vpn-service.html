@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | android vpn service</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="大前端,Android,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-vpn-service.html" rel="bookmark" title="Permanent Link to &quot;android vpn service&quot;">android vpn service</a>
+                </h2>
+
+                
+                
+
+                <p>VPN Service 运行在 IP 层。它创建了一个虚拟的网络接口，可以配置地址和路由规则，并返回一个 file descriptor。每次读这个 fp 返回一个数据包，每次写发送一个数据包。</p>
+<p>两个最重要的方法分别是<code>prepare(Context)</code> 和 <code>establish()</code>。前者接受用户响应并关闭其他应用的 VPN 链接，后者使用 <code>VpnService.Builder</code> 的参数创建 VPN 接口。</p>
+<p>实现 VpnService 的类必须在 manifest 中声明：</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;service</span> <span class="na">android:name=</span><span class="s">&quot;.ExampleVpnService&quot;</span>
+         <span class="na">android:permission=</span><span class="s">&quot;android.permission.BIND_VPN_SERVICE&quot;</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;intent-filter&gt;</span>
+         <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">&quot;android.net.VpnService&quot;</span><span class="nt">/&gt;</span>
+     <span class="nt">&lt;/intent-filter&gt;</span>
+ <span class="nt">&lt;/service&gt;</span>
+</pre></div>
+
+
+<ol>
+<li>VpnService works on the network layer, the IP protocol is a point to point protocol, the packet changes between each hop, TCP is a end to end protocol</li>
+<li>use the vpn service as a layer4(NAT) router, and then you could modify or relay the packet</li>
+<li>IP packet contains only src and dst IP address and upper protocol, the port information is stored in TCP packet</li>
+<li>TCP is a stream protocol, so thers is no packet in tcp(see http://stackoverflow.com/q/1529680/)</li>
+</ol>
+<h1>关于 VPN Service 的一些讨论</h1>
+<p><a href="http://stackoverflow.com/questions/17766405/android-vpnservice-to-capture-packets-wont-capture-packets">you need to reverse the ip order for ip layer headers</a></p>
+<p><a href="https://github.com/android/platform_development/tree/master/samples/ToyVpn">ToyVPN is the official example on using vpn service</a></p>
+<p><a href="https://stackoverflow.com/questions/16358589/implementing-a-simple-https-proxy-application-with-java">SSL in java</a></p>
+<h1>building a client</h1>
+<p>Your VPN will need to create a new socket, protect the socket from being routed back into the VPN using <code>VpnService.protect(Socket)</code>, and connect the socket to 10.162.1.2. Having set up a tunnel connection to the VPN server, you should proceed to writing the input stream of the VpnService's interface into the tunnel's output stream, and in turn write the tunnel response back into the interface output stream.</p>
+<p>http://stackoverflow.com/questions/13233477/how-to-use-vpn-in-android/#answers</p>
+<ol>
+<li>simple example</li>
+</ol>
+<p>http://www.thegeekstuff.com/2014/06/android-vpn-service/</p>
+<ol>
+<li>building a firewall with vpn service</li>
+</ol>
+<p>Incoming and outgoing streams of the VpnService are in the network layer( layer); you are receiving (and should in turn be transmitting) raw IP packets, as you describe in your question.</p>
+<p>also check out the OSI model and IP header format on WikiPedia</p>
+<p>When forwarding the requests, you are in the application layer; you should be transmitting the contents of the UDP or TCP payload (i.e. only their data, not the headers themselves) using respectively a DatagramSocket or a Socket.</p>
+<p>Bear in mind that this skips the transport layer as those implementations take care of constructing the UDP header (in case of DatagramSocket) and the TCP header and options (in case of Socket).</p>
+<p>all I hava to do is to:</p>
+<p>check if the IP packet is for http or https:</p>
+<p>if not:</p>
+<p>act as a route, forward as is, but ack requests and reconstruct the packet with new src, and </p>
+<p>if so:</p>
+<ul>
+<li>act as the server, ack the request packet</li>
+<li>act as the client, send new http request to the server and retrive the response</li>
+<li>act as the server, send back the response packet</li>
+</ul>
+<p>The whole process is like we are the router, and dispatch different packet to different nodes(servers).</p>
+<p>http://stackoverflow.com/questions/20237743/android-firewall-with-vpnservice</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-vpn-service.html">posted at 10:07</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

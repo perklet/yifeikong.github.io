@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "计算机" | Page 30</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/ji-suan-ji/page/30/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/configuring-openwrt-in-tp-link-702n.html" rel="bookmark" title="Permanent Link to &quot;Configuring OpenWrt in TP-Link 702n&quot;">Configuring OpenWrt in TP-Link 702n</a>
+                </h2>
+
+                
+                
+
+                <h1>如何重置一个损坏的 OpenWrt</h1>
+<p>删除 overlay 下的文件即可</p>
+<div class="highlight"><pre><span></span>rm -rf /overlay/*
+</pre></div>
+
+
+<h1>网络配置</h1>
+<h3>1.Assign a Password for Root</h3>
+<p>telnet 192.168.1.1
+    passwd root
+    exit</p>
+<h3>2.Interface config: <code>/etc/config/network</code></h3>
+<div class="highlight"><pre><span></span>        config interface &#39;loopback&#39;
+            option ifname &#39;lo&#39;
+            option proto &#39;static&#39;
+            option ipaddr &#39;127.0.0.1&#39;
+            option netmask &#39;255.0.0.0 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/configuring-openwrt-in-tp-link-702n.html">posted at 01:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/iot.html" class="tags">IoT</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/cyu-yan-zhong-de-setjmplongjmp.html" rel="bookmark" title="Permanent Link to &quot;C语言中的 setjmp/longjmp&quot;">C语言中的 setjmp/longjmp</a>
+                </h2>
+
+                
+                
+
+                <p>首先吐槽一下这个缩写, 好好地 jump 单词才四个字母不用, 非要缩写成 jmp 三个字母, 每次都打错, 蛋疼</p>
+<p>在 C 中，goto 语句是不能跨越函数的，而执行这类跳转功能的是 <code>setjmp</code> 和 <code>longjmp</code> 宏。这两个宏对于处理发生在深层嵌套函数调用中的出错情况是非常有用的。</p>
+<p>此即为：非局部跳转。非局部指的是，这不是由普通 C 语言 goto 语句在一个函数内实施的跳转，而是在栈上跳过若干调用帧，返回到当前函数调用路径的某个函数中。</p>
+<div class="highlight"><pre><span></span>#include &amp;lt;setjmp.h&amp;gt;
+int  setjmp (jmp_buf env) ;  /*设置调转点*/
+void longjmp (jmp_buf env,  int val) ;  /*跳转*/
+</pre></div>
+
+
+<p><code>setjmp</code> 参数 env …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/cyu-yan-zhong-de-setjmplongjmp.html">posted at 01:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/cyu-yan-zhong-yi-jing-fei-qi-de-han-shu.html" rel="bookmark" title="Permanent Link to &quot;C语言中已经废弃的函数&quot;">C语言中已经废弃的函数</a>
+                </h2>
+
+                
+                
+
+                <p>由于安全性原因，C 标准库中的不少函数已经被废弃了，同时增加了对应的替换函数。</p>
+<div class="highlight"><pre><span></span>sprintf --&gt; snprintf
+gets --&gt; fgets
+strcat --&gt; strncat
+strcpy --&gt; strncpy
+</pre></div>
+
+
+<p><code>strtok</code>函数用于分解字符串，需要一个变量保存内部分解进度
+<code>strtok_r</code>是它的可重入版本</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/cyu-yan-zhong-yi-jing-fei-qi-de-han-shu.html">posted at 01:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/vim-goto-yu-li-shi-dao-hang.html" rel="bookmark" title="Permanent Link to &quot;vim goto 与历史导航&quot;">vim goto 与历史导航</a>
+                </h2>
+
+                
+                
+
+                <p>Vim command of g<key>
+ </p>
+<div class="highlight"><pre><span></span>gd  本地定义
+gD  全局声明
+g*  搜索
+g#  反向搜索
+gf  打开文件
+g]  跳到tag定义的地方
+</pre></div>
+
+
+<p><code>Ctrl-O</code> to go back to files</p>
+<p><code>Ctrl-I</code> to go to new files</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/vim-goto-yu-li-shi-dao-hang.html">posted at 01:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/vim.html" class="tags">vim</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>            <h4 class="date">Dec 27, 2016</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/rss-he-atom-xie-yi-xiang-jie-he-bu-zu.html" rel="bookmark" title="Permanent Link to &quot;RSS 和 Atom 协议详解和不足&quot;">RSS 和 Atom 协议详解和不足</a>
+                </h2>
+
+                
+                
+
+                <h1>关于CDATA</h1>
+<p>CDATA stands for Character Data and it means that the data in between these strings includes data that could be interpreted as XML markup, but should not be.</p>
+<p>So we could use CDATA to smuggle some HTML into the XML document, so that the HTML doesn't confuse the XML …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/rss-he-atom-xie-yi-xiang-jie-he-bu-zu.html">posted at 11:35</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/29" class="prev_page">&larr;&nbsp;Previous</a>
+                    <span>Page 30 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

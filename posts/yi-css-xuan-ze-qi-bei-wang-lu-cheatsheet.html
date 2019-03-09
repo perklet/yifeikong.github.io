@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | [译] CSS 选择器备忘录（cheatsheet）</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="CSS,大前端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 11, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yi-css-xuan-ze-qi-bei-wang-lu-cheatsheet.html" rel="bookmark" title="Permanent Link to &quot;[译] CSS 选择器备忘录（cheatsheet）&quot;">[译] CSS 选择器备忘录（cheatsheet）</a>
+                </h2>
+
+                
+                
+
+                <p>这两天打算写写爬虫，准备用 css 选择器来抽取内容，翻译了<a href="http://butlerccwebdev.net/support/css-selectors-cheatsheet.html">一篇文章</a>，正好复习一下，这篇文章遵守 CC-BY-NC-SA 协议。</p>
+<p>大多数的 web 开发者首先学会了 CSS。因为给 HTML 元素写样式规则的元素选择器都很容易理解和记忆。经过一点点练习之后，就会发现成组的 CSS 表达式非常的有必要，比如使用一个逗号分隔开选择器，就可以把同一个样式属性附加到不同的多个元素了。</p>
+<p>使用标签选择器和分组的选择器当然也有不足，那就是他们会应用到所有的标签。很快你就会意识到有时候需要给一个特定的元素加上样式。对于大多数开发者来说，最简单的选择当然是使用 class 和 id 选择器了。但是很遗憾的是这样下去的话，整个页面就会充满各种奇奇怪怪的类了。</p>
+<p>除了不管的给 HTML 添加纯粹用于应用样式的 class 和 id 之外，你也可以考虑使用高级的 CSS 选择器来给指定元素应用样式。高级的选择器大致可以分类为上下文选择器、属性选择器、伪元素选择器和伪类选择器。</p>
+<h1>元素选择器</h1>
+<p>元素选择器把样式应用到所有选中元素上，也是被使用最广泛的选择器</p>
+<table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>语法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>元素</td>
+<td><code>h2</code></td>
+<td>选择页面上的所有 h2 元素，<code>h2 {text-align: center;}</code> 会把所有 h2 元素的文本居中对齐</td>
+</tr>
+<tr>
+<td>分组</td>
+<td><code>h1,h2,h3</code></td>
+<td>选择页面上所有的 h1, h2, h3 元素，<code>h1, h2, h3 {margin-bottom: .5em;}</code> 将会把 h1, h2, h3 标签的底部 margin 设置成 0.5 em</td>
+</tr>
+</tbody>
+</table>
+<h1>class 和 id 选择器</h1>
+<p>Class 和 id 选择器是你能够把某些属性应用到个别元素上而不影响其他的。Class 让你能够按照概念分类。两个或者更多元素可以属于同一个组。id 给一个元素一个唯一的标识，同一个 id 每个页面上只能使用一次。</p>
+<table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>语法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Class</td>
+<td><code>.warning</code> <code>p.warning</code></td>
+<td>前者选择所有属于 warning 类的元素，后者选择所有属于 warning 类的p元素</td>
+</tr>
+<tr>
+<td>id</td>
+<td><code>#title</code></td>
+<td>选择 id 为 title 的元素</td>
+</tr>
+</tbody>
+</table>
+<h1>上下文选择器</h1>
+<p>Contextual selectors (combinators) target elements based on their relationships to other elements in the document's tree hierarchy, and use the same parent, child, sibling, and descendant terminology.</p>
+<p>上下文选择器基于元素在 HTML 文档中的上下级挂你来选择元素。</p>
+<table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>语法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>后代</td>
+<td><code>#main li</code></td>
+<td>选择一个元素的后代元素。注意这里不一定是直接子元素，后代即可。</td>
+</tr>
+<tr>
+<td>相邻元素</td>
+<td><code>h2+p</code></td>
+<td>选择一个元素的直接相邻元素，比如说这个表达式只选择 h2 的直接相邻元素 p</td>
+</tr>
+<tr>
+<td>子元素</td>
+<td><code>div&gt;p</code></td>
+<td>选择所有直接子元素</td>
+</tr>
+<tr>
+<td>所有相邻元素</td>
+<td><code>h2~p</code></td>
+<td>选择一个元素的所有相邻元素</td>
+</tr>
+</tbody>
+</table>
+<h1>伪类选择器</h1>
+<p>伪类选择器基于浏览器状态或者文档中的位置来选择元素。浏览器在幕后保存了好多状态，比如一个链接有没有被访问过，一个元素有没有被选中，一个元素是不是它这种类型的第一个或者最后一个元素，甚至于一个元素是不是它的父元素的第一个子元素。</p>
+<p>所有处于同一个状态的元素被看做是属于同一个伪类，尽管在 HTML 中并没有明确声明类的名字。伪类标识符用冒号 <code>:</code> 开头，而且一般是和元素名称放在一起用的。</p>
+<h2>用作链接和用户状态的伪类</h2>
+<p>当给一个链接应用样式的时候，按照下面表中的顺序来制定样式才能获得预期效果。</p>
+<table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>语法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>未访问的链接</td>
+<td><code>:link</code></td>
+<td>选择未访问过的链接，例如 <code>a:link</code></td>
+</tr>
+<tr>
+<td>访问过的链接</td>
+<td><code>:visited</code></td>
+<td>选择已经访问过的链接，例如 <code>a:visited</code></td>
+</tr>
+<tr>
+<td>用户焦点</td>
+<td><code>:focus</code></td>
+<td>选择当前拥有用户光标，可以直接输入的元素，例如 <code>a:focus</code> <code>input:focus</code></td>
+</tr>
+<tr>
+<td>悬浮</td>
+<td><code>:hover</code></td>
+<td>选择当前用户鼠标指针悬浮的元素</td>
+</tr>
+<tr>
+<td>激活</td>
+<td><code>:active</code></td>
+<td>选择当前用户正在点击的元素</td>
+</tr>
+</tbody>
+</table>
+<h2>用于选择相邻元素的伪类</h2>
+<p>下面的 6 个选择器用于选择拥有同一个父节点的元素中符合某种条件的元素，算是一个断言（assert）吧。</p>
+<table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>语法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一个元素</td>
+<td><code>:first-child</code></td>
+<td>如果指定的元素是他的父元素的第一个子元素，选择生效</td>
+</tr>
+<tr>
+<td>最后一个元素</td>
+<td><code>:last-child</code></td>
+<td>如果指定的元素是他的父元素的最后一个子元素，选择生效</td>
+</tr>
+<tr>
+<td>唯一子元素</td>
+<td><code>:only-child</code></td>
+<td>如果指定的元素是他的父元素的唯一一个子元素，选择生效</td>
+</tr>
+<tr>
+<td>同类型第一个</td>
+<td><code>:first-of-type</code></td>
+<td>如果指定的元素是他的父元素的子元素中同类型的第一个，选择生效</td>
+</tr>
+<tr>
+<td>同类型最后一个</td>
+<td><code>:last-of-type</code></td>
+<td>如果指定的元素是他的父元素的子元素中同类型的最后一个，选择生效</td>
+</tr>
+<tr>
+<td>同类型唯一一个</td>
+<td><code>:only-of-type</code></td>
+<td>如果指定的元素是他的父元素的子元素中同类型的唯一一个，选择生效</td>
+</tr>
+</tbody>
+</table>
+<p>随着元素和 DOM 树的更新，这些伪类能够应用的元素都是动态变化的。</p>
+<h2>CSS3 中的结构相关伪类</h2>
+<p>CSS3 提供了更灵活的选择方式，可以根据元素在文档中的位置选择一系列的元素。这些选择器还可以接受一个参数</p>
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:nth-child(n)</code></td>
+<td>父元素的第 n 个子元素</td>
+</tr>
+<tr>
+<td><code>:nth-last-child(n)</code></td>
+<td>父元素的倒数第 n 个子元素</td>
+</tr>
+<tr>
+<td><code>:nth-of-type(n)</code></td>
+<td>父类型子元素中，同类型中的第 n 个</td>
+</tr>
+<tr>
+<td><code>:nth-last-of-type(n)</code></td>
+<td>父类型子元素中，同类型中的倒数第 n 个</td>
+</tr>
+</tbody>
+</table>
+<p>其中的 n 的取值往往取如下几种</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>odd</code> <code>2n+1</code></td>
+<td>奇数</td>
+</tr>
+<tr>
+<td><code>even</code> <code>2n</code></td>
+<td>偶数</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>第二个</td>
+</tr>
+</tbody>
+</table>
+<h1>伪元素选择器</h1>
+<p>伪元素选择器让你能够给虚构的元素增加样式，而不用在 HTML 中真的创建他们。<code>::first-letter</code> 和 <code>::first-line</code> 选择了文本的一部分从而避免了使用 <code>span</code> 元素。 <code>::before</code> 和 <code>::after</code> 选择器用来在并不存在的地方动态插入文本。</p>
+<p>CSS3 uses a double colon for pseudo-elements. To provide backward compatibility for older browsers, omit one of the colons that precede the pseudo-elements (ie :first-letter)</p>
+<p>CSS3 使用两个冒号来表示伪元素。为了兼容老浏览器，可以省略一个冒号（也就是 <code>:first-letter</code>）</p>
+<table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>语法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一个字母</td>
+<td><code>::first-letter</code></td>
+<td>选择指定元素的第一个字母</td>
+</tr>
+<tr>
+<td>最后一个元素</td>
+<td><code>::first-line</code></td>
+<td>选择指定元素的第一行</td>
+</tr>
+<tr>
+<td>之前</td>
+<td><code>::before</code></td>
+<td>选择指定元素之前生成的一个伪元素，和元素是相邻关系</td>
+</tr>
+<tr>
+<td>之后</td>
+<td><code>::after</code></td>
+<td>选择指定元素之后生成的一个伪元素，和元素是相邻关系</td>
+</tr>
+</tbody>
+</table>
+<h1>属性选择器</h1>
+<p>属性选择器基于元素时候有某个特定的属性而定。下面的 7 中选择器中，后面 3 中是 CSS3 中新定义的，浏览器们可能还没有完全支持。</p>
+<table>
+<thead>
+<tr>
+<th>选择器</th>
+<th>语法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>存在</td>
+<td><code>E[attr]</code></td>
+<td>选择包含某个属性的元素</td>
+</tr>
+<tr>
+<td>相等</td>
+<td><code>E[attr='val']</code></td>
+<td>选择某个属性的值等于 <code>xxx</code> 的元素</td>
+</tr>
+<tr>
+<td>包含</td>
+<td><code>E[attr~='val']</code></td>
+<td>很鸡肋，把某个元素的值按空格分隔，如果包含给定的值，选中。优点类似于类的分隔</td>
+</tr>
+<tr>
+<td>开头</td>
+<td><code>E[attr\|='val']</code></td>
+<td>很鸡肋，某个属性的值以给定的值 + <code>-</code> 开头</td>
+</tr>
+<tr>
+<td>开头</td>
+<td><code>E[attr^='val']</code></td>
+<td>某个属性的值以给定的值开头</td>
+</tr>
+<tr>
+<td>结尾</td>
+<td><code>E[attr$='val']</code></td>
+<td>某个属性的值以给定的值结尾</td>
+</tr>
+<tr>
+<td>包含</td>
+<td><code>E[attr*='val']</code></td>
+<td>某个属性的值包含给定的值</td>
+</tr>
+</tbody>
+</table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yi-css-xuan-ze-qi-bei-wang-lu-cheatsheet.html">posted at 09:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/css.html" class="tags">CSS</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

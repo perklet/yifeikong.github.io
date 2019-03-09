@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Go 语言数据库教程</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="golang,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/go-yu-yan-shu-ju-ku-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;Go 语言数据库教程&quot;">Go 语言数据库教程</a>
+                </h2>
+
+                
+                
+
+                <p>在学习 Go 的过程中重新思考了数据库相关的一些知识，之前认为数据库的驱动就是应该有一个 conn 对象表示连接， 然后再有一个 cursor 对象来具体操作。但是 Go 完全没有这么来，而是直接生成一个 db 对象来操作，开始觉得不适应，然而后来我也实在想不起来为什么需要用两个对象了。</p>
+<p>另外，为什么要用 ORM 呢？之前用 Django 的ORM比较多，因为生成后台非常方便，而且自己对 SQL 也不是很熟悉，对数据库的操作基本上都在使用这个ORM。然而，现在感觉到如果想要自己的代码性能比较高的话，自己手工写 SQL 几乎是不可避免的，而且 SQL 其实也没有那么吓人。</p>
+<p>Go语言中的 <code>database/sql</code> 包提供了一个数据库的访问接口，但是对于不同的数据库，还需要不同的驱动。</p>
+<p>一些常见的数据库的驱动参见这里：http://golang.org/s/sqldrivers。</p>
+<h1>连接数据库</h1>
+<div class="highlight"><pre><span></span>db, err := sql.Open(driver, dataSourceName)
+</pre></div>
+
+
+<p>这里值得注意的有两点</p>
+<ol>
+<li>Go语言中不像其他语言一样，除了 connection 对象之外还有 cursor 对象，golang 里面很简单，直接用db对象操作就好了。</li>
+<li>Open 函数并不会去真的链接数据库，直到第一条语句才会去链接，如果想检测是否连接成功，可以使用:</li>
+</ol>
+<div class="highlight"><pre><span></span>if err := db.Ping(); err != nil {
+  log.Fatal(err)
+}
+</pre></div>
+
+
+<h1>执行语句</h1>
+<p>使用 <code>db.Exec</code> 方法</p>
+<div class="highlight"><pre><span></span>result, err := db.Exec(
+    &quot;INSERT INTO users (name, age) VALUES ($1, $2)&quot;,
+    &quot;gopher&quot;,
+    27,
+)
+</pre></div>
+
+
+<p>result 类型定义如下：</p>
+<div class="highlight"><pre><span></span>type Result Interface {
+    LastInsertId()
+    RowAffcted()
+}
+</pre></div>
+
+
+<h1>查询</h1>
+<div class="highlight"><pre><span></span>rows, err := db.Query(
+    &quot;SELECT NAME FROM  users WHERE age = $1&quot;,
+    age
+)
+
+if err != nil {
+    log.Fatal(err)
+}
+
+for rows.Next() {
+    var name string
+    if err := rows.Scan(&amp;name); err != nil {
+        log.Fatal(err)
+    }
+    fmt.Printf(&quot;%s is %d old\n&quot;, name, age)
+}
+
+if err := rows.Err(); err != nil {
+    log.Fata(err)
+}
+</pre></div>
+
+
+<p>Row 有一个方法 Scan，而 Rows 中常用的两个方法是 Next 和 Err</p>
+<p>如果查询结果只有一列的话，使用 QueryRow 方法。</p>
+<div class="highlight"><pre><span></span>var age int64
+row := db.QueryRow(&quot;SELECT age FROM users WHERE name = $1&quot;, name)
+err := row.Scan(&amp;age)
+</pre></div>
+
+
+<p>当然像其他所有的语言一样，可以预编译语句然后执行。</p>
+<div class="highlight"><pre><span></span>age := 27
+stme, err := db.Prepare(&quot;SELECT name FROM users WHERE age = $1&quot;)
+if err != nil {
+    log.Fatal(err)
+}
+rows, err := stmt.Query(age)
+defer stmt.Close()
+</pre></div>
+
+
+<h1>事务（Transaction）</h1>
+<div class="highlight"><pre><span></span>tx, err := db.Begin()
+if err != nil {
+    log.Fatal(err)
+}
+...
+tx.Commit() 
+// or tx.Rollback()
+</pre></div>
+
+
+<h1>处理 null</h1>
+<p>如果一列可能为 null 的话，那么传递个Scan的参数就不应该是对应的基础类型，而应该是对应的包含null的复合类型</p>
+<div class="highlight"><pre><span></span>var name NullString
+err := db.QueryRow(&quot;SELECT name FROM names WHERE id = $1&quot;, &amp;name)
+if name.Valid {
+   // 使用 name.String 访问
+} else {
+  //
+}
+</pre></div>
+
+
+<p>除此之外还包含了其他几种 Null 复合值，NullBool、NullFloat64、NullInt64。可以使用对应的参数访问</p>
+<h1>使用 sqlite3</h1>
+<div class="highlight"><pre><span></span><span class="c">% go get github.com/mattn/go-sqlite3</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="p">(</span>
+    <span class="s2">&quot;database/sql&quot;</span>
+    <span class="n">_</span> <span class="s2">&quot;github.com/mattn/go-sqlite3&quot;</span>
+<span class="p">)</span>
+
+<span class="n">db</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="s2">&quot;sqlite3&quot;</span><span class="p">,</span> <span class="s2">&quot;./foo.db&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<h1>sqlx</h1>
+<p>待续</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/go-yu-yan-shu-ju-ku-jiao-cheng.html">posted at 04:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

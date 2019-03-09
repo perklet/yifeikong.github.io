@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 在阿里云上为内网VPC搭建NAT出口服务器</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 16, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/zai-a-li-yun-shang-wei-nei-wang-vpcda-jian-natchu-kou-fu-wu-qi.html" rel="bookmark" title="Permanent Link to &quot;在阿里云上为内网VPC搭建NAT出口服务器&quot;">在阿里云上为内网VPC搭建NAT出口服务器</a>
+                </h2>
+
+                
+                
+
+                <p>对于大多数的内部服务来说，我们是不希望他们暴露在公网上的；而且服务之间通过公网通信效率也比较低。阿里云提供了虚拟私网的服务，我们可以把服务都部署在内网。但是与此同时如何让内网的服务器能够上网也就成了问题，毕竟还是经常需要<code>apt-get</code> 一下。</p>
+<p>首先，不可能每个服务器都绑定一个弹性IP，贵且不说，这样和又把内部服务暴露在了公网。</p>
+<p>其次，阿里云提供了专用的NAT服务器，但是太贵了！！！</p>
+<p>其实 NAT 服务器也很简单啦，就是一个路由转发而已，利用 iptables 可以轻松实现。下面以一个例子来讲解一下。</p>
+<p>首先说一下 NAT 的两种术语：SNAT 和 DNAT。SNAT的意思就是 source NAT，也就是我们访问其他网站，作为 TCP 链接的来源。而 DNAT 就是 destination NAT，也就是我们作为服务器，作为 TCP 链接的重点。在这里我们要实现的是内网上网，而不是内网提供服务，所以我们只需要 SNAT 就好了。</p>
+<p>假设我们有三台服务器，在一个内网中，分别是：10.1.1.1, 10.1.1.2, 10.1.1.3。其中 10.1.1.1 绑定了外网IP可以上网。这里要说明的是：阿里云的弹性 IP 实际上是一个“伪IP”，也就是并没有真的绑定到我们的主机上，而是通过 SNAT 和 DNAT 的方式来模拟了绑定IP的行为。可以通过 <code>ip addr show</code> 命令验证一下，并没用弹性 IP 的任何信息。</p>
+<p>阿里云内网必须建立一个虚拟交换机来连接各个主机，在后台我们可以配置这个主机的路由表。为了实现让 10.1.1.1 作为出口的功能，我们配置交换机的路由表，添加如下一行：</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tNc79ly1ftbtme2354j319m0eo3zv.jpg"></p>
+<p>把所有的流量都转发到 10.1.1.1</p>
+<p>然后，在 10.1.1.1 上执行：</p>
+<div class="highlight"><pre><span></span>echo 1 &gt; /proc/sys/net/ipv4/ip_forward   # 打开转发功能
+
+# 所有来自10.0.0.0/8 的流量通过 eth0 发出
+iptables -t nat -A POSTROUTING -s 10.0.0.0/8 -o eth0 -j MASQUERADE
+
+iptables -A FORWARD -d 10.0.0.0/8 -j ACCEPT # 有人说需要这两句，但是亲测这两句不需要，但是也不知道什么意思
+iptables -A FORWARD -s 10.0.0.0/8 -j ACCEPT
+</pre></div>
+
+
+<p>这时候在 10.1.1.2 上就可以上网了</p>
+<p>说在最后：自己搭建DNAT/SNAT只能单机，无法做到高可用，因为阿里云不给我们提供VIP。如果你考虑构建高可用的私有云，还是直接购买阿里云的负载均衡+NAT网关吧，它们分别对应DNAT和SNAT，但是可靠性更高。</p>
+<p>参考：https://yuerblog.cc/2017/03/25/vpc-in-aliyun/</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/zai-a-li-yun-shang-wei-nei-wang-vpcda-jian-natchu-kou-fu-wu-qi.html">posted at 08:14</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

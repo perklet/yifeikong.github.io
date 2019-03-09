@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 跳表（skiplist）</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="算法,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/tiao-biao-skiplist.html" rel="bookmark" title="Permanent Link to &quot;跳表（skiplist）&quot;">跳表（skiplist）</a>
+                </h2>
+
+                
+                
+
+                <p>平衡二叉树可以实现 O(logn) 的查找复杂度。跳表可以实现相当于平衡二叉树的复杂度查询数据，而代码实现比较简单。在 Redis 中，zset 就用到了 skiplist。</p>
+<p>跳表是用<strong>并连的链表</strong>来实现的查询结构</p>
+<p><img alt="" src="https://ws3.sinaimg.cn/large/006tNc79gy1fq102txkvvj30hs07haaf.jpg"></p>
+<ul>
+<li>每个节点包含的指针的层数是由一个随机数决定的。</li>
+<li>跳表的时间复杂度和平衡二叉树相同，但是在实现上要简单很多。</li>
+<li>跳表是有序的，跳跃表的特点就是有序的，所以对于一些有序类型的数据，比如整数，日期这种，用跳跃表可以进行范围查找。</li>
+<li>在构建跳跃表和查询跳跃的复杂度一致，所以也比较适合于在线的实时索引查询，可以来一个文档，一边查找就一边知道要如何进行插入操作了。</li>
+<li>保存到磁盘和从磁盘载入也比较简单，因为本质上是几个链表，所以保存的时候可以按照数组的方式分别保存几个数组就可以了。</li>
+</ul>
+<h1>一些优化</h1>
+<p>空间优化，把底层的表放到硬盘里，影响增加删除节点的效率</p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tNc79gy1fq1043qhraj30hs06i3zn.jpg"></p>
+<p>时间优化，用数组代替链表，可以使用二分查找而非遍历</p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tNc79gy1fq104leytgj30hs06j0tf.jpg"></p>
+<p>对于类似时间这种数据，比如24小时对应1440分钟对应86400秒钟</p>
+<p>甚至可以固定直接用索引随机访问</p>
+<p><img alt="" src="https://ws3.sinaimg.cn/large/006tNc79gy1fq106sqt91j30hs06j758.jpg"></p>
+<h1>实现</h1>
+<p>https://github.com/begeekmyfriend/skiplist/blob/master/skiplist.h</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/tiao-biao-skiplist.html">posted at 06:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

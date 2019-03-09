@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "算法"</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/suan-fa.html">算法</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Aug 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/tu-jie-yi-zhi-xing-ha-xi.html" rel="bookmark" title="Permanent Link to &quot;图解一致性哈希&quot;">图解一致性哈希</a>
+                </h2>
+
+                
+                
+
+                <h1>起源</h1>
+<p>比如你有 N 个 cache 服务器（后面简称 cache ），那么如何将一个对象 object 映射到 N 个 cache 上呢，你很可能会采用类似下面的通用方法计算 object 的 hash 值，然后均匀的映射到到 N 个 cache ；</p>
+<div class="highlight"><pre><span></span>hash(object) % N
+</pre></div>
+
+
+<p>一切都运行正常，再考虑如下的两种情况；</p>
+<ol>
+<li>
+<p>一个 cache 服务器 m down 掉了（在实际应用中必须要考虑这种情况），这样所有映射到 cache m 的对象都会失效，怎么办，需要把 cache m 从 cache 中移除，这时候 cache 是 …</p></li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/tu-jie-yi-zhi-xing-ha-xi.html">posted at 05:43</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags selected">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 31, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ha-shi-yao-shi-raft-xie-yi.html" rel="bookmark" title="Permanent Link to &quot;蛤？什么是 raft 协议？&quot;">蛤？什么是 raft 协议？</a>
+                </h2>
+
+                
+                
+
+                <p>Raft 协议是一个分布式的一致性协议，主要通过 Leader Election 和 Log Replication 两个步骤来实现高可用的一致性状态存储。</p>
+<p>这篇文章并不是 Raft 协议的一个完整介绍，只是其中核心概念的一个总结概括，要完全理解所有细节还是得看论文。</p>
+<h1>Leader 选举</h1>
+<ol>
+<li>每个节点有三种状态：follower、candidate、leader。</li>
+<li>作为 leader 有任期(term)的概念，根据基本法必须选举上台。Term 是一个自增的数字。</li>
+<li>作为 leader 要不断发送心跳给 follower，告诉他们一律不得经商。</li>
+<li>所有节点都有一个随机的定时器（150ms~300ms），当 follower 没有收到日志后就会升级为 candidate，term + 1，给自己投一票，并且发送 Request Vote RPC 给所有节点，也就是 apply …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ha-shi-yao-shi-raft-xie-yi.html">posted at 18:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags selected">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 31, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/lsm-he-sstable.html" rel="bookmark" title="Permanent Link to &quot;LSM 和 sstable&quot;">LSM 和 sstable</a>
+                </h2>
+
+                
+                
+
+                <h1>核心要点</h1>
+<p>lsm 是 bigtable、leveldb、rocksdb 等数据库采用的算法。</p>
+<p>硬盘，尤其是机械硬盘，顺序写入性能远大于随机写入性能，所以 lsm 把大量的随机写入抓换成了顺序写入，从而极大地又花了写入能力。同时查找效率收到了损伤。</p>
+<p>适用于顺序写入多，随机读取少的场景。</p>
+<p>之所以要使用 Immutable Memtable，就是为了避免将 MemTable 中的内容序列化到磁盘中时会阻塞写操作。</p>
+<h2>操作</h2>
+<ol>
+<li>插入</li>
+</ol>
+<p>写入 WAL，然后操作 memtable。WAL 是顺序读写，而memtable 是跳表，操作都很迅速</p>
+<ol>
+<li>更新</li>
+</ol>
+<p>和插入其实是一样的操作</p>
+<ol>
+<li>删除</li>
+</ol>
+<p>插入一条特殊的删除日志，在 memtable 中标记删除</p>
+<ol>
+<li>compaction（压缩）</li>
+</ol>
+<p>当 memtable 达到设定的阈值的时候，会写入到 immutable memtable，然后写入到硬盘上的 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/lsm-he-sstable.html">posted at 10:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags selected">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 26, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/hong-hei-shu.html" rel="bookmark" title="Permanent Link to &quot;红黑树&quot;">红黑树</a>
+                </h2>
+
+                
+                
+
+                <p>红黑树的要求：</p>
+<ol>
+<li>节点是红色或黑色。</li>
+<li>根是黑色。</li>
+<li>所有叶子都是黑色（叶子是NIL节点）。</li>
+<li>每个红色节点必须有两个黑色的子节点。（从每个叶子到根的所有路径上不能有两个连续的红色节点。）</li>
+<li>从任一节点到其每个叶子的所有简单路径都包含相同数目的黑色节点。</li>
+</ol>
+<p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Red-black_tree_example.svg/900px-Red-black_tree_example.svg.png"></p>
+<p>两篇不错的教程：</p>
+<ol>
+<li><a href="https://juejin.im/post/5a27c6946fb9a04509096248">漫画：什么是红黑树</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E7%BA%A2%E9%BB%91%E6%A0%91">维基上的红黑树</a></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/hong-hei-shu.html">posted at 18:37</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags selected">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 23, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/dong-tai-gui-hua-leetcode-413-arithmetic-slices.html" rel="bookmark" title="Permanent Link to &quot;动态规划（LeetCode 413. Arithmetic Slices）&quot;">动态规划（LeetCode 413. Arithmetic Slices）</a>
+                </h2>
+
+                
+                
+
+                <h1>LeetCode 413. Arithmetic Slice</h1>
+<p>是一道可以用动态规划解的问题</p>
+<h2>题目</h2>
+<p>给定一个数组，找出其中等差数列的个数。等差数列的定义：3各元素以上，每个元素之间差相等。</p>
+<p>比如：</p>
+<div class="highlight"><pre><span></span>1, 3, 5, 7, 9
+7, 7, 7, 7
+3, -1, -5, -9
+</pre></div>
+
+
+<p>下面的就不是：</p>
+<div class="highlight"><pre><span></span>1, 1, 2, 5, 7
+</pre></div>
+
+
+<p>例子：</p>
+<div class="highlight"><pre><span></span>A = [1, 2, 3, 4]
+
+return: 3, for 3 arithmetic slices in A: [1, 2, 3], [2, 3 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/dong-tai-gui-hua-leetcode-413-arithmetic-slices.html">posted at 01:12</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags selected">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 20, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/da-gui-mo-zi-fu-chuan-de-pi-pei.html" rel="bookmark" title="Permanent Link to &quot;大规模字符串的匹配&quot;">大规模字符串的匹配</a>
+                </h2>
+
+                
+                
+
+                <p>问题：假设我们有一组比较长的文本，每一个文本都有几十k左右，还有一些敏感关键词需要删除，大概有几千，然后需要在这些文本中把关键词找出来。</p>
+<h1>方法1：暴力搜索</h1>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">compiled_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\b&#39;</span> <span class="o">+</span> <span class="n">word</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;\b&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">my20000words</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">compiled_words</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="s2">&quot;***&quot;</span><span class="p">,</span> <span class="n">sentence</span><span class="p">))</span>
+</pre></div>
+
+
+<h1>改进1：把正则组合起来</h1>
+<div class="highlight"><pre><span></span>pattern = &quot;\b(word1|word2|word3)\b&quot;
+
+for sentence in sentences:
+  print(re.sub …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/da-gui-mo-zi-fu-chuan-de-pi-pei.html">posted at 02:35</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags selected">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/tiao-biao-skiplist.html" rel="bookmark" title="Permanent Link to &quot;跳表（skiplist）&quot;">跳表（skiplist）</a>
+                </h2>
+
+                
+                
+
+                <p>平衡二叉树可以实现 O(logn) 的查找复杂度。跳表可以实现相当于平衡二叉树的复杂度查询数据，而代码实现比较简单。在 Redis 中，zset 就用到了 skiplist。</p>
+<p>跳表是用<strong>并连的链表</strong>来实现的查询结构</p>
+<p><img alt="" src="https://ws3.sinaimg.cn/large/006tNc79gy1fq102txkvvj30hs07haaf.jpg"></p>
+<ul>
+<li>每个节点包含的指针的层数是由一个随机数决定的。</li>
+<li>跳表的时间复杂度和平衡二叉树相同，但是在实现上要简单很多。</li>
+<li>跳表是有序的，跳跃表的特点就是有序的，所以对于一些有序类型的数据，比如整数，日期这种，用跳跃表可以进行范围查找。</li>
+<li>在构建跳跃表和查询跳跃的复杂度一致，所以也比较适合于在线的实时索引查询，可以来一个文档，一边查找就一边知道要如何进行插入操作了。</li>
+<li>保存到磁盘和从磁盘载入也比较简单，因为本质上是几个链表，所以保存的时候可以按照数组的方式分别保存几个数组就可以了。</li>
+</ul>
+<h1>一些优化</h1>
+<p>空间优化，把底层的表放到硬盘里，影响增加删除节点的效率</p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tNc79gy1fq1043qhraj30hs06i3zn.jpg"></p>
+<p>时间优化，用数组代替链表，可以使用二分查找而非遍历</p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tNc79gy1fq104leytgj30hs06j0tf.jpg"></p>
+<p>对于类似时间这种数据，比如24小时对应1440分钟对应86400秒钟</p>
+<p>甚至可以固定直接用索引随机访问</p>
+<p><img alt="" src="https://ws3.sinaimg.cn/large/006tNc79gy1fq106sqt91j30hs06j758.jpg"></p>
+<h1>实现</h1>
+<p>https://github.com/begeekmyfriend/skiplist/blob/master/skiplist …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/tiao-biao-skiplist.html">posted at 06:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags selected">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/simhash.html" rel="bookmark" title="Permanent Link to &quot;simhash&quot;">simhash</a>
+                </h2>
+
+                
+                
+
+                <h1>shingling</h1>
+<p>n-shingling 就是把一个句子或者文章分成 n 个连续单词的组合，然后去重。</p>
+<p>比如： the cat sat on the cat</p>
+<p>第一步，分组： the cat, cat sat, sat on, on the, the cat
+第二步，去重： the cat, cat sat, sat on, on the</p>
+<p>simhash 计算过程</p>
+<p>生成 shingle</p>
+<h1>Reference</h1>
+<p>[1] http://matpalm.com/resemblance/jaccard_coeff/</p>
+<p>[2] http://blog.csdn …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/simhash.html">posted at 09:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags selected">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/jaccard-coefficientjie-la-de-ju-chi.html" rel="bookmark" title="Permanent Link to &quot;Jaccard coefficient(杰拉德距离)&quot;">Jaccard coefficient(杰拉德距离)</a>
+                </h2>
+
+                
+                
+
+                <p>the jaccard index is a simple measure of how similiar two sets are.
+it's simply the ratio of the size of the intersection of the sets and the size of the union of the sets.</p>
+<p>eg. </p>
+<div class="highlight"><pre><span></span>if J(A,B) is jaccard index between sets A and B
+and A …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/jaccard-coefficientjie-la-de-ju-chi.html">posted at 09:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags selected">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/graph-theory.html" rel="bookmark" title="Permanent Link to &quot;Graph Theory&quot;">Graph Theory</a>
+                </h2>
+
+                
+                
+
+                <p>四个基础算法</p>
+<p>http://www.cnblogs.com/aiyelinglong/archive/2012/03/26/2418707.html</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/graph-theory.html">posted at 09:18</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags selected">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/2" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 1 of 2</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | django forms</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Django,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-forms.html" rel="bookmark" title="Permanent Link to &quot;django forms&quot;">django forms</a>
+                </h2>
+
+                
+                
+
+                <p>django 中的 form 和 model 的用法很像，都是定义一个类，然后指定一些字段就可以了</p>
+<p>最简单的form</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+
+<span class="k">class</span> <span class="nc">ContactForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clean_message</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span>
+        <span class="n">num_words</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">num_words</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Not enough words!&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">message</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>def contact(request):
+    if request.method == &#39;POST&#39;:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            send_mail(
+                cd[&#39;subject&#39;],
+                cd[&#39;message&#39;],
+                cd.get(&#39;email&#39;, &#39;noreply@example.com&#39;),
+                [&#39;siteowner@example.com&#39;],
+            )
+            return HttpResponseRedirect(&#39;/contact/thanks/&#39;)
+    else:
+        form = ContactForm()
+        return render(request, &#39;contact_form.html&#39;, {&#39;form&#39;: form})
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">&quot;&quot;</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;table&gt;</span>
+        <span class="cp">{{</span> <span class="nv">form.as_table</span> <span class="cp">}}</span>
+    <span class="nt">&lt;/table&gt;</span>
+    <span class="cp">{%</span> <span class="k">csrf_token</span> <span class="cp">%}</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Submit&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</pre></div>
+
+
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>用法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>form.<strong>str</strong>()</td>
+<td>return table representation</td>
+</tr>
+<tr>
+<td>form.as_p()</td>
+<td>return p representation</td>
+</tr>
+<tr>
+<td>form.as_li()</td>
+<td>return li representation</td>
+</tr>
+<tr>
+<td>form.<strong>getitem</strong>()</td>
+<td>return element tag</td>
+</tr>
+<tr>
+<td>form.<strong>init</strong>(dict)</td>
+<td>fill values</td>
+</tr>
+<tr>
+<td>form.is_bound</td>
+<td></td>
+</tr>
+<tr>
+<td>form.is_valid()</td>
+<td></td>
+</tr>
+<tr>
+<td>form.cleaned_data</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Note not include table/ul/form tags, just the inside tags</p>
+<h1>ajax</h1>
+<h2>ajax 中如何指定 crsf token</h2>
+<p>axios 中：</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">axios</span> <span class="nn">from</span> <span class="s1">&#39;axios&#39;</span><span class="p">;</span>
+<span class="n">axios</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">xsrfHeaderName</span> <span class="o">=</span> <span class="s2">&quot;X-CSRFTOKEN&quot;</span><span class="p">;</span>
+<span class="n">axios</span><span class="o">.</span><span class="n">defaults</span><span class="o">.</span><span class="n">xsrfCookieName</span> <span class="o">=</span> <span class="s2">&quot;csrftoken&quot;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>settings.py 中</p>
+<div class="highlight"><pre><span></span>CSRF_COOKIE_NAME = &quot;csrftoken&quot;
+</pre></div>
+
+
+<p><a href="https://stackoverflow.com/questions/39254562/csrf-with-django-reactredux-using-axios">参考</a></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-forms.html">posted at 04:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

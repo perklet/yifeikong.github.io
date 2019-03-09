@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles in the "计算机" category | Page 20</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/category/ji-suan-ji/page/20/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-bei-fen-yu-hui-fu.html" rel="bookmark" title="Permanent Link to &quot;MySQL 备份与恢复&quot;">MySQL 备份与恢复</a>
+                </h2>
+
+                
+                
+
+                <h1>基础使用</h1>
+<p>帮助命令很简单</p>
+<div class="highlight"><pre><span></span><span class="n">Usage</span><span class="o">:</span> <span class="n">mysqldump</span> <span class="o">[</span><span class="n">OPTIONS</span><span class="o">]</span> <span class="n">database</span> <span class="o">[</span><span class="n">tables</span><span class="o">]</span>
+<span class="n">OR</span>     <span class="n">mysqldump</span> <span class="o">[</span><span class="n">OPTIONS</span><span class="o">]</span> <span class="o">--</span><span class="n">databases</span> <span class="o">[</span><span class="n">OPTIONS</span><span class="o">]</span> <span class="n">DB1</span> <span class="o">[</span><span class="n">DB2</span> <span class="n">DB3</span><span class="o">...]</span>
+<span class="n">OR</span>     <span class="n">mysqldump</span> <span class="o">[</span><span class="n">OPTIONS</span><span class="o">]</span> <span class="o">--</span><span class="n">all</span><span class="o">-</span><span class="n">databases</span> <span class="o">[</span><span class="n">OPTIONS</span><span class="o">]</span>
+</pre></div>
+
+
+<h1>备份</h1>
+<p><code>mysqldump -u root --password=xxx DB_NAME [TABLE_NAME] &gt; backup.sql</code></p>
+<p><code>--password</code> 可以直接在命令中使用密码</p>
+<p>可以选择只 dump 一个数据库或者一个表。</p>
+<h1>恢复</h1>
+<p><code>mysql -u root -p DB_NAME &lt; backup.sql</code></p>
+<h1>一行操作</h1>
+<div class="highlight"><pre><span></span>mysqldump -u root -pPassword --all-databases …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-bei-fen-yu-hui-fu.html">posted at 07:06</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/vim-zhong-de-pin-xie-jian-cha.html" rel="bookmark" title="Permanent Link to &quot;vim 中的拼写检查&quot;">vim 中的拼写检查</a>
+                </h2>
+
+                
+                
+
+                <h1>basic usage</h1>
+<p><code>:set spell</code> to open, <code>:set nospell</code> to disable, <code>:set spell!</code> to toggle.</p>
+<p><code>]s</code> and <code>[s</code> to go to next and previous spell error. <code>z=</code> to see suggestions, but it's not good. use <code>:nnoremap \s ea&lt;C-X&gt;&lt;C-S&gt;</code></p>
+<p>Use <code>set spell</code> to check spellings in vim, if you find …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/vim-zhong-de-pin-xie-jian-cha.html">posted at 04:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/vim.html" class="tags">vim</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>            <h4 class="date">Jun 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/axios-and-fetch.html" rel="bookmark" title="Permanent Link to &quot;axios and fetch&quot;">axios and fetch</a>
+                </h2>
+
+                
+                
+
+                <h1>cookies</h1>
+<p>浏览器中的 JavaScript 运行在一个沙箱中。</p>
+<p>fetch 默认不带 cookie, see https://developer.mozilla.org/en-US/docs/Web/API/Request/credentials</p>
+<p>axios 自动附加请求域名对应的 cookie</p>
+<p>可以使用 JavaScript 设置对应所在域名的 cookie，而 chrome extension 可以设置所有域名的 cookie</p>
+<h1>basic usage</h1>
+<div class="highlight"><pre><span></span>try {
+    let response = axios.get(url)
+} catch (e) {
+    console.log(e)
+}
+
+// 可以使用的几种语法
+axios.get(url)
+axios.post(url …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/axios-and-fetch.html">posted at 01:37</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/chrome-extension-runtime.html" rel="bookmark" title="Permanent Link to &quot;Chrome Extension runtime&quot;">Chrome Extension runtime</a>
+                </h2>
+
+                
+                
+
+                <h1>basic usage</h1>
+<div class="highlight"><pre><span></span>chrome.runtime.getBackgroundPage(function(window) {})  // retrive the background page&#39;s window object
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>chrome.runtime.getURL(path)  // get the absolute url for given file in extension package
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/chrome-extension-runtime.html">posted at 15:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/chrome-extension-tabs.html" rel="bookmark" title="Permanent Link to &quot;Chrome Extension Tabs&quot;">Chrome Extension Tabs</a>
+                </h2>
+
+                
+                
+
+                <h1>permissions</h1>
+<div class="highlight"><pre><span></span>permissions: [
+    &quot;tabs&quot;,
+]
+</pre></div>
+
+
+<h1>usage</h1>
+<h2>chrome.tabs.query to get current tab</h2>
+<div class="highlight"><pre><span></span><span class="nt">chrome</span><span class="p">.</span><span class="nc">tabs</span><span class="p">.</span><span class="nc">query</span><span class="o">(</span><span class="p">{</span><span class="n">active</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span> <span class="n">currentWindow</span><span class="o">:</span> <span class="n">true</span><span class="p">}</span><span class="o">,</span> <span class="nt">function</span><span class="o">(</span><span class="nt">tabs</span><span class="o">)</span> <span class="p">{}</span><span class="o">);</span>  <span class="o">//</span> <span class="nt">tabs</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">would</span> <span class="nt">be</span> <span class="nt">the</span> <span class="nt">current</span> <span class="nt">tab</span>
+</pre></div>
+
+
+<h2>create new tab</h2>
+<div class="highlight"><pre><span></span>chrome.tabs.create({url: URL}, function(tab) {})
+</pre></div>
+
+
+<h2>kill tab</h2>
+<div class="highlight"><pre><span></span>chrome.tabs.remove(tabId or [tabId], function() {})
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/chrome-extension-tabs.html">posted at 14:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/chrome-extension-storage.html" rel="bookmark" title="Permanent Link to &quot;Chrome Extension storage&quot;">Chrome Extension storage</a>
+                </h2>
+
+                
+                
+
+                <h1>Basic Concepts</h1>
+<p>there are 3 storage area for chrome, <code>sync</code>, <code>local</code>, <code>managed</code> areas. the <code>sync</code> area will be synced with the cloud. managed area is read-only.</p>
+<p>all your extension scripts share the same storage, including content scripts, they don't belong to their domain's localStorage.</p>
+<h1>Usage</h1>
+<div class="highlight"><pre><span></span>chrome.storage.local.get(&#39;key …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/chrome-extension-storage.html">posted at 13:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/javascript-snippets.html" rel="bookmark" title="Permanent Link to &quot;JavaScript snippets&quot;">JavaScript snippets</a>
+                </h2>
+
+                
+                
+
+                <h1>get parameter from url</h1>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">getParameterByName</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">url</span><span class="p">)</span> <span class="nx">url</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">;</span>
+    <span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[\[\]]/g</span><span class="p">,</span> <span class="s2">&quot;\\$&amp;&quot;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">regex</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&quot;[?&amp;]&quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;(=([^&amp;#]*)|&amp;|#|$)&quot;</span><span class="p">),</span>
+        <span class="nx">results</span> <span class="o">=</span> <span class="nx">regex</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">url</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">results</span><span class="p">)</span> <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">results</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">decodeURIComponent</span><span class="p">(</span><span class="nx">results</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\+/g</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/javascript-snippets.html">posted at 12:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/chrome-extension-cookies.html" rel="bookmark" title="Permanent Link to &quot;Chrome extension cookies&quot;">Chrome extension cookies</a>
+                </h2>
+
+                
+                
+
+                <h1>permissions</h1>
+<p>set the cookies permission and the domain you would like to access cookies.</p>
+<div class="highlight"><pre><span></span>&quot;permissions&quot;: {
+    &quot;cookies&quot;,
+    &quot;*://*.example.com/&quot;
+}
+</pre></div>
+
+
+<h1>type</h1>
+<h2>cookie</h2>
+<p>just a simple object with <code>{name, value, domain...}</code></p>
+<h2>CookieStore</h2>
+<p>normal mode and incognito mode use different cookie stores.</p>
+<h1>read</h1>
+<p>get: <code>chrome.cookies.get({url: URL, name: COOKIE_NAME, storeId: COOKIE_STORE_ID}, function …</code></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/chrome-extension-cookies.html">posted at 08:01</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ecmascript-set.html" rel="bookmark" title="Permanent Link to &quot;EcmaScript Set&quot;">EcmaScript Set</a>
+                </h2>
+
+                
+                
+
+                <h1>basic usage</h1>
+<div class="highlight"><pre><span></span>let set = new Set();
+let set = new Set([a, b, c]);
+
+set.size  // the size of set
+set.add(a)
+set.delete(a)
+set.clear()
+set.has(value)
+set.keys()  // the same as keys
+set.values()  // return the values as a iterator
+</pre></div>
+
+
+<p>reference:</p>
+<p><a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Set">MDN set</a></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ecmascript-set.html">posted at 00:14</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 11, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/javascript-move-element-by-draging.html" rel="bookmark" title="Permanent Link to &quot;JavaScript Move Element by Draging&quot;">JavaScript Move Element by Draging</a>
+                </h2>
+
+                
+                
+
+                <p>see: https://stackoverflow.com/questions/6230834/html5-drag-and-drop-anywhere-on-the-screen</p>
+<p>but you also need to set <code>-webkit-user-drag: element;</code> to the element.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/javascript-move-element-by-draging.html">posted at 11:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/19" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/21" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 20 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

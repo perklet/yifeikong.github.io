@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | curio 的 http 库 asks 代码解析</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/curio-de-http-ku-asks-dai-ma-jie-xi.html" rel="bookmark" title="Permanent Link to &quot;curio 的 http 库 asks 代码解析&quot;">curio 的 http 库 asks 代码解析</a>
+                </h2>
+
+                
+                
+
+                <p>asks 是 Python 的异步框架 curio 中的 一个 http 库。</p>
+<h1><strong>init</strong>.py</h1>
+<p>init 函数，初始化 curio 或者 trio 库</p>
+<h1>auth.py</h1>
+<p>auth 相关函数</p>
+<h1>base_funcs.py</h1>
+<p>asks.request 函数，创建一个session，然后做请求，之后再丢弃掉这个session</p>
+<h1>cookie_utils.py</h1>
+<h2>CookieTracker类</h2>
+<p>对外的方法主要有两个 get_additional_cookies 用于获取域名对应的cookie，_store_cookies 用于添加cookie</p>
+<p>errors.py 抛出的异常的类</p>
+<h1>req_structs.py</h1>
+<h2>SocketQ</h2>
+<p>这是一个 socket 的连接池。</p>
+<p>使用一个deque作为存储，实际上相当于又模拟了一个字典{netloc =&gt; socket}（思考：为什么不使用OrderedDict呢？）
+是deque的子类。index返回指定hostloc对应的index。pull弹出指定index的socket。__contains__遍历看是否包含对应的socket</p>
+<p>CaseIncesitiveDict 对大小写不敏感的词典</p>
+<h1>request.py</h1>
+<h2>Request 类</h2>
+<p>make_request 方法。hconnection定义和使用的地方相距太远了。cookie的生成应该使用join。之后调用_request_io 发送请求</p>
+<p>_request_io 调用 首先掉用_send, 然后调用_catch_response</p>
+<p>_catch_response 调用recv_event</p>
+<p>_recv_event 不断调用 _async_lib.recv(self.sock, 10000) 从而不断产生数据，知道读完为之</p>
+<h2>session 类</h2>
+<p>request 调用 grab_connection 获取一个socket，然后把这个socket交给Request对象
+grab_connection 调用 checkout_connection 获得一个socket或者，调用make_connection产生一个新的socket，注意其中有一个奇怪的 await sleep(0)，可能意思是把循环交回给event loop</p>
+<p>make_connection 调用_connect 方法，并把host和port作为属性写到socket上</p>
+<p>session 中有两个SocketQ的类，conn_pool, checked_out_sockets 分别用来保存已连接未使用的socket和正在使用中的socket</p>
+<p>Asks 的连接池</p>
+<p>如果使用代理的话</p>
+<h1>curio 的网络通信</h1>
+<p>首先，需要引入curio.socket 而不是使用内置的socket
+TCP通信，使用sock.bind/listen/accept等建立服务器，使用recv和sendall发送接收消息
+UDP通信，使用recvfrom和sendto函数通信</p>
+<p>作为客户端使用curio.open_connection 打开到服务器的链接，其中ssl=True打开的是HTTPS连接诶</p>
+<p>对于其他要使用ssl的情况，应该使用curio.ssl而不是标准库的ssl</p>
+<p>curio.network.</p>
+<p>ssl.wrap_socket 不支持server_hostname sslcontext.wrap_socket 支持</p>
+<p>不要把 proxies 传递给request 对象</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/curio-de-http-ku-asks-dai-ma-jie-xi.html">posted at 10:23</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

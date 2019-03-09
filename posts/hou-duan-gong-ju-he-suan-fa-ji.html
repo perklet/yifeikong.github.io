@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 后端工具和算法集</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/hou-duan-gong-ju-he-suan-fa-ji.html" rel="bookmark" title="Permanent Link to &quot;后端工具和算法集&quot;">后端工具和算法集</a>
+                </h2>
+
+                
+                
+
+                <p>总结一下后端常用的工具和蕴含的算法</p>
+<p>TODO: 应该把 GitHub 5000 star 以上的项目都看一下</p>
+<ul>
+<li>
+<p>前端</p>
+<ul>
+<li>框架<ul>
+<li>vue</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>数据库</p>
+<ul>
+<li>mysql(btree)</li>
+<li>postgresql</li>
+<li>redis</li>
+<li>pika/rocksdb/leveldb</li>
+<li>elasticsearch</li>
+<li>mongodb</li>
+<li>memcache 功能是redis的子集，现在用得比较少了</li>
+</ul>
+</li>
+<li>
+<p>消息队列</p>
+<ul>
+<li>kafka</li>
+<li>redis stream</li>
+<li>rabbitmq<ul>
+<li>amqp 协议</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>RPC 和序列化</p>
+<ul>
+<li>protobuf/grpc</li>
+<li>thrift</li>
+<li>msgpack</li>
+<li>envoy<ul>
+<li>service mesh 的思想</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>负载均衡</p>
+<ul>
+<li>四层和七层负载均衡的区别</li>
+<li>nginx</li>
+<li>LVS</li>
+<li>一致性哈希</li>
+</ul>
+</li>
+<li>
+<p>部署和容器化</p>
+<ul>
+<li>docker<ul>
+<li>cgroups</li>
+</ul>
+</li>
+<li>kubernetes<ul>
+<li>borg 论文</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>CI</p>
+<ul>
+<li>jenkins</li>
+</ul>
+</li>
+<li>
+<p>web 框架</p>
+<ul>
+<li>django(MVC 模式)</li>
+<li>flask</li>
+</ul>
+</li>
+<li>
+<p>日志收集</p>
+<p>分布式系统中需要日志可能分布在不同的机器上，要想查找一条错误日志，可能需要 ssh 到不同的机器上，非常浪费时间和精力。可以把日志收集到一个统一的存储中，方便检索查看</p>
+<ul>
+<li>filebeat</li>
+<li>sentry</li>
+</ul>
+</li>
+<li>
+<p>监控</p>
+<p>时序数据库</p>
+<div class="highlight"><pre><span></span>- OpenTSDB
+- influxdb
+- prometheus
+</pre></div>
+
+
+<p>前端面板</p>
+<div class="highlight"><pre><span></span>- grafana
+</pre></div>
+
+
+</li>
+<li>
+<p>高并发厂家服务</p>
+<ul>
+<li>计数服务<ul>
+<li><a href="http://zhuanlan.51cto.com/art/201706/542217.htm">计数系统架构实践一次搞定</a></li>
+<li><a href="http://blog.cydu.net/weidesign/2012/09/09/weibo-counter-service-design-2/">微博计数器的设计</a></li>
+<li><a href="https://instagram-engineering.com/storing-hundreds-of-millions-of-simple-key-value-pairs-in-redis-1091ae80f74c">instagram 使用 redis 计数</a></li>
+</ul>
+</li>
+<li>限流服务<ul>
+<li>token bucket</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>搜索引擎相关</p>
+<ul>
+<li>simhash</li>
+<li>tf-idf</li>
+</ul>
+</li>
+<li>
+<p>统一登录</p>
+<ul>
+<li>CAS，<a href="https://blog.csdn.net/csdnxingyuntian/article/details/54970102">了解CAS协议</a></li>
+<li>kerbos</li>
+</ul>
+</li>
+<li>
+<p>操作系统</p>
+<ul>
+<li>内存换页算法<ul>
+<li>OPT</li>
+<li>FIFO</li>
+<li>LRU</li>
+<li>CLOCK</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>限流</p>
+</li>
+<li>
+<p>锁</p>
+<ul>
+<li>分布式锁</li>
+<li>自旋锁</li>
+<li>乐观锁、悲观锁</li>
+</ul>
+</li>
+</ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/hou-duan-gong-ju-he-suan-fa-ji.html">posted at 08:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

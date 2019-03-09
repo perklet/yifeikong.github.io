@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 网页与API的常见频次限制与破解</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机,爬虫" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 17, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wang-ye-yu-apide-chang-jian-pin-ci-xian-zhi-yu-po-jie.html" rel="bookmark" title="Permanent Link to &quot;网页与API的常见频次限制与破解&quot;">网页与API的常见频次限制与破解</a>
+                </h2>
+
+                
+                
+
+                <p>上线一个新的页面或者接口的时候都需要考虑被爬取，滥用的情况。这篇文章总结一下常见的限制与反制方法。</p>
+<p>从接口的角度来说，匿名的接口一定是可以滥用的，只是破解成本的问题；而有登录状态的接口一般不容易被滥用。</p>
+<h1>第一个例子，自增ID被滥用</h1>
+<p>什么值得买的评测页面，https://test.smzdm.com/pingce/p/40205/，这个链接的最后一个数字就是评测的问题ID，大小才不过几万，也就是说，我只要遍历一下这个数字，就可以把“什么值得买”这个网站的所有评测都爬取一遍，这个是在太容易被利用了。</p>
+<p>对于这个问题，可以不要直接使用数据库的主键作为页面的ID，而是尽量使用没有规律的数字（比如UUID）或者至少大一点的数字作为ID，避免被穷举遍历。</p>
+<h1>第二个例子，列表页面被滥用</h1>
+<p>链家的二手房页面，https://bj.lianjia.com/ershoufang/101102279987.html，这个页面的ID就比较大了，但是我们没办法去遍历这样一个数字。这时候可以从列表页入手，https://bj.lianjia.com/ershoufang/rs/，只要从页面上找到所有二手房的页面地址就可以了。</p>
+<p>对于这种滥用的情形，</p>
+<ol>
+<li>只能限制每个用户的访问频次了。</li>
+<li>或者直接屏蔽掉一些非法的请求。比如说User-Agent是curl的先屏蔽掉。但是这些总是可以伪造的，甚至可以直接用一个headless chrome来访问页面，链家网总不能把chrome屏蔽掉吧。。</li>
+</ol>
+<p>以上两个问题，还有一个共同的特点，用户都是没有登录状态的，都是匿名的。比如说链家网，总不能让每个人登录了才能看房子吧，那估计客户流失会很严重。这时候识别每个用户常用的一些方法主要是通过cookies和IP。</p>
+<ol>
+<li>通过IP识别用户</li>
+</ol>
+<p>这种方法简单粗暴，直接根据来源IP来判定是否是同一个用户，如果访问过快，屏蔽请求或者需要输入验证码。但是有一个问题，好多学校或者公司都是使用为数不多的几个IP地址来作为出口IP，方便管理，如果这种地方有一两个人在恶意请求，那么可能屏蔽会造成很多人访问异常。</p>
+<p>对于这种限制来说，可以放慢请求速度，或者使用多个代理IP来伪装自己。</p>
+<ol>
+<li>通过Cookies来识别用户</li>
+</ol>
+<p>上面说过直接通过 IP 来识别用户的话比较暴力，可能误伤，另一种方法就是通过 Cookie 来标示用户，如果有一个用户访问过多的话，就对这个Cookie做限制。</p>
+<p>对于这种限制来说，可以直接每次请求不带 Cookie，或者预先多申请一些 Cookie，然后负载均衡一下。</p>
+<p>对于传统的静态页面的限制和破解基本上就是这些方法。不过现在很多页面都是操作丰富的动态页面，也就是我们感兴趣的消息可能是通过ajax加载的，我们只需要访问这个api就可以了。另外现在不少的产品都是直接提供应用，根本没有网页版了。所以接下来简单谈下API的攻防。</p>
+<h1>API 的攻防</h1>
+<p>有一些 API 没有任何防护，对于这种 API 直接刷就好了，不过可能有的 API 会有根据 IP 的频次限制。</p>
+<p>有一些 API 访问必须通过Token，如果含有这个 token 并且合法，就认为访问是合法的。一般来说在使用了 token 验证访问合法性的时候，服务端就不会再对 IP 等做限制了。</p>
+<p>Token 的计算过程往往有三个因素需要参与，分别是 key、secret 和签名算法。比如说下面的 API:</p>
+<p>GET api.example.com/v1/search?q=XXX&amp;type=XXX&amp;limit=5&amp;timestamp=1501230129&amp;app_key=424242token=XXX</p>
+<p>其中 app_key 等于 424242，表示请求方的唯一ID，secret是服务器授予请求方的密码，比如123456。而</p>
+<div class="highlight"><pre><span></span>secret = md5(sorted([&quot;k=v&quot; for k, v in params] + [&quot;secret=123456&quot;]).join(&quot;&quot;) + )
+</pre></div>
+
+
+<p>也就是把所有参数都排序之后，拼接成字符串然后再计算某个hash值，作为token附在参数后面。</p>
+<p>一般来说常用的签名算法都是这样实现的：</p>
+<ol>
+<li>参数中加上时间戳，同时附在请求上，这样服务器可以只接受当前时间附近的真实请求，从而避免某个请求被保存下来，用作重放攻击。</li>
+<li>添加参数secret＝123456到需要计算的参数中，但是secret并不会出现在请求中。</li>
+<li>把所有需要加密的参数都按照字典排序，然后拼接成字符串，这样是为了计算出来的值唯一。</li>
+<li>计算出的token也附在请求上，一起发给服务器。</li>
+<li>服务器根据app_key，取出对应的app_secret，用同样的方法计算token，验证合法性。</li>
+</ol>
+<h2>app_key 的分配和含义</h2>
+<p>一般有两种理解，一种是把 app_key 作为某种类型客户端的标示，比如安卓客户端使用一个appkey，iOS客户端使用一个appkey。另一种是每个用户使用一个appkey，把appkey作为用户的标示。</p>
+<p>对于网页中通过 ajax 请求 API 来说，因为 js 实际上相当于是源码公开的，所以隐藏secret和算法实际上是不现实的。这时候可以有两种做法，一种是把secret和加密算法等放到Flash里面去，flash是可以编译成二进制的，所以相对来说更安全一些，不过随着flash的死亡，这种做法应该是逐渐淘汰了。另一种做法是secret动态获取，控制secret的来提高破解难度，同时把加密算法做一些混淆。</p>
+<p>对于应用中来说，简单一点的做法可直接把secret和算法都直接放到代码里面，但是一般来说因为通用的加密方法大家套路基本也都那么几样，通过反编译之后加上一些基于经验的猜测很容易才出来。所以进一步可以把加密算法写到native层，编译成so文件，这样就大大提高了反编译的难度，基本可以认为是安全的。</p>
+<p>更严厉一点的话，可以限制只有登录用户可以访问某些敏感接口，这样就完全由服务端来控制接口的访问量了，只需要注意用户注册的接口不要被滥用即可。</p>
+<h1>一个例子</h1>
+<p>比如淘宝H5站的接口</p>
+<p>当请求不带任何cookie时，会返回一个_m_h5_tk 和 _m_h5_tk_enc，通过下面的算法算出sign值再次请求</p>
+<p>sign算法：<em>m_h5_tk值的'</em>'前部分+时间戳+appkey+data  中间用&amp;分隔，如下</p>
+<div class="highlight"><pre><span></span>echo -n &#39;ddc882e0e69bb8babbfdecc479439252&amp;1450260485494&amp;12574478&amp;{&quot;platform&quot;:&quot;8&quot;,&quot;asac&quot;:&quot;D679AU6J95PHQT67G0B5&quot;,&quot;days&quot;:50,&quot;cinemaid&quot;:&quot;24053&quot;,&quot;showid&quot;:141207}&#39;|md5sum|cut -d &#39; &#39; -f1
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wang-ye-yu-apide-chang-jian-pin-ci-xian-zhi-yu-po-jie.html">posted at 20:28</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

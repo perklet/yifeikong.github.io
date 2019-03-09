@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Articles by Yifei Kong</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/author/yifei-kong/page/21/index.html">Yifei Kong</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 08, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-guo-yu-dao-gang-ru-zhi-chang-de-wo-xiao-dao-xiao-xi.html" rel="bookmark" title="Permanent Link to &quot;如果遇到刚入职场的我 —— 小道消息&quot;">如果遇到刚入职场的我 —— 小道消息</a>
+                </h2>
+
+                
+                
+
+                <p>0.能力的提升比涨工资更重要，虽然你特别缺钱，刚开始工作谁不缺钱啊，又不是富二代。别跟同事比薪水，「那个蠢货比我技术差，凭什么比我薪水高?」蠢货，比了也不会让你薪水立刻涨上来。</p>
+<p>1.老板不是资本家，他/她也没有剥削你。「工作受剥削」大概是我这一带人乃至几代人受的教育里最影响你职业发展的一个垃圾观念了，赶紧从头脑中删除。永远不要再想起来。</p>
+<p>2.注意仪容仪表，尽管你是个工程师，但也不能穿得别太邋遢，衣服整洁，每天洗头，刮胡子。</p>
+<p>3.你的同事不是笨蛋，你的客户也不是白痴，你自己才是蠢货。所以，对他们出现的错误要能够理解，你的同事开发的软件会有缺陷，客户不会用则是因为软件做得不够好。</p>
+<p>4.在客户那里，你代表的就是公司。别跟客户抱怨公司的产品不够好不给力，这实在太蠢了。</p>
+<p>5.做好小事，处理好每件小事的细节，做不好的地方自己要有总结，找到原因以便改进。相信我，这时候你真不是做大事的料。</p>
+<p>6.养成一个好习惯，比如每天做工作记录，每天回顾自己。跳槽后你会发现比很多人都牛 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-guo-yu-dao-gang-ru-zhi-chang-de-wo-xiao-dao-xiao-xi.html">posted at 09:19</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/talks.html" rel="tag">talks</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/talks.html" class="tags">talks</a>
+                </div>
+            </article>            <h4 class="date">Jul 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/curio.html" rel="bookmark" title="Permanent Link to &quot;curio&quot;">curio</a>
+                </h2>
+
+                
+                
+
+                <p>curio 是一个神奇的 Python 库，它完全面向 Python 3.5 增加的 async/await 语法，从低层就没有使用 callback 的语法，因此相比 asyncio 来说设计更简单，API 更优雅，性能却更好。</p>
+<h1>一个例子</h1>
+<p>curio 的文档给了一个很好的例子，下面总结一下这个例子。这个例子模拟了孩子在玩Minecraft，而家长在催促孩子该出发了的情景。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">curio</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">countdonw</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;T-minus&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">await</span> <span class="n">cuiro</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 在异步编程中，不能使用同步代码中的 time.sleep</span>
+        <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+
+<span class="n">start_evt …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/curio.html">posted at 14:56</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-public-key-pinning.html" rel="bookmark" title="Permanent Link to &quot;android public key pinning&quot;">android public key pinning</a>
+                </h2>
+
+                
+                
+
+                <h1>What is public key pinning?</h1>
+<p>to view https traffic, you could sign your own root CA, and perform mitm attack to view the traffic. HPKP (http public key pinning) stops this sniffing by only trust given CA, thus, your self-signed certs will be invalid. To let given app to trust …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-public-key-pinning.html">posted at 08:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-intent.html" rel="bookmark" title="Permanent Link to &quot;android intent&quot;">android intent</a>
+                </h2>
+
+                
+                
+
+                <p>You should use intent to communicate between activities and services</p>
+<h1>intent extra</h1>
+<h2>package data from activity</h2>
+<p>create a intent instance</p>
+<p>Intent intent = new Intent(getBaseContext(), SignoutActivity.class);
+intent.putExtra("key", value);
+startActivity(intent);</p>
+<h2>package data from service</h2>
+<p>Intent intent = new Intent(context, SignoutActivity.class);
+intent.putExtra("key", value);
+startService(intent …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-intent.html">posted at 11:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/androidoshandler.html" rel="bookmark" title="Permanent Link to &quot;android.os.handler&quot;">android.os.handler</a>
+                </h2>
+
+                
+                
+
+                <p>android.os.handler 用于向每个线程的 MessageQueue 发送消息。</p>
+<p>There are two main uses for a Handler: </p>
+<p>(1) to schedule messages and runnables to be executed as some point in the future; and </p>
+<p>(2) to enqueue an action to be performed on a different thread than your own.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/androidoshandler.html">posted at 10:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-vpn-service.html" rel="bookmark" title="Permanent Link to &quot;android vpn service&quot;">android vpn service</a>
+                </h2>
+
+                
+                
+
+                <p>VPN Service 运行在 IP 层。它创建了一个虚拟的网络接口，可以配置地址和路由规则，并返回一个 file descriptor。每次读这个 fp 返回一个数据包，每次写发送一个数据包。</p>
+<p>两个最重要的方法分别是<code>prepare(Context)</code> 和 <code>establish()</code>。前者接受用户响应并关闭其他应用的 VPN 链接，后者使用 <code>VpnService.Builder</code> 的参数创建 VPN 接口。</p>
+<p>实现 VpnService 的类必须在 manifest 中声明：</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;service</span> <span class="na">android:name=</span><span class="s">&quot;.ExampleVpnService&quot;</span>
+         <span class="na">android:permission=</span><span class="s">&quot;android.permission.BIND_VPN_SERVICE&quot;</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;intent-filter&gt;</span>
+         <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">&quot;android.net.VpnService&quot;</span><span class="nt">/&gt;</span>
+     <span class="nt">&lt;/intent-filter …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-vpn-service.html">posted at 10:07</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/simhash.html" rel="bookmark" title="Permanent Link to &quot;simhash&quot;">simhash</a>
+                </h2>
+
+                
+                
+
+                <h1>shingling</h1>
+<p>n-shingling 就是把一个句子或者文章分成 n 个连续单词的组合，然后去重。</p>
+<p>比如： the cat sat on the cat</p>
+<p>第一步，分组： the cat, cat sat, sat on, on the, the cat
+第二步，去重： the cat, cat sat, sat on, on the</p>
+<p>simhash 计算过程</p>
+<p>生成 shingle</p>
+<h1>Reference</h1>
+<p>[1] http://matpalm.com/resemblance/jaccard_coeff/</p>
+<p>[2] http://blog.csdn …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/simhash.html">posted at 09:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-1-cha-xun-shu-ju.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(1) - 查询数据&quot;">mysql 基础知识(1) - 查询数据</a>
+                </h2>
+
+                
+                
+
+                <p><a href="https://mp.weixin.qq.com/s/87BoE2-0mW_3qALyNSpiTw">最全总结</a></p>
+<h1>显示操作</h1>
+<div class="highlight"><pre><span></span>show databases;
+show create database DB;
+show tables;
+show columns from TABLE;
+show create table TABLE;
+show status;
+shou grants;
+</pre></div>
+
+
+<h1>连接数据库</h1>
+<p><code>mysql -u root -p -h HOST -P 3306</code>, 其中的参数代表了用户, 机器地址和密码等, 注意其中的密码必须之后输入, 而不能直接带上, 这样是为了避免把密码记录在bash历史中.</p>
+<p>另一个更好的工具是Python写的mycli, 谁用谁知道~</p>
+<p>使用 <code>use DATABASE</code>来更改指定的数据库.</p>
+<h1>查询数据库</h1>
+<p>下面的部分都使用这个表, 方便讨论.</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>first_name</th>
+<th>last_name</th>
+<th>math_score</th>
+<th>english_score …</th></tr></thead></table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-1-cha-xun-shu-ju.html">posted at 01:22</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 02, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/the-ipinfo-story.html" rel="bookmark" title="Permanent Link to &quot;the ipinfo story&quot;">the ipinfo story</a>
+                </h2>
+
+                
+                
+
+                <h1>what does this guy do?</h1>
+<ul>
+<li>find a easy question, however cumbersome question on <a href="https://stackoverflow.com/questions/409999">stackoverflow.com</a></li>
+<li>answer the question with a solution of his api, <em>with full demo codes of usage</em>.</li>
+<li>so many amateur programmers are not capable of or too lazy to build such an easy api, his answer and …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/the-ipinfo-story.html">posted at 05:05</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/chuang-ye.html" rel="tag">创业</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ta-shan-zhi-shi.html" class="tags">他山之石</a>
+                    &nbsp;<a href="/tag/chuang-ye.html" class="tags">创业</a>
+                </div>
+            </article>            <h4 class="date">Jul 01, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-shi-yong-letsencrypt.html" rel="bookmark" title="Permanent Link to &quot;如何使用 letsencrypt&quot;">如何使用 letsencrypt</a>
+                </h2>
+
+                
+                
+
+                <p>letsencrypt 现在终于支持通配符证书了。</p>
+<p>certbot 比较坑爹的一点是renew时候使用的是和创建证书相同的参数, 而且不能更改, 也就是最好在创建证书的时候就选择使用webroot的方式.</p>
+<h2>install certbot</h2>
+<p>see ~/.dotfiles/installs/install_certbot.sh</p>
+<h2>create new cert</h2>
+<p>sudo certbot certonly --webroot -w /opt/spider/nginx/html/ -d shujutuzi.com -d www.shujutuzi.com</p>
+<p>sudo certbot certonly --standalone --agree-tos --email kongyifei@gmail.com --domain g.yifei.me --preferred-challenges http --non-interactive</p>
+<p>the cert …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-shi-yong-letsencrypt.html">posted at 02:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/20" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/22" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 21 of 34</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

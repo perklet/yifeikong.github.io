@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Chrome Extension Tabs</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="JavaScript,大前端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/chrome-extension-tabs.html" rel="bookmark" title="Permanent Link to &quot;Chrome Extension Tabs&quot;">Chrome Extension Tabs</a>
+                </h2>
+
+                
+                
+
+                <h1>permissions</h1>
+<div class="highlight"><pre><span></span>permissions: [
+    &quot;tabs&quot;,
+]
+</pre></div>
+
+
+<h1>usage</h1>
+<h2>chrome.tabs.query to get current tab</h2>
+<div class="highlight"><pre><span></span><span class="nt">chrome</span><span class="p">.</span><span class="nc">tabs</span><span class="p">.</span><span class="nc">query</span><span class="o">(</span><span class="p">{</span><span class="n">active</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span> <span class="n">currentWindow</span><span class="o">:</span> <span class="n">true</span><span class="p">}</span><span class="o">,</span> <span class="nt">function</span><span class="o">(</span><span class="nt">tabs</span><span class="o">)</span> <span class="p">{}</span><span class="o">);</span>  <span class="o">//</span> <span class="nt">tabs</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">would</span> <span class="nt">be</span> <span class="nt">the</span> <span class="nt">current</span> <span class="nt">tab</span>
+</pre></div>
+
+
+<h2>create new tab</h2>
+<div class="highlight"><pre><span></span>chrome.tabs.create({url: URL}, function(tab) {})
+</pre></div>
+
+
+<h2>kill tab</h2>
+<div class="highlight"><pre><span></span>chrome.tabs.remove(tabId or [tabId], function() {})
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/chrome-extension-tabs.html">posted at 14:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

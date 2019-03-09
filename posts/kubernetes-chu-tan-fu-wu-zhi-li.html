@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | kubernetes 初探——服务治理</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="架构,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jan 18, 2019</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-fu-wu-zhi-li.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——服务治理&quot;">kubernetes 初探——服务治理</a>
+                </h2>
+
+                
+                
+
+                <p>服务治理有两种方式：</p>
+<ul>
+<li>一种是直接在服务中集成熔断降级等操作</li>
+<li>一种是使用 sidecar 模式，有公共组件来处理</li>
+</ul>
+<p>两种模式的区别如图：</p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tNc79ly1fzbu3a41c3j30gw09jabr.jpg"></p>
+<h1>参考资料</h1>
+<ol>
+<li><a href="https://mp.weixin.qq.com/s/1zAxecTzeZToaWFymeY-sw">Service Mesh 的本质、价值和应用探索 </a></li>
+<li><a href="https://www.kubernetes.org.cn/2350.html">Istio, K8S 的微服务支持</a></li>
+<li><a href="https://blog.csdn.net/aa1215018028/article/details/81700796">微服务之熔断、降级、限流</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzI1NzYzODk4OQ==&amp;mid=2247484925&amp;idx=1&amp;sn=5c15ba98fb03a2a0d9c823136f34e162">微服务化之服务拆分与服务发现</a></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-fu-wu-zhi-li.html">posted at 21:33</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

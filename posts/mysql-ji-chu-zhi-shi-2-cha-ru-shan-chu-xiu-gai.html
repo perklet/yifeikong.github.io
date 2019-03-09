@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | mysql 基础知识(2) - 插入删除修改</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-2-cha-ru-shan-chu-xiu-gai.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(2) - 插入删除修改&quot;">mysql 基础知识(2) - 插入删除修改</a>
+                </h2>
+
+                
+                
+
+                <p>我们还是使用上篇文章定义的例子来说明问题</p>
+<h1>插入数据</h1>
+<p>使用 <code>INSERT</code> 语句.</p>
+<div class="highlight"><pre><span></span>insert into students(**field_names) values(**VALUES), values(**VALUES);
+</pre></div>
+
+
+<h2>批量插入</h2>
+<p>如果一次要插入所有数据的话, 可以直接省略前面的字段名. MySQL 可以一次插入多行数据或者一行数据, 但是这并不是SQL标准规定的. 使用批量插入可以大幅度提高性能。</p>
+<p>在批量插入的语句中，如果有一行是错的，那么就会导致整个插入失败，可以使用 insert ignore 语句。</p>
+<p>如果要在批量插入不同的表，可以一次执行多个语句，而不是只执行一个。</p>
+<h1>insert or update</h1>
+<p>如果要实现 insert or update 的功能，可以使用 insert on duplicate update 语句。</p>
+<h1>更新数据</h1>
+<p>使用 <code>UPDATE</code> 语句.</p>
+<div class="highlight"><pre><span></span>update students set math_score = 100 where first_name = &#39;luke&#39;;
+</pre></div>
+
+
+<h1>删除数据</h1>
+<p>使用 <code>DELETE</code> 语句.</p>
+<div class="highlight"><pre><span></span>delete from students where name = &#39;luke&#39;;
+</pre></div>
+
+
+<h1>参考</h1>
+<ol>
+<li>http://www.mysqltutorial.org/mysql-insert-ignore/</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-2-cha-ru-shan-chu-xiu-gai.html">posted at 15:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "命令行"</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/ming-ling-xing.html">命令行</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-xia-fen-qu-bing-gua-zai-ci-pan.html" rel="bookmark" title="Permanent Link to &quot;Linux 下分区并挂载磁盘&quot;">Linux 下分区并挂载磁盘</a>
+                </h2>
+
+                
+                
+
+                <h1>分区</h1>
+<div class="highlight"><pre><span></span>parted -s -a optimal /dev/sda mklabel gpt -- mkpart primary ext4 1 -1s
+</pre></div>
+
+
+<h1>创建文件系统</h1>
+<div class="highlight"><pre><span></span>mkfs.ext4 /dev/sda1
+</pre></div>
+
+
+<h1>查看分区结果</h1>
+<div class="highlight"><pre><span></span>parted -l
+</pre></div>
+
+
+<h1>复制数据</h1>
+<p>首先挂载到临时分区</p>
+<div class="highlight"><pre><span></span>mount /dev/sdb1 /mnt
+</pre></div>
+
+
+<p>把之前的数据考进去</p>
+<div class="highlight"><pre><span></span># rsync -av /home/* /mnt/
+OR
+# cp -aR /home/* /mnt/
+</pre></div>
+
+
+<p>校验数据</p>
+<div class="highlight"><pre><span></span><span class="gh">diff -r /home /mnt</span>
+</pre></div>
+
+
+<p>删除老数据</p>
+<div class="highlight"><pre><span></span>rm -rf /home/*
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>umount /mnt
+</pre></div>
+
+
+<h1>挂载 …</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-xia-fen-qu-bing-gua-zai-ci-pan.html">posted at 23:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags selected">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/fd-geng-hao-de-find-ming-ling-fd-a-nicer-find-command.html" rel="bookmark" title="Permanent Link to &quot;fd - 更好的 find 命令（fd - A nicer find command）&quot;">fd - 更好的 find 命令（fd - A nicer find command）</a>
+                </h2>
+
+                
+                
+
+                <p><code>fd</code>（https://github.com/sharkdp/fd） 是 <code>find</code> 命令的一个更现代的替换。</p>
+<p><code>fd</code>（https://github.com/sharkdp/fd）is a modern and nicer replacement to the traditional <code>find</code> command.</p>
+<h1>对比一下 Some comparisons</h1>
+<h2>查找名字含有某个字符的文件 Find a filename with certain string</h2>
+<p>OLD</p>
+<div class="highlight"><pre><span></span>-&gt; % find . -name &quot;*hello*&quot;
+./courses/hello_world.go
+./courses/chapter_01/hello_world.go
+./courses/chapter_01/hello_world …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/fd-geng-hao-de-find-ming-ling-fd-a-nicer-find-command.html">posted at 04:33</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags selected">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jan 28, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ming-ling-xing-de-yi-xie-xiao-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;命令行的一些小技巧&quot;">命令行的一些小技巧</a>
+                </h2>
+
+                
+                
+
+                <p>最近工作中经常用到的一些组合命令，本来想提交到 commandlinefu.com 上，但是忘记了密码，怎么也登录不上去了，记到这里吧</p>
+<ul>
+<li>脚本所在的目录</li>
+</ul>
+<div class="highlight"><pre><span></span>dirname $0
+</pre></div>
+
+
+<ul>
+<li>文件夹下面按照占用空间大小排序</li>
+</ul>
+<div class="highlight"><pre><span></span>du -sh `ls` | sort -rh
+</pre></div>
+
+
+<ul>
+<li>返回上一个目录</li>
+</ul>
+<div class="highlight"><pre><span></span>cd -
+</pre></div>
+
+
+<ul>
+<li>显示所有的日志的最后几行</li>
+</ul>
+<div class="highlight"><pre><span></span>tail *
+</pre></div>
+
+
+<ul>
+<li>set</li>
+</ul>
+<div class="highlight"><pre><span></span>set -x # 显示每个执行的命令
+set -e # 当有程序返回非0值时直接退出，相当于抛出异常
+</pre></div>
+
+
+<ul>
+<li>here doc</li>
+</ul>
+<div class="highlight"><pre><span></span>cat &lt;&lt; EOF &gt; /tmp/yourfilehere
+These contents will be written to the file.
+        This line is indented.
+EOF
+</pre></div>
+
+
+<ul>
+<li>删除包含某个关键字的所有行</li>
+</ul>
+<div class="highlight"><pre><span></span>fd …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ming-ling-xing-de-yi-xie-xiao-ji-qiao.html">posted at 19:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags selected">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 16, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shell-bian-cheng-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;shell 编程教程&quot;">shell 编程教程</a>
+                </h2>
+
+                
+                
+
+                <h1>变量和值</h1>
+<p>variables are referenced by $var or ${var}. Global variables are visible to all sub bash sessions, and are often called env variables, local variables are only visible to local session, not subsessions.</p>
+<p>Global variables can be viewed as <code>env</code>, and can be created by <code>export</code>.</p>
+<div class="highlight"><pre><span></span>TEST=testing; export $TEST …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shell-bian-cheng-jiao-cheng.html">posted at 01:38</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags selected">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/sudo-passwordless.html" rel="bookmark" title="Permanent Link to &quot;sudo passwordless&quot;">sudo passwordless</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span><span class="err">$</span> <span class="n">EDITOR</span><span class="o">=</span><span class="n">vi</span> <span class="n">visudo</span>
+
+<span class="cp"># then add this</span>
+
+<span class="n">ALL</span> <span class="n">ALL</span><span class="o">=</span><span class="p">(</span><span class="n">ALL</span><span class="p">)</span> <span class="nl">NOPASSWD</span><span class="p">:</span> <span class="n">ALL</span>
+<span class="n">username</span> <span class="n">ALL</span><span class="o">=</span><span class="p">(</span><span class="n">ALL</span><span class="p">)</span> <span class="nl">NOPASSWD</span><span class="p">:</span> <span class="n">ALL</span>
+<span class="nf">%group</span> <span class="n">ALL</span><span class="o">=</span><span class="p">(</span><span class="n">ALL</span><span class="p">)</span> <span class="nl">NOPASSWD</span><span class="p">:</span> <span class="n">ALL</span>
+<span class="n">Defaults</span> <span class="n">env_keep</span> <span class="o">+=</span> <span class="s">&quot;EDITOR&quot;</span>
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/sudo-passwordless.html">posted at 13:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags selected">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-wen-jian-guan-li.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行文件管理&quot;">Linux 命令行文件管理</a>
+                </h2>
+
+                
+                
+
+                <h2>get current file path</h2>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash </span>
+<span class="c1"># Absolute path to this script, e.g. /home/user/bin/foo.sh</span>
+<span class="nv">SCRIPT</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="k">)</span>
+<span class="c1"># Absolute path this script is in, thus /home/user/bin</span>
+<span class="nv">SCRIPTPATH</span><span class="o">=</span><span class="k">$(</span>dirname <span class="s2">&quot;</span><span class="nv">$SCRIPT</span><span class="s2">&quot;</span><span class="k">)</span>
+<span class="nb">echo</span> <span class="nv">$SCRIPTPATH</span>
+</pre></div>
+</td></tr></table>
+
+<p>这些程序基本都有一个模式：如果不给定文件作为参数，那么就从stdin读取，从 stdout 输出，非常适合 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-wen-jian-guan-li.html">posted at 12:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags selected">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ming-ling-xing-ya-suo-tu-pian-de-gong-ju.html" rel="bookmark" title="Permanent Link to &quot;命令行压缩图片的工具&quot;">命令行压缩图片的工具</a>
+                </h2>
+
+                
+                
+
+                <p>加载速度对于网页的体验还是很重要的, 而每个页面比较耗费带宽的资源就是图片了, 所以在页面发布后对图像做适当的压缩是很有必要的.</p>
+<p>常用的图片格式基本有三种: jpg, png 和 gif, 分别有不同的压缩工具</p>
+<p>JPG 压缩建议使用 jpegoptim, 实测压缩比在40%左右, 最常用的语法是</p>
+<p><code>jpegoptim -p -m&lt;dd&gt;  &lt;imagefile&gt;</code></p>
+<p>其中 -p 是保留 mtime 的意思, 也可以用 --perserve, -m 后面跟两个数字表示, 压缩的比例, 一般用90即可, 肉眼无法分辨, 且能够压缩掉40%左右</p>
+<p>png 压缩有两个选项, 常规的 optipng 和另一个新一点 pngquant, 测试了一下, 发现 optipng 速度慢而且压缩效率低, pngquant 则表现相当优秀, 但是需要注意 pngquant 是有损压缩.</p>
+<p>pngquant …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ming-ling-xing-ya-suo-tu-pian-de-gong-ju.html">posted at 01:42</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags selected">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/converting-mp4-to-gif.html" rel="bookmark" title="Permanent Link to &quot;converting mp4 to gif&quot;">converting mp4 to gif</a>
+                </h2>
+
+                
+                
+
+                <h2>Converting MP4 to gif</h2>
+<p>To convert the entire video to GIF, use the following command:</p>
+<p><code>ffmpeg -i small.mp4 small.gif</code></p>
+<p>To convert just a portion of a video clip to GIF, use the following command:</p>
+<p><code>ffmpeg -t 3 -ss 00:00:02 -i small.webm small-clip.gif</code></p>
+<p>The snippet …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/converting-mp4-to-gif.html">posted at 01:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags selected">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-zhang-hu-guan-li.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行账户管理&quot;">Linux 命令行账户管理</a>
+                </h2>
+
+                
+                
+
+                <p>执行 <code>sudo vi /etc/suduers</code>, 然后输入：</p>
+<p><code>username ALL=(ALL) NOPASSWD: ALL</code></p>
+<div class="highlight"><pre><span></span>useradd -m USERNAME  # add a user
+userdel USERNAME  # delete a user
+passwd -e  # password expire next time user login
+
+groups username  # view username groups
+usermod -G groupname username  # add user to a group
+usermod -g groupname username # set user …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-zhang-hu-guan-li.html">posted at 12:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags selected">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

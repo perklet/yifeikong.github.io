@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "计算机" | Page 13</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/ji-suan-ji/page/13/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jan 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-auth-and-user.html" rel="bookmark" title="Permanent Link to &quot;django auth and user&quot;">django auth and user</a>
+                </h2>
+
+                
+                
+
+                <h1>激活</h1>
+<p>django 自带的 auth 模块需要收先创建数据库才能够使用：</p>
+<div class="highlight"><pre><span></span>python manage.py migrate auth
+python manage.py migrate
+</pre></div>
+
+
+<p>request.user.is_anonymous 检查用户是否</p>
+<p>django comes with login/logout forms and views</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">views</span> <span class="k">as</span> <span class="n">auth_views</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^login/$&#39;</span><span class="p">,</span> <span class="n">auth_views …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-auth-and-user.html">posted at 22:53</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jan 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/tiller-for-docker.html" rel="bookmark" title="Permanent Link to &quot;tiller for docker&quot;">tiller for docker</a>
+                </h2>
+
+                
+                
+
+                <h1>Yifei's Notes</h1>
+<p>Tiller SUCKS</p>
+<p>The only good part of tiller is that it makes a docker image can read environment variables and generate config files based on predefined templates, this functionality should easily be achieved by python and jinja2</p>
+<h1>Tiller</h1>
+<p>tiller runs program such as nginx inside docker instead of …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/tiller-for-docker.html">posted at 20:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags">Docker</a>
+                </div>
+            </article>            <h4 class="date">Dec 18, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xue-xi-xie-yi-ge-bian-yi-qi.html" rel="bookmark" title="Permanent Link to &quot;学习写一个编译器&quot;">学习写一个编译器</a>
+                </h2>
+
+                
+                
+
+                <h1>为什么？</h1>
+<p>有一个很好的比喻：不懂编译器写程序就好比没有学过人体解剖学就去画人像一样，能当让是能，但是核心上总有些不对的地方</p>
+<p>每个成功的项目都有很多的语言构成，拿一个简单的 Python Web 项目来说，我们可能需要 Python、yml、jinja、ini 等等多种语言（不一定是完备的变成语言）。总有一天你对发现现有的语言并不能特别好得满足你的特定需求的时候，而这时候你就需要一个编译器了。</p>
+<p>设计一门语言还是一个很好的联系</p>
+<p><img alt="" src="http://www.craftinginterpreters.com/image/a-map-of-the-territory/mountain.png"></p>
+<h1>编译的步骤</h1>
+<p><img alt="" src="http://www.craftinginterpreters.com/image/a-map-of-the-territory/string.png"></p>
+<ol>
+<li>Scanning，也就是词法分析（Lexical Analysis）</li>
+<li>Parsing</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xue-xi-xie-yi-ge-bian-yi-qi.html">posted at 07:14</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/bian-yi-yuan-li.html" class="tags">编译原理</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Dec 17, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-dan-yuan-ce-shi.html" rel="bookmark" title="Permanent Link to &quot;Python 的单元测试&quot;">Python 的单元测试</a>
+                </h2>
+
+                
+                
+
+                <h1>编写测试的基本原则</h1>
+<p>每一个测试单元必须是完全独立的。每一个必须能够独立运行以及在其他的测试组中运行，不管他们的顺序如何。加载和清空数据应该使用 setUp() 和 tearDown() 方法（如果使用unittest）。</p>
+<p><strong>sans-io</strong>。也就是把逻辑和 IO 分开来，这样在测试的时候方便指定输入，以及捕获输出。</p>
+<p>尽量让测试跑的快一点。如果一个测试在几毫秒之内跑不完的话，开发就会慢下来，以至于没有人再去跑这些测试了。如果实在有很花时间的测试，把他们单独放在一起定期执行。</p>
+<p>如果你正在开发某样东西的过程中被打断的话，可以写一个测试，这样当你回过头来的时候还能很快想起来需要做什么。</p>
+<p>使用有描述性的长名字。实际代码中你可能使用 <code>square()</code> 这样的名字，但是在测试用你要用 <code>test_square_of_number_2</code> 这样的名字。</p>
+<p>测试代码的另一个用途是作为新手的介绍。让别人来看你的代码的时候，看看测试就知道他是干什么的了。</p>
+<h1>编写测试的思路</h1>
+<p>按照代码逻辑分支测试，把代码的每一个分支的</p>
+<ol>
+<li>入口参数是什么</li>
+<li>出口参数是什么</li>
+<li>副作用是什么</li>
+<li>产生的异常是什么</li>
+</ol>
+<p>都测试到。</p>
+<h1>工具选择</h1>
+<p>Python 常用的测试工具有三种：</p>
+<ol>
+<li>标准库自带的 unittest</li>
+<li>nose[2 …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-dan-yuan-ce-shi.html">posted at 20:26</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Dec 16, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/google-guan-yu-machine-leaning-de-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;Google 关于Machine Leaning 的笔记&quot;">Google 关于Machine Leaning 的笔记</a>
+                </h2>
+
+                
+                
+
+                <p>前几天看了 Google 的一个关于 Machine Learning 的<a href="https://docs.google.com/presentation/d/1kSuQyW5DTnkVaZEjGYCkfOxvzCqGEFzWBy4e9Uedd9k/preview">slides</a>，感觉不错，整理一下学习笔记</p>
+<h1>ML 的定义</h1>
+<blockquote>
+<p>An approach to achieve artificial intelligence through systems that can learn from experience to find patterns in that data</p>
+<p>ML teaches a computer to recognise patterns by examples, rather than programming it with specific rules.</p>
+</blockquote>
+<p>一个例子：</p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tNc79gy1fmjv6ugbr4j31jw0mo4qp.jpg"></p>
+<h1>feature</h1>
+<p>一般来说，几个属性就代表了几个维度 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/google-guan-yu-machine-leaning-de-bi-ji.html">posted at 19:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/ji-qi-xue-xi.html" class="tags">机器学习</a>
+                </div>
+            </article>            <h4 class="date">Dec 10, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/lispy-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;lispy 笔记&quot;">lispy 笔记</a>
+                </h2>
+
+                
+                
+
+                <p>阅读 norvig 文章<a href="http://norvig.com/lispy.html">(How to Write a (Lisp) Interpreter (in Python))</a>的笔记。</p>
+<p>作为从数学系转过来的学生，之前并没有学过编译原理，只是自己在一些文章中读过关于编译器的只言片语，借这篇文章了解一些编辑器的基本知识吧。</p>
+<p>这篇文章主要是用 Python 实现了一个 lisp 的解释器。lisp 语言的语法非常简单，可以说lisp语言本身就是 AST 。一个解释器基本有两个部分。一部分是 parser，生成AST，另一部分是执行，运行AST。</p>
+<div class="highlight"><pre><span></span>code --&gt; (parse)  --&gt; AST --&gt; (eval) --&gt; result
+</pre></div>
+
+
+<p>也就是我们只要去实现 parse 和 eval 两个函数就好了～</p>
+<h1>类型定义</h1>
+<p>这里使用了几个类型，都是直接衍生自Python 的原生类型</p>
+<div class="highlight"><pre><span></span>Symbol = str  # 变量
+Number = (int …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/lispy-bi-ji.html">posted at 05:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/bug-cuo-ti-ben.html" rel="bookmark" title="Permanent Link to &quot;bug 错题本&quot;">bug 错题本</a>
+                </h2>
+
+                
+                
+
+                <p>发现有一些错误是自己经常犯的，不记录下来回顾一下，总是会一直犯。高中的时候还有习惯来记录错题，然而这么好的习惯，到了大学里却莫名其妙的没有了，知道毕业两年后的今天才突然想起。所以第一个场贩的错误就是思想上的——学习是一件终身的事，要延续好习惯。</p>
+<p>对于各种持有资源的连接池对象等，要时刻注意它们是否是线程安全的。</p>
+<h1>Python</h1>
+<h2>更新变量的value的时候，变量名写错了，导致创建了一个没有用的新变量，老变量的value却没有更新</h2>
+<p>解决：</p>
+<ol>
+<li>使用pylint 检查代码，会提示 unused variable；</li>
+<li>在写代码的时候多用自动补全，而不要手动打出每一个变量。</li>
+</ol>
+<p>Python 的变量声明和赋值没有分开，这个是一个坑，只能通过多用工具检查来实现</p>
+<h1>故障排查</h1>
+<ul>
+<li>
+<p>有时候删文件删不掉但是空间还在占用是因为还有程序在使用这个文件</p>
+</li>
+<li>
+<p>CPU wait 比较高说明在做io</p>
+</li>
+<li>
+<p>操作系统相关问题（OOM）</p>
+</li>
+</ul>
+<p><code>dmesg -T</code> 或 <code>tail -200 /var/log/kern.log</code> 查看系统kill进程的日志，可以看到被kill掉时候的内存占用，再用free -m 查看一下是否超出了内存 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/bug-cuo-ti-ben.html">posted at 22:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiang-fa.html" class="tags">想法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pdb.html" rel="bookmark" title="Permanent Link to &quot;pdb&quot;">pdb</a>
+                </h2>
+
+                
+                
+
+                <p>常用命令</p>
+<ul>
+<li>[n]ext 下一步</li>
+<li>[s]tep into 进入函数</li>
+<li>[r]eturn 跳出函数</li>
+<li>[b]reakpoint 打断点</li>
+</ul>
+<p>pdb</p>
+<p>pdb is fine, just don’t have so many features</p>
+<p>Usage: import pdb; pdb.set_trace()</p>
+<p>Ipdb is better</p>
+<p>Usage: import ipdb; ipdb.set_trace()
+n   next
+p   print
+pp  pprint
+s   setp into
+c   continue to …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pdb.html">posted at 23:47</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 25, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/zan-shi-mei-yong-dao-de-ruan-jian-qing-dan.html" rel="bookmark" title="Permanent Link to &quot;暂时没用到的软件清单&quot;">暂时没用到的软件清单</a>
+                </h2>
+
+                
+                
+
+                <p>DNS</p>
+<ul>
+<li>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzIwMzg1ODcwMw==&amp;mid=2247487141&amp;idx=1&amp;sn=d8e3d8bb867e65d0f09ed38f58949956&amp;chksm=96c9b8c5a1be31d3368334a5c0b7ade1cad89185f4a643d1be2778fe0198f6a48dc593792ae1#rd">PowerDNS 拥有web管理界面的DNS</a></p>
+</li>
+<li>
+<p><a href="http://xiaqunfeng.cc/2017/02/03/Dm-cache-vs-Bcache/">bcache</a> <a href="https://blog.lilydjwg.me/2015/5/11/self-made-sshd-with-bcache.92025.html">另一篇</a></p>
+</li>
+<li>
+<p><a href="http://man7.org/linux/man-pages/man7/vdso.7.html">vdso</a></p>
+</li>
+<li>
+<p><a href="https://zhuanlan.zhihu.com/clickhouse">clickhouse</a></p>
+</li>
+<li>
+<p><a href="https://github.com/major/MySQLTuner-perl">Mysql Tunner</a></p>
+</li>
+<li>
+<p><a href="https://www.maptiler.com/">切割地图 maptiler</a></p>
+</li>
+</ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/zan-shi-mei-yong-dao-de-ruan-jian-qing-dan.html">posted at 18:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 24, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/sklearn-ru-men-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;sklearn 入门笔记&quot;">sklearn 入门笔记</a>
+                </h2>
+
+                
+                
+
+                <p>前一阵看了一个叫做 <a href="https://morvanzhou.github.io/tutorials/machine-learning/sklearn/1-1-why/">莫烦Python</a> 的教程，还有 <a href="http://scikit-learn.org/stable/tutorial/basic/tutorial.html">sklearn的官方教程</a> 初步了解了一下 sklearn 的基本概念，不过教程毕竟有些啰嗦，还是自己记录一下关键要点备忘。</p>
+<h1>机器学习要解决的问题</h1>
+<h2>什么是机器学习？</h2>
+<p>sklearn 给了一个定义</p>
+<blockquote>
+<p>In general, a learning problem considers a set of n samples of data and then tries to predict properties of unknown data. If each sample is more than a single number and, for instance, a multi-dimensional …</p></blockquote>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/sklearn-ru-men-bi-ji.html">posted at 19:35</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/ji-qi-xue-xi.html" class="tags">机器学习</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/12" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/14" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 13 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

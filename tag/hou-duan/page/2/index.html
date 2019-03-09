@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "后端" | Page 2</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/hou-duan/page/2/index.html">后端</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Oct 05, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-you-zhuang-tai-fu-wu.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——部署有状态服务&quot;">kubernetes 初探——部署有状态服务</a>
+                </h2>
+
+                
+                
+
+                <p>为了部署我们自己的应用, 首先需要把基础设施部署上去, 其中数据库就占了大头. 有人说数据库等应用不是和容器化部署, 但是也有人认为所有的应用都适合容器化部署. 在这里我们不讨论这些观点，仅以部署 MySQL 为例说明一下如何在 K8S 上部署有状态服务。</p>
+<h1>相关概念</h1>
+<ul>
+<li>PersistentVolume(PV) 是集群之中的一块网络存储。跟 Node 一样，也是集群的资源。PV 跟 Volume 类似，不过会有独立于 Pod 的生命周期。这一 API 对象包含了存储的实现细节，例如 NFS、iSCSI 或者其他的云提供商的存储系统。</li>
+<li>PersistentVolumeClaim (PVC) 是用户的一个请求。他跟 Pod 类似。Pod 消费 Node 的资源，PVC 消费 PV 的资源。Pod 能够申请特定的资源（CPU …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-you-zhuang-tai-fu-wu.html">posted at 08:02</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Oct 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-wu-zhuang-tai-ying-yong.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——部署无状态应用&quot;">kubernetes 初探——部署无状态应用</a>
+                </h2>
+
+                
+                
+
+                <p>kubernetes 架构图</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tNbRwly1fvxa7izqb8j30mb0gcmzk.jpg"></p>
+<ul>
+<li>Master. 用于控制整个集群部署的机器, 为了高可用, 可以使用多台，一般至少三台为宜。</li>
+<li>Node. 工作节点, 用于部署服务. 一台机器可以既是 Master 也是 Worker，当然最好 Master 不要做 Worker。</li>
+<li>Pod. k8s 部署的最小单元, 一个 Pod 中可能包含多个 container. Pod 随时可能挂掉，也可能被替换。</li>
+<li>Label. Pod 的标签, 可以通过这些标签（组合）来选择对应的 Pod。</li>
+<li>Replica Set. 作为一个高可用的系统, 每个服务一般来说可能有多个 Pod. Replication Set 用来创建并保证有足够的 Pod 副本。RS 的名字总是 <Deployment的名字>-<pod template的hash值> 格式的。</li>
+<li>Deployment. 用户一般来说不会直接创建 …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-wu-zhuang-tai-ying-yong.html">posted at 17:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Sep 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-ji-qun.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——部署集群&quot;">kubernetes 初探——部署集群</a>
+                </h2>
+
+                
+                
+
+                <p>随着 docker cloud 的关闭，容器的编排工具之争似乎已经结束了，Docker Swarm 上算是完了，Kubernetes 笑到了最后。然而 k8s 的组件众多，因此部署起来也很麻烦。为此，网上有不少的网上有不少的部署教程和脚本，包括但不限于：</p>
+<ul>
+<li>kubesaz</li>
+<li>minikube</li>
+<li>kubespray</li>
+<li>rke</li>
+<li>kubernetes: the hard way</li>
+</ul>
+<p>有的出于教学目的的单机版本，有的是可以在生产环境部署的版本。研究了一番，发现 rke 这个工具应该是最简单的了。不过 rke 还不太稳定，目前看来，kubespray 声明了可以在生产环境使用</p>
+<p>本文基于 ubuntu 16.04. CentOS 上好多默认设置都需要修改，因此建议大家基于 Ubuntu 部署 k8s。</p>
+<h1>使用 kubespray 安装 …</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-ji-qun.html">posted at 04:58</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Sep 20, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/influxdbgrafanatelegraf-jian-kong-xi-tong-da-jian.html" rel="bookmark" title="Permanent Link to &quot;influxdb+grafana+telegraf 监控系统搭建&quot;">influxdb+grafana+telegraf 监控系统搭建</a>
+                </h2>
+
+                
+                
+
+                <p>本文基于 ubuntu 18.04</p>
+<h1>要不要用 docker？</h1>
+<p>这是一个哲学问题，用不用其实都有各自的好处。不过在这里我倾向于不用。因为 influxdb 和 grafana 都有好多的状态，而且不是都可以写到 mysql 中的，所以既然还得 mount 出来，何苦用 docker 呢？telegraf 需要采集系统的相关信息，更不适合放在 docker 里面。</p>
+<h1>搭建过程</h1>
+<h2>influxdb &amp;&amp; telegraf</h2>
+<p>因为这两个都是一家的产品，所以安装步骤都是一样的。按照<a href="https://docs.influxdata.com/influxdb/v1.6/introduction/installation/">官网</a>给的安装步骤，其实很简单的。</p>
+<div class="highlight"><pre><span></span>curl -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+source /etc …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/influxdbgrafanatelegraf-jian-kong-xi-tong-da-jian.html">posted at 19:05</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Sep 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/jian-kong-xi-tong-xuan-xing.html" rel="bookmark" title="Permanent Link to &quot;监控系统选型&quot;">监控系统选型</a>
+                </h2>
+
+                
+                
+
+                <p>现代的监控系统一般都有如下几部分组成：</p>
+<p>时序数据库 + 前端显示 + 报警系统 + 指标收集</p>
+<p>一般需要实现的功能:</p>
+<ul>
+<li>度量数据收集和可视化</li>
+<li>收集尽可能多的性能和状态数据</li>
+<li>图形化做有意义的展示</li>
+<li>如果发现可疑问题,可以关联其他图表找到原因</li>
+<li>错误检测</li>
+<li>按需告警, 触发条件越宽松则告警应该越少</li>
+<li>避免误报</li>
+</ul>
+<p>从监控的层次划分的话,一般包含三层监控:</p>
+<ul>
+<li>基础层: 主机的CPU,内存,网络及IO等</li>
+<li>中间层: 应用运行的中间件层, Nginx, Tomcat, MySQL, Redis</li>
+<li>应用层: 服务端及客户端性能数据,如API访问次数和响应时间等</li>
+</ul>
+<p>现代的监控越来越关注应用层和其他层数据的整合能力, 具有快速找到系统瓶颈, 方便扩容或代码优化.</p>
+<h1>时序数据库的选择</h1>
+<p>监控数据往往都带有时间戳，其实就是一种典型时间序列数据，而这方面已经有很多专门的存储系统，如 opentsdb，influxdb，prometheus 等。相比 mysql 这样的传统数据库，这类系统在存储、查询上针对时间序列数据都做了特别的优化。</p>
+<p>其中 opentsdb 基于 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/jian-kong-xi-tong-xuan-xing.html">posted at 23:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 07, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/rabbitmq-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;rabbitmq 教程&quot;">rabbitmq 教程</a>
+                </h2>
+
+                
+                
+
+                <p>更新：弃坑了，rabbitmq 在我这里总是崩溃，实在没法正常使用</p>
+<p>评估了几款 Message Queue，发现还是 rabbitmq 比较简单一些，各种特性也支持地很好。网上好多教程说“rabbitmq 非常重量级，适合企业应用开发”，这些话可以说是人云亦云，瞎扯了。实际上 rabbitmq 采用 erlang 开发，不光性能强大，而且从操作和运维上来说都是非常轻量级的。</p>
+<h1>基础概念</h1>
+<p>rabbitmq 实现的是 AMQP 0.9.1 协议，其中重要概念有：</p>
+<ul>
+<li>producer：生产者，生产消息</li>
+<li>consumer：消费者，消费消息</li>
+<li>routing-key: 每个消息中决定消息如何分发的参数</li>
+<li>exchange：类似路由，消息实际发送给 exchange，可以指定几种不同的分发算法，然后用 routing-key 作为参数计算出该发送到哪个队列中 …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/rabbitmq-jiao-cheng.html">posted at 17:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 23, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-de-wait_timeout-wen-ti.html" rel="bookmark" title="Permanent Link to &quot;Mysql 的 wait_timeout 问题&quot;">Mysql 的 wait_timeout 问题</a>
+                </h2>
+
+                
+                
+
+                <p>Mysql 中默认的 wait_timeout 和 interactive_timeout 的值是八小时，也就是一个连接（交互式和非交互式的）只有在 8 小时没有活动之后才会被关闭掉。对于互联网公司来说，这个值实在太大了，一个库可能被很多脚本和服务访问，可能只是一个简短的查询就不需要数据库了，如果每个查询都占据了8小时的时间，那么 mysql 很快连接数就会满了，报出 too many connections 错误。</p>
+<p>mysql 默认的连接数可以修改 max_connections 参数，但是一个服务器能支撑的连接数显然是由硬件决定的。</p>
+<p>设置 wait_timeout 过短可能会造成一些问题，如果在 django 中两次查询的之间时间大于 wait_timeout，就会报 (2006, 'MySQL server has gone away')。django 官方给的建议是：</p>
+<ol>
+<li>当你的脚本不需要使用数据库的时候，主动关闭连接 <code>from django.db …</code></li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-de-wait_timeout-wen-ti.html">posted at 02:28</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 16, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/zai-a-li-yun-shang-wei-nei-wang-vpcda-jian-natchu-kou-fu-wu-qi.html" rel="bookmark" title="Permanent Link to &quot;在阿里云上为内网VPC搭建NAT出口服务器&quot;">在阿里云上为内网VPC搭建NAT出口服务器</a>
+                </h2>
+
+                
+                
+
+                <p>对于大多数的内部服务来说，我们是不希望他们暴露在公网上的；而且服务之间通过公网通信效率也比较低。阿里云提供了虚拟私网的服务，我们可以把服务都部署在内网。但是与此同时如何让内网的服务器能够上网也就成了问题，毕竟还是经常需要<code>apt-get</code> 一下。</p>
+<p>首先，不可能每个服务器都绑定一个弹性IP，贵且不说，这样和又把内部服务暴露在了公网。</p>
+<p>其次，阿里云提供了专用的NAT服务器，但是太贵了！！！</p>
+<p>其实 NAT 服务器也很简单啦，就是一个路由转发而已，利用 iptables 可以轻松实现。下面以一个例子来讲解一下。</p>
+<p>首先说一下 NAT 的两种术语：SNAT 和 DNAT。SNAT的意思就是 source NAT，也就是我们访问其他网站，作为 TCP 链接的来源。而 DNAT 就是 destination NAT，也就是我们作为服务器，作为 TCP 链接的重点。在这里我们要实现的是内网上网，而不是内网提供服务，所以我们只需要 SNAT …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/zai-a-li-yun-shang-wei-nei-wang-vpcda-jian-natchu-kou-fu-wu-qi.html">posted at 08:14</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yi-pian-jian-dan-de-python-grpc-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;一篇简单的 Python gRPC 教程&quot;">一篇简单的 Python gRPC 教程</a>
+                </h2>
+
+                
+                
+
+                <h1>安装</h1>
+<div class="highlight"><pre><span></span>pip install grpcio grpcio-tools protobuf googleapis-common-protos
+</pre></div>
+
+
+<h1>IDL</h1>
+<p>grpc 使用 protobuf 来定义接口。按照 protobuf 的 <a href="https://developers.google.com/protocol-buffers/docs/style">Style Guide</a> 的要求，service 和其中的方法都应该使用 CamelCase。</p>
+<p>service 关键字定义一个服务，相当于一个接口。把下面的文件保存为 helloworld.proto</p>
+<p>需要注意的是，grpc 中的方法只能接受一个参数，返回一个参数。</p>
+<div class="highlight"><pre><span></span>// The greeter service definition.
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+
+// The request message containing the …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yi-pian-jian-dan-de-python-grpc-jiao-cheng.html">posted at 05:22</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xiao-xi-dui-lie-cong-yi-lian-meng-bi-dao-kafka.html" rel="bookmark" title="Permanent Link to &quot;消息队列：从一脸懵逼到 Kafka&quot;">消息队列：从一脸懵逼到 Kafka</a>
+                </h2>
+
+                
+                
+
+                <p>消息队列是分布式系统中分离解耦、削峰填谷、横向扩展的一个利器。而其中尤其以 kafka 为代表，在性能等各方面都很出众。</p>
+<p>Kafka 使用 ZK 作为协调器，原生支持集群。每条消息有一个 <key, value, timestamp> 组成。</p>
+<p>每个 partition 可以有多台机器，其中的 leader 负责所有读写，而 follower 复制 leader 的所有操作。如果 leader 挂了， follower 就会顶上去。生产者既可以使用 RR 这些算法来往不同的 partition 发东西，做负载均衡，也可以按照某些业务规则，发到指定的 partition。</p>
+<p>消息队列有两种模型，Queue 和 PubSub。Kafka 通过 Consumer Group 这个概念很好地解决了这个问题</p>
+<h1>术语</h1>
+<table>
+<thead>
+<tr>
+<th>Term …</th></tr></thead></table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xiao-xi-dui-lie-cong-yi-lian-meng-bi-dao-kafka.html">posted at 04:35</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/3" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 2 of 7</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

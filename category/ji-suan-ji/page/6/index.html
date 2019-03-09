@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles in the "计算机" category | Page 6</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/category/ji-suan-ji/page/6/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-po-jie-bei-js-jia-mi-de-shu-ju.html" rel="bookmark" title="Permanent Link to &quot;如何破解被 JS 加密的数据&quot;">如何破解被 JS 加密的数据</a>
+                </h2>
+
+                
+                
+
+                <p>由于网页和JavaScript都是明文的，导致很多API接口都直接暴露在爬虫的眼里，所以好多
+网站选择使用混淆后的 JavaScript 来加密接口。其中有分为两大类：</p>
+<ol>
+<li>通过 JavaScript 计算一个参数或者 Cookie 作为接口的签名验证</li>
+<li>返回的数据是加密的，需要使用 JavaScript 解密</li>
+</ol>
+<p>不过总的来说，这两种加密的破解思路都是一样的。</p>
+<ol>
+<li>找到相关的网络请求。如果找不到，清空缓存，尝试触发</li>
+<li>打断点找到相关代码，可以是 ajax 断点或者 js 断点。或者直接看网络请求的
+   initiator</li>
+<li>逐层分析，找到加密函数</li>
+<li>使用 node 执行js代码获得数据</li>
+</ol>
+<h1>具体步骤</h1>
+<p>有空了再写。。</p>
+<p>参考：</p>
+<ol>
+<li><a href="https://cuiqingcai.com/5024.html">中国天气质量网返回结果加密的破解</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/32139007">破解 Google 翻译的token</a></li>
+<li><a href="https://github.com/jhao104/spider/tree/master/PyV8%E7%A0%B4%E8%A7%A3JS%E5%8A%A0%E5%AF%86Cookie">JavaScript 生成 Cookie</a></li>
+<li><a href="http://liehu.tass.com.cn/archives/1016">常见加密算法</a></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-po-jie-bei-js-jia-mi-de-shu-ju.html">posted at 04:32</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Jul 14, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xu-lie-hua-xie-yi-de-xuan-ze-json-vs-msgpack-vs-thrift-vs-protobuf.html" rel="bookmark" title="Permanent Link to &quot;序列化协议的选择 json vs msgpack vs thrift vs protobuf&quot;">序列化协议的选择 json vs msgpack vs thrift vs protobuf</a>
+                </h2>
+
+                
+                
+
+                <p>当我们的程序需要保存一些对象到硬盘上供下次运行时使用，或者需要和其他程序交换数据
+的时候，需要把对象用某种方式编程二进制字符串然后保存到硬盘上或者发送出去，这种方
+法我们一般称作序列化。序列化有很多不同的方法, 一般考虑三个方面：</p>
+<ol>
+<li>速度，序列化和反序列化的速度越快越好</li>
+<li>体积，序列化之后的文件体积越小越好</li>
+<li>跨语言，序列化能够支持的语言越多越好</li>
+</ol>
+<p>下面考察几种序列化的方法</p>
+<ol>
+<li>语言内置的序列化。比如 Python 的 pickle，显然这种协议只能在一种语言内部使用，
+   而且对于Python来说，甚至不同版本的 pickle 协议都是不兼容的。</li>
+<li>json / xml。这两个都可以把对象序列化成人类可读的字符串的形式，但是序列化后之
+   后体积都变大不少，而且性能也不好，适合于简单的场景。另外一点就是 json 不能定
+   义 schema（接口规范），<em>在大型项目中 schema 是必须的</em>。</li>
+<li>msgpack 序列化之后的体积也比较紧致，但是同样不能定义 schema。</li>
+<li>专门的序列化库。比如 protobuf/thrift。这些库都支持多个语言 …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xu-lie-hua-xie-yi-de-xuan-ze-json-vs-msgpack-vs-thrift-vs-protobuf.html">posted at 19:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 10, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/get-he-post-fang-fa-de-xuan-ze-he-urlde-she-ji.html" rel="bookmark" title="Permanent Link to &quot;Get 和 Post 方法的选择和URL的设计&quot;">Get 和 Post 方法的选择和URL的设计</a>
+                </h2>
+
+                
+                
+
+                <p>HTTP 中常用的方法有 GET/POST/PUT/DELETE 等，在设计API或者表单的时候我们需要选择合适的方法。一般有两种方案：</p>
+<ol>
+<li>只使用 GET 和 POST，GET 主要用来读取数据，POST 用来创建或者更新数据。</li>
+<li>RESTful的方法，GET/POST/PUT/DELETE 分别用来增删改查。</li>
+</ol>
+<h1>URL 的设计</h1>
+<p>为了探讨两种方案，首先我们来看一下 URL 的设计。URL 是 Universal Resource Locator 的缩写，也就是一个 URL 表示的是唯一的一个资源，所以这个资源的 id 或者说主键应该是放在 URL 路径中的。</p>
+<p>比如一个好的设计：</p>
+<div class="highlight"><pre><span></span>http://example.com/post/1234
+</pre></div>
+
+
+<p>不好的设计 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/get-he-post-fang-fa-de-xuan-ze-he-urlde-she-ji.html">posted at 08:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>            <h4 class="date">Jul 09, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/fu-jin-cheng-tui-chu-hou-ru-he-tui-chu-zi-jin-cheng.html" rel="bookmark" title="Permanent Link to &quot;父进程退出后如何退出子进程&quot;">父进程退出后如何退出子进程</a>
+                </h2>
+
+                
+                
+
+                <p>我们知道当子进程推出的时候，父进程会收到 SIGCHLD 信号，从而可以采取相应的操作。但是当父进程退出的时候，系统会把子进程的父进程更改为pid=0的 init 进程，而且子进程不会收到任何信号。而我们经常想在父进程退出的时候，让子进程也推出。在 Python 中可以有如下几种做法。</p>
+<h1>设置子进程为 daemon</h1>
+<p>这里的 daemon 和系统的守护进程没有任何关系，是 quit_when_parent_dies 的意思。也就是当父进程退出的时候，会自动尝试关闭 daemon=True 的子进程。</p>
+<div class="highlight"><pre><span></span>p = multiprocessing.Process(target=foo)
+p.daemon = True
+p.start()
+</pre></div>
+
+
+<p><a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Process.daemon">官方文档</a></p>
+<h1>在子进程中设置 PDEATHSIG</h1>
+<p>在 Linux 中，进程可以要求内核在父进程退出的时候给自己发信号。使用系统调用 prctl。</p>
+<div class="highlight"><pre><span></span>prctl(PR_SET_PDEATHSIG …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/fu-jin-cheng-tui-chu-hou-ru-he-tui-chu-zi-jin-cheng.html">posted at 03:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/hou-duan-gong-ju-he-suan-fa-ji.html" rel="bookmark" title="Permanent Link to &quot;后端工具和算法集&quot;">后端工具和算法集</a>
+                </h2>
+
+                
+                
+
+                <p>总结一下后端常用的工具和蕴含的算法</p>
+<p>TODO: 应该把 GitHub 5000 star 以上的项目都看一下</p>
+<ul>
+<li>
+<p>前端</p>
+<ul>
+<li>框架<ul>
+<li>vue</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>数据库</p>
+<ul>
+<li>mysql(btree)</li>
+<li>postgresql</li>
+<li>redis</li>
+<li>pika/rocksdb/leveldb</li>
+<li>elasticsearch</li>
+<li>mongodb</li>
+<li>memcache 功能是redis的子集，现在用得比较少了</li>
+</ul>
+</li>
+<li>
+<p>消息队列</p>
+<ul>
+<li>kafka</li>
+<li>redis stream</li>
+<li>rabbitmq<ul>
+<li>amqp 协议</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>RPC 和序列化</p>
+<ul>
+<li>protobuf/grpc</li>
+<li>thrift</li>
+<li>msgpack</li>
+<li>envoy<ul>
+<li>service mesh 的思想</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>负载均衡</p>
+<ul>
+<li>四层和七层负载均衡的区别</li>
+<li>nginx</li>
+<li>LVS</li>
+<li>一致性哈希</li>
+</ul>
+</li>
+<li>
+<p>部署和容器化</p>
+<ul>
+<li>docker<ul>
+<li>cgroups</li>
+</ul>
+</li>
+<li>kubernetes<ul>
+<li>borg …</li></ul></li></ul></li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/hou-duan-gong-ju-he-suan-fa-ji.html">posted at 08:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 23, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ruan-jian-gong-cheng-zhong-de-3-de-gui-ze.html" rel="bookmark" title="Permanent Link to &quot;软件工程中的 “3” 的规则&quot;">软件工程中的 “3” 的规则</a>
+                </h2>
+
+                
+                
+
+                <p>我注意到了一个神奇的软件工程法则：在你正确地解决问题之前，你至少需要3个例子。</p>
+<p>具体说来是这样的：</p>
+<ol>
+<li>不要试图在两个类之间共享代码，至少等到你有三个类的时候。</li>
+<li>解决问题的前两次尝试一定会失败，因为你还没完全理解这个问题。第三次才行</li>
+<li>任何想要早期就能设计好的尝试都会导致对于巧合情形的过度拟合。</li>
+</ol>
+<h1>你在说什么？请给个例子</h1>
+<p>比如说你在实现一个类，从银行抓取数据。下面是一个非常傻瓜的版本，但是应该说明了问题：</p>
+<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">ChaseScraper</span>:
+    <span class="kt">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">_username</span> <span class="o">=</span> <span class="nx">username</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">_password</span> <span class="o">=</span> <span class="nx">password</span>
+
+    <span class="nx">def</span> <span class="nx">scrape</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">session</span> <span class="o">=</span> <span class="nx">requests</span><span class="p">.</span><span class="nx">Session</span><span class="p">()</span>
+        <span class="nx">sessions</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;https://chase.com/rest/login.aspx&#39;</span><span class="p">,</span>
+                 <span class="nx">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;username&#39;</span><span class="o">:</span> <span class="nx">self</span><span class="p">.</span><span class="nx">_username</span><span class="p">,</span>
+                   <span class="s1">&#39;password&#39;</span><span class="o">:</span> <span class="nx">self</span><span class="p">.</span><span class="nx">_password …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ruan-jian-gong-cheng-zhong-de-3-de-gui-ze.html">posted at 02:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-ru-he-ya-suo-wen-jian.html" rel="bookmark" title="Permanent Link to &quot;Python 中如何压缩文件&quot;">Python 中如何压缩文件</a>
+                </h2>
+
+                
+                
+
+                <p>basic usage</p>
+<p>import gzip/bz2
+with gzip.open('file.gz', 'rt') as f:
+    text = f.read()</p>
+<p>NOTE: the default mode is binary.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-ru-he-ya-suo-wen-jian.html">posted at 14:02</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/curio-de-http-ku-asks-dai-ma-jie-xi.html" rel="bookmark" title="Permanent Link to &quot;curio 的 http 库 asks 代码解析&quot;">curio 的 http 库 asks 代码解析</a>
+                </h2>
+
+                
+                
+
+                <p>asks 是 Python 的异步框架 curio 中的 一个 http 库。</p>
+<h1><strong>init</strong>.py</h1>
+<p>init 函数，初始化 curio 或者 trio 库</p>
+<h1>auth.py</h1>
+<p>auth 相关函数</p>
+<h1>base_funcs.py</h1>
+<p>asks.request 函数，创建一个session，然后做请求，之后再丢弃掉这个session</p>
+<h1>cookie_utils.py</h1>
+<h2>CookieTracker类</h2>
+<p>对外的方法主要有两个 get_additional_cookies 用于获取域名对应的cookie，_store_cookies 用于添加cookie</p>
+<p>errors.py 抛出的异常的类</p>
+<h1>req_structs.py</h1>
+<h2>SocketQ</h2>
+<p>这是一个 socket 的连接池。</p>
+<p>使用一个deque作为存储，实际上相当于又模拟了一个字典{netloc …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/curio-de-http-ku-asks-dai-ma-jie-xi.html">posted at 10:23</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-cao-zuo-ssh.html" rel="bookmark" title="Permanent Link to &quot;Python 操作 ssh&quot;">Python 操作 ssh</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paramiko</span>
+<span class="n">ip</span><span class="o">=</span><span class="s1">&#39;server ip&#39;</span>
+<span class="n">port</span><span class="o">=</span><span class="mi">22</span>
+<span class="n">username</span><span class="o">=</span><span class="s1">&#39;username&#39;</span>
+<span class="n">password</span><span class="o">=</span><span class="s1">&#39;password&#39;</span>
+<span class="n">cmd</span><span class="o">=</span><span class="s1">&#39;some useful command&#39;</span> 
+<span class="n">ssh</span><span class="o">=</span><span class="n">paramiko</span><span class="o">.</span><span class="n">SSHClient</span><span class="p">()</span>
+<span class="n">ssh</span><span class="o">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">paramiko</span><span class="o">.</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
+<span class="n">ssh</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span><span class="n">port</span><span class="p">,</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">)</span>
+<span class="n">stdin</span><span class="p">,</span><span class="n">stdout</span><span class="p">,</span><span class="n">stderr</span><span class="o">=</span><span class="n">ssh</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+<span class="n">outlines</span><span class="o">=</span><span class="n">stdout</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="n">resp</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outlines</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-cao-zuo-ssh.html">posted at 10:21</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhuan-yi-html-shi-ti-zi-fu.html" rel="bookmark" title="Permanent Link to &quot;Python 转义 html 实体字符&quot;">Python 转义 html 实体字符</a>
+                </h2>
+
+                
+                
+
+                <p>在网页中经常出现 <code>&amp;lt;</code>, <code>&amp;amp;</code>, <code>&amp;0x0026;</code> 这些特殊字符，这是 html 实体字符转义，用于防止 XSS 攻击。Python3 标准库中包含了 html.entities 模块，可以用于转义和反转义这些字符。</p>
+<div class="highlight"><pre><span></span>html.entities.entitydefs 中包含了名称到符号的映射：比如{&#39;amp&#39;: &#39;&amp;&#39;}
+html.entities.name2codepoint 中包含了名称到数字的映射：比如 {&#39;amp&#39;: 0x0026}
+html.entities.codepoint2name 中包含了数字到名称的映射：比如 {0x0026: &#39;amp&#39;}
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhuan-yi-html-shi-ti-zi-fu.html">posted at 10:21</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/5" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/7" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 6 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

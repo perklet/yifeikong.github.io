@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | converting mp4 to gif</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="命令行,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/converting-mp4-to-gif.html" rel="bookmark" title="Permanent Link to &quot;converting mp4 to gif&quot;">converting mp4 to gif</a>
+                </h2>
+
+                
+                
+
+                <h2>Converting MP4 to gif</h2>
+<p>To convert the entire video to GIF, use the following command:</p>
+<p><code>ffmpeg -i small.mp4 small.gif</code></p>
+<p>To convert just a portion of a video clip to GIF, use the following command:</p>
+<p><code>ffmpeg -t 3 -ss 00:00:02 -i small.webm small-clip.gif</code></p>
+<p>The snippet above directs ffmpeg to create a GIF 3 seconds long starting at 2 seconds into the video.
+The default conversion doesn't appear to be high quality, so you can configure the bitrate via another parameter:</p>
+<p><code>ffmpeg -i small.mp4 -b 2048k small.gif</code></p>
+<h2>Convert GIF to Video</h2>
+<p>The command is quite simple:</p>
+<p><code>ffmpeg -f gif -i animation.gif animation.mp4</code></p>
+<p>You can use this same command format to convert to other video formats:</p>
+<div class="highlight"><pre><span></span>ffmpeg -f gif -i animation.gif animation.mpeg
+ffmpeg -f gif -i animation.gif animation.webm
+</pre></div>
+
+
+<p>ffmpeg and ImageMagick are awesome media utilities which you should take some time to check out if you have any questions about how to get something done!</p>
+<h2>optimize</h2>
+<p>gifsicle to scale down the image to a smaller size</p>
+<p>I used <code>ffmpeg -i foo.mp4 -r 5 -vf scale=270:-1 foo.gif</code> , where -r 5 cuts it to 5 frames per second, and <code>-vf scale=270:-1</code> scales the output to a width of 270 pixels and a height that matches the aspect ratio.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/converting-mp4-to-gif.html">posted at 01:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

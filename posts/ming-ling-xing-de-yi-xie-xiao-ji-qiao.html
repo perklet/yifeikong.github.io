@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 命令行的一些小技巧</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="命令行,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jan 28, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ming-ling-xing-de-yi-xie-xiao-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;命令行的一些小技巧&quot;">命令行的一些小技巧</a>
+                </h2>
+
+                
+                
+
+                <p>最近工作中经常用到的一些组合命令，本来想提交到 commandlinefu.com 上，但是忘记了密码，怎么也登录不上去了，记到这里吧</p>
+<ul>
+<li>脚本所在的目录</li>
+</ul>
+<div class="highlight"><pre><span></span>dirname $0
+</pre></div>
+
+
+<ul>
+<li>文件夹下面按照占用空间大小排序</li>
+</ul>
+<div class="highlight"><pre><span></span>du -sh `ls` | sort -rh
+</pre></div>
+
+
+<ul>
+<li>返回上一个目录</li>
+</ul>
+<div class="highlight"><pre><span></span>cd -
+</pre></div>
+
+
+<ul>
+<li>显示所有的日志的最后几行</li>
+</ul>
+<div class="highlight"><pre><span></span>tail *
+</pre></div>
+
+
+<ul>
+<li>set</li>
+</ul>
+<div class="highlight"><pre><span></span>set -x # 显示每个执行的命令
+set -e # 当有程序返回非0值时直接退出，相当于抛出异常
+</pre></div>
+
+
+<ul>
+<li>here doc</li>
+</ul>
+<div class="highlight"><pre><span></span>cat &lt;&lt; EOF &gt; /tmp/yourfilehere
+These contents will be written to the file.
+        This line is indented.
+EOF
+</pre></div>
+
+
+<ul>
+<li>删除包含某个关键字的所有行</li>
+</ul>
+<div class="highlight"><pre><span></span>fd -t f -0 | xargs -0 sed -i /KeyWord/d
+</pre></div>
+
+
+<ul>
+<li>在 shell 中，所有字符串都要用引号包围</li>
+</ul>
+<p>Always quote strings in bash. If you string is empty and you are testing it with == or !=, then there will be a "== is not uniary operator" error</p>
+<ul>
+<li>替换一个文件夹下的所有文件</li>
+</ul>
+<div class="highlight"><pre><span></span>find ./ -type f -exec sed -i -e &#39;s/apple/orange/g&#39; {} \;
+</pre></div>
+
+
+<p>from: https://stackoverflow.com/questions/6758963/find-and-replace-with-sed-in-directory-and-sub-directories</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ming-ling-xing-de-yi-xie-xiao-ji-qiao.html">posted at 19:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

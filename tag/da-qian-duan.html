@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "大前端"</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/da-qian-duan.html">大前端</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/css-bu-ju-ji-chu-zhi-shi.html" rel="bookmark" title="Permanent Link to &quot;CSS 布局基础知识&quot;">CSS 布局基础知识</a>
+                </h2>
+
+                
+                
+
+                <h1>布局</h1>
+<p>网页的布局是面向文档流的，也就是每个元素默认都是从左到右，从上到下依次排列的。当然就像文章一样，有些元素比如标题默认就会另起一行，并且单独占据这一行。</p>
+<p>所有的元素都分为三类：inline、inline-block、和 block。</p>
+<p>其中 block 元素占据了一行的位置，即使他们的宽度不够一行，并且他们有自己的宽度和高度，比如 h1 元素。</p>
+<p>inline-block 结合了 inline 和 block 元素的特性，首先他布局是 inline 的，也就是不会另起一行，但是又可以设定单独的高度和宽度。</p>
+<p><code>display: none</code> 将会完全不渲染该元素, <code>visibility: hidden</code> 会渲染这个元素，只是在该显式的地方留下空白</p>
+<h2>使用 inline-box 的布局</h2>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tKfTcly1fquqqp791hj30kr0i1gpe.jpg"></p>
+<h1>定位</h1>
+<p>CSS 中元素的定位有如下几种，可以使用 position 指定</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>static …</td></tr></tbody></table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/css-bu-ju-ji-chu-zhi-shi.html">posted at 07:56</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/css.html" class="tags">CSS</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 11, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yi-css-xuan-ze-qi-bei-wang-lu-cheatsheet.html" rel="bookmark" title="Permanent Link to &quot;[译] CSS 选择器备忘录（cheatsheet）&quot;">[译] CSS 选择器备忘录（cheatsheet）</a>
+                </h2>
+
+                
+                
+
+                <p>这两天打算写写爬虫，准备用 css 选择器来抽取内容，翻译了<a href="http://butlerccwebdev.net/support/css-selectors-cheatsheet.html">一篇文章</a>，正好复习一下，这篇文章遵守 CC-BY-NC-SA 协议。</p>
+<p>大多数的 web 开发者首先学会了 CSS。因为给 HTML 元素写样式规则的元素选择器都很容易理解和记忆。经过一点点练习之后，就会发现成组的 CSS 表达式非常的有必要，比如使用一个逗号分隔开选择器，就可以把同一个样式属性附加到不同的多个元素了。</p>
+<p>使用标签选择器和分组的选择器当然也有不足，那就是他们会应用到所有的标签。很快你就会意识到有时候需要给一个特定的元素加上样式。对于大多数开发者来说，最简单的选择当然是使用 class 和 id 选择器了。但是很遗憾的是这样下去的话，整个页面就会充满各种奇奇怪怪的类了。</p>
+<p>除了不管的给 HTML 添加纯粹用于应用样式的 class 和 id 之外，你也可以考虑使用高级的 CSS 选择器来给指定元素应用样式。高级的选择器大致可以分类为上下文选择器、属性选择器、伪元素选择器和伪类选择器。</p>
+<h1>元素选择器</h1>
+<p>元素选择器把样式应用到所有选中元素上，也是被使用最广泛的选择器 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yi-css-xuan-ze-qi-bei-wang-lu-cheatsheet.html">posted at 09:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/css.html" class="tags">CSS</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-sharedpreference.html" rel="bookmark" title="Permanent Link to &quot;Android SharedPreference&quot;">Android SharedPreference</a>
+                </h2>
+
+                
+                
+
+                <p>用来在应用中存储键值对配置</p>
+<p>context.getSharedPreferences("prefName", Context.MODE_PRIVATE)  get SharedPreferecnes instance
+sharedPref.getXXX("keyName", defaultValue)  get value from SharedPreferences
+sharedPref.edit()   get editor(SharedPreference.Editor)
+editor.putXXX("key-name", value)    put value
+editor.commit() commit the changes</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-sharedpreference.html">posted at 06:01</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-kai-fa-de-yi-xie-tips.html" rel="bookmark" title="Permanent Link to &quot;Android 开发的一些 tips&quot;">Android 开发的一些 tips</a>
+                </h2>
+
+                
+                
+
+                <p>Prefer Maven dependency resolution instead of importing jar files. If you explicitly include jar files in your project, they will be of some specific frozen version, such as 2.1.1. Downloading jars and handling updates is cumbersome, this is a problem that Maven solves properly, and is also encouraged …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-kai-fa-de-yi-xie-tips.html">posted at 06:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-lian-jie-wifi.html" rel="bookmark" title="Permanent Link to &quot;Android 连接 WiFi&quot;">Android 连接 WiFi</a>
+                </h2>
+
+                
+                
+
+                <p>https://stackoverflow.com/questions/4249911/android-how-to-create-eap-wifi-configuration-programmatically</p>
+<p>redirects to </p>
+<p>https://stackoverflow.com/questions/4374862/how-to-programmatically-create-and-read-wep-eap-wifi-configurations-in-android</p>
+<p>https://stackoverflow.com/questions/19170260/how-to-connect-to-wpa-eap-wifi-on-android-with-4-3-api</p>
+<p>Android 6.0 changes</p>
+<p>https://developer.android.com/about/versions/marshmallow/android-6.0-changes.html#behavior-network</p>
+<p>working methods</p>
+<p>https://stackoverflow.com/questions/12486441/how-can-i-set-proxysettings-and-proxyproperties-on-android-wi-fi-connection-usin</p>
+<p>get real ip https://stackoverflow.com/questions …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-lian-jie-wifi.html">posted at 06:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/maven-basics.html" rel="bookmark" title="Permanent Link to &quot;Maven Basics&quot;">Maven Basics</a>
+                </h2>
+
+                
+                
+
+                <p>From: http://tutorials.jenkov.com/maven/maven-tutorial.html</p>
+<h1>Introduction</h1>
+<p>Maven is built around the pom.xml file. In Maven, how to build your project is predefined in the Maven Build Life Cycles, Phases and Goals.  The POM file describes <em>what to build</em>, but most often <em>not how to build it …</em></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/maven-basics.html">posted at 05:57</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-gson-jie-xi-json-wen-dang.html" rel="bookmark" title="Permanent Link to &quot;使用 Gson 解析 json 文档&quot;">使用 Gson 解析 json 文档</a>
+                </h2>
+
+                
+                
+
+                <p>解析 json 有两种流派：</p>
+<ol>
+<li>event-driven json parse: iterate the document, not loading all into memory</li>
+<li>document-based json parse: load the full document into memory once for all.</li>
+</ol>
+<p>在 Python 中可以很容易的解析json文件，Python 中的 json.loads 是 document-based。而在 java 中可以使用 event-driven的。个人感觉这种 event-driven 的解析方式是多此一举，json本来定位就是小型的数据传输和配置存储，如果生成了一个很大的 json，应该考虑换用xml了。</p>
+<p>在 Java 中需要生成和 JSON …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-gson-jie-xi-json-wen-dang.html">posted at 05:56</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Feb 24, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/an-zhuo-zheng-shu-yu-dai-li-zi-dong-pei-zhi.html" rel="bookmark" title="Permanent Link to &quot;安卓证书与代理自动配置&quot;">安卓证书与代理自动配置</a>
+                </h2>
+
+                
+                
+
+                <p>Go to Settings &gt; Security &gt; Install from storage.</p>
+<p>install programatically can be achived by from command line, by moving certs to </p>
+<p>replacing bks file solely is useless, it has to be combined with the password</p>
+<p>https://github.com/danzeeeman/meerkat-decompiled/blob/master/io/fabric/sdk/android/services/network/PinningInfoProvider.java</p>
+<p>set …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/an-zhuo-zheng-shu-yu-dai-li-zi-dong-pei-zhi.html">posted at 18:08</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/an-zhuo-kai-fa-zhong-de-context.html" rel="bookmark" title="Permanent Link to &quot;安卓开发中的Context&quot;">安卓开发中的Context</a>
+                </h2>
+
+                
+                
+
+                <p>在安卓当中，Context几乎是无处不在的，每一个Activity是一个Context，每一个Service也是一个Context。</p>
+<p>但是如果你新起了一个线程的话，你需要显式地把Context传递进去。</p>
+<p>比如下面的例子：</p>
+<div class="highlight"><pre><span></span>public class DumpLocationLog extends Thread {
+    LocationManager lm;
+    LocationHelper loc;
+    public DumpLocationLog(Context context) {
+        loc = new LocationHelper();
+        lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+    }
+    public void run() {
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 500.0f, loc);
+    }
+}
+</pre></div>
+
+
+<p>然后使用这个线程的时候，把this，也就是一个context的实例传递进去</p>
+<p><code>new DumpLocationLog(this);</code></p>
+<p>if you are in …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/an-zhuo-kai-fa-zhong-de-context.html">posted at 05:29</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-an-zhuo-bian-yi-64wei-de-dropbear.html" rel="bookmark" title="Permanent Link to &quot;为安卓编译64位的dropbear&quot;">为安卓编译64位的dropbear</a>
+                </h2>
+
+                
+                
+
+                <h2>如何使用dropbear</h2>
+<p>这里主要是需要在安卓上生成 host key，以及把自己的公钥传到安卓上</p>
+<div class="highlight"><pre><span></span>dropbearkey -t rsa -f /data/local/dropbear_host_key # 在安卓上生成key
+adb push ~/.ssh/id_rsa.pub /data/local/authorized_keys # 在宿主机把自己的密钥传过去
+dropbear -F -E -r /data/local/dropbear_host_key -A -N root -C jk -R /data/local/authorized_keys # 按照给定的key启动dropbear
+dropbear -P /data/local/dropbear.pid -r /data/local/dropbear_host_key -A …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-an-zhuo-bian-yi-64wei-de-dropbear.html">posted at 05:13</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/2" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 1 of 6</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

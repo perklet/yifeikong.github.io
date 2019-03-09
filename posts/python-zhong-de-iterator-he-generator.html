@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Python 中的 iterator 和 generator</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-de-iterator-he-generator.html" rel="bookmark" title="Permanent Link to &quot;Python 中的 iterator 和 generator&quot;">Python 中的 iterator 和 generator</a>
+                </h2>
+
+                
+                
+
+                <p>这篇文章里面有不少概念都是错的，需要改进</p>
+<h1>迭代器</h1>
+<p>In Python, iterable and iterator have specific meanings.</p>
+<p>An iterable is an object that has an <strong>iter</strong> method which returns an iterator, or which defines a <strong>getitem</strong> method that can take sequential indexes starting from 0 (and raises an IndexError when the indexes are no longer valid). So an iterable is an object that you can get an iterator from.</p>
+<p>calling iter(iterable) will return a iterator</p>
+<p>An iterator is an object with a next (Python 2) or <strong>next</strong> (Python 3) method. 
+Whenever you use a for loop, or map, or a list comprehension, etc. in Python, the next method is called automatically to get each item from the iterator, thus going through the process of iteration.</p>
+<h1>Generators</h1>
+<p>Generators are iterators, but you can only iterate over them once. It's because they do not store all the values in memory, they generate the values on the fly. </p>
+<div class="highlight"><pre><span></span>def generator_function():
+    for i in [0, 1, 2]:
+        yield i * 2
+for item in generator_function():
+    print(item)
+# Output: 0
+# 2
+# 4
+</pre></div>
+
+
+<p>as you can see, generators are typically a filter or mapper between sequences</p>
+<div class="highlight"><pre><span></span>def fib(n):
+    a = b = 1
+    for i in range(n):
+        yield a
+        a, b = b, a + b
+</pre></div>
+
+
+<p>From <a href="http://book.pythontips.com/en/latest/generators.html">http://book.pythontips.com/en/latest/generators.html</a></p>
+<h1>迭代器协议</h1>
+<p>with open('file') as f:
+    try:
+        while True:
+            value = next(f)
+            print value
+    except StopIteration:        pass</p>
+<p>The word “generator” is confusingly used to mean both the function that generates and what it generates. In this chapter, I’ll use the word “generator” to mean the genearted object and “generator function” to mean the function that generates it.</p>
+<p>Can you think about how it is working internally?</p>
+<p>When a generator function is called, it returns a generator object without even beginning execution of the function. When next method is called for the first time, the function starts executing until it reaches yield statement. The yielded value is returned by the next call.
+The following example demonstrates the interplay between yield and call to next method on generator object.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-de-iterator-he-generator.html">posted at 06:19</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

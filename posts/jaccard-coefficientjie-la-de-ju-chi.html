@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Jaccard coefficient(杰拉德距离)</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="算法,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/jaccard-coefficientjie-la-de-ju-chi.html" rel="bookmark" title="Permanent Link to &quot;Jaccard coefficient(杰拉德距离)&quot;">Jaccard coefficient(杰拉德距离)</a>
+                </h2>
+
+                
+                
+
+                <p>the jaccard index is a simple measure of how similiar two sets are.
+it's simply the ratio of the size of the intersection of the sets and the size of the union of the sets.</p>
+<p>eg. </p>
+<div class="highlight"><pre><span></span>if J(A,B) is jaccard index between sets A and B
+and A = {1,2,3}, B = {2,3,4}, C = {4,5,6},
+then J(A,B) = 2/4 = 0.5,
+and J(A,C) = 0/6 = 0,
+and J(B,C) = 1/5 = 0.2
+so the most &quot;similiar&quot; sets are A and B and the least similiar are A and C
+(note also J(A,A) = J(B,B) = J(C,C) = 1)
+</pre></div>
+
+
+<p>we have to consider what the values(jaccard coefficient) would be in real world. how are the distributed.</p>
+<p>Jeccard coeffi is not transtive, so, for a set of n sentences, we have to calculate O(n2) times. There is a way to do it in O(n) time</p>
+<p>map N-grams to a set of numbers, then use bit to express whether the N-gram exists in one word/sententce.</p>
+<div class="highlight"><pre><span></span>A = mat -&gt; {ma, at} \                              / 101 \    
+                    --&gt; {ma(2), ca(1), at(0)} -&gt;         --&gt; &amp;(001), |(111)
+B = cat -&gt; {ca, at} /                              \ 011 /
+</pre></div>
+
+
+<p>J(A, B) = and(A, B)/or(A, B)</p>
+<p>let X = card(A ^ B), let U = card(A U B)
+let J(A, B) = X / (X + U)</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/jaccard-coefficientjie-la-de-ju-chi.html">posted at 09:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 每个程序员都应该知道的延迟数字</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 23, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mei-ge-cheng-xu-yuan-du-ying-gai-zhi-dao-de-yan-chi-shu-zi.html" rel="bookmark" title="Permanent Link to &quot;每个程序员都应该知道的延迟数字&quot;">每个程序员都应该知道的延迟数字</a>
+                </h2>
+
+                
+                
+
+                <table>
+<thead>
+<tr>
+<th>动作</th>
+<th>时间</th>
+<th>换算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1 缓存访问</td>
+<td>0.5 ns</td>
+<td>0.5ns</td>
+</tr>
+<tr>
+<td>分支预测错误</td>
+<td>5 ns</td>
+<td>5ns</td>
+</tr>
+<tr>
+<td>L2 缓存访问</td>
+<td>7 ns</td>
+<td>7ns</td>
+</tr>
+<tr>
+<td>互斥锁/解锁</td>
+<td>25 ns</td>
+<td>25ns</td>
+</tr>
+<tr>
+<td>内存访问</td>
+<td>100 ns</td>
+<td>100ns</td>
+</tr>
+<tr>
+<td>使用 Zippy压缩 1KiB</td>
+<td>3,000 ns</td>
+<td>3 µs</td>
+</tr>
+<tr>
+<td>通过 1 Gbps 网络发送 2KiB</td>
+<td>20,000 ns</td>
+<td>20 µs</td>
+</tr>
+<tr>
+<td>SSD 随机读取</td>
+<td>150,000 ns</td>
+<td>150 µs</td>
+</tr>
+<tr>
+<td>内存中连续读取 1 MB</td>
+<td>250,000 ns</td>
+<td>250 µs</td>
+</tr>
+<tr>
+<td>同一个数据中心的来回</td>
+<td>500,000 ns</td>
+<td>0.5 ms</td>
+</tr>
+<tr>
+<td>从 SSD 上连续读取 1 MB*</td>
+<td>1,000,000 ns</td>
+<td>1 ms</td>
+</tr>
+<tr>
+<td>机械磁盘寻道</td>
+<td>10,000,000 ns</td>
+<td>10 ms</td>
+</tr>
+<tr>
+<td>机械磁盘连续读取 1 MB</td>
+<td>20,000,000 ns</td>
+<td>20 ms</td>
+</tr>
+<tr>
+<td>发送数据包 加州-&gt;荷兰-&gt;加州</td>
+<td>150,000,000 ns</td>
+<td>150 ms</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>假设 ~1GB/sec SSD</li>
+</ul>
+<p>如果把这些时长都乘以 10 亿的话:</p>
+<table>
+<thead>
+<tr>
+<th>动作</th>
+<th>时长</th>
+<th>相当于</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1 缓存访问</td>
+<td>0.5 s</td>
+<td>一次心跳 (0.5 s)</td>
+</tr>
+<tr>
+<td>分支预测错误</td>
+<td>5 s</td>
+<td>打个哈欠</td>
+</tr>
+<tr>
+<td>L2 缓存访问</td>
+<td>7 s</td>
+<td>打个长哈欠</td>
+</tr>
+<tr>
+<td>互斥锁/解锁</td>
+<td>25 s</td>
+<td>冲一杯咖啡</td>
+</tr>
+<tr>
+<td>内存访问</td>
+<td>100 s</td>
+<td>刷牙</td>
+</tr>
+<tr>
+<td>使用 Zippy压缩 1KiB</td>
+<td>50 min</td>
+<td>一集电视剧(包括广告)</td>
+</tr>
+<tr>
+<td>通过 1 Gbps 网络发送 2KiB</td>
+<td>5.5 hr</td>
+<td>从午餐到下午工作结束</td>
+</tr>
+<tr>
+<td>SSD 随机读取</td>
+<td>1.7 days</td>
+<td>一个普通的周末</td>
+</tr>
+<tr>
+<td>内存中连续读取 1 MB</td>
+<td>2.9 days</td>
+<td>一个长周末</td>
+</tr>
+<tr>
+<td>同一个数据中心的来回</td>
+<td>5.8 days</td>
+<td>一个普通假期</td>
+</tr>
+<tr>
+<td>从 SSD 上连续读取 1 MB*</td>
+<td>11.6 days</td>
+<td>等快递等了两周</td>
+</tr>
+<tr>
+<td>机械磁盘寻道</td>
+<td>16.5 weeks</td>
+<td>大学里的一个学期</td>
+</tr>
+<tr>
+<td>机械磁盘连续读取 1 MB</td>
+<td>7.8 months</td>
+<td>几乎能造个人了</td>
+</tr>
+<tr>
+<td>上面两个加起来</td>
+<td>1 year</td>
+<td>整整一年</td>
+</tr>
+<tr>
+<td>发送数据包 加州-&gt;荷兰-&gt;加州</td>
+<td>4.8 years</td>
+<td>快能读个博士了</td>
+</tr>
+</tbody>
+</table>
+<p>可视化网页：
+https://people.eecs.berkeley.edu/~rcs/research/interactive_latency.html</p>
+<h1>这些数字的作用是什么？</h1>
+<p>了解这些时间的量级有助于比较不同的解决方案。通过这些数字，你可以看出来从远程服务器的内存中读一些数据时比直接从硬盘上读取快的。在一般的程序中，这也就意味着使用磁盘存储比使用数据库服务器要慢，因为数据库通常把所有东西都放在内存里了。而且这也说明了为什么在服务全球客户的时候 CDN 至关重要。从北美到欧洲的一个 ping 就要花上 100+ ms，所以从地理上来说，内容应该是分布式部署的。</p>
+<p>The idea is more about knowing the scale of time it takes to help compare different solution. With those number you can see that it's faster to get data in memory from a distant server than to read the same data from disk. In common application that means using disk storage is less efficient that storing it in a database on an other server, since it usually keeps almost everything in memory. It also tells a lot about why CDN are needed if you are serving client worldwide. A ping from North America to Europe will always takes 100+ ms, so having geographically distributed content is a good idea.</p>
+<p>对于互斥锁的开启锁定时间
+mutex lock/unlock time is important for anyone writing code that depends on code that is accessing the same data structures at the same time. If you don't know that there is a considerable cost to writing such code, now you do; and this number can quantify it.</p>
+<p>还需要注意顺序读写和批量读写带来的提速</p>
+<h1>常见问题</h1>
+<h2>随着摩尔定律的发展，这些数字会不会不太准确了？</h2>
+<p>首先摩尔定律基本上经失效了。其次，这些数字的重点是他们之间的比例，而不是具体数字。</p>
+<p>参考：</p>
+<ol>
+<li>https://gist.github.com/hellerbarde/2843375 </li>
+<li>https://softwareengineering.stackexchange.com/questions/312485/how-can-jeff-deans-latency-numbers-every-programmer-should-know-be-accurate-i</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mei-ge-cheng-xu-yuan-du-ying-gai-zhi-dao-de-yan-chi-shu-zi.html">posted at 02:32</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

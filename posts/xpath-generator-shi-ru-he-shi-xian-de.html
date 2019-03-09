@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | xpath generator 是如何实现的?</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="大前端,浏览器扩展,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Aug 20, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xpath-generator-shi-ru-he-shi-xian-de.html" rel="bookmark" title="Permanent Link to &quot;xpath generator 是如何实现的?&quot;">xpath generator 是如何实现的?</a>
+                </h2>
+
+                
+                
+
+                <p>写爬虫的话做到最后基本上最终没法自动化的就是指定要抽取的元素的xpath了, 要定向爬一个网站的内容基本上都会归结到去找下一页和数据元素的xpath. 如果能把xpath的生成交给不会写程序的运营同学来做的话, 能够极大地解放程序员的生产力.</p>
+<p>毕竟xpath也算是一个DSL, 对于不会编程的同学还是有一定难度的. SQL写得熟练的PM多得是, 想找一个会写xpath的运营同学则是很困难, 毕竟术业有专攻, 运营需要面对的问题和我们程序猿还是有很大不同. 多年的经验, 感觉能教会他们yaml已经是极限了...</p>
+<p>那么能不能有一个图形化的工具来生成xpath呢? 答案显然是有的, chrome浏览器就内置了生成xpath的工具, 如下图所示:</p>
+<p><img alt="chrome xpath" src="https://ws4.sinaimg.cn/large/006tNc79ly1flhwpu64uvj31f20keaj4.jpg"></p>
+<p>这幅图生成的xpath是: <code>//*[@id="fc_B_pic"]/ul[1]/li[1]/a[1]</code></p>
+<p>然而chrome的xpath生成却有几个缺点:</p>
+<ol>
+<li>chrome的xpath只会想上去找带有id的元素, 而根据实际的情况, 往往找到带有class的元素就可以保证找的xpath是对的了.</li>
+<li>chrome生成的元素是尽量保证元素唯一的, 也就是当你想要搞一个能能够选中多个元素的xpath时, chrome 无能为力, 还是需要自己去改写.</li>
+<li>另外就是生成之后不能方便的用图形工具去验证.</li>
+</ol>
+<p>未完待续</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xpath-generator-shi-ru-he-shi-xian-de.html">posted at 18:57</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

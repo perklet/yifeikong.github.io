@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 使用 Nomad 编排服务</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="架构,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-nomad-bian-pai-fu-wu.html" rel="bookmark" title="Permanent Link to &quot;使用 Nomad 编排服务&quot;">使用 Nomad 编排服务</a>
+                </h2>
+
+                
+                
+
+                <p>2019-01-02 更新：相对于 Kubernetes 来说，Nomad 还是太简陋了，弃坑</p>
+<p>Nomad 是 HashiCorp 出品的一个容器编排服务，相较于重量级的 Kubernetes 来说，Nomad 的特点在于</p>
+<ol>
+<li>轻量级，只有一个二进制文件。K8s 的安装可能就要花上半天，在国内还有万恶的防火墙问题。</li>
+<li>概念也比较清晰，专注于任务的调度的编排，而不像 Kubernetes 一样引入了各种五花八门的概念。</li>
+<li>除了编排容器之外，Nomad 还可以直接编排普通应用，使用 cgroups 安全运行应用。</li>
+</ol>
+<h1>安装</h1>
+<p>从官网下载二进制文件，复制到 /usr/local/bin 就好了，不再赘述</p>
+<h1>使用</h1>
+<div class="highlight"><pre><span></span>$ sudo nomad agent -dev
+
+$ nomad node status
+ID        DC   Name   Class   Drain  Eligibility  Status
+171a583b  dc1  nomad  &lt;none&gt;  <span class="nb">false</span>  eligible     ready
+
+$ nomad server members
+Name          Address    Port  Status  Leader  Protocol  Build  Datacenter  Region
+nomad.global  <span class="m">127</span>.0.0.1  <span class="m">4648</span>  alive   <span class="nb">true</span>    <span class="m">2</span>         <span class="m">0</span>.7.0  dc1         global
+</pre></div>
+
+
+<h1>Job</h1>
+<p>Nomad 的调度单元称作 Job，Job 分为了三种类型：</p>
+<ol>
+<li>Batch，也就是一次批处理，程序运行之后就结束了。不过也可以通过 cron 字段指定任务定期运行</li>
+<li>Service，程序是一个常驻内存的服务，如果退出之后，Nomad 会按照给定的策略重启</li>
+<li>System，在每一个 Nomad 节点上都需要运行的服务</li>
+</ol>
+<p>Job 可以使用 HCL 文件来定义，HCL 文件在语义上和 JSON 是等价的，只不过是省去了一些多余的引号逗号之类的。也可以使用 JSON 文件来定义。</p>
+<h2>创建一个新的 Job</h2>
+<p>创建一个空白的 job 文件</p>
+<div class="highlight"><pre><span></span>$ nomad job init
+Example job file written to example.nomad
+</pre></div>
+
+
+<p>打开生成的 example.nomad 文件，我们看到生成了一大推配置，默认定义了一个 redis 服务器的 job。Job 中包含了 Group，Group 中包含了 Task，task 可以认为是我们最终需要运行服务的那个命令。比如这里就是定义了运行 redis:3.2 这个 docker 镜像。</p>
+<div class="highlight"><pre><span></span>task &quot;redis&quot; {
+  # The &quot;driver&quot; parameter specifies the task driver that should be used to
+  # run the task.
+  driver = &quot;docker&quot;
+
+  # The &quot;config&quot; stanza specifies the driver configuration, which is passed
+  # directly to the driver to start the task. The details of configurations
+  # are specific to each driver, so please see specific driver
+  # documentation for more information.
+  config {
+    image = &quot;redis:3.2&quot;
+    port_map {
+      db = 6379
+    }
+  }
+</pre></div>
+
+
+<p>我们可以运行一下这个 job</p>
+<div class="highlight"><pre><span></span>-&gt; % nomad job run example.nomad
+==&gt; Monitoring evaluation &quot;4f5559e0&quot;
+    Evaluation triggered by job &quot;example&quot;
+    Allocation &quot;98959767&quot; created: node &quot;ecf9f7cd&quot;, group &quot;cache&quot;
+    Evaluation within deployment: &quot;e66e0957&quot;
+    Evaluation status changed: &quot;pending&quot; -&gt; &quot;complete&quot;
+==&gt; Evaluation &quot;4f5559e0&quot; finished with status &quot;complete&quot;
+</pre></div>
+
+
+<p>然后查看一下 job 的运行状态：</p>
+<div class="highlight"><pre><span></span>$ nomad status example
+...
+Allocations
+ID        Node ID   Task Group  Version  Desired  Status   Created  Modified
+8ba85cef  171a583b  cache       <span class="m">0</span>        run      running  5m ago   5m ago
+</pre></div>
+
+
+<p>在最下面一行我们可以看到 Allocation 的状态。Allocation 可以理解为一个 Job 的一个实例化。</p>
+<p>我们可以再查看这个 Alloc 的状态：</p>
+<div class="highlight"><pre><span></span>$ nomad alloc status 8ba85cef
+...
+Recent Events:
+Time                   Type        Description
+<span class="m">10</span>/31/17 <span class="m">22</span>:58:49 UTC  Started     Task started by client
+<span class="m">10</span>/31/17 <span class="m">22</span>:58:40 UTC  Driver      Downloading image redis:3.2
+<span class="m">10</span>/31/17 <span class="m">22</span>:58:40 UTC  Task Setup  Building Task Directory
+<span class="m">10</span>/31/17 <span class="m">22</span>:58:40 UTC  Received    Task received by client
+</pre></div>
+
+
+<p>查看 Alloc 的日志</p>
+<div class="highlight"><pre><span></span>$ nomad alloc logs 8ba85cef redis
+</pre></div>
+
+
+<h2>修改 Job</h2>
+<p>比如说，我们可以把这个 Job 中 cache task group 需要运行的副本数量改为 3</p>
+<div class="highlight"><pre><span></span>count = 3
+</pre></div>
+
+
+<p>使用 nomad job plan 来 dry run 一下。</p>
+<div class="highlight"><pre><span></span>$ nomad job plan example.nomad
+
++/- Job: <span class="s2">&quot;example&quot;</span>
++/- Task Group: <span class="s2">&quot;cache&quot;</span> <span class="o">(</span><span class="m">2</span> create, <span class="m">1</span> in-place update<span class="o">)</span>
+  +/- Count: <span class="s2">&quot;1&quot;</span> <span class="o">=</span>&gt; <span class="s2">&quot;3&quot;</span> <span class="o">(</span>forces create<span class="o">)</span>
+      Task: <span class="s2">&quot;redis&quot;</span>
+...
+Job Modify Index: <span class="m">7</span>
+To submit the job with version verification run:
+
+nomad job run -check-index <span class="m">7</span> example.nomad
+...
+</pre></div>
+
+
+<p>注意到其中返回了一个 check-index 这个是为了避免同时更改同一个 job 造成冲突。</p>
+<div class="highlight"><pre><span></span>$ nomad job run -check-index <span class="m">7</span> example.nomad
+</pre></div>
+
+
+<h1>集群</h1>
+<p>在生产环境中，我们当然应该使用集群模式，而不是单机。nomad 可以直接利用 consul 来实现 bootstrap 集群。</p>
+<p>服务端配置：</p>
+<div class="highlight"><pre><span></span># /etc/nomad.d/server.hcl
+
+data_dir = &quot;/etc/nomad.d&quot;
+
+server {
+  enabled          = true
+  bootstrap_expect = 3
+}
+</pre></div>
+
+
+<p>启动：</p>
+<div class="highlight"><pre><span></span>$ nomad agent -config<span class="o">=</span>/etc/nomad.d/server.hcl
+</pre></div>
+
+
+<p>客户端配置：</p>
+<div class="highlight"><pre><span></span># /etc/nomad.d/client.hcl
+
+datacenter = &quot;dc1&quot;
+data_dir   = &quot;/etc/nomad.d&quot;
+
+client {
+  enabled = true
+}
+</pre></div>
+
+
+<p>启动：</p>
+<div class="highlight"><pre><span></span>$ nomad agent -config<span class="o">=</span>/etc/nomad.d/client.hcl
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-nomad-bian-pai-fu-wu.html">posted at 22:57</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | shell 编程教程</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="命令行,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 16, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shell-bian-cheng-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;shell 编程教程&quot;">shell 编程教程</a>
+                </h2>
+
+                
+                
+
+                <h1>变量和值</h1>
+<p>variables are referenced by $var or ${var}. Global variables are visible to all sub bash sessions, and are often called env variables, local variables are only visible to local session, not subsessions.</p>
+<p>Global variables can be viewed as <code>env</code>, and can be created by <code>export</code>.</p>
+<div class="highlight"><pre><span></span>TEST=testing; export $TEST # or
+export TEST=testing # NOTE: no $
+</pre></div>
+
+
+<h2>Useful variables</h2>
+<div class="highlight"><pre><span></span>HOME    Same to ~
+IFS 
+PATH    Search path
+EUID    User id
+GROUPS  Groups for current user
+HOSTNAME    Hostname
+LANG    
+LC_ALL  
+OLDPWD  
+PWD 
+</pre></div>
+
+
+<h2>定义和使用变量</h2>
+<p>定义变量，注意因为 shell 中的语法使用空格作为命令分割的限制，等于号前后不能加空格。</p>
+<div class="highlight"><pre><span></span>FOO=bar
+</pre></div>
+
+
+<p>使用变量，需要添加上 <code>$</code> 符号。</p>
+<div class="highlight"><pre><span></span>echo $FOO
+</pre></div>
+
+
+<p>字符串在双引号中可以直接插入，这时候要加上大括号来指示变量名的起始位置。</p>
+<div class="highlight"><pre><span></span>echo &quot;<span class="cp">${</span><span class="n">FOO</span><span class="cp">}</span>xxx&quot;
+</pre></div>
+
+
+<p>变量默认实在当前的回话中可见的，而不会作为环境变量传递给调用的命令。可以使用 export 导出变量，或者在命令前加上指定的环境变量。</p>
+<div class="highlight"><pre><span></span><span class="o">-&gt;</span> <span class="o">%</span> <span class="n">cat</span> <span class="n">env</span><span class="o">.</span><span class="n">py</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;FOO env variable is: &#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;FOO&#39;</span><span class="p">))</span>
+
+<span class="o">-&gt;</span> <span class="o">%</span> <span class="n">python3</span> <span class="n">env</span><span class="o">.</span><span class="n">py</span>
+<span class="n">FOO</span> <span class="n">env</span> <span class="n">variable</span> <span class="ow">is</span><span class="p">:</span>  <span class="bp">None</span>
+
+<span class="o">-&gt;</span> <span class="o">%</span> <span class="n">FOO</span><span class="o">=</span><span class="n">bar</span> <span class="n">python3</span> <span class="n">env</span><span class="o">.</span><span class="n">py</span>
+<span class="n">FOO</span> <span class="n">env</span> <span class="n">variable</span> <span class="ow">is</span><span class="p">:</span>  <span class="n">bar</span>
+</pre></div>
+
+
+<p>使用 export</p>
+<div class="highlight"><pre><span></span>-&gt; % export FOO=bar
+-&gt; % python3 env.py
+FOO env variable is:  bar
+</pre></div>
+
+
+<h2>一些有用的内置变量</h2>
+<div class="highlight"><pre><span></span>$HOME     家目录，比如 /home/kongyifei
+$IFS      默认的分隔符，和 for 循环紧密相关
+$PATH     搜索路径，当你执行 ls 的时候，shell 会在这个变量中查找 ls 命令
+$EUID     当前有效用户 ID
+$LANG     
+$LC_ALL   
+$OLDPWD   上一个工作目录
+$PWD      当前工作目录
+</pre></div>
+
+
+<h2>数组</h2>
+<p>使用小括号来定义一个数组，关于 for 循环随后会讲</p>
+<div class="highlight"><pre><span></span>A=(1 2 3)
+
+for el in <span class="cp">${</span><span class="n">A</span><span class="p">[</span><span class="err">@</span><span class="p">]</span><span class="cp">}</span>; do
+    echo <span class="nv">$el</span>
+done
+</pre></div>
+
+
+<h2>字符串操作</h2>
+<p>大括号里面的字符串会被展开成独立的字符串</p>
+<div class="highlight"><pre><span></span><span class="c">% echo {1,2,3,4}</span>
+<span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span>
+<span class="c">% mkdir -p test/{a,b,c,d}{1,2,3,4}</span>
+<span class="c">% ls test/</span>
+<span class="n">a1</span>  <span class="n">a2</span>  <span class="n">a3</span>  <span class="n">a4</span>  <span class="n">b1</span>  <span class="n">b2</span>  <span class="n">b3</span>  <span class="n">b4</span>  <span class="n">c1</span>  <span class="n">c2</span>  <span class="n">c3</span>  <span class="n">c4</span>  <span class="n">d1</span>  <span class="n">d2</span>  <span class="n">d3</span>  <span class="n">d4</span>
+<span class="c">% mv test/{a,c}.conf  # 这个命令的意思是：mv test/a.conf test/c.conf</span>
+</pre></div>
+
+
+<p>切片: <code>${string:start:length}</code></p>
+<p>默认值 <code>${var:-default}</code></p>
+<p>设定值 <code>${var:=default}</code></p>
+<p>长度 <code>${#var}</code></p>
+<h3>字符串 Expansion and slice</h3>
+<p>[zorro@zorrozou-pc0 bash]$ mkdir -p test/zorro/{a,b,c,d}{1,2,3,4} 
+[zorro@zorrozou-pc0 bash]$ ls test/zorro/ 
+a1  a2  a3  a4  b1  b2  b3  b4  c1  c2  c3  c4  d1  d2  d3  d4</p>
+<p>[zorro@zorrozou-pc0 bash]$ mv test/{a,c}.conf
+这个命令的意思是：mv test/a.conf test/c.conf</p>
+<p>${string:start :length} string slice</p>
+<p>default value: ${var:-default}
+set value: ${var:=default}</p>
+<p>${#var} get variable length</p>
+<h1>Redirection</h1>
+<p>input: &lt;, output &gt;, append &gt;&gt;</p>
+<p>cat &gt; file &lt;&lt; EOF
+this 
+line
+will 
+be redirected to
+file
+EOF</p>
+<h1>pipe</h1>
+<p>pipe commands will be run simultaneously, but the second command will wait for the input</p>
+<h1>Sub shell</h1>
+<p>use $(expression)</p>
+<h1>控制语句</h1>
+<h2>条件语句</h2>
+<p>if 语句成立的条件是 <code>expr</code> 返回值为 0。</p>
+<div class="highlight"><pre><span></span>if expr; then
+    statement;
+elif expr; then
+    statement;
+else
+    statement;
+fi
+</pre></div>
+
+
+<h2>test command</h2>
+<p>虽然可以使用任意的语句作为判断条件，不过我们一般情况下都是用 <code>[</code> 这个命令来作为判断条件的，需要注意的是 <code>[</code> 并不是一个语法，而是一个命令。不过由于 <code>[</code> 这个上古命令实在功能太少，现在一般采用 <code>[[</code> 来作为判断条件。</p>
+<div class="highlight"><pre><span></span>if [[ &quot;a&quot; == &quot;b&quot; ]]; then
+    echo &quot;wtf&quot;
+else
+    echo &quot;meh&quot;
+fi
+</pre></div>
+
+
+<p><code>[[</code>支持的条件有</p>
+<p>1 数值比较, 仅限整数，注意不能使用 <code>&gt;</code> <code>&lt;</code> 等符号。</p>
+<div class="highlight"><pre><span></span>n1 -eq n2   equal
+n1 -ge n2   greater or equal
+n1 -gt n2   greater
+n1 -le n2       less or equal
+n1 -lt n2   less
+n1 -ne n2   not equal
+</pre></div>
+
+
+<p>2 字符串比较</p>
+<p>Note: Variables may contain space, so the best way to comparison is to add quotes: <code>"$var1" = "$var2"</code></p>
+<div class="highlight"><pre><span></span>str1 == str2    equal
+str1 != str2    not equal
+str1 &lt; str2 less
+str1 &gt; str2 greater
+-z str  zero
+-n str  not zero length
+</pre></div>
+
+
+<p>3 file comparison</p>
+<div class="highlight"><pre><span></span>-d  is directory?
+-e  exist?
+-f  is regular file?
+-r  exist and readable?
+-s  exist and has content
+-w  exist and writable
+-x  exist and executealbe
+-O  exist and owned
+-G  exist and in same group
+file -nt file2  newer than
+file1 -ot file2     older than
+</pre></div>
+
+
+<h2>case</h2>
+<p>case var in 
+parttern | pattern2) commands;;
+pattern3) commands2;
+*) default commnads;;
+esac</p>
+<h2>Loops</h2>
+<h3>foreach 语句</h3>
+<p>for var in list; do
+     echo $var
+done</p>
+<p>其中 list 可以是一个数组，也可以是一个被 $IFS 分割的字符串。默认情况下，$IFS 是 " \n\t"。其中包含了空格。</p>
+<p>如果要覆盖 IFS，一般这样使用:</p>
+<p>OLDIFS=$IFS
+IFS="\n" # new seperator</p>
+<h1>do things</h1>
+<p>IFS=$OLDIFS</p>
+<h3>while-loop</h3>
+<p>until/while expr; do
+    # commands
+done</p>
+<h3>pipe</h3>
+<p>the result of a for loop is pipe-able to other command</p>
+<div class="highlight"><pre><span></span>for city in beijing shanghai; do
+    echo $city is big
+done &gt; cities.txt
+# will save the result in cities.txt
+</pre></div>
+
+
+<h1>输入输出</h1>
+<h2>命令行参数</h2>
+<p>parameters to a script can be obtained as $1, $2, $3...。 $0 is the script name, remember to check whether the parameter is empty. $# is the number of parameters(without script name).</p>
+<div class="highlight"><pre><span></span>$0  script name / function name
+$1...$x command line arguments / parameters
+$#  number of arguments(without $0)
+$*  all parameters as a string
+$@  all parameters as a string list
+</pre></div>
+
+
+<h3>shift</h3>
+<p>processing parameters using shift,</p>
+<p>while [ -n "$1" ]; do
+    case "$1" in
+        -a) echo "option -a" ;;
+        --) shift
+            break;;
+        *) echo "$1" is not a option ;;
+    esac
+    shift
+done</p>
+<h2>read</h2>
+<p>read OPTIONS VARNAME read input to variables</p>
+<ul>
+<li>read -p   Prompt</li>
+<li>read -t   timeout</li>
+<li>read -s   hide input</li>
+</ul>
+<p>we can use read to read file or stdin</p>
+<h2>redirection</h2>
+<p>2&gt;  redirect STDERR
+m&gt;&amp;n    redirect fd m to fd n's associated file</p>
+<p>Note: you have to use command &gt;&gt; command.log 2&gt;&amp;1 (put 2&gt;&amp;1 at the end), since this means redirect 2 to 1's 
+in a scirpt
+exec 2&gt; filename # reopen stdout to filename</p>
+<h1>Signal</h1>
+<p>trap commnad signal is used to handle signals in shell</p>
+<h1>Functions</h1>
+<p>有两种定义函数的方式</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">name</span> <span class="p">{</span>
+    <span class="err">#</span> <span class="kd">function</span> <span class="nx">body</span>
+<span class="p">}</span>
+
+<span class="nx">foo() {</span>
+    <span class="err">#</span> <span class="kd">function</span> <span class="nx">body</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>要调用上面这个函数，直接就输入</p>
+<div class="highlight"><pre><span></span>foo
+</pre></div>
+
+
+<p>就好了</p>
+<h2>return</h2>
+<p>shell functions behave like a small script, and it does NOT return a computed value...It retures a exit code, which is between 0 and 255. if no return is specified, the exit code of last command will be returned</p>
+<p>You can read the return value by $? like any normal commands</p>
+<p>the right way to to return a value from function, you will have to echo out the value, and put the function is subshell</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">foo</span> <span class="p">{</span>
+    <span class="err">#</span> <span class="k">do</span> <span class="nx">some</span> <span class="nx">compute</span>
+    <span class="nx">echo</span> <span class="nx">$result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">retval</span><span class="o">=</span><span class="nx">$</span><span class="p">(</span><span class="nx">foo</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Note: any thing that echos in the function body will be captured, so please keep that from happen</p>
+<h2>parameters</h2>
+<p>like a shell script, $0 holds the function name, $1 ... $9 holds the parameters, $# is the num of parameters</p>
+<h2>local variables</h2>
+<p>use <code>local</code> to declare local variables</p>
+<h1>alias</h1>
+<div class="highlight"><pre><span></span>alias new_name=&#39;command string&#39;
+$ \command  # bypass alias
+</pre></div>
+
+
+<h1>debugging</h1>
+<p>DEBUG macro</p>
+<h1>multiprocess</h1>
+<p>PID_ARRAY=()
+for file in filelist; do
+    md5sum file &amp;;
+    PID_ARRAY+=("$!")
+done
+wait ${PID_ARRAY[@]}</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shell-bian-cheng-jiao-cheng.html">posted at 01:38</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

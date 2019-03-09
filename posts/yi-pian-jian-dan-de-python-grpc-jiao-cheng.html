@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 一篇简单的 Python gRPC 教程</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yi-pian-jian-dan-de-python-grpc-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;一篇简单的 Python gRPC 教程&quot;">一篇简单的 Python gRPC 教程</a>
+                </h2>
+
+                
+                
+
+                <h1>安装</h1>
+<div class="highlight"><pre><span></span>pip install grpcio grpcio-tools protobuf googleapis-common-protos
+</pre></div>
+
+
+<h1>IDL</h1>
+<p>grpc 使用 protobuf 来定义接口。按照 protobuf 的 <a href="https://developers.google.com/protocol-buffers/docs/style">Style Guide</a> 的要求，service 和其中的方法都应该使用 CamelCase。</p>
+<p>service 关键字定义一个服务，相当于一个接口。把下面的文件保存为 helloworld.proto</p>
+<p>需要注意的是，grpc 中的方法只能接受一个参数，返回一个参数。</p>
+<div class="highlight"><pre><span></span>// The greeter service definition.
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+
+// The request message containing the user&#39;s name.
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloResponse {
+  string message = 1;
+}
+</pre></div>
+
+
+<h2>生成 rpc 代码</h2>
+<div class="highlight"><pre><span></span>python -m grpc_tools.protoc  --python_out=. --grpc_python_out=. helloworld.proto
+</pre></div>
+
+
+<p>生成了两个文件:</p>
+<ul>
+<li>helloworld_pb2，包含了 protobuf 中结构的定义</li>
+<li>helloworld_pb2_grpc, 包含了 protobuf grpc 接口的定义</li>
+</ul>
+<h2>实现 rpc 服务</h2>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">current.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+<span class="kn">from</span> <span class="nn">helloworld_pb2</span> <span class="kn">import</span> <span class="n">HelloRepsonse</span>
+<span class="kn">from</span> <span class="nn">helloworld_pb2_grpc</span> <span class="kn">import</span> <span class="n">GreeterServicer</span><span class="p">,</span> <span class="n">add_GreeterServicer_to_server</span>
+
+<span class="k">class</span> <span class="nc">Greeter</span><span class="p">(</span><span class="n">GreeterServicer</span><span class="p">):</span>
+
+  <span class="k">def</span> <span class="nf">SayHello</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">HelloResponse</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s1">&#39;Hello, </span><span class="si">%s</span><span class="s1">!&#39;</span> <span class="o">%</span> <span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">SayHelloAgain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">HelloResponse</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s1">&#39;Hello again, </span><span class="si">%s</span><span class="s1">!&#39;</span> <span class="o">%</span> <span class="n">request</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">serve</span><span class="p">():</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">grpc</span><span class="o">.</span><span class="n">server</span><span class="p">(</span><span class="n">futures</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+    <span class="n">add_GreeterServicer_to_server</span><span class="p">(</span><span class="n">Greeter</span><span class="p">(),</span> <span class="n">server</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">add_insecure_port</span><span class="p">(</span><span class="s1">&#39;[::]:50051&#39;</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">_ONE_DAY_IN_SECONDS</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">server</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>客户端调用</h2>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">grpc</span>
+<span class="kn">from</span> <span class="nn">helloworld_pb2</span> <span class="kn">import</span> <span class="n">HelloRequest</span>
+<span class="kn">from</span> <span class="nn">helloworld_pb2_grpc</span> <span class="kn">import</span> <span class="n">GreeterStub</span>
+
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="c1"># NOTE(gRPC Python Team): .close() is possible on a channel and should be</span>
+    <span class="c1"># used in circumstances in which the with statement does not fit the needs</span>
+    <span class="c1"># of the code.</span>
+    <span class="k">with</span> <span class="n">grpc</span><span class="o">.</span><span class="n">insecure_channel</span><span class="p">(</span><span class="s1">&#39;localhost:50051&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">channel</span><span class="p">:</span>
+        <span class="n">stub</span> <span class="o">=</span> <span class="n">GreeterStub</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">stub</span><span class="o">.</span><span class="n">SayHello</span><span class="p">(</span><span class="n">HelloRequest</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;you&#39;</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Greeter client received: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+</pre></div>
+
+
+<h1>高级话题</h1>
+<p>stream</p>
+<p>未完待续</p>
+<h1>参考</h1>
+<ol>
+<li>[A simplified guide to gRPC in Python](</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yi-pian-jian-dan-de-python-grpc-jiao-cheng.html">posted at 05:22</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

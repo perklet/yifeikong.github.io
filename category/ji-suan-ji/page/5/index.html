@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles in the "计算机" category | Page 5</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/category/ji-suan-ji/page/5/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 19, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-de-gcla-ji-hui-shou.html" rel="bookmark" title="Permanent Link to &quot;Python 中的 GC（垃圾回收）&quot;">Python 中的 GC（垃圾回收）</a>
+                </h2>
+
+                
+                
+
+                <h1>引用计数（reference counting）</h1>
+<p>CPython 中默认使用的垃圾回收算法是 Reference Counting。也就是对每个元素标记有多少个其他元素引用了它，当引用数降到零的时候就删除。</p>
+<ol>
+<li>当对象增加一个引用，比如赋值给变量，属性或者传入一个方法，引用计数执行加1运算。</li>
+<li>当对象减少一个引用，比如变量离开作用域，属性被赋值为另一个对象引用，属性所在的对象被回收或者之前传入参数的方法返回，引用计数执行减1操作。</li>
+<li>当引用计数变为0，代表该对象不被引用，可以标记成垃圾进行回收。</li>
+</ol>
+<p>为了解决循环引用的问题，CPython 使用了 Cyclic GC，遍历所有的环，并且把每一个元素的引用减一，来检测每一个引用环是不是循环应用。</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tKfTcly1ftg5mu2087j30we0i6gv5.jpg"></p>
+<h1>标记删除（Mark and Sweep）</h1>
+<ol>
+<li>从某一个已知的还活着的对象开始，便利对象，如果经过了某个对象就认为是活着的</li>
+<li>如果没有被标记的就删除</li>
+</ol>
+<p>避免了循环引用的问题</p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tKfTcly1ftf9x2kejlj30wo0ic11s.jpg"></p>
+<p>实际的处理过程</p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tKfTcly1ftfa55k2e7j30wi0ick3k.jpg"></p>
+<p><img alt="" src="https://ws3.sinaimg.cn/large/006tKfTcly1ftfa6amfmmj30wc0iedr8.jpg"></p>
+<p>Pluggable
+Generational
+Incremental</p>
+<p>参考资料：</p>
+<ol>
+<li>https://www.youtube.com/watch?v=iHVs_HkjdmI …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-de-gcla-ji-hui-shou.html">posted at 08:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 18, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/zai-python-zhong-you-ya-di-chu-li-sigterm-xin-hao.html" rel="bookmark" title="Permanent Link to &quot;在 Python 中优雅地处理 SIGTERM 信号&quot;">在 Python 中优雅地处理 SIGTERM 信号</a>
+                </h2>
+
+                
+                
+
+                <p>昨天写了一个服务，在本地运行很好，使用 Ctrl-C 结束运行之后会清理资源，然后取消注册，然而放到 Docker 中跑之后发现结束之后资源没有释放。查了查发现原来是下面是几个因素造成的：</p>
+<ol>
+<li>Ctrl-C 发送的是 SIGINT 信号，Python 会转化成 KeyboardInterrupt 异常，而我的资源是在 finally 释放资源，所以使用 Ctrl-C 可以优雅地退出</li>
+<li>Python 中对其他的信号（比如 SIGTERM、SIGHUP）都不会处理，而是直接退出</li>
+<li>Docker 在推出的时候默认发送的是 SIGTERM 信号</li>
+</ol>
+<p>所以在 docker stop 的时候服务并不能优雅的推出。</p>
+<h1>解决方法</h1>
+<p>使用 atexit 模块是不可以的，atexit 不会处理 SIGTERM。需要使用 signal 模块来，在网上找到了一份源码 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/zai-python-zhong-you-ya-di-chu-li-sigterm-xin-hao.html">posted at 01:46</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 16, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/zai-a-li-yun-shang-wei-nei-wang-vpcda-jian-natchu-kou-fu-wu-qi.html" rel="bookmark" title="Permanent Link to &quot;在阿里云上为内网VPC搭建NAT出口服务器&quot;">在阿里云上为内网VPC搭建NAT出口服务器</a>
+                </h2>
+
+                
+                
+
+                <p>对于大多数的内部服务来说，我们是不希望他们暴露在公网上的；而且服务之间通过公网通信效率也比较低。阿里云提供了虚拟私网的服务，我们可以把服务都部署在内网。但是与此同时如何让内网的服务器能够上网也就成了问题，毕竟还是经常需要<code>apt-get</code> 一下。</p>
+<p>首先，不可能每个服务器都绑定一个弹性IP，贵且不说，这样和又把内部服务暴露在了公网。</p>
+<p>其次，阿里云提供了专用的NAT服务器，但是太贵了！！！</p>
+<p>其实 NAT 服务器也很简单啦，就是一个路由转发而已，利用 iptables 可以轻松实现。下面以一个例子来讲解一下。</p>
+<p>首先说一下 NAT 的两种术语：SNAT 和 DNAT。SNAT的意思就是 source NAT，也就是我们访问其他网站，作为 TCP 链接的来源。而 DNAT 就是 destination NAT，也就是我们作为服务器，作为 TCP 链接的重点。在这里我们要实现的是内网上网，而不是内网提供服务，所以我们只需要 SNAT …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/zai-a-li-yun-shang-wei-nei-wang-vpcda-jian-natchu-kou-fu-wu-qi.html">posted at 08:14</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 16, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/redis-zhong-ru-he-gei-ji-he-zhong-de-yuan-su-she-zhi-ttl.html" rel="bookmark" title="Permanent Link to &quot;redis 中如何给集合中的元素设置 TTL&quot;">redis 中如何给集合中的元素设置 TTL</a>
+                </h2>
+
+                
+                
+
+                <p>我们知道在 redis 中可以给每个 key 设置过期时间（TTL），但是没法为每个集合中的每一个元素设置过期时间，可以使用zset来实现这个效果。</p>
+<p>直接上代码吧，Python 版的。</p>
+<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">RedisSet</span>:
+
+    <span class="kt">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">client</span> <span class="o">=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">StrictRedis</span><span class="p">()</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">key</span> <span class="o">=</span> <span class="nx">key</span>
+
+    <span class="nx">def</span> <span class="nx">add</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">val</span><span class="p">,</span> <span class="nx">ttl</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">now</span> <span class="o">=</span> <span class="nx">time</span><span class="p">.</span><span class="nx">time</span><span class="p">()</span>
+        <span class="err">#</span> <span class="err">把过期时间作为</span> <span class="nx">score</span> <span class="err">添加到</span> <span class="nx">zset</span> <span class="err">中</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nx">zadd</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">now</span> <span class="o">+</span> <span class="nx">ttl</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span>
+        <span class="err">#</span> <span class="err">删除已经过期的元素</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nx">zremrangebyscore …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/redis-zhong-ru-he-gei-ji-he-zhong-de-yuan-su-she-zhi-ttl.html">posted at 07:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yi-pian-jian-dan-de-python-grpc-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;一篇简单的 Python gRPC 教程&quot;">一篇简单的 Python gRPC 教程</a>
+                </h2>
+
+                
+                
+
+                <h1>安装</h1>
+<div class="highlight"><pre><span></span>pip install grpcio grpcio-tools protobuf googleapis-common-protos
+</pre></div>
+
+
+<h1>IDL</h1>
+<p>grpc 使用 protobuf 来定义接口。按照 protobuf 的 <a href="https://developers.google.com/protocol-buffers/docs/style">Style Guide</a> 的要求，service 和其中的方法都应该使用 CamelCase。</p>
+<p>service 关键字定义一个服务，相当于一个接口。把下面的文件保存为 helloworld.proto</p>
+<p>需要注意的是，grpc 中的方法只能接受一个参数，返回一个参数。</p>
+<div class="highlight"><pre><span></span>// The greeter service definition.
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+
+// The request message containing the …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yi-pian-jian-dan-de-python-grpc-jiao-cheng.html">posted at 05:22</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/goyu-yan-du-xie-wen-jian-xiang-guan-han-shu-dui-bi.html" rel="bookmark" title="Permanent Link to &quot;Go语言读写文件相关函数对比&quot;">Go语言读写文件相关函数对比</a>
+                </h2>
+
+                
+                
+
+                <h1>文件 IO</h1>
+<p><code>io.Reader</code> 和 <code>io.Writer</code>。这两个是两个特别重要的 interface。一般来说凡是可以抽象为输入的 IO 操作都会使用 io.Reader。凡是可以抽象为输出的 IO 操作都会使用 io.Writer。</p>
+<h1>io/ioutil</h1>
+<p>对于配置文件等等比较小的常规文件，一般来说我们可以使用 io/ioutil 包中的辅助函数操作就好了，比较快捷方便。</p>
+<table>
+<thead>
+<tr>
+<th>函数签名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>func NopCloser(r io.Reader) io.ReadCloser</code></td>
+<td>把 io.Reader 包装成一个 io.ReadWriter</td>
+</tr>
+<tr>
+<td><code>func ReadAll(r io.Reader) ([]byte, error)</code></td>
+<td>读取所有字符 …</td></tr></tbody></table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/goyu-yan-du-xie-wen-jian-xiang-guan-han-shu-dui-bi.html">posted at 05:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/goyu-yan-chu-li-csv-wen-jian.html" rel="bookmark" title="Permanent Link to &quot;Go语言处理 CSV 文件&quot;">Go语言处理 CSV 文件</a>
+                </h2>
+
+                
+                
+
+                <p>在 Go 语言中可以使用 <code>encoding/csv</code> 包来处理 csv 文件。</p>
+<p>csv 包中主要有两个 struct，Reader 和 Writer。Reader 从一个 io.Reader
+中读取每一行的内容，同时提供了一些设置的选项。Writer 用来写入 csv 文件。</p>
+<h1>Reader</h1>
+<div class="highlight"><pre><span></span>r := csv.NewReader(strings.NewReader(in))
+
+for {
+    record, err := r.Read()
+    if err == io.EOF {
+        break
+    }
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    fmt.Println(record …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/goyu-yan-chu-li-csv-wen-jian.html">posted at 04:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/zhi-hu-yi-dong-duan-jie-kou-fen-xi.html" rel="bookmark" title="Permanent Link to &quot;知乎移动端接口分析&quot;">知乎移动端接口分析</a>
+                </h2>
+
+                
+                
+
+                <p>最近想注册一些知乎的机器人玩玩儿，比如给自己点赞之类的，通过抓包分析，获得了完整注册登录流程。</p>
+<h1>抓包</h1>
+<div class="highlight"><pre><span></span>1 POST https://api.zhihu.com/auth/digits
+      ← 401 application/json 97b 246ms
+2 GET https://api.zhihu.com/captcha
+     ← 200 application/json 22b 233ms
+3 PUT https://api.zhihu.com/captcha
+     ← 202 application/json 5.46k 323ms
+4 POST https://api.zhihu.com/captcha …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/zhi-hu-yi-dong-duan-jie-kou-fen-xi.html">posted at 04:58</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/oauth2-xie-yi-xiang-jie.html" rel="bookmark" title="Permanent Link to &quot;OAuth2 协议详解&quot;">OAuth2 协议详解</a>
+                </h2>
+
+                
+                
+
+                <p>今天有个项目需要用到 OAuth2 来处理一些东西，然而中文互联网有时候真是很难找到像样的文档，搜索 “OAuth 教程” 的到排名前两位的<a href="https://aaronparecki.com/oauth-2-simplified/">教</a><a href="https://aaronparecki.com/oauth-2-simplified/">程</a>都是翻译自一个英文教程，翻译质量奇差无比就不说了，这个英文教程本身就是有问题的，无奈只好搜索 “OAuth tutorial” 才找到几个看得过去的英文教程，总结一下放在这里，算是为中文互联网引入一些正确的知识。</p>
+<p>看到 OAuth2 这个词，一般人肯定会想，是不是还有个 OAuth 1 协议呢？是的，有 OAuth 1 协议，但是因为协议搞得太复杂了，所以没人用，市面上的基本都是根据 OAuth 2 来的。既然实际只有一个 OAuth，以下就简称 OAuth 了。</p>
+<h1>为什么要使用 OAuth —— 一个例子</h1>
+<p>大家最熟悉的例子就是第三方登录了。假设有个论坛叫做“91论坛”你没有注册过 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/oauth2-xie-yi-xiang-jie.html">posted at 04:41</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xiao-xi-dui-lie-cong-yi-lian-meng-bi-dao-kafka.html" rel="bookmark" title="Permanent Link to &quot;消息队列：从一脸懵逼到 Kafka&quot;">消息队列：从一脸懵逼到 Kafka</a>
+                </h2>
+
+                
+                
+
+                <p>消息队列是分布式系统中分离解耦、削峰填谷、横向扩展的一个利器。而其中尤其以 kafka 为代表，在性能等各方面都很出众。</p>
+<p>Kafka 使用 ZK 作为协调器，原生支持集群。每条消息有一个 <key, value, timestamp> 组成。</p>
+<p>每个 partition 可以有多台机器，其中的 leader 负责所有读写，而 follower 复制 leader 的所有操作。如果 leader 挂了， follower 就会顶上去。生产者既可以使用 RR 这些算法来往不同的 partition 发东西，做负载均衡，也可以按照某些业务规则，发到指定的 partition。</p>
+<p>消息队列有两种模型，Queue 和 PubSub。Kafka 通过 Consumer Group 这个概念很好地解决了这个问题</p>
+<h1>术语</h1>
+<table>
+<thead>
+<tr>
+<th>Term …</th></tr></thead></table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xiao-xi-dui-lie-cong-yi-lian-meng-bi-dao-kafka.html">posted at 04:35</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/4" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/6" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 5 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

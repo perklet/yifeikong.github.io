@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Python + Influxdb + Grafana 的监控系统</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="架构,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Oct 16, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-influxdb-grafana-de-jian-kong-xi-tong.html" rel="bookmark" title="Permanent Link to &quot;Python + Influxdb + Grafana 的监控系统&quot;">Python + Influxdb + Grafana 的监控系统</a>
+                </h2>
+
+                
+                
+
+                <h1>influxdb</h1>
+<p>为什么我们要把监控数据存到 influxdb 呢? 存到 MySQL 或者 MongoDB 甚至 Elasticsearch 不好么?</p>
+<p>数据模型上, 监控数据是和时间相关的, 脱离点产生的时间, 那么数据将毫无意义, 传统数据库中并没又强调这一点.</p>
+<p>性能上, influxdb 是时间序列数据库, 这类数据库面临的问题是写入非常多, 而读取比较少. 而普通的数据库一般都是读比较多, 而写入较少, 并且要保证写入的正确性. </p>
+<p>监控打点显然是一个面向时间序列的过程, 并且写入非常多, 而一般只有在触发告警, 排查问题的时候可能读取才比较多. 所以从性能和功能考虑上来说, 传统数据库都是不适用的.</p>
+<p>influxdb 中常见的存储数据格式:</p>
+<div class="highlight"><pre><span></span>cpu_usage value=49 1502043216
+cpu_usage value=50 1502193042
+cpu_usage value=5 1502196258
+</pre></div>
+
+
+<h2>influxdb 数据模型</h2>
+<p>我们以一个 measurement(测量) 作为一个表, tag-value, field-value 都是记录数据的键值对, 区别是 tag 是由索引的, 而 field 没有, timestamp 是时间戳. tag set 自然指的是一组 tag 的组合.</p>
+<div class="highlight"><pre><span></span>measurement,tag=value,tag1=value1 field=value,field1=value1 timestamp
+</pre></div>
+
+
+<p><code>measurement + tag set</code> 被称为一个序列(series). 每一个 series 都可以指定不同的 retention policy.</p>
+<h2>influxdb 查询</h2>
+<p>使用类似 SQL 的语言, 执行 <code>influx</code> 进入shell</p>
+<div class="highlight"><pre><span></span>&gt; CREATE DATABASE mydb
+&gt; SHOW DATABASES
+&gt; USE mydb
+</pre></div>
+
+
+<p>插入数据, 和 SQL 差别还是挺大的, 其中 cpu 是 measurement, 也就是 "表名", 没指定时间的话, influxdb 会自己加上.</p>
+<div class="highlight"><pre><span></span>INSERT cpu,host=serverA,region=us_west value=0.64
+</pre></div>
+
+
+<p>查询数据, 注意多出来的 timestamp 一栏</p>
+<div class="highlight"><pre><span></span>&gt; SELECT &quot;host&quot;, &quot;region&quot;, &quot;value&quot; FROM &quot;cpu&quot;
+name: cpu
+---------
+time                                     host       region   value
+2015-10-21T19:28:07.580664347Z  serverA   us_west    0.64
+</pre></div>
+
+
+<h2>回收策略</h2>
+<p>默认情况下, influxdb 会永久保留数据, 一般来说这样是没有意义的, 我们可以设置短一点.</p>
+<div class="highlight"><pre><span></span>CREATE RETENTION POLICY &lt;retention_policy_name&gt; ON &lt;database_name&gt; DURATION &lt;duration&gt; REPLICATION &lt;n&gt; [DEFAULT]
+</pre></div>
+
+
+<p>其中 replication 只能设置为 1, 因为开源版只有 1. 可以设置成 30d, 1w</p>
+<h1>Python 客户端的编写</h1>
+<p>看到这里有人可能要问了, 不是有 python-influxdb 这个库么, 好好地客户端你为什么要封装一层呢? 答案很简单: 性能.</p>
+<ol>
+<li>调用 <code>influxdb.write_points()</code> 是一个涉及到网络的阻塞操作, 极有可能对于程序造成性能影响.</li>
+<li>如果我们在程序中散落着各种打点的代码, 那么就会造成没打一个点都去调用一些 IO, 不如放在一个队列里面可以每次多打几个, 减少 IO 次数, 这样对程序和 influxdb 的性能都有好处.</li>
+</ol>
+<h2>UDP vs http</h2>
+<p>influxdb 支持使用 UDP 和 HTTP 两种协议访问. 显然对于打点这种操纵来说, 我们不关心响应结果, 哪怕一个点没打上, 没打上就没打上吧......所以采用 UDP 就好了. 根据测试 udp 的性能在 http 的几十倍.</p>
+<p>按照 influxdb 官网的建议, 我们需要调整 UDP buffer 的 size 到 25MB(26214400B) 为宜.</p>
+<p>查看系统的 udp buffer 大小:</p>
+<div class="highlight"><pre><span></span>$ sysctl net.core.rmem_max
+$ sysctl net.core.rmem_default
+</pre></div>
+
+
+<p>修改 <code>/etc/sysctl.conf</code> 文件: </p>
+<div class="highlight"><pre><span></span>net.core.rmem_max=26214400
+net.core.rmem_default=26214400
+</pre></div>
+
+
+<p>但是这个设置只有到下次重启才能生效, 继续使用 sysctl 设置立即生效:</p>
+<div class="highlight"><pre><span></span>$ sysctl -w net.core.rmem_max<span class="o">=</span><span class="m">26214400</span>
+$ sysctl -w net.core.rmem_default<span class="o">=</span><span class="m">26214400</span>
+</pre></div>
+
+
+<p>另外注意, UDP 有一个大坑, 只吃吃精度为 s 的打点, 所以在配置和客户端中都必须使用这个时间精度.</p>
+<p>P.S. 中文互联网上的好多教程都在使用 http 打点, 误人子弟, 毁人不倦啊......</p>
+<p>参考:</p>
+<ol>
+<li>https://docs.influxdata.com/influxdb/v1.6/supported_protocols/udp/</li>
+<li>https://github.com/MikaelGRA/InfluxDB.Client/issues/31</li>
+<li>https://blog.codeship.com/a-deep-dive-into-influxdb/</li>
+<li>http://docs.grafana.org/features/datasources/influxdb/</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-influxdb-grafana-de-jian-kong-xi-tong.html">posted at 02:18</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

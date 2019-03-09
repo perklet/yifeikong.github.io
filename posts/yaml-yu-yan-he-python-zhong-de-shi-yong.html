@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | YAML 语言和 Python 中的使用</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yaml-yu-yan-he-python-zhong-de-shi-yong.html" rel="bookmark" title="Permanent Link to &quot;YAML 语言和 Python 中的使用&quot;">YAML 语言和 Python 中的使用</a>
+                </h2>
+
+                
+                
+
+                <h2>Install</h2>
+<div class="highlight"><pre><span></span>pip install pyyaml
+</pre></div>
+
+
+<h2>Basic Example</h2>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yaml</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">yaml_string</span><span class="p">)</span> <span class="c1"># to python list or dict</span>
+<span class="n">string</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">py_object</span><span class="p">)</span>
+<span class="c1"># NOTE: unlike the json module, the method here is load/dump, not loads/dumps</span>
+</pre></div>
+
+
+<h2>Yaml</h2>
+<p>YAML uses three dashes (“---”) to separate documents within a stream. Three dots ( “...”) indicate the end of a document without starting a new one, for use in communication channels.</p>
+<p>empty string in yaml is '' or "", if you have a blank entry, it will be converted to None
+you don't need to quote strings in yaml</p>
+<p>for dumping, when dumping to a file, do this</p>
+<p>with open('file.yml', 'w') as f:
+    yaml.dump(data, f, default_flow_style=False, allow_unicode=True)</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yaml-yu-yan-he-python-zhong-de-shi-yong.html">posted at 15:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

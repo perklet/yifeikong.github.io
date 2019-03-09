@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | lua</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Lua,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/lua.html" rel="bookmark" title="Permanent Link to &quot;lua&quot;">lua</a>
+                </h2>
+
+                
+                
+
+                <p>lua_pcall 是使用 c 中的 setjmp 实现的, 对应在lua 中的函数就是 pcall</p>
+<p>pcall/error 大概就相当于其他语言中的 try-catch /throw了</p>
+<div class="highlight"><pre><span></span>local ok, errorobject = pcall(function() 
+    --here goes the protected code 
+    ... 
+end) 
+
+if not ok then 
+    --here goes the error handling code 
+    --(errorobject has more information about the error) 
+    ... 
+end 
+</pre></div>
+
+
+<h1>协程</h1>
+<p>对称协程只有一个关键字: transfer, 类似于 goto 语句, 把控制权移交给其他的任意一个协程; 而非对称协程一般有两个关键字:resume 和 yield, 使用 resume打开一个协程, 然后在这个协程中使用 yield 返回.</p>
+<p>学习lua可以获得</p>
+<ul>
+<li>怎样实现一门语言，编译原理，离散数学</li>
+<li>lua本身</li>
+<li>虚拟机，jit</li>
+<li>C语言能力的增强</li>
+</ul>
+<p>lua 的标准库补充 <a href="https://github.com/stevedonovan/Penlight">Penlight</a></p>
+<p><img alt="" src="http://ww4.sinaimg.cn/large/006tNbRwgy1fg3q43bjn9j31kw1rgk1j.jpg"></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/lua.html">posted at 13:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/lua.html" class="tags">Lua</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

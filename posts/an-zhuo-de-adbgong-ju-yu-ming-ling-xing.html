@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 安卓的adb工具与命令行</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="大前端,Android,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/an-zhuo-de-adbgong-ju-yu-ming-ling-xing.html" rel="bookmark" title="Permanent Link to &quot;安卓的adb工具与命令行&quot;">安卓的adb工具与命令行</a>
+                </h2>
+
+                
+                
+
+                <h1>Yifei's Notes</h1>
+<p>adb is pretty unstable, it's meant for debug usage, NOT for a long-running service.</p>
+<h1>Install</h1>
+<p>install on ubuntu: <code>apt-get install android-tools-adb android-tools-fastboot</code></p>
+<p>install on mac: <code>brew install android-platform-tools</code></p>
+<h1>Connect model</h1>
+<p>there is a server on PC called adb server, if not started, will be started on first adb client call commands. there is an adbd daemon on phone, run as not root by default.</p>
+<h1>adb devices</h1>
+<p>list all devices, give serial number for usb, and ip:port for wifi devices as adb id. if only one device, all commands are issued to that device, if many, use adb -s <adb-id> command to select a device.</p>
+<h2>Connect over Wifi</h2>
+<ol>
+<li>first usb adb to the device</li>
+<li>
+<p>second</p>
+<p>if rooted and run this on phone</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span>su
+setprop service.adb.tcp.port 5555
+stop adbd &amp;&amp; start adbd
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>if not rooted and run this on computer
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>adb tcpip 5555
+</pre></div>
+
+
+<ol>
+<li><code>adb connect ip:port</code></li>
+<li><code>adb usb</code>  # back to usb mode</li>
+</ol>
+<h2>pull/push</h2>
+<p><code>adb pull phone_path pc_path</code>
+<code>adb push pc_path phone_path</code></p>
+<h2>install/uninstall</h2>
+<div class="highlight"><pre><span></span>adb install 
+adb uninstall
+adb shell pm clear PACKAGE_NAME  # clears package data
+</pre></div>
+
+
+<h2>forward</h2>
+<p>adb forward local:port android:port</p>
+<p>adb wait-for-device</p>
+<p>read the adb help</p>
+<h2>remount</h2>
+<p>remounts the /system, /vendor (if present) and /oem (if present) partitions on the device read-write</p>
+<p>adb forward</p>
+<p>which forwards requests on a specific host port to a different port on a device</p>
+<p><code>adb forward host device</code>
+<code>adb forward tcp:6100 tcp:7100</code></p>
+<h2>get running activity name</h2>
+<p><code>adb shell dumpsys activity | grep mFocusedActivity</code></p>
+<p>pm
+setprop/getprop
+netcfg
+screencap
+screenrecord</p>
+<p>error closed</p>
+<p>可能是权限不够，执行了n权限过高的操作，需要首先执行 adb root</p>
+<p>能用 ssh，就用 ssh ，不要用 adb</p>
+<h1>Android Shell Command</h1>
+<p>https://github.com/jackpal/Android-Terminal-Emulator/wiki/Android-Shell-Command-Reference
+http://forum.xda-developers.com/showthread.php?t=1694251 
+http://forum.xda-developers.com/wiki/Guide%3aUsing_the_Terminal#SSHD
+http://www.kpbird.com/2013/05/android-shell-command-pm-package-manager.html</p>
+<p>termux</p>
+<h1>32 bit adb 在64位linux上无法运行</h1>
+<p>The error message is no such file of directory, which is quite miss-leading</p>
+<h1>adb install 安装失败</h1>
+<p>apk 没有权限  应该777
+apk 有证书不一致的 卸载旧的apk</p>
+<h1>Configuator 设置 uiautomator 的超时时间，参见[1]</h1>
+<p>[1] https://developer.android.com/reference/android/support/test/uiautomator/Configurator.html</p>
+<p>从手机上拉取已安装应用的apk文件</p>
+<p>adb shell pm path com.example.someapp</p>
+<p>adb pull /data/app/com.example.someapp-2.apk</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/an-zhuo-de-adbgong-ju-yu-ming-ling-xing.html">posted at 12:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

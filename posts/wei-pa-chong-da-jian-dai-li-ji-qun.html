@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 为爬虫搭建代理集群</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机,爬虫" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 28, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-pa-chong-da-jian-dai-li-ji-qun.html" rel="bookmark" title="Permanent Link to &quot;为爬虫搭建代理集群&quot;">为爬虫搭建代理集群</a>
+                </h2>
+
+                
+                
+
+                <p>爬虫如果只用固定的同一个或者同一组 IP 的话，很容易被封禁，轻者弹验证码，重者直接无法访问。</p>
+<p>这里主要探讨如何构架一个代理 IP 池，从而能够频繁更换代理 IP。</p>
+<p>按照代理 IP 的来源，主要有几个方法：</p>
+<ol>
+<li>去免费代理的网站上爬</li>
+<li>利用 ADSL 重拨会更换 IP 的原理，使用 ADSL 机器搭建集群</li>
+<li>利用云提供商的 API，自动更换 IP</li>
+</ol>
+<h1>搭建一个自己的 adsl 集群</h1>
+<h2>找代理商</h2>
+<p>首先找到一个靠谱的网站就实属不易，这些 adsl 提供商的技术水平普遍不高，往往只能提供 centos 镜像，有 centos 7.1就算不错的了，其中有一家竟然提供了 ubuntu 14.04，结果还是各种问题，坑了我大概半天的时间。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-pa-chong-da-jian-dai-li-ji-qun.html">posted at 02:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Linux 命令行文本处理（sed/awk/grep...）</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-wen-ben-chu-li-sedawkgrep.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行文本处理（sed/awk/grep...）&quot;">Linux 命令行文本处理（sed/awk/grep...）</a>
+                </h2>
+
+                
+                
+
+                <h1>sort</h1>
+<div class="highlight"><pre><span></span>-d 按照字典排序(默认)
+-n 按照数字大小排序
+-f 忽略大小写
+-g 按照浮点数排序
+-M 按照 Jan Feb 等排序
+
+-r 逆序
+-k 指定第 k 列排序 -t 指定分隔符
+-b 忽略行首空格字符
+-m 把两个已经排序的文件合并
+</pre></div>
+
+
+<h1>uniq 合并重复</h1>
+<p>uniq 命令假定文件是已经排序的，因此基本要接着 sort 使用</p>
+<ul>
+<li><code>sort unsorted.txt | uniq</code> 删除重复行</li>
+<li><code>sort unsorted.txt | uniq -c</code> 统计行数</li>
+<li><code>sort unsorted.txt | uniq -d</code> 只显示重复行 -u 只显示不重复行</li>
+</ul>
+<h1>tr 翻译指令</h1>
+<p>tr "source" "target" 如果目标字符串太短的化，使用最后一个字符填充
+tr -d "source" remove
+tr -s "source" squeeze extra characters, useful for piping to cut
+-c 参数对第一个字符串的补集
+可以使用区间 a-z 0-9 等
+还可以使用字符类 [:class:]</p>
+<ul>
+<li>alnum：字母和数字</li>
+<li>alpha：字母</li>
+<li>digit：数字</li>
+<li>space：空白字符</li>
+<li>lower：小写</li>
+<li>upper：大写</li>
+<li>cntrl：控制（非可打印）字符</li>
+<li>print：可打印字符</li>
+</ul>
+<p>cut 选取某一列 sort <mode> <which>
+有三种模式 -b 按字节 -c 按字符 -f 按域 -d 指定分隔符
+选取的列可以使用:</p>
+<ul>
+<li>i 第 i 行</li>
+<li>a,b  i 行和 j 行</li>
+<li>a-b 第 i 到 j 行</li>
+</ul>
+<p>--completment 选取补集
+--output-delimiter 输出</p>
+<h1>wc</h1>
+<p>统计单词 -c 字符数 -w 单词数 -l 行数</p>
+<h1>nl</h1>
+<p>给每行添加行号 -ba 所有行</p>
+<h1>paste</h1>
+<p>按列合并文本</p>
+<h1>xargs</h1>
+<p>xargs reformat the data it received and give it to next command. xargs squish all parameters into one line</p>
+<p>-d set delemeters
+-t 回显命令
+-I 执行指定的 Instruction，需要指定操作符
+如 ls *.md | xargs -t -I "%" cp "%" markdown/
+-n output with n args on one line</p>
+<h1>regular expression in shell</h1>
+<table>
+<thead>
+<tr>
+<th>Commands</th>
+<th>BRE</th>
+<th>ERE</th>
+<th>PCRE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sed</td>
+<td>*</td>
+<td>-E/-r</td>
+<td></td>
+</tr>
+<tr>
+<td>awk</td>
+<td></td>
+<td>*</td>
+<td></td>
+</tr>
+<tr>
+<td>grep</td>
+<td>*</td>
+<td>-E</td>
+<td>-P</td>
+</tr>
+<tr>
+<td>find</td>
+<td></td>
+<td>*</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1>Sed</h1>
+<h2>Basic format</h2>
+<div class="highlight"><pre><span></span>sed options script file
+</pre></div>
+
+
+<p>by default, sed uses BRE, but you probably want sed -E to enable ERE, see http://liujiacai.net/blog/2014/12/07/regexp-favors/. basically, sed works line by line and do transformation</p>
+<p>s for substitution</p>
+<p>sed s/day/night/OPTION OLDFILE &gt; NEWFILE</p>
+<p>默认只替换第一处出现, /g 替换所有</p>
+<p>/只是默认的分隔符, 可以任意使用, 推荐使用:</p>
+<p>使用 &amp; 作为匹配到的字符, 使用 \1 \2 来表示匹配到的分组, 这种表达方式倒是和 pcre有些类似</p>
+<p>使用 -r(linux) 或者 -E(mac) 才能够使用扩展的posix正则, 一定要带上这两个</p>
+<p>OPTION</p>
+<p>处理命令行输入输出的时候可能经常需要trim, 尤其是字符串带了\n的情况</p>
+<p>sed -n 's/PATTERN/&amp;/p' file</p>
+<p>sed '/PATTERN/p' file</p>
+<h2>Options</h2>
+<div class="highlight"><pre><span></span>-i  inplace
+-i.bak  inplace with backup
+-E/-r   use ERE
+</pre></div>
+
+
+<h2>script</h2>
+<p>sed command syntax: option/pattern/command parameters
+pattern selects lines and do command with parameters on those lines</p>
+<h1>awk</h1>
+<h2>basic usage</h2>
+<p>gawk options program varlist file</p>
+<p>gawk, like sed, is also line-oriented</p>
+<h2>vaiables</h2>
+<p>$0  the whole line
+$1...$n word in line
+NR  number of rows
+NF  number of fileds</p>
+<h2>awk program</h2>
+<p>awk 'BEGIN{ } pattern { } END { }' file
+BEGIN in used for initilization, and END is used to print out the result, pattern {} is run against each line</p>
+<p>awk 'pattern' file
+print lines with the pattern</p>
+<h1>grep</h1>
+<div class="highlight"><pre><span></span>grep pattern file1 file2...
+grep pattern *
+grep pattern -r &lt;dir&gt;
+</pre></div>
+
+
+<p>force grep to show file name: 
+    grep pattern file /dev/null</p>
+<h2>options</h2>
+<p>-v  invert search
+-r/-R   recursively
+-c  count matching lines
+-o  printing matched part in differnet lines
+-b -o   output offset
+-n  with line numbers
+-i  ignore case
+-l  list matched files
+-f  pattern from 
+--include   include files for grep
+-Z  use \0 as delemeter
+-q  no output only return value
+-A n    lines after
+-B n    lines before
+-C n    lines combined</p>
+<h1>ag</h1>
+<p>按文件过滤，支持多种文件类型，可以用<code>ag --list-file-types</code>查看支持的类型</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-wen-ben-chu-li-sedawkgrep.html">posted at 12:37</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 父进程退出后如何退出子进程</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 09, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/fu-jin-cheng-tui-chu-hou-ru-he-tui-chu-zi-jin-cheng.html" rel="bookmark" title="Permanent Link to &quot;父进程退出后如何退出子进程&quot;">父进程退出后如何退出子进程</a>
+                </h2>
+
+                
+                
+
+                <p>我们知道当子进程推出的时候，父进程会收到 SIGCHLD 信号，从而可以采取相应的操作。但是当父进程退出的时候，系统会把子进程的父进程更改为pid=0的 init 进程，而且子进程不会收到任何信号。而我们经常想在父进程退出的时候，让子进程也推出。在 Python 中可以有如下几种做法。</p>
+<h1>设置子进程为 daemon</h1>
+<p>这里的 daemon 和系统的守护进程没有任何关系，是 quit_when_parent_dies 的意思。也就是当父进程退出的时候，会自动尝试关闭 daemon=True 的子进程。</p>
+<div class="highlight"><pre><span></span>p = multiprocessing.Process(target=foo)
+p.daemon = True
+p.start()
+</pre></div>
+
+
+<p><a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Process.daemon">官方文档</a></p>
+<h1>在子进程中设置 PDEATHSIG</h1>
+<p>在 Linux 中，进程可以要求内核在父进程退出的时候给自己发信号。使用系统调用 prctl。</p>
+<div class="highlight"><pre><span></span>prctl(PR_SET_PDEATHSIG, SIGHUP);
+</pre></div>
+
+
+<p>在 Python中也有<a href="https://github.com/seveas/python-prctl">对应的包 python-prctl</a>，可以在<strong>子进程</strong>中这样使用，这样在父进程挂掉的时候，子进程就会收到 SIGHUP 信号：</p>
+<div class="highlight"><pre><span></span><span class="c1"># apt-get install build-essential libcap-dev</span>
+<span class="c1"># pip install python-prctl</span>
+
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">prctl</span>
+
+<span class="n">prctl</span><span class="o">.</span><span class="n">set_pdeathsig</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGHUP</span><span class="p">)</span>
+</pre></div>
+
+
+<p>缺点：只支持 linux</p>
+<h1>父进程在终止的时候回收子进程</h1>
+<p>可以使用 atexit.register 在主进程中注册代码：</p>
+<div class="highlight"><pre><span></span><span class="c1"># pip install psutil</span>
+
+
+<span class="kn">import</span> <span class="nn">psutil</span>
+<span class="kn">import</span> <span class="nn">atexit</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+
+<span class="nd">@atexit.register</span>
+<span class="k">def</span> <span class="nf">kill_children</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;quitting, press Ctrl-C to force quit&#39;</span><span class="p">)</span>
+    <span class="n">current_process</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">Process</span><span class="p">()</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="n">current_process</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">recursive</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Child pid is {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">pid</span><span class="p">))</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">)</span>
+</pre></div>
+
+
+<p>使用 atexit 在<a href="http://yifei.me/note/558">收到 SIGTERM 的时候并不能触发</a>，所以最好使用 signal 注册到主进程对应的信号上。</p>
+<p>缺点是当使用 kill -9 或者使用 os._exit 的时候不会调用这些函数。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/fu-jin-cheng-tui-chu-hou-ru-he-tui-chu-zi-jin-cheng.html">posted at 03:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Page 26</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 31, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-wang-luo-xiang-guan-curlwgetnc.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行网络相关（curl/wget/nc...）&quot;">Linux 命令行网络相关（curl/wget/nc...）</a>
+                </h2>
+
+                
+                
+
+                <p>有待整理。。。</p>
+<h1>fuser</h1>
+<p>view which program is using which port.</p>
+<div class="highlight"><pre><span></span>fuser XXX/tcp  # see which program is using tcp port XXX
+fuser XXX/upd  # see which program is using udp port XXX
+fuser -k XXX/tcp  # kill the program, if you have right permissions
+</pre></div>
+
+
+<h1>curl</h1>
+<p>wget 功能很有限，httpie 虽然比较人性化但是有很多 bug，还是 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-wang-luo-xiang-guan-curlwgetnc.html">posted at 06:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/redis-shi-zhan-zong-jie.html" rel="bookmark" title="Permanent Link to &quot;redis 实战总结&quot;">redis 实战总结</a>
+                </h2>
+
+                
+                
+
+                <h2>redis是做什么的</h2>
+<p>一个数据结构存储器，数据驻留在内存里，可以在程序的两次之间保存数据</p>
+<h2>一些实现细节和比较好的地方</h2>
+<p>redis 的 string 是 binary-safe 的，可以存储任意的二进制数据（bytes），甚至可以把图片存储在 redis 中</p>
+<h2>经常用到的场合</h2>
+<ol>
+<li>用作缓存</li>
+<li>
+<p>最基础的，最经典的应用场合，当查询数据库或者ES等存储代价比较高的时候，直接用查询的语句做 key，查询结果用作缓存</p>
+</li>
+<li>
+<p>用做队列</p>
+</li>
+<li>
+<p>用做集合，也就是存储一批数据的池子。用作有序集合</p>
+</li>
+</ol>
+<h2>经常遇到的问题</h2>
+<p>过期之间只能指定到键级别，而不能指定到集合的键级别</p>
+<h2>pipeline</h2>
+<p>imporve performance by combining multi command into one and reduce TCP times</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; p = r.pipeline()        # 创建一个管道
+&gt;&gt;&gt; p.set …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/redis-shi-zhan-zong-jie.html">posted at 14:33</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linuxbrew.html" rel="bookmark" title="Permanent Link to &quot;linuxbrew&quot;">linuxbrew</a>
+                </h2>
+
+                
+                
+
+                <p>It can be installed in your home directory and does not require root access.</p>
+<p>ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
+PATH="$HOME/.linuxbrew/bin:$PATH"</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linuxbrew.html">posted at 14:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/caputre-ios-traffic.html" rel="bookmark" title="Permanent Link to &quot;caputre iOS traffic&quot;">caputre iOS traffic</a>
+                </h2>
+
+                
+                
+
+                <p>RVI</p>
+<p>Step 1. Plug you iPhone with USB
+Step 2. go to pgyer.cn, and find the UDID
+Step 3. use rvi -x UDID
+Step 4. use  wireshark and select the rvi0 device</p>
+<p>http://useyourloaf.com/blog/remote-packet-capture-for-ios-devices/</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/caputre-ios-traffic.html">posted at 14:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/react.html" rel="bookmark" title="Permanent Link to &quot;React&quot;">React</a>
+                </h2>
+
+                
+                
+
+                <p>Most important ideas:</p>
+<p>Widget based</p>
+<p>Note: You can write your whole app in React, but you can also use it as a component in your app
+props</p>
+<p>state</p>
+<p>Single data flow with dom-diff</p>
+<p>Most Notable methods</p>
+<p>React.Component
+React.Component.render
+React.render</p>
+<p>Yifei's Notes</p>
+<p>过去写界面的方法是，把所有的结构(html)，动作(js …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/react.html">posted at 14:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/michael-sipser-dean-of-science.html" rel="bookmark" title="Permanent Link to &quot;Michael Sipser - Dean of Science&quot;">Michael Sipser - Dean of Science</a>
+                </h2>
+
+                
+                
+
+                <p>Gravity Waves</p>
+<p>LIGO</p>
+<p>Rai Weiss</p>
+<p>RSA is first published in Scientific American</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/michael-sipser-dean-of-science.html">posted at 14:06</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/talks.html" rel="tag">talks</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/talks.html" class="tags">talks</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ecmascript-6.html" rel="bookmark" title="Permanent Link to &quot;EcmaScript 6&quot;">EcmaScript 6</a>
+                </h2>
+
+                
+                
+
+                <h2>using es6 with babel</h2>
+<h3>debugging mode</h3>
+<div class="highlight"><pre><span></span><span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">&quot;node_modules/babel-core/browser.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span> 
+<span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/babel&quot;</span><span class="nt">&gt;</span> 
+// Your ES6 code
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+
+<h3>production mode</h3>
+<p><code>babel script.js --out-file script-compiled.js</code></p>
+<h2>Yifei's Notes</h2>
+<p>the main impovements of ES6 are loops and generators, let/const, arrow functions, class syntax
+small pieces are function …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ecmascript-6.html">posted at 13:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/java-notes.html" rel="bookmark" title="Permanent Link to &quot;Java Notes&quot;">Java Notes</a>
+                </h2>
+
+                
+                
+
+                <p>内部类
+OuterClassName.InnerClassName
+内部类可以直接访问其外围对象的成员，而不需要任何特殊条件
+OuterClass.this OuterClass.new  </p>
+<p>匿名内部类非常有用。 new ClassName() {} 创建一个继承自ClassName的匿名类的对象</p>
+<p>嵌套类是指使用了static class 的内部类</p>
+<p>java中不允许变量隐藏</p>
+<p>只有类成员才会默认初始化，普通变量不会</p>
+<p>int x = a.f()
+其中，消息是f(), 对象是a,面向对象就是「给对象发消息」</p>
+<p>java中不允许将其他类型用做bool值</p>
+<p>java会为你提供默认构造器（无参构造器）</p>
+<p>无法通过返回值来重载函数</p>
+<p>静态块</p>
+<p>static {
+    i = 47;
+}</p>
+<p>可变参数列表
+doGET(Object... args)</p>
+<p>默认访问权限是包访问权限</p>
+<p>.java 文件编译生成 .class 文件，jar文件是.class 文件的打包</p>
+<p>使用import时，默认去CLASSPATH …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/java-notes.html">posted at 13:46</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/lua.html" rel="bookmark" title="Permanent Link to &quot;lua&quot;">lua</a>
+                </h2>
+
+                
+                
+
+                <p>lua_pcall 是使用 c 中的 setjmp 实现的, 对应在lua 中的函数就是 pcall</p>
+<p>pcall/error 大概就相当于其他语言中的 try-catch /throw了</p>
+<div class="highlight"><pre><span></span>local ok, errorobject = pcall(function() 
+    --here goes the protected code 
+    ... 
+end) 
+
+if not ok then 
+    --here goes the error handling code 
+    --(errorobject has more information about the error) 
+    ... 
+end 
+</pre></div>
+
+
+<h1>协程</h1>
+<p>对称协程只有一个关键字: transfer, 类似于 goto 语句, 把控制权移交给其他的任意一个协程 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/lua.html">posted at 13:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/lua.html" class="tags">Lua</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/openresty.html" rel="bookmark" title="Permanent Link to &quot;openresty&quot;">openresty</a>
+                </h2>
+
+                
+                
+
+                <ol>
+<li>The *by_lua modules that tweak the nginx behaviour (for ex the rewrite_by_lua that is the lua equivalent of nginx http rewrite) module are always run after the standard nginx modules.</li>
+<li>The choice of *by_lua module to use largely depends upon the problem that you are trying to solve. For example …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/openresty.html">posted at 13:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/lua.html" class="tags">Lua</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/25" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/27" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 26 of 34</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

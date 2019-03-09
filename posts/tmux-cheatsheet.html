@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | tmux cheatsheet</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="小工具,计算机,通用工具" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 18, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/tmux-cheatsheet.html" rel="bookmark" title="Permanent Link to &quot;tmux cheatsheet&quot;">tmux cheatsheet</a>
+                </h2>
+
+                
+                
+
+                <p>if you use set mouse off, then you could use system mark and copy, or if you are  in Mac, you could use Option + Mouse Select</p>
+<h1>按键绑定</h1>
+<div class="highlight"><pre><span></span>C-b         发送 Ctrl-b 按键
+C-z         暂停（suspend） tmux 客户端
+</pre></div>
+
+
+<h2>窗口创建与管理</h2>
+<div class="highlight"><pre><span></span>!           把当前分区独立出来作为单独的窗口
+&quot;           横向分隔，变成上线两个分区
+%           纵向分隔，变成左右两个分区
+&amp;           关闭当前窗口（window），也就是所有的分区                    
+.           Prompt for an index to move the current window.
+c           创建一个新窗口
+x           关闭当前分区（pane）
+{           Swap the current pane with the previous pane.
+}           Swap the current pane with the next pane.
+C-o         Rotate the panes in the current window forwards.
+M-o         Rotate the panes in the current window backwards.
+C-Up, C-Down
+C-Left, C-Right
+            Resize the current pane in steps of one cell.
+M-Up, M-Down
+M-Left, M-Right
+            Resize the current pane in steps of five cells.
+M-1 to M-5  Arrange panes in one of the five preset layouts: even-horizontal, even-vertical, main-horizontal, main-vertical, or tiled.
+Space       Arrange the current window in the next preset layout.
+M-n         Move to the next window with a bell or activity marker.
+M-p         Move to the previous window with a bell or activity marker.
+</pre></div>
+
+
+<h2>copy and paste</h2>
+<div class="highlight"><pre><span></span>#           List all paste buffers.
+-           Delete the most recently copied buffer of text.
+=           Choose which buffer to paste interactively from a list.
+[           Enter copy mode to copy text or view the history.
+]           Paste the most recently copied buffer of text.
+Page Up     Enter copy mode and scroll one page up.
+</pre></div>
+
+
+<h2>rename</h2>
+<div class="highlight"><pre><span></span>$           Rename the current session.
+,           Rename the current window.
+</pre></div>
+
+
+<h2>选择窗口</h2>
+<div class="highlight"><pre><span></span>&#39;           Prompt for a window index to select.
+(           Switch the attached client to the previous session.
+)           Switch the attached client to the next session.
+0 to 9      Select windows 0 to 9.
+l           Move to the previously selected window. remapped to \
+n           Change to the next window.
+o           Select the next pane in the current window.
+p           Change to the previous window.
+s           Select a new session for the attached client interactively.
+w           Choose the current window interactively.
+;           Move to the previously active pane.
+</pre></div>
+
+
+<h2>其他</h2>
+<div class="highlight"><pre><span></span>:           Enter the tmux command prompt.
+?           List all key bindings.
+D           Choose a client to detach.
+L           Switch the attached client back to the last session.        
+d           Detach the current client.
+f           Prompt to search for text in open windows.
+i           Display some information about the current window.
+q           Briefly display pane indexes.
+r           Force redraw of the attached client.
+m           Mark the current pane (see select-pane -m).
+M           Clear the marked pane.
+t           Show the time
+z           Toggle zoom state of the current pane.
+           ~           Show previous messages from tmux, if any.
+
+           Up, Down
+           Left, Right
+                       Change to the pane above, below, to the left, or to the right of the current pane.
+</pre></div>
+
+
+<h1>dtach</h1>
+<p>还有一个类似 tmux 的命令 dtach，不过后来没怎么用了，笔记还是留在这里。</p>
+<p><code>dtach</code> is used to detach and attach to a session.</p>
+<p><code>dtach</code> works with a session file, and can detach and attach to a session, but it has no functionality of terminal multiplexing.</p>
+<p>Formula
+    dtach [mode] [session_file] [options] [command]</p>
+<p><code>dtach</code> modes are <code>-a</code> attach, <code>-A</code> attach or create, <code>-c</code> creates a new session and attach, <code>-n</code> creates without attach.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/tmux-cheatsheet.html">posted at 00:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiao-gong-ju.html" class="tags">小工具</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

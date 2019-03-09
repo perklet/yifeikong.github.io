@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 动态规划</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="算法,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/dong-tai-gui-hua.html" rel="bookmark" title="Permanent Link to &quot;动态规划&quot;">动态规划</a>
+                </h2>
+
+                
+                
+
+                <p>如果每个阶段的决策都和状态无关，那么就是贪心算法</p>
+<p>如果需要把整个解空间都遍历一遍，那么就是穷举</p>
+<p>如果可一个根据上一步的结果的出下一步的结果，可以使用动态规划</p>
+<p>以下转载自：https://www.zhihu.com/question/39948290/answer/155958549</p>
+<h1>1.动态规划是什么?</h1>
+<p>答：动态规划是一种通过“大而化小”的思路解决问题的算法。区别于一些固定形式的算法，如二分法，宽度优
+先搜索法，动态规划没有实际的步骤来规定第一步做什么第二步做什么。所以更加确切的说，动态规划是一种
+解决问题的思想。这种思想的本质是，一个规模比较大的问题（假如用2‑3个参数可以表示），是通过规模比
+较小的若干问题的结果来得到的（通过取最大，取最小，或者加起来之类的运算）所以我们经常看到的动态规
+划的核心——状态转移方程都长成这样：</p>
+<ul>
+<li>f[i][j] = f[i ‑ 1][j] + f[i][j ‑ 1]</li>
+<li>f[i] = max{f[j] if j &lt; i and …} + 1</li>
+<li>f[i][j] = f[0][j ‑ 1] &amp;&amp; judge(1,i) || f[1][j ‑ 1] &amp;&amp; judge(2,i) || …</li>
+</ul>
+<h1>2.动态规划面试考得多么？</h1>
+<p>答：多。并且越来越多。随着CS从业与求职者的增加，并伴随大家都是“有备而来”的情况下，一般简单的反转
+链表之类的题目已经无法再在面试中坚挺了。因此在求职者人数与招聘名额的比例较大的情况下，公司会倾向
+于出更难的面试问题。而动态规划就是一种比较具有难度，又比较“好出”的面试问题。相比其他的算法与数据
+结构知识来说，贪心法分治法太难出题了，搜索算法往往需要耗费求职者过长的程序编写时间一般也不倾向于
+出，二叉树链表等问题题目并没有那么多，而且求职者也都会着重准备这一块。因此动态规划这一类的问题，
+便越来越多的出现在了面试中。</p>
+<h1>3.动态规划快在哪儿？</h1>
+<p>答：动态规划一般来说是“高效”的代名词，因为其解决的问题一般退而求其次的算法只有搜索了。以“数字三
+角形”一题为例子（lintcode.com/problem/tr） ，在“三角矩阵”中找一条从上到下的路径，使得权值之和最
+小。如果使用暴力搜索的算法，那么需求穷举出2^(n‑1)条路径（n为三角形高度），而使用动态规划的话，则
+时间复杂度降低到了n^2，完成了质的飞跃。那么究竟为什么这么快呢？原因在于动态规划算法去掉了“无用和
+重复的运算”。在搜索算法中，假如从A‑&gt;B有2条路径，一条代价为10，另外一条代价为100，B‑&gt;终点有1024
+条路径。当我们选择了代价为10的那条路径走到B时，可以继续往下走完1024条路径到终点，但是在此之后，
+我们再从代价为100的路径从A走到B时，我们可以发现此时无论如何走，都不可能有刚才从10的路径走过来更
+好，所以这些计算是“无用”的计算，也可以说是“重复”的计算。这就是动态规划之所以“快”的重要原因。</p>
+<h1>4.学习动态规划有什么捷径？</h1>
+<p>答：我们将动态规划的常见类型分为如下几种：
+<em> 矩阵型
+</em> 序列型
+<em> 双序列型
+</em> 划分型
+<em> 区间型
+</em> 背包型
+<em> 状态压缩型
+</em> 树型
+其中，在技术面试中经常出现的是矩阵型，序列型和双序列型。划分型，区间型和背包型偶尔出现。状态压缩
+和树型基本不会出现（一般在算法竞赛中才会出现）。
+每种类型都有着自己的题目特点和状态的表示方法。以矩阵型动态规划为例，一般题目会给你一个矩阵，告诉
+你有一个小人在上面走动，每次只能向右和向下走，然后问你比如有多少种方案从左上走到右下
+(lintcode.com/problem/un)。这种类型状态表示的特点一般是使用坐标作为状态，如f[i][j]表示走到(i,j)这个位
+置的时候，一共有多少种方案。状态的转移则是考虑是从哪儿走到(i,j)这个坐标的。而序列型的动态规划，一
+般是告诉你一个序列；双序列的动态规划一般是告诉你两个字符串或者两个序列。
+将所做过的动态规划问题按照这些类别进行归类，分析状态的表示方法和状态转移方程的构造方法在每种类型
+中的近似之处，会让你更快的学会动态规划。</p>
+<h1>5.什么样的问题适合使用动态规划？</h1>
+<p>答：可以使用动态规划的问题一般都有一些特点可以遵循。如题目的问法一般是三种方式：</p>
+<ol>
+<li>求最大值/最小值</li>
+<li>求可不可行</li>
+<li>求方案总数</li>
+</ol>
+<p>如果你碰到一个问题，是问你这三个问题之一的，那么有90%的概率是使用动态规划来求解。
+要重点说明的是，如果一个问题让你求出“所有的”方案和结果，则肯定不是使用动态规划。</p>
+<h1>6.解决一个动态规划问题的步骤是什么？</h1>
+<p>答：首先根据“问5”判断是否是动态规划的问题，如果是，则尝试将其按照“问4”进行分类，找到对应的类别和
+相似的问题。接着从下面的4个要素去逐步剖析解决这道题：</p>
+<ol>
+<li>状态是什么</li>
+<li>状态转移方程是什么</li>
+<li>状态的初始值是什么</li>
+<li>问题要求的最后答案是什么</li>
+</ol>
+<p>每个步骤分析完成之后，就基本上解决了整道动态规划的问题。</p>
+<h1>7.怎么优化动态规划的时间？</h1>
+<p>答：一般来说，使用动态规划求解的问题，时间上已经比暴力搜索要优化很多了。但是仍然存在着一些可以优
+化的空间。通常来说，动态规划的时间优化，有如下两种常见的方式：</p>
+<ol>
+<li>通过变换状态优化</li>
+<li>通过决策单调优化</li>
+</ol>
+<p>对于通过变换状态来优化的问题比较难，需要一些经验和灵感。而对于决策单调的优化，则比较简单，但适用
+范围不广，一般只适用于划分型动态规划当中，通常这个方法可以将复杂度降低一个数量级。</p>
+<h1>8.怎样优化动态规划的空间？</h1>
+<p>答：动态规划的空间优化往往采用滚动数组优化。以一个二维的动态规划为例子。假如状态转移方程如下：</p>
+<div class="highlight"><pre><span></span>f[i][j] = f[i ‑ 1][j] + f[i][j ‑ 1]。
+</pre></div>
+
+
+<p>我们可以发现，第i层的状态，已经和第i‑2层的状态没有关系了，那么这种情况下，用于存储第i‑2层的空间就可以被重复利用。方法非常简单，把数组的第一维对2取模就可以了：</p>
+<div class="highlight"><pre><span></span>f[i % 2][j] = f[(i ‑ 1) % 2][j] + f[i % 2][j‑1]。
+</pre></div>
+
+
+<p>这种方法通常可以将空间复杂度降低一个数量级。</p>
+<h1>9.有什么书籍和参考资料可以推荐么？</h1>
+<p>著名的背包九讲：
+vdisk.weibo.com/s/tanGy （也可以直接在网上搜索背包九讲）</p>
+<h1>10.有哪些动态规划题目必须要练习的？</h1>
+<p>在LintCode上包含了30余道动态规划的练习题，都是从实际的面试问题中汇总的精选练习：
+lintcode.com/tag/dynami</p>
+<p>所以，动态规划自学并不难，关键是你要掌握学习的方法。
+如果你觉得我说的很有用，欢迎关注我的微信公众号：ninechapter，里面有海量的算法题等你领取~</p>
+<h2>基础介绍</h2>
+<p>http://www.hawstein.com/posts/dp-novice-to-advanced.html</p>
+<h2>数组分割问题</h2>
+<p>http://www.cnblogs.com/liyukuneed/archive/2013/05/27/3090454.html</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/dong-tai-gui-hua.html">posted at 03:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

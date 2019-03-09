@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Articles by Yifei Kong</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/author/yifei-kong/page/6/index.html">Yifei Kong</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/chao-gu-ji.html" rel="bookmark" title="Permanent Link to &quot;炒股记&quot;">炒股记</a>
+                </h2>
+
+                
+                
+
+                <p>老婆总是念叨着要炒股，经过一番科学分析，刚开始还赚了几千。不过因为听信了塑料姐妹花的传言，买了几只传说要疯长的股票，把赚进来的全都赔了回去。天天看着被套牢很烦，然后她把账户给了我。</p>
+<p>这个故事告诉我们，不要相信所谓的内部消息，要自己分析才好。</p>
+<p>A 股没有什么互联网企业。</p>
+<p>A 股的白色家电股票不错，包括了格力、美的、海尔。其中格力因为没有分红导致股票暴跌，应该很快就会恢复原来的价格。美的收购了德国的工业机器人公司，长期看好。</p>
+<p>京东方A 作为政府扶持的液晶面板公司，应该业绩不会很差。</p>
+<p>紫光的 RAM 生产线不知道何时才能下线，应该时刻关注相关新闻</p>
+<p>海天酱油作为行业的龙头，近几年发展一直不错，看好。</p>
+<p>汽车板块也值得关注。</p>
+<p>之前一直觉得像是"XX要搞AI，为了提升股价"这种新闻都感觉很假，但是现在发现的确是这样的，对于不了解行业的小白来说，站上这些名词的确好像显得公司有前途，所以小白活该被套啊。这也提醒我们，不要碰自己不了解或者没有研究过的行业。</p>
+<p>要买长期看好的股票，这样如果上涨的话当然最好，即使短暂下跌，也可以有解套的机会。</p>
+<p>2018-11-28 更新</p>
+<p>狗日的贸易战啊 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/chao-gu-ji.html">posted at 04:43</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/sheng-huo.html" rel="tag">生活</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/sheng-huo.html" class="tags">生活</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/oauth2-xie-yi-xiang-jie.html" rel="bookmark" title="Permanent Link to &quot;OAuth2 协议详解&quot;">OAuth2 协议详解</a>
+                </h2>
+
+                
+                
+
+                <p>今天有个项目需要用到 OAuth2 来处理一些东西，然而中文互联网有时候真是很难找到像样的文档，搜索 “OAuth 教程” 的到排名前两位的<a href="https://aaronparecki.com/oauth-2-simplified/">教</a><a href="https://aaronparecki.com/oauth-2-simplified/">程</a>都是翻译自一个英文教程，翻译质量奇差无比就不说了，这个英文教程本身就是有问题的，无奈只好搜索 “OAuth tutorial” 才找到几个看得过去的英文教程，总结一下放在这里，算是为中文互联网引入一些正确的知识。</p>
+<p>看到 OAuth2 这个词，一般人肯定会想，是不是还有个 OAuth 1 协议呢？是的，有 OAuth 1 协议，但是因为协议搞得太复杂了，所以没人用，市面上的基本都是根据 OAuth 2 来的。既然实际只有一个 OAuth，以下就简称 OAuth 了。</p>
+<h1>为什么要使用 OAuth —— 一个例子</h1>
+<p>大家最熟悉的例子就是第三方登录了。假设有个论坛叫做“91论坛”你没有注册过 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/oauth2-xie-yi-xiang-jie.html">posted at 04:41</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xiao-xi-dui-lie-cong-yi-lian-meng-bi-dao-kafka.html" rel="bookmark" title="Permanent Link to &quot;消息队列：从一脸懵逼到 Kafka&quot;">消息队列：从一脸懵逼到 Kafka</a>
+                </h2>
+
+                
+                
+
+                <p>消息队列是分布式系统中分离解耦、削峰填谷、横向扩展的一个利器。而其中尤其以 kafka 为代表，在性能等各方面都很出众。</p>
+<p>Kafka 使用 ZK 作为协调器，原生支持集群。每条消息有一个 <key, value, timestamp> 组成。</p>
+<p>每个 partition 可以有多台机器，其中的 leader 负责所有读写，而 follower 复制 leader 的所有操作。如果 leader 挂了， follower 就会顶上去。生产者既可以使用 RR 这些算法来往不同的 partition 发东西，做负载均衡，也可以按照某些业务规则，发到指定的 partition。</p>
+<p>消息队列有两种模型，Queue 和 PubSub。Kafka 通过 Consumer Group 这个概念很好地解决了这个问题</p>
+<h1>术语</h1>
+<table>
+<thead>
+<tr>
+<th>Term …</th></tr></thead></table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xiao-xi-dui-lie-cong-yi-lian-meng-bi-dao-kafka.html">posted at 04:35</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-po-jie-bei-js-jia-mi-de-shu-ju.html" rel="bookmark" title="Permanent Link to &quot;如何破解被 JS 加密的数据&quot;">如何破解被 JS 加密的数据</a>
+                </h2>
+
+                
+                
+
+                <p>由于网页和JavaScript都是明文的，导致很多API接口都直接暴露在爬虫的眼里，所以好多
+网站选择使用混淆后的 JavaScript 来加密接口。其中有分为两大类：</p>
+<ol>
+<li>通过 JavaScript 计算一个参数或者 Cookie 作为接口的签名验证</li>
+<li>返回的数据是加密的，需要使用 JavaScript 解密</li>
+</ol>
+<p>不过总的来说，这两种加密的破解思路都是一样的。</p>
+<ol>
+<li>找到相关的网络请求。如果找不到，清空缓存，尝试触发</li>
+<li>打断点找到相关代码，可以是 ajax 断点或者 js 断点。或者直接看网络请求的
+   initiator</li>
+<li>逐层分析，找到加密函数</li>
+<li>使用 node 执行js代码获得数据</li>
+</ol>
+<h1>具体步骤</h1>
+<p>有空了再写。。</p>
+<p>参考：</p>
+<ol>
+<li><a href="https://cuiqingcai.com/5024.html">中国天气质量网返回结果加密的破解</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/32139007">破解 Google 翻译的token</a></li>
+<li><a href="https://github.com/jhao104/spider/tree/master/PyV8%E7%A0%B4%E8%A7%A3JS%E5%8A%A0%E5%AF%86Cookie">JavaScript 生成 Cookie</a></li>
+<li><a href="http://liehu.tass.com.cn/archives/1016">常见加密算法</a></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-po-jie-bei-js-jia-mi-de-shu-ju.html">posted at 04:32</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-mian-shang-de-yi-xie-rss-gong-ju.html" rel="bookmark" title="Permanent Link to &quot;市面上的一些 RSS 工具&quot;">市面上的一些 RSS 工具</a>
+                </h2>
+
+                
+                
+
+                <p>YN: 总的来说，RSS 是一个小众的工具，也不会大众化，所以适合高端用户，付费使用。
+另外对于 RSS 来说，阅读一些娱乐化的东西没有任何意义，但是对于比如说使用印象笔记的用户，用处还是很大的。可以作为生产力工具</p>
+<p>phantomjscloud 还有这种网站。。</p>
+<p>现有的一些工具</p>
+<h2>生成 RSS 的工具</h2>
+<p><a href="https://github.com/huginn/huginn">huginn</a>. 类似 ifttt，中文社区也有，而且有<a href="http://git.huginn.cn/docs/Huginn%E7%AE%80%E4%BB%8B.html">中文
+文档</a></p>
+<p><a href="http://feed43.com/">feed43</a>. 老牌的生成 RSS 的工具，最近界面做了改动，但是生成
+RSS 需要网页源码中自己取找出模式，对于普通用户来说非常难用，对于程序员来说又很鸡
+肋。</p>
+<p><a href="https://feedity.com/">feedity</a>. 提供一个可视化的界面用来选择元素，然后构建RSS，
+不过生成的 RSS 是有广告的。</p>
+<p><a href="http://fivefilters.org/content-only/">fivefilters</a>. 提供摘要转全文 RSS 的方法</p>
+<p><a href="https://feedex.net/">feedex</a>. 有一个全文RSS …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-mian-shang-de-yi-xie-rss-gong-ju.html">posted at 04:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/chuang-ye.html" rel="tag">创业</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/chuang-ye.html" class="tags">创业</a>
+                    &nbsp;<a href="/tag/kai-shi-zuo-de-xiang-mu.html" class="tags">开始做的项目</a>
+                </div>
+            </article>            <h4 class="date">Jul 14, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xu-lie-hua-xie-yi-de-xuan-ze-json-vs-msgpack-vs-thrift-vs-protobuf.html" rel="bookmark" title="Permanent Link to &quot;序列化协议的选择 json vs msgpack vs thrift vs protobuf&quot;">序列化协议的选择 json vs msgpack vs thrift vs protobuf</a>
+                </h2>
+
+                
+                
+
+                <p>当我们的程序需要保存一些对象到硬盘上供下次运行时使用，或者需要和其他程序交换数据
+的时候，需要把对象用某种方式编程二进制字符串然后保存到硬盘上或者发送出去，这种方
+法我们一般称作序列化。序列化有很多不同的方法, 一般考虑三个方面：</p>
+<ol>
+<li>速度，序列化和反序列化的速度越快越好</li>
+<li>体积，序列化之后的文件体积越小越好</li>
+<li>跨语言，序列化能够支持的语言越多越好</li>
+</ol>
+<p>下面考察几种序列化的方法</p>
+<ol>
+<li>语言内置的序列化。比如 Python 的 pickle，显然这种协议只能在一种语言内部使用，
+   而且对于Python来说，甚至不同版本的 pickle 协议都是不兼容的。</li>
+<li>json / xml。这两个都可以把对象序列化成人类可读的字符串的形式，但是序列化后之
+   后体积都变大不少，而且性能也不好，适合于简单的场景。另外一点就是 json 不能定
+   义 schema（接口规范），<em>在大型项目中 schema 是必须的</em>。</li>
+<li>msgpack 序列化之后的体积也比较紧致，但是同样不能定义 schema。</li>
+<li>专门的序列化库。比如 protobuf/thrift。这些库都支持多个语言 …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xu-lie-hua-xie-yi-de-xuan-ze-json-vs-msgpack-vs-thrift-vs-protobuf.html">posted at 19:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 11, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/hu-lian-wang-chuang-ye-de-fang-xiang.html" rel="bookmark" title="Permanent Link to &quot;互联网创业的方向&quot;">互联网创业的方向</a>
+                </h2>
+
+                
+                
+
+                <p>主要考虑团队和航道大小，如果难以看清航道，则看有无国外明显对标，如果国外有对标，也要注意区分国内外外部环境（比如 fb 和人人）</p>
+<p>制度性的腐败在于其合法性，通过对某些行业设立准入门槛，合法地把牌照输送给自己的利益相关方，比如互联网支付牌照等。</p>
+<h1>To C</h1>
+<ul>
+<li>
+<p>共享经济</p>
+<ul>
+<li>共享单车 ❌</li>
+<li>共享充电宝 ❌</li>
+</ul>
+</li>
+<li>
+<p>O2O</p>
+<ul>
+<li>美团</li>
+<li>58</li>
+<li>外卖<ul>
+<li>美团外卖</li>
+<li>饿了么</li>
+<li>滴滴外卖 ❌已据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>AI</p>
+<ul>
+<li>Face++</li>
+<li>商汤</li>
+<li>第四范式</li>
+</ul>
+</li>
+<li>
+<p>VR ❌不看好</p>
+</li>
+<li>
+<p>互联网金融</p>
+<ul>
+<li>区块链 ❌（全是骗子）</li>
+<li>P2P ❌（全是骗子）</li>
+</ul>
+</li>
+</ul>
+<p>基本都是骗子</p>
+<ul>
+<li>
+<p>电商</p>
+<ul>
+<li>
+<p>综合电商</p>
+<ul>
+<li>C2C 淘宝</li>
+<li>B2C 京东</li>
+<li>微信电商<ul>
+<li>拼多多</li>
+<li>趣店</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>女性购物社区</p>
+<ul>
+<li>小红书</li>
+<li>聚美优品</li>
+<li>美丽说 …</li></ul></li></ul></li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/hu-lian-wang-chuang-ye-de-fang-xiang.html">posted at 14:19</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/chuang-ye.html" rel="tag">创业</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/chuang-ye.html" class="tags">创业</a>
+                </div>
+            </article>            <h4 class="date">Jul 10, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/get-he-post-fang-fa-de-xuan-ze-he-urlde-she-ji.html" rel="bookmark" title="Permanent Link to &quot;Get 和 Post 方法的选择和URL的设计&quot;">Get 和 Post 方法的选择和URL的设计</a>
+                </h2>
+
+                
+                
+
+                <p>HTTP 中常用的方法有 GET/POST/PUT/DELETE 等，在设计API或者表单的时候我们需要选择合适的方法。一般有两种方案：</p>
+<ol>
+<li>只使用 GET 和 POST，GET 主要用来读取数据，POST 用来创建或者更新数据。</li>
+<li>RESTful的方法，GET/POST/PUT/DELETE 分别用来增删改查。</li>
+</ol>
+<h1>URL 的设计</h1>
+<p>为了探讨两种方案，首先我们来看一下 URL 的设计。URL 是 Universal Resource Locator 的缩写，也就是一个 URL 表示的是唯一的一个资源，所以这个资源的 id 或者说主键应该是放在 URL 路径中的。</p>
+<p>比如一个好的设计：</p>
+<div class="highlight"><pre><span></span>http://example.com/post/1234
+</pre></div>
+
+
+<p>不好的设计 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/get-he-post-fang-fa-de-xuan-ze-he-urlde-she-ji.html">posted at 08:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>            <h4 class="date">Jul 09, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/fu-jin-cheng-tui-chu-hou-ru-he-tui-chu-zi-jin-cheng.html" rel="bookmark" title="Permanent Link to &quot;父进程退出后如何退出子进程&quot;">父进程退出后如何退出子进程</a>
+                </h2>
+
+                
+                
+
+                <p>我们知道当子进程推出的时候，父进程会收到 SIGCHLD 信号，从而可以采取相应的操作。但是当父进程退出的时候，系统会把子进程的父进程更改为pid=0的 init 进程，而且子进程不会收到任何信号。而我们经常想在父进程退出的时候，让子进程也推出。在 Python 中可以有如下几种做法。</p>
+<h1>设置子进程为 daemon</h1>
+<p>这里的 daemon 和系统的守护进程没有任何关系，是 quit_when_parent_dies 的意思。也就是当父进程退出的时候，会自动尝试关闭 daemon=True 的子进程。</p>
+<div class="highlight"><pre><span></span>p = multiprocessing.Process(target=foo)
+p.daemon = True
+p.start()
+</pre></div>
+
+
+<p><a href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Process.daemon">官方文档</a></p>
+<h1>在子进程中设置 PDEATHSIG</h1>
+<p>在 Linux 中，进程可以要求内核在父进程退出的时候给自己发信号。使用系统调用 prctl。</p>
+<div class="highlight"><pre><span></span>prctl(PR_SET_PDEATHSIG …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/fu-jin-cheng-tui-chu-hou-ru-he-tui-chu-zi-jin-cheng.html">posted at 03:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/hou-duan-gong-ju-he-suan-fa-ji.html" rel="bookmark" title="Permanent Link to &quot;后端工具和算法集&quot;">后端工具和算法集</a>
+                </h2>
+
+                
+                
+
+                <p>总结一下后端常用的工具和蕴含的算法</p>
+<p>TODO: 应该把 GitHub 5000 star 以上的项目都看一下</p>
+<ul>
+<li>
+<p>前端</p>
+<ul>
+<li>框架<ul>
+<li>vue</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>数据库</p>
+<ul>
+<li>mysql(btree)</li>
+<li>postgresql</li>
+<li>redis</li>
+<li>pika/rocksdb/leveldb</li>
+<li>elasticsearch</li>
+<li>mongodb</li>
+<li>memcache 功能是redis的子集，现在用得比较少了</li>
+</ul>
+</li>
+<li>
+<p>消息队列</p>
+<ul>
+<li>kafka</li>
+<li>redis stream</li>
+<li>rabbitmq<ul>
+<li>amqp 协议</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>RPC 和序列化</p>
+<ul>
+<li>protobuf/grpc</li>
+<li>thrift</li>
+<li>msgpack</li>
+<li>envoy<ul>
+<li>service mesh 的思想</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>负载均衡</p>
+<ul>
+<li>四层和七层负载均衡的区别</li>
+<li>nginx</li>
+<li>LVS</li>
+<li>一致性哈希</li>
+</ul>
+</li>
+<li>
+<p>部署和容器化</p>
+<ul>
+<li>docker<ul>
+<li>cgroups</li>
+</ul>
+</li>
+<li>kubernetes<ul>
+<li>borg …</li></ul></li></ul></li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/hou-duan-gong-ju-he-suan-fa-ji.html">posted at 08:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/5" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/7" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 6 of 34</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

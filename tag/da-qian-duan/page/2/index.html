@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "大前端" | Page 2</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/da-qian-duan/page/2/index.html">大前端</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/an-zhuo-fan-bian-yi-de-yi-xie-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;安卓反编译的一些笔记&quot;">安卓反编译的一些笔记</a>
+                </h2>
+
+                
+                
+
+                <h1>工具</h1>
+<p>apk studio</p>
+<p>如何 sign：https://www.nevermoe.com/?p=373</p>
+<p>smali code tutorial： https://forum.xda-developers.com/showthread.php?t=2193735</p>
+<p>一篇很好的pdf的文档，利用smali code：http://www.security-assessment.com/files/documents/whitepapers/Bypassing%20SSL%20Pinning%20on%20Android%20via%20Reverse%20Engineering.pdf</p>
+<h1>安卓中 pinning 的原理</h1>
+<p>使用自己的keystore实例化 TrustManagerFactory</p>
+<p>关键语句</p>
+<div class="highlight"><pre><span></span>InputStream in = resources …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/an-zhuo-fan-bian-yi-de-yi-xie-bi-ji.html">posted at 05:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/an-zhuo-de-asynctask.html" rel="bookmark" title="Permanent Link to &quot;安卓的 AsyncTask&quot;">安卓的 AsyncTask</a>
+                </h2>
+
+                
+                
+
+                <p>asynchronusally run task without explicitly creating thread.</p>
+<h1>Usage</h1>
+<div class="highlight"><pre><span></span>doInBackground(Params...)
+onProgressUpdate(Progress...)
+onPostExecute(Result)
+</pre></div>
+
+
+<p>Here is an example of subclassing:</p>
+<div class="highlight"><pre><span></span> private class DownloadFilesTask extends AsyncTask&lt;URL, Integer, Long&gt; {
+     protected Long doInBackground(URL... urls) {
+         int count = urls.length;
+         long totalSize = 0;
+         for (int i = 0; i &lt; count; i++) {
+             totalSize += Downloader.downloadFile …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/an-zhuo-de-asynctask.html">posted at 05:05</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/html-de-yi-xie-xiao-zhi-shi-he-xian-jing.html" rel="bookmark" title="Permanent Link to &quot;html 的一些小知识和陷阱&quot;">html 的一些小知识和陷阱</a>
+                </h2>
+
+                
+                
+
+                <h1>如何自定义favicon</h1>
+<p><code>&lt;link rel="shortcut icon" type="image/png" href="/favicon.png"/&gt;</code></p>
+<h1>html中的空格</h1>
+<p>multiple spaces in html is displayed as one, to show multiple space</p>
+<ol>
+<li>use <code>&lt;pre&gt;</code> around the word</li>
+<li>use <code>&amp;nbsp;</code></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/html-de-yi-xie-xiao-zhi-shi-he-xian-jing.html">posted at 05:53</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Sep 22, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/qian-duan-kuang-jia-vue-xue-xi-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;前端框架 Vue 学习笔记&quot;">前端框架 Vue 学习笔记</a>
+                </h2>
+
+                
+                
+
+                <p>之前在网页里小范围的用了vue, 感觉用起来非常爽, 现在打算做自己的笔记应用. 这次打算做成SPA的形式, 前端全部用vue来写. 需要node的一些东西, 记录下学习过程. 迈向全栈，哈哈 ^_^</p>
+<h1>安装</h1>
+<p>首先, 全局安装vue: </p>
+<div class="highlight"><pre><span></span>npm install --global @vue/cli
+</pre></div>
+
+
+<h1>data 属性</h1>
+<p>只有在创建时提供的 data 属性才是响应式的，在创建之后在添加新元素就不管用了。</p>
+<p>当然还可以使用 app.$watch 方法显式创建一些监听器</p>
+<div class="highlight"><pre><span></span>// $watch 是一个实例方法
+vm.$watch(&#39;a&#39;, function (newValue, oldValue) {
+  // 这个回调将在 `vm.a` 改变后调用
+})
+</pre></div>
+
+
+<h1>methods 和 computed</h1>
+<p>methods 定义了一些可以调用的方法，他的值也可以用来插值。但是最好使用 computed，因为 computed …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/qian-duan-kuang-jia-vue-xue-xi-bi-ji.html">posted at 04:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 20, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xpath-generator-shi-ru-he-shi-xian-de.html" rel="bookmark" title="Permanent Link to &quot;xpath generator 是如何实现的?&quot;">xpath generator 是如何实现的?</a>
+                </h2>
+
+                
+                
+
+                <p>写爬虫的话做到最后基本上最终没法自动化的就是指定要抽取的元素的xpath了, 要定向爬一个网站的内容基本上都会归结到去找下一页和数据元素的xpath. 如果能把xpath的生成交给不会写程序的运营同学来做的话, 能够极大地解放程序员的生产力.</p>
+<p>毕竟xpath也算是一个DSL, 对于不会编程的同学还是有一定难度的. SQL写得熟练的PM多得是, 想找一个会写xpath的运营同学则是很困难, 毕竟术业有专攻, 运营需要面对的问题和我们程序猿还是有很大不同. 多年的经验, 感觉能教会他们yaml已经是极限了...</p>
+<p>那么能不能有一个图形化的工具来生成xpath呢? 答案显然是有的, chrome浏览器就内置了生成xpath的工具, 如下图所示:</p>
+<p><img alt="chrome xpath" src="https://ws4.sinaimg.cn/large/006tNc79ly1flhwpu64uvj31f20keaj4.jpg"></p>
+<p>这幅图生成的xpath是: <code>//*[@id="fc_B_pic"]/ul[1]/li[1]/a[1]</code></p>
+<p>然而chrome的xpath生成却有几个缺点:</p>
+<ol>
+<li>chrome的xpath只会想上去找带有id的元素, 而根据实际的情况, 往往找到带有class的元素就可以保证找的xpath是对的了.</li>
+<li>chrome生成的元素是尽量保证元素唯一的, 也就是当你想要搞一个能能够选中多个元素的xpath时, chrome 无能为力, 还是需要自己去改写.</li>
+<li>另外就是生成之后不能方便的用图形工具去验证.</li>
+</ol>
+<p>未完待续</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xpath-generator-shi-ru-he-shi-xian-de.html">posted at 18:57</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/html-node-vs-element.html" rel="bookmark" title="Permanent Link to &quot;html Node vs Element&quot;">html Node vs Element</a>
+                </h2>
+
+                
+                
+
+                <ul>
+<li>Node vs Element</li>
+</ul>
+<p>HTML Document consists of different node, element is one type of node.</p>
+<ul>
+<li>NodeList vs HTMLCollection</li>
+</ul>
+<p>NodeList is a collection of node, HTMLCollection is a collection of element.</p>
+<ul>
+<li>HTMLCollection vs NodeList vs Array</li>
+</ul>
+<p>HTMLCollection 和 NodeList 都是动态的,会随着 DOM 的变化而变化</p>
+<p>Array 是静态的数据结构</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/html-node-vs-element.html">posted at 02:41</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-public-key-pinning.html" rel="bookmark" title="Permanent Link to &quot;android public key pinning&quot;">android public key pinning</a>
+                </h2>
+
+                
+                
+
+                <h1>What is public key pinning?</h1>
+<p>to view https traffic, you could sign your own root CA, and perform mitm attack to view the traffic. HPKP (http public key pinning) stops this sniffing by only trust given CA, thus, your self-signed certs will be invalid. To let given app to trust …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-public-key-pinning.html">posted at 08:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-intent.html" rel="bookmark" title="Permanent Link to &quot;android intent&quot;">android intent</a>
+                </h2>
+
+                
+                
+
+                <p>You should use intent to communicate between activities and services</p>
+<h1>intent extra</h1>
+<h2>package data from activity</h2>
+<p>create a intent instance</p>
+<p>Intent intent = new Intent(getBaseContext(), SignoutActivity.class);
+intent.putExtra("key", value);
+startActivity(intent);</p>
+<h2>package data from service</h2>
+<p>Intent intent = new Intent(context, SignoutActivity.class);
+intent.putExtra("key", value);
+startService(intent …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-intent.html">posted at 11:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/androidoshandler.html" rel="bookmark" title="Permanent Link to &quot;android.os.handler&quot;">android.os.handler</a>
+                </h2>
+
+                
+                
+
+                <p>android.os.handler 用于向每个线程的 MessageQueue 发送消息。</p>
+<p>There are two main uses for a Handler: </p>
+<p>(1) to schedule messages and runnables to be executed as some point in the future; and </p>
+<p>(2) to enqueue an action to be performed on a different thread than your own.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/androidoshandler.html">posted at 10:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-vpn-service.html" rel="bookmark" title="Permanent Link to &quot;android vpn service&quot;">android vpn service</a>
+                </h2>
+
+                
+                
+
+                <p>VPN Service 运行在 IP 层。它创建了一个虚拟的网络接口，可以配置地址和路由规则，并返回一个 file descriptor。每次读这个 fp 返回一个数据包，每次写发送一个数据包。</p>
+<p>两个最重要的方法分别是<code>prepare(Context)</code> 和 <code>establish()</code>。前者接受用户响应并关闭其他应用的 VPN 链接，后者使用 <code>VpnService.Builder</code> 的参数创建 VPN 接口。</p>
+<p>实现 VpnService 的类必须在 manifest 中声明：</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;service</span> <span class="na">android:name=</span><span class="s">&quot;.ExampleVpnService&quot;</span>
+         <span class="na">android:permission=</span><span class="s">&quot;android.permission.BIND_VPN_SERVICE&quot;</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;intent-filter&gt;</span>
+         <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">&quot;android.net.VpnService&quot;</span><span class="nt">/&gt;</span>
+     <span class="nt">&lt;/intent-filter …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-vpn-service.html">posted at 10:07</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/3" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 2 of 6</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

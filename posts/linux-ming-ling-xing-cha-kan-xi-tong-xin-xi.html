@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Linux 命令行查看系统信息</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Mar 03, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-cha-kan-xi-tong-xin-xi.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行查看系统信息&quot;">Linux 命令行查看系统信息</a>
+                </h2>
+
+                
+                
+
+                <h1>查看机器名</h1>
+<p>uname -a # view system name
+arch # show arch</p>
+<h1>查看 ubuntu 版本</h1>
+<p>show ubuntu version</p>
+<p>cat /etc/*release</p>
+<h1>查看内存使用</h1>
+<p>free -mh</p>
+<div class="highlight"><pre><span></span>(master)kongyifei@localhost ~ $ free -mh
+             total       used       free     shared    buffers     cached
+Mem:          251G       241G       9.8G       5.9G       4.3G        76G
+-/+ buffers/cache:       161G        90G
+Swap:           0B         0B         0B
+</pre></div>
+
+
+<p>含义，第一行表示实际的内存占用情况，linux的机制是尽可能多的占用内存，所以free往往很小；但是占用的内存不一定都在被使用，也就是最后的buffers和cached内存是被系统预先占用的。
+在第二行把这两项抛出，就是你的实际内存占用161G，实际可使用内存90G</p>
+<h1>iostat 和 vmstat</h1>
+<p>vmstat -awS M</p>
+<div class="highlight"><pre><span></span>(master)kongyifei.rocks@n8-147-097 ~/repos/crawl_deploy/svc_ctl $ vmstat -a
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free  inact active   si   so    bi    bo   in   cs us sy id wa st
+57  0      0 197155680 3614480 57558348    0    0     8    39    0    0  6  2 91  0  0
+</pre></div>
+
+
+<p>查看内存使用情况，其中最重要的是free和si、so三列，其中free表示空闲内存，si表示swap in，so表示 swap out</p>
+<p>vmstat INTERVAL TIMES 执行vmstat每INTERVAL秒，并且执行TIMES次</p>
+<p>http://www.orczhou.com/index.php/2010/03/iostat-detail/</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-cha-kan-xi-tong-xin-xi.html">posted at 05:23</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

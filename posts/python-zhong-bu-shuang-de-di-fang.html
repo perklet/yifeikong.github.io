@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Python 中不爽的地方</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 11, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-bu-shuang-de-di-fang.html" rel="bookmark" title="Permanent Link to &quot;Python 中不爽的地方&quot;">Python 中不爽的地方</a>
+                </h2>
+
+                
+                
+
+                <h1>GIL</h1>
+<p>之前用多线程都是做一些IO密集的内容, 比如爬网页的时候开一个ThreadPool, 处理速度立马就翻了几倍. 所以一直没把GIL放在心上, 前几天要跑一些处理敏感词的数据, 大概要对几百万篇文章做正则匹配. 想都没想就用了多线程, 吃饭回来发现并没有跑完, 这才想起来正则匹配这种东西是CPU密集的, 用Python的线程并没有任何卵用. 这时候换成multiprocessing.Pool速度又飚起来了, 然而使用进程池终究还是不如线程池方便, 所有传入的函数必须是marshallable, 有时候还是不能直接替换的.</p>
+<h1>函数式编程</h1>
+<p>没有真正的闭包, 必须使用nonlocal关键词才能实现一些闭包的功能</p>
+<p>也没有真正的lambda表达式, 自带的lambda表达式局限非常大</p>
+<h1>其他</h1>
+<p>bytes的格式化输出竟然是 b'xxx'</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-bu-shuang-de-di-fang.html">posted at 11:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

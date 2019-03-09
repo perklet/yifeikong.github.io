@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Python 的 import 系统与 importlib</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Aug 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-import-xi-tong-yu-importlib.html" rel="bookmark" title="Permanent Link to &quot;Python 的 import 系统与 importlib&quot;">Python 的 import 系统与 importlib</a>
+                </h2>
+
+                
+                
+
+                <p>首先</p>
+<p><strong>init</strong>.py is first called before the actual import</p>
+<p>if you have  the following code:</p>
+<div class="highlight"><pre><span></span>foobar/
+    __init__.py
+    baz.py
+</pre></div>
+
+
+<p>runing import foobar will not make foobar.baz available
+you have to add from . import baz to <strong>init</strong>.py</p>
+<p>add <strong>all</strong> to <strong>init.</strong>.py to control which to be imported by import *</p>
+<h2>relative import</h2>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">grok</span>
+<span class="kn">from</span> <span class="nn">..B</span> <span class="kn">import</span> <span class="n">bar</span>
+<span class="n">relavtive</span> <span class="kn">import</span> <span class="nn">only</span> <span class="nn">works</span> <span class="nn">when</span> <span class="nn">using</span> <span class="o">-</span><span class="n">m</span> <span class="n">option</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">mypackage</span><span class="o">.</span><span class="n">A</span><span class="o">.</span><span class="n">spam</span>
+</pre></div>
+
+
+<p>by calling import foo, foo/<strong>init</strong>.py will be called</p>
+<h1>常见的问题</h1>
+<p>implicit import</p>
+<p>需要注意的是 python2 中支持隐式的从当前文件import当前目录的文件。 这个功能在python3 中已经被去掉了。</p>
+<h1>Q&amp;A</h1>
+<p>如何处理循环引用的问题？</p>
+<p>把一些import语句放到真正需要他们的地方， 比如某个函数里面</p>
+<h1>importlib</h1>
+<p>之所以想研究importlib，是因为leader提到了Thrift应该把源文件提交到仓库中，而不是把编译后的文件提交到仓库中，而python运行是没有预编译机制的，那么就需要一套机制来在runtime动态的编译加载thrift文件。第一个想法当然是写一个import_thrift函数，大概是这样的：</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">import_thrfit</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="o">*</span><span class="n">names</span><span class="p">):</span>
+    <span class="n">_compile_thrift</span><span class="p">(</span><span class="n">package</span><span class="p">)</span>  <span class="c1"># compile *.thrift files</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">objects</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">module_name</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">module_name</span> <span class="kn">import</span> <span class="o">*</span><span class="n">names</span>
+</pre></div>
+
+
+<p>但是，显然直接使用import语句是不可以的，因为import是一个语句，后边跟的不能是变量。这时候就需要import背后的库importlib的帮助了。再者，当多次调用这个函数的时候，我们希望有缓存，而不是每次编译一次</p>
+<h1>介绍importlib</h1>
+<p>importlib实现了两个功能，1. 提供了import的实现，2. 提供了import_module函数，这样我们就可以实现自己的import系统。本文中我们主要关注第二点。</p>
+<h2>importlib.import_module</h2>
+<p>importlib.import_module(name, package=None) 如果name是相对包名，name将从package中相对导入这个包，比如<code>..mod</code>，package是<code>package.subpkg</code>，将会导入package.mod这个包。如果name是绝对包名，那就直接导入。需要注意的是在上述例子中，返回的是package.mod这个名字而不是单独的mod名称。</p>
+<p>有了这个函数我们就可以实现 import_thrift 了</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-import-xi-tong-yu-importlib.html">posted at 01:01</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

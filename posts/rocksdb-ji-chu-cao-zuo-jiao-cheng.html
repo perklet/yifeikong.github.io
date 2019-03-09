@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | RocksDB 基础操作教程</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 11, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/rocksdb-ji-chu-cao-zuo-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;RocksDB 基础操作教程&quot;">RocksDB 基础操作教程</a>
+                </h2>
+
+                
+                
+
+                <h2>打开一个数据库</h2>
+<div class="highlight"><pre><span></span>  <span class="cp">#include</span> <span class="cpf">&lt;cassert&gt;</span><span class="cp"></span>
+  <span class="cp">#include</span> <span class="cpf">&quot;rocksdb/db.h&quot;</span><span class="cp"></span>
+
+  <span class="n">rocksdb</span><span class="o">::</span><span class="n">DB</span><span class="o">*</span> <span class="n">db</span><span class="p">;</span>
+  <span class="n">rocksdb</span><span class="o">::</span><span class="n">Options</span> <span class="n">options</span><span class="p">;</span>
+  <span class="n">options</span><span class="p">.</span><span class="n">create_if_missing</span> <span class="o">=</span> <span class="kr">true</span><span class="p">;</span>
+  <span class="n">options</span><span class="p">.</span><span class="n">error_if_exists</span> <span class="o">=</span> <span class="kr">true</span><span class="p">;</span>
+  <span class="n">rocksdb</span><span class="o">::</span><span class="n">Status</span> <span class="n">status</span> <span class="o">=</span> <span class="n">rocksdb</span><span class="o">::</span><span class="n">DB</span><span class="o">::</span><span class="n">Open</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="s">&quot;/tmp/testdb&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">db</span><span class="p">);</span>
+  <span class="n">assert</span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="n">ok</span><span class="p">());</span>
+  <span class="p">...</span>
+</pre></div>
+
+
+<p>通过options制定一些属性, 然后用 <code>rocksdb::DB::Open</code>打开. RocksDB 会把使用的配置保存在 <code>OPTIONS-xxxx</code> 文件中.</p>
+<p>注意上面返回的那个status变量, 在RocksDB中所有会遇到错误的函数都会返回这个变量, 可以用来检查有没有出错.</p>
+<div class="highlight"><pre><span></span>   <span class="nt">rocksdb</span><span class="p">::</span><span class="nd">Status</span> <span class="nt">s</span> <span class="o">=</span> <span class="o">...;</span>
+   <span class="nt">if</span> <span class="o">(!</span><span class="nt">s</span><span class="p">.</span><span class="nc">ok</span><span class="o">())</span> <span class="nt">cerr</span> <span class="o">&lt;&lt;</span> <span class="nt">s</span><span class="p">.</span><span class="nc">ToString</span><span class="o">()</span> <span class="o">&lt;&lt;</span> <span class="nt">endl</span><span class="o">;</span>
+</pre></div>
+
+
+<p>关闭数据库, 只需要简单得把指针释放就可以了: <code>delete db</code>.</p>
+<h2>读写数据库</h2>
+<p>基本的Put, Get, Delete:</p>
+<div class="highlight"><pre><span></span>  <span class="nt">std</span><span class="p">::</span><span class="nd">string</span> <span class="nt">value</span><span class="o">;</span>
+  <span class="nt">rocksdb</span><span class="p">::</span><span class="nd">Status</span> <span class="nt">s</span> <span class="o">=</span> <span class="nt">db-</span><span class="o">&gt;</span><span class="nt">Get</span><span class="o">(</span><span class="nt">rocksdb</span><span class="p">::</span><span class="nd">ReadOptions</span><span class="o">(),</span> <span class="nt">key1</span><span class="o">,</span> <span class="o">&amp;</span><span class="nt">value</span><span class="o">);</span>
+  <span class="nt">if</span> <span class="o">(</span><span class="nt">s</span><span class="p">.</span><span class="nc">ok</span><span class="o">())</span> <span class="nt">s</span> <span class="o">=</span> <span class="nt">db-</span><span class="o">&gt;</span><span class="nt">Put</span><span class="o">(</span><span class="nt">rocksdb</span><span class="p">::</span><span class="nd">WriteOptions</span><span class="o">(),</span> <span class="nt">key2</span><span class="o">,</span> <span class="nt">value</span><span class="o">);</span>
+  <span class="nt">if</span> <span class="o">(</span><span class="nt">s</span><span class="p">.</span><span class="nc">ok</span><span class="o">())</span> <span class="nt">s</span> <span class="o">=</span> <span class="nt">db-</span><span class="o">&gt;</span><span class="nt">Delete</span><span class="o">(</span><span class="nt">rocksdb</span><span class="p">::</span><span class="nd">WriteOptions</span><span class="o">(),</span> <span class="nt">key1</span><span class="o">);</span>
+</pre></div>
+
+
+<p>注意其中每次都检查了操作是否成功.</p>
+<p>每次 Get 操作都会导致至少一次的memcpy, 如果不想要这种浪费的话, 可以使用 PinnableSlice 操作.</p>
+<div class="highlight"><pre><span></span>  <span class="nt">PinnableSlice</span> <span class="nt">pinnable_val</span><span class="o">;</span>
+  <span class="nt">rocksdb</span><span class="p">::</span><span class="nd">Status</span> <span class="nt">s</span> <span class="o">=</span> <span class="nt">db-</span><span class="o">&gt;</span><span class="nt">Get</span><span class="o">(</span><span class="nt">rocksdb</span><span class="p">::</span><span class="nd">ReadOptions</span><span class="o">(),</span> <span class="nt">key1</span><span class="o">,</span> <span class="o">&amp;</span><span class="nt">pinnable_val</span><span class="o">);</span>
+</pre></div>
+
+
+<h2>原子操作</h2>
+<p>使用<code>WriteBatch</code>来构成一个原子性的操作. 什么是原子性操作总不用多说吧...原子操作不仅保证了原子性, 而且一般来说对性能也有帮助</p>
+<div class="highlight"><pre><span></span>  <span class="cp">#include</span> <span class="cpf">&quot;rocksdb/write_batch.h&quot;</span><span class="cp"></span>
+  <span class="p">...</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">value</span><span class="p">;</span>
+  <span class="n">rocksdb</span><span class="o">::</span><span class="n">Status</span> <span class="n">s</span> <span class="o">=</span> <span class="n">db</span><span class="o">-&gt;</span><span class="n">Get</span><span class="p">(</span><span class="n">rocksdb</span><span class="o">::</span><span class="n">ReadOptions</span><span class="p">(),</span> <span class="n">key1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">ok</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">rocksdb</span><span class="o">::</span><span class="n">WriteBatch</span> <span class="n">batch</span><span class="p">;</span>
+    <span class="n">batch</span><span class="p">.</span><span class="n">Delete</span><span class="p">(</span><span class="n">key1</span><span class="p">);</span>
+    <span class="n">batch</span><span class="p">.</span><span class="n">Put</span><span class="p">(</span><span class="n">key2</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">db</span><span class="o">-&gt;</span><span class="n">Write</span><span class="p">(</span><span class="n">rocksdb</span><span class="o">::</span><span class="n">WriteOptions</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">batch</span><span class="p">);</span>
+  <span class="p">}</span>
+</pre></div>
+
+
+<h2>同步与异步读写</h2>
+<p>这块没看明白...</p>
+<p>默认的是异步读写, 如果使用了<code>sync</code>这个标志, 那么就是同步读写了</p>
+<div class="highlight"><pre><span></span>  <span class="nt">rocksdb</span><span class="p">::</span><span class="nd">WriteOptions</span> <span class="nt">write_options</span><span class="o">;</span>
+  <span class="nt">write_options</span><span class="p">.</span><span class="nc">sync</span> <span class="o">=</span> <span class="nt">true</span><span class="o">;</span>
+  <span class="nt">db-</span><span class="o">&gt;</span><span class="nt">Put</span><span class="o">(</span><span class="nt">write_options</span><span class="o">,</span> <span class="o">...);</span>
+</pre></div>
+
+
+<p>异步读写经常会比同步读写快上1000倍, 但是当机器down掉的时候, 会丢失最后的几个写入. 不过通常来说, 可以认为异步读写安全性也是够的.</p>
+<p>除了可以使用异步读写以外, 还可以使用 <code>WriteBatch</code> 来批量读写.</p>
+<h2>并发</h2>
+<p>一个数据库同时只能被一个进程读写. 但是一个db实例的<code>Get</code>操作都是线程安全的, 而<code>WriteBatch</code>等操作可能需要其他一些同步机制</p>
+<h2>Merge 操作符</h2>
+<p>待续</p>
+<h2>Iterators</h2>
+<p>遍历所有的key</p>
+<div class="highlight"><pre><span></span>  <span class="nt">rocksdb</span><span class="p">::</span><span class="nd">Iterator</span><span class="o">*</span> <span class="nt">it</span> <span class="o">=</span> <span class="nt">db-</span><span class="o">&gt;</span><span class="nt">NewIterator</span><span class="o">(</span><span class="nt">rocksdb</span><span class="p">::</span><span class="nd">ReadOptions</span><span class="o">());</span>
+  <span class="nt">for</span> <span class="o">(</span><span class="nt">it-</span><span class="o">&gt;</span><span class="nt">SeekToFirst</span><span class="o">();</span> <span class="nt">it-</span><span class="o">&gt;</span><span class="nt">Valid</span><span class="o">();</span> <span class="nt">it-</span><span class="o">&gt;</span><span class="nt">Next</span><span class="o">())</span> <span class="p">{</span>
+    <span class="err">cout</span> <span class="err">&lt;&lt;</span> <span class="err">it-&gt;key().ToString()</span> <span class="err">&lt;&lt;</span> <span class="err">&quot;:</span> <span class="err">&quot;</span> <span class="err">&lt;&lt;</span> <span class="err">it-&gt;value().ToString()</span> <span class="err">&lt;&lt;</span> <span class="err">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nt">assert</span><span class="o">(</span><span class="nt">it-</span><span class="o">&gt;</span><span class="nt">status</span><span class="o">()</span><span class="p">.</span><span class="nc">ok</span><span class="o">());</span> <span class="o">//</span> <span class="nt">Check</span> <span class="nt">for</span> <span class="nt">any</span> <span class="nt">errors</span> <span class="nt">found</span> <span class="nt">during</span> <span class="nt">the</span> <span class="nt">scan</span>
+  <span class="nt">delete</span> <span class="nt">it</span><span class="o">;</span>
+</pre></div>
+
+
+<p>遍历[start, limit)之间的值</p>
+<div class="highlight"><pre><span></span>  for (it-&gt;Seek(start);
+       it-&gt;Valid() &amp;&amp; it-&gt;key().ToString() &lt; limit;
+       it-&gt;Next()) {
+    ...
+  }
+  assert(it-&gt;status().ok()); // Check for any errors found during the scan
+</pre></div>
+
+
+<p>反向遍历</p>
+<div class="highlight"><pre><span></span>  for (it-&gt;SeekToLast(); it-&gt;Valid(); it-&gt;Prev()) {
+    ...
+  }
+  assert(it-&gt;status().ok()); // Check for any errors found during the scan
+</pre></div>
+
+
+<h2>Snapshot(快照)</h2>
+<p>Snapshot 提供了当前系统在某一点的一个只读的状态表示.</p>
+<div class="highlight"><pre><span></span>  <span class="nt">rocksdb</span><span class="p">::</span><span class="nd">ReadOptions</span> <span class="nt">options</span><span class="o">;</span>
+  <span class="nt">options</span><span class="p">.</span><span class="nc">snapshot</span> <span class="o">=</span> <span class="nt">db-</span><span class="o">&gt;</span><span class="nt">GetSnapshot</span><span class="o">();</span>
+  <span class="o">...</span> <span class="nt">apply</span> <span class="nt">some</span> <span class="nt">updates</span> <span class="nt">to</span> <span class="nt">db</span> <span class="o">...</span>
+  <span class="nt">rocksdb</span><span class="p">::</span><span class="nd">Iterator</span><span class="o">*</span> <span class="nt">iter</span> <span class="o">=</span> <span class="nt">db-</span><span class="o">&gt;</span><span class="nt">NewIterator</span><span class="o">(</span><span class="nt">options</span><span class="o">);</span>
+  <span class="o">...</span> <span class="nt">read</span> <span class="nt">using</span> <span class="nt">iter</span> <span class="nt">to</span> <span class="nt">view</span> <span class="nt">the</span> <span class="nt">state</span> <span class="nt">when</span> <span class="nt">the</span> <span class="nt">snapshot</span> <span class="nt">was</span> <span class="nt">created</span> <span class="o">...</span>
+  <span class="nt">delete</span> <span class="nt">iter</span><span class="o">;</span>
+  <span class="nt">db-</span><span class="o">&gt;</span><span class="nt">ReleaseSnapshot</span><span class="o">(</span><span class="nt">options</span><span class="p">.</span><span class="nc">snapshot</span><span class="o">);</span>
+</pre></div>
+
+
+<p>注意这里通过snapshot读到的都是在做snapshot那个时间点的数据库的值.</p>
+<h2>Slice</h2>
+<p>上面提到的 <code>iter-&gt;key()</code> 和 <code>iter-value()</code> 的返回值都是 <code>rocksdb::Slice</code> 类型的. Slice 仅仅是一个包含了长度和指针的bytearray. 它本身并不储存值, 这样也就避免了拷贝.</p>
+<p>Slice和string的互相转换:</p>
+<div class="highlight"><pre><span></span>   <span class="nt">rocksdb</span><span class="p">::</span><span class="nd">Slice</span> <span class="nt">s1</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span><span class="o">;</span>
+
+   <span class="nt">std</span><span class="p">::</span><span class="nd">string</span> <span class="nt">str</span><span class="o">(</span><span class="s2">&quot;world&quot;</span><span class="o">);</span>
+   <span class="nt">rocksdb</span><span class="p">::</span><span class="nd">Slice</span> <span class="nt">s2</span> <span class="o">=</span> <span class="nt">str</span><span class="o">;</span>
+
+   <span class="nt">std</span><span class="p">::</span><span class="nd">string</span> <span class="nt">str</span> <span class="o">=</span> <span class="nt">s1</span><span class="p">.</span><span class="nc">ToString</span><span class="o">();</span>
+   <span class="nt">assert</span><span class="o">(</span><span class="nt">str</span> <span class="o">==</span> <span class="nt">std</span><span class="p">::</span><span class="nd">string</span><span class="o">(</span><span class="s2">&quot;hello&quot;</span><span class="o">));</span>
+</pre></div>
+
+
+<p>未完待续...</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/rocksdb-ji-chu-cao-zuo-jiao-cheng.html">posted at 03:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

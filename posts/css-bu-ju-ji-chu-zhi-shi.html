@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | CSS 布局基础知识</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="CSS,大前端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/css-bu-ju-ji-chu-zhi-shi.html" rel="bookmark" title="Permanent Link to &quot;CSS 布局基础知识&quot;">CSS 布局基础知识</a>
+                </h2>
+
+                
+                
+
+                <h1>布局</h1>
+<p>网页的布局是面向文档流的，也就是每个元素默认都是从左到右，从上到下依次排列的。当然就像文章一样，有些元素比如标题默认就会另起一行，并且单独占据这一行。</p>
+<p>所有的元素都分为三类：inline、inline-block、和 block。</p>
+<p>其中 block 元素占据了一行的位置，即使他们的宽度不够一行，并且他们有自己的宽度和高度，比如 h1 元素。</p>
+<p>inline-block 结合了 inline 和 block 元素的特性，首先他布局是 inline 的，也就是不会另起一行，但是又可以设定单独的高度和宽度。</p>
+<p><code>display: none</code> 将会完全不渲染该元素, <code>visibility: hidden</code> 会渲染这个元素，只是在该显式的地方留下空白</p>
+<h2>使用 inline-box 的布局</h2>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tKfTcly1fquqqp791hj30kr0i1gpe.jpg"></p>
+<h1>定位</h1>
+<p>CSS 中元素的定位有如下几种，可以使用 position 指定</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>static</td>
+<td>默认的定位方法，指的是在文档中的位置是静态的</td>
+</tr>
+<tr>
+<td>relative</td>
+<td>relative to its static positions, if set(top, left, bottom, right)</td>
+</tr>
+<tr>
+<td>fixed</td>
+<td>fixed to the viewport, if set(top, left, bottom, right)</td>
+</tr>
+<tr>
+<td>absolute</td>
+<td>behaves like fixed, but relative to nearest non-static ancestor</td>
+</tr>
+<tr>
+<td>float</td>
+<td>floated element will become a block element, but it will not occupy one row</td>
+</tr>
+</tbody>
+</table>
+<p>使用 float 的布局</p>
+<p><img alt="" src="https://ws3.sinaimg.cn/large/006tKfTcly1fsktnrsi5dj30kc0hp781.jpg"></p>
+<h3>后续元素没有占据指定空间</h3>
+<p>元素浮动之后，它后面的元素就会去占据它的位置，然而我们往往并不想影响到后面的元素，所以应该指定它后面的元素清除浮动。</p>
+<p>not stretching parent element
+floating elements will also not stretching the element containing it, to fix that, add overflow: auto to the parent element</p>
+<h1>盒模型</h1>
+<h2>讨厌的 content-box 模型</h2>
+<p>width set width of the content, and </p>
+<ul>
+<li>padding will push out the border... </li>
+<li>background-color only set for content area</li>
+<li>entire width is for border</li>
+</ul>
+<p><img alt="" src="https://ws3.sinaimg.cn/large/006tKfTcly1fqurrspk7ej30ah09gq39.jpg"></p>
+<h2>符合直觉的 border-box 模型</h2>
+<p>as shown by the picture, border-box width sets the entire width, contains border + padding + content</p>
+<p>如下图所示，border-box 模型设定的快读包含了 <strong>border + padding + content</strong></p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tKfTcly1fqurs7z1chj30ge094wgg.jpg"></p>
+<h1>responsive design</h1>
+<p>query device width</p>
+<div class="highlight"><pre><span></span>@media screen and (mid/max-width: xxxpx)
+</pre></div>
+
+
+<p>set viewport</p>
+<div class="highlight"><pre><span></span>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width/320, initial-scale=0.5, maximum-scale=1, minimum-scale=3, user-scalable=no&quot; /&gt;
+</pre></div>
+
+
+<h1>记录 CSS 的一个坑</h1>
+<h2>在 td 元素上无法使用 width</h2>
+<p>可以通过指定： table-layout: fixed 解决</p>
+<h2>centering</h2>
+<div class="highlight"><pre><span></span><span class="n">margin</span><span class="o">:</span> <span class="mi">0</span> <span class="n">auto</span><span class="o">;</span>
+</pre></div>
+
+
+<h2>css columns</h2>
+<div class="highlight"><pre><span></span><span class="nt">column-count</span><span class="o">:</span> <span class="nt">x</span><span class="o">;</span>
+<span class="nt">column-gap</span><span class="o">:</span> <span class="nt">xpx</span><span class="o">;</span>
+</pre></div>
+
+
+<h2>通过 js 获得最终 CSS 属性</h2>
+<p>https://developer.mozilla.org/zh-CN/docs/Web/API/Window/getComputedStyle</p>
+<h1>reference</h1>
+<p>[1] http://learnlayout.com</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/css-bu-ju-ji-chu-zhi-shi.html">posted at 07:56</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/css.html" class="tags">CSS</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

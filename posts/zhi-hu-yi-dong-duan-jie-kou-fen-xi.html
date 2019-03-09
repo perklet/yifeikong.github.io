@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 知乎移动端接口分析</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机,爬虫" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/zhi-hu-yi-dong-duan-jie-kou-fen-xi.html" rel="bookmark" title="Permanent Link to &quot;知乎移动端接口分析&quot;">知乎移动端接口分析</a>
+                </h2>
+
+                
+                
+
+                <p>最近想注册一些知乎的机器人玩玩儿，比如给自己点赞之类的，通过抓包分析，获得了完整注册登录流程。</p>
+<h1>抓包</h1>
+<div class="highlight"><pre><span></span>1 POST https://api.zhihu.com/auth/digits
+      ← 401 application/json 97b 246ms
+2 GET https://api.zhihu.com/captcha
+     ← 200 application/json 22b 233ms
+3 PUT https://api.zhihu.com/captcha
+     ← 202 application/json 5.46k 323ms
+4 POST https://api.zhihu.com/captcha
+      ← 201 application/json 16b 295ms
+5 POST https://api.zhihu.com/sms/digits
+      ← 201 application/json 16b 353ms
+6 POST https://api.zhihu.com/validate/digits
+      ← 201 application/json 16b 409ms
+7 POST https://api.zhihu.com/validate/register_form
+      ← 200 application/json 16b 279ms
+8 POST https://api.zhihu.com/register
+      ← 201 application/json 761b 529ms
+</pre></div>
+
+
+<p>逐行分析一下每个包:</p>
+<ol>
+<li>这个请求发送了 <code>username: +86155xxxxxxxx</code> 请求，然后返回了 <code>缺少验证码票据</code>，应该是表示缺少验证码。</li>
+<li>应该不是请求验证码，而是请求是否需要验证码，返回了<code>"show_captcha": false</code>，虽然表示的是不需要验证码，但是还是弹出了验证码，奇怪。</li>
+<li>注意这个请求是 PUT，POST 参数<code>height: 60, width: 240</code>。然后返回了验证码：<code>{"img_base64": ...}</code>, base64 解码后就是验证码</li>
+<li>这一步 POST 正确的 captcha 并通过验证，参数是：<code>input_text: nxa8</code>, 返回是：<code>{ "success": true }</code></li>
+<li>这一步请求发送短信验证码，POST 参数是：<code>phone_no: +86155xxxxxxxx</code>, 发挥是：<code>{ "success": true }</code></li>
+<li>提交验证码，POST 参数是: <code>phone_no: +86155xxxxxxxx, digits: xxxxxx</code>， 返回是：<code>{ "success": true }</code></li>
+<li>填写用户信息，POST 参数是：<code>phone_no: +86155xxxxxxxx, gender: 0, fullname: XXX</code>,返回是：<code>{ "success": true }</code></li>
+<li>
+<p>上一步注册了用户，这一步是向知乎请求新的 access token。</p>
+<p>请求 POST 参数：
+<code>digits:        865405
+fullname:      Lucindai
+phone_no:      +8615568995304
+register_type: phone_digits</code></p>
+<p>返回数据如下：
+<code>{
+"access_token": "...",
+"cookie": { },
+"expires_in": 2592000,
+"lock_in": 1800,
+"old_id": 155681178,
+"refresh_token": "...",
+"token_type": "bearer",
+"uid": "...",
+"unlock_ticket": "...",
+"user_id":...
+}</code></p>
+<p>其中的 refresh token 和 access token 都是 OAuth2 中的参数，可以用于使用 OAuth2 访问知乎的 API。可以使用 zhihu_oauth 这个库来访问知乎。</p>
+</li>
+</ol>
+<p>知乎的 API 还需要在 header 中设定一些特殊参数，可以参考 zhihu_oauth 中的参数</p>
+<p>再注册成功之后还应该设定密码，这样之后就可以使用密码登录了。</p>
+<div class="highlight"><pre><span></span>PUT https://api.zhihu.com/account/password
+new_password=xxxxxx
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/zhi-hu-yi-dong-duan-jie-kou-fen-xi.html">posted at 04:58</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 技术选型的技巧</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="架构,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ji-zhu-xuan-xing-de-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;技术选型的技巧&quot;">技术选型的技巧</a>
+                </h2>
+
+                
+                
+
+                <h1>不要魔改原系统</h1>
+<p>所以我们的建议是不要改动原系统，而是要开发辅助系统:监控，报警，负载均衡，管理等。以Redis为例，如果我们想增加集群功能，不要去改动Redis本身的实现，而是增加一个proxy层来实现，Twitter的Twemproxy就是这样做的，而Redis到了3.0后本身提供了集群功能，原有的方案简单切换到Redis3.0即可。详细可参考(http://www.cnblogs.com/gomysql/p/4413922.html)</p>
+<p>如果实在想改到原有系统，怎么办呢？我们的建议是直接给开源项目提需求或者bug，但弊端就是响应比较缓慢，这个就要看业务紧急程度了，如果实在太急那就只能自己改了，不过不是太急，建议做好备份或者应急手段即可。</p>
+<p>所以，如果你有钱有人有时间，投入人力去重复发明完美符合自己业务特点的轮子也是很好的选择！毕竟，土豪们（BAT......等）很多都是这样做的，否则的话我们也就没有那么多好用的开源项目了 :)</p>
+<p>魔改系统的另一个不好是员工的不满。对于员工来说，自然希望能够在简历上写上一些通用的技能，而使用公司内部工具的化，对员工的发展也不利。</p>
+<p>来源：https://book.douban.com/review/6456359/</p>
+<p>突然想起来我们之前一个经验比较丰富的同事告诉我，他学习的方法就是一件事情先找到方法给干掉，先知道怎么用，再系统的看书学习，借此和大家分享。</p>
+<h1>不要选择过于小众的技术</h1>
+<p>如果你是你们新用户最大的用户，那么你遇到的问题将会是最大的</p>
+<p>Maturity = (Blood + Sweat) / Complexity</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ji-zhu-xuan-xing-de-ji-qiao.html">posted at 04:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

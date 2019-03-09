@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Git 使用技巧</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="git,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/git-shi-yong-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;Git 使用技巧&quot;">Git 使用技巧</a>
+                </h2>
+
+                
+                
+
+                <p>最佳实践，每次提交前都使用git status查看已经更改的文件，然后使用git add逐条添加文件,然后再看git status提交的文件是不是都对的. 认真编写.gitignore文件，最好能够做到每次可以使用<code>git add .</code>是安全的。</p>
+<h1>取消与重置</h1>
+<p>当你的 commit 已经 push 之后就不能再撤销了，只能使用 revert。</p>
+<h2>取消上一个 commit</h2>
+<div class="highlight"><pre><span></span>git reset HEAD~1
+</pre></div>
+
+
+<ul>
+<li>reset --mixed will reset the index not the working dir</li>
+<li>reset --soft will only move the HEAD</li>
+<li>reset --hard will even reset the working dir</li>
+</ul>
+<h2>重置到origin库中的 HEAD</h2>
+<p>首先，保存到一个分支</p>
+<div class="highlight"><pre><span></span>git commit -a -m &quot;Saving my work, just in case&quot;
+git branch my-saved-work
+</pre></div>
+
+
+<p>然后，把master分支重置到 origin/master</p>
+<div class="highlight"><pre><span></span>git fetch origin
+git reset --hard origin/master
+</pre></div>
+
+
+<h2>从 staging area 中删除文件</h2>
+<div class="highlight"><pre><span></span>git reset HEAD &lt;file&gt;  // remove a file from staging area
+
+git reset // to remove all files from staging area
+</pre></div>
+
+
+<p>git checkout -- <filename>
+git fetch origin &amp;&amp; git reset --hard origin/master</p>
+<h1>push</h1>
+<p><code>git push --tags</code> 推送 tag 到远端仓库</p>
+<p><code>git tag tagname commit_id</code> 给某个commit打上标签</p>
+<p><code>git checkout tagname</code> 切换到某个tag</p>
+<h1>使用 git bisect 二分查找问题</h1>
+<p>use bisect to determine when a bug is introduced by specifying a start point and a end point, and doing a binary search between the commits.</p>
+<div class="highlight"><pre><span></span>git bisect start
+git bisect good xxxxxx
+git bisect bad xxxxxx
+# begin binary search
+run test and mark commits
+git bisect good/bad
+# end of binary search
+# git will prompt a first bad commits
+# you can use git log to visualize the process
+git bisect reset
+</pre></div>
+
+
+<h1>分支与合并</h1>
+<div class="highlight"><pre><span></span>git push -u origin master
+git checkout -b branch_name # create new branch
+git checkout master # switch back
+git branch -d branch_name # delete branch
+git push origin --delete branch_name # delete remote branch
+git push origin branch_name # push to remote
+git branch branch -v xxxxxx
+git merge branch_name # merge branch_name to current branch
+git merge --squash
+git merge --abort  # 放弃合并
+</pre></div>
+
+
+<p>当第一次推送某个分支的时候，需要使用 <code>--set-upstream/-u</code> 来制定要同步的分支。</p>
+<p>为了使commit记录清晰易懂，不产生无谓的commit，应该尽量避免和远程分支合并。每次提交尽量使用pull --rebase，而不是pull and merge。</p>
+<div class="highlight"><pre><span></span>git pull --rebase  # 如果有冲突的话，先运行 git stash
+git stash # if you and remote change the same file
+git stash pop  # pull 之后再 stash pop
+git commit -am &quot;some change&quot;
+git push
+</pre></div>
+
+
+<h2>rebase</h2>
+<p>Once you understand what rebasing is, the most important thing to learn is when not to do it. The golden rule of git rebase is to never use it on public branches.</p>
+<div class="highlight"><pre><span></span>git rebase origin/master
+</pre></div>
+
+
+<h2>rebase vs merge</h2>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tKfTcgy1fse6aurc89j30im0dhq3d.jpg"></p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tKfTcgy1fse6cbu59sj30h80dnaah.jpg"></p>
+<h1>advanced stash</h1>
+<ol>
+<li>
+<p>git stash save "stash_name"  // save a stash with a name</p>
+</li>
+<li>
+<p>apply by name</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="k">[alias]</span>
+<span class="na">sshow</span> <span class="o">=</span> <span class="s">&quot;!f() { git stash show stash^{/$*} -p; }; f&quot;</span>
+<span class="na">sapply</span> <span class="o">=</span> <span class="s">&quot;!f() { git stash apply stash^{/$*}; }; f&quot;</span>
+</pre></div>
+
+
+<p>use these lines to show and apply stash by name</p>
+<ol>
+<li>git stash -p  // stashes which files you select</li>
+</ol>
+<p>git diff 可以跟时间，来查看一段时间内的改动</p>
+<p>显示某个文件谁的改动最多：</p>
+<div class="highlight"><pre><span></span>git blame file | sort -b -k 3 # sort by date
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/git-shi-yong-ji-qiao.html">posted at 10:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/git.html" class="tags">git</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

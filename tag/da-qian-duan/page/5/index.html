@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "大前端" | Page 5</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/da-qian-duan/page/5/index.html">大前端</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/java-notes.html" rel="bookmark" title="Permanent Link to &quot;Java Notes&quot;">Java Notes</a>
+                </h2>
+
+                
+                
+
+                <p>内部类
+OuterClassName.InnerClassName
+内部类可以直接访问其外围对象的成员，而不需要任何特殊条件
+OuterClass.this OuterClass.new  </p>
+<p>匿名内部类非常有用。 new ClassName() {} 创建一个继承自ClassName的匿名类的对象</p>
+<p>嵌套类是指使用了static class 的内部类</p>
+<p>java中不允许变量隐藏</p>
+<p>只有类成员才会默认初始化，普通变量不会</p>
+<p>int x = a.f()
+其中，消息是f(), 对象是a,面向对象就是「给对象发消息」</p>
+<p>java中不允许将其他类型用做bool值</p>
+<p>java会为你提供默认构造器（无参构造器）</p>
+<p>无法通过返回值来重载函数</p>
+<p>静态块</p>
+<p>static {
+    i = 47;
+}</p>
+<p>可变参数列表
+doGET(Object... args)</p>
+<p>默认访问权限是包访问权限</p>
+<p>.java 文件编译生成 .class 文件，jar文件是.class 文件的打包</p>
+<p>使用import时，默认去CLASSPATH …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/java-notes.html">posted at 13:46</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/jquery-and-un-jquery.html" rel="bookmark" title="Permanent Link to &quot;jQuery and un-jQuery&quot;">jQuery and un-jQuery</a>
+                </h2>
+
+                
+                
+
+                <h1>jQuery</h1>
+<p>$el.append(htmlString)
+$el.prepend(htmlString)</p>
+<p>$newEl.insertBefore(queryString)
+$newEl.insertAfter(queryString)</p>
+<h1>un-jQuery</h1>
+<h2>DOM 操作</h2>
+<p>选择器可以使用 querySelector 和 querySelectorAll, 但是这两个的性能太差了, 最好使用 getElementById, getElementsByTagName, getElementsByClassName</p>
+<p>$el.val() 对应 el.value</p>
+<h3>获取 attr</h3>
+<div class="highlight"><pre><span></span>$el.attr(&#39;id&#39;);
+el.getAttribute(&#39;id);
+el.setAttribute(attr, value)
+</pre></div>
+
+
+<h3>parent and children</h3>
+<div class="highlight"><pre><span></span>$el.children
+$el.parent()
+el …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/jquery-and-un-jquery.html">posted at 13:41</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/javascript-dom-api.html" rel="bookmark" title="Permanent Link to &quot;JavaScript DOM API&quot;">JavaScript DOM API</a>
+                </h2>
+
+                
+                
+
+                <h2>document object</h2>
+<p>attributes of document object</p>
+<div class="highlight"><pre><span></span>document.title               //设置文档标题等价于HTML的&lt;title&gt;标签
+document.URL                 //设置URL属性从而在同一窗口打开另一网页
+document.fileCreatedDate     //文件建立日期，只读属性
+document.fileModifiedDate    //文件修改日期，只读属性
+document.fileSize            //文件大小，只读属性
+document.cookie              //设置和读出cookie
+document.charset             //设置字符集 简体中文:gb2312
+document.body         // body 元素
+document.location.hash/host/href/port          // location
+</pre></div>
+
+
+<p>methods of document object</p>
+<div class="highlight"><pre><span></span>getElementById …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/javascript-dom-api.html">posted at 09:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/javascript-xue-xi-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;JavaScript 学习笔记&quot;">JavaScript 学习笔记</a>
+                </h2>
+
+                
+                
+
+                <h2>Values</h2>
+<p>类型转换</p>
+<p>Object to bool，全部转换为True，包括 [] {}和new Boolean(false)</p>
+<p>to string 首先调用toString()，如果没有然后调用valueOf()</p>
+<p>to number 首先调用valueOf(),如果没有然后调用toString()</p>
+<h2>Array</h2>
+<div class="highlight"><pre><span></span>Array.join()    
+Array.reverse() 
+Array.sort([func])  // function cmp(a, b) {return a - b;}, implace
+Array.concat(val or array)  // combination of python append and extend, will not recursively smash array …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/javascript-xue-xi-bi-ji.html">posted at 07:53</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/decompile-apk.html" rel="bookmark" title="Permanent Link to &quot;decompile apk&quot;">decompile apk</a>
+                </h2>
+
+                
+                
+
+                <h1>jadx[1]</h1>
+<h2>compile and install jadx</h2>
+<p>mkdir jadx
+git clone https://github.com/skylot/jadx.git
+cd jadx
+./gradlew dist   # you might need to wait on this</p>
+<h2>decompile apk</h2>
+<div class="highlight"><pre><span></span>1. change apk to zip file and unzip it
+2. copy out the class.dex file
+3. build/jadx/bin/jadx …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/decompile-apk.html">posted at 07:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yong-yu-ti-dai-ajaxde-fetch-api.html" rel="bookmark" title="Permanent Link to &quot;用于替代ajax的 fetch API&quot;">用于替代ajax的 fetch API</a>
+                </h2>
+
+                
+                
+
+                <p>fetch is the new and easy api for js to make request to the server, it replaces XMLHttpRequest.</p>
+<h2>Objects:</h2>
+<p>fetch, Request, Reponse, Headers</p>
+<h2>Usage:</h2>
+<div class="highlight"><pre><span></span>fetch(&#39;/path/to/fetch&#39;,
+    {method: &#39;GET&#39;}
+).then(function (response) {
+    // process response;
+    return response.json(); // returns a json promise
+    return response.text(); // returns a text promise
+
+
+    return …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yong-yu-ti-dai-ajaxde-fetch-api.html">posted at 03:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-rang-an-zhuo-shou-ji-cha-shang-dian-yuan-zi-dong-kai-ji.html" rel="bookmark" title="Permanent Link to &quot;如何让安卓手机插上电源自动开机&quot;">如何让安卓手机插上电源自动开机</a>
+                </h2>
+
+                
+                
+
+                <p>非常简单的原理，把充电电池动画文件替换成重启命令。</p>
+<p>比如说，对于红米 Note2，这个文件是 <code>/system/bin/kpoc_charger</code></p>
+<p>替换成如下文件</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/system/bin/sh</span>
+/system/bin/reboot
+</pre></div>
+</td></tr></table>
+
+<p>然后 <code>chmod +x /system/bin/kpoc_charger</code></p>
+<p>http://developwear.com/blog/2014/07/03/autobootstart-android-when-charger-is-connected/</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-rang-an-zhuo-shou-ji-cha-shang-dian-yuan-zi-dong-kai-ji.html">posted at 03:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xue-xi-greasemonkey-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;学习 greasemonkey 教程&quot;">学习 greasemonkey 教程</a>
+                </h2>
+
+                
+                
+
+                <p>GreaseMonkey/TamperMonkey 学习</p>
+<h1>头部命令</h1>
+<ul>
+<li>@name | 脚本名字| </li>
+<li>@namespace|命名空间|  </li>
+<li>@version| 版本| </li>
+<li>@author|作者|       </li>
+<li>@description      </li>
+<li>@homepage     </li>
+<li>@icon     </li>
+<li>@updateURL        </li>
+<li>@downloadURL      </li>
+<li>@include      </li>
+<li>@exclude      </li>
+<li>@resource key url     </li>
+<li>@require  include scripts </li>
+<li>@connect  reach cross origin domains  self, current domain, localhost,  or *</li>
+<li>@run-at   when to run the script  document-start/document-body/document-end/document-idle/context-menu</li>
+<li>@grant    whitelist GM_* functions …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xue-xi-greasemonkey-jiao-cheng.html">posted at 15:23</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/get-and-change-android-device-id.html" rel="bookmark" title="Permanent Link to &quot;get and change android device id&quot;">get and change android device id</a>
+                </h2>
+
+                
+                
+
+                <h2>get device id</h2>
+<p><code>String id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);</code></p>
+<h2>set device id</h2>
+<p>As far as Settings.Secure.ANDROID_ID goes, this should do the trick:</p>
+<p><code>adb shell sqlite3 /data/data/com.android.providers.settings/databases/settings.db "UPDATE secure SET value='newid' WHERE name='android_id'"</code></p>
+<p>Where newid is usually the …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/get-and-change-android-device-id.html">posted at 14:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/okhttp.html" rel="bookmark" title="Permanent Link to &quot;okhttp&quot;">okhttp</a>
+                </h2>
+
+                
+                
+
+                <p>Good tutorial: http://www.vogella.com/tutorials/JavaLibrary-OkHttp/article.html#creating-request-objects-for-make-network-calls</p>
+<p>注意：很多国产ROM 会限制应用的后台联网，需要把应用加入白名单</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/okhttp.html">posted at 14:08</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags selected">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/4" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/6" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 5 of 6</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

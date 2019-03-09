@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Articles by Yifei Kong</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/author/yifei-kong/page/19/index.html">Yifei Kong</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Aug 16, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yue-du-instagram-de-python-sheng-ji-wen-zhang.html" rel="bookmark" title="Permanent Link to &quot;阅读 instagram 的 python 升级文章&quot;">阅读 instagram 的 python 升级文章</a>
+                </h2>
+
+                
+                
+
+                <p>在 Instagram 的用户数迅速增长的过程中，性能问题还是出现了：服务器数量的增长率已经慢慢的超过了用户增长率。</p>
+<p>为此，他们决定跳过 Python 2 中哪些蹩脚的异步 IO 实现 （可怜的 gevent、tornado、twisted 众），直接升级到 Python 3，去探索标准库中的 asyncio 模块所能带来的可能性。</p>
+<p>在 Instagram，进行 Python 3 的迁移需要必须满足两个前提条件：</p>
+<ul>
+<li>不停机，不能有任何的服务因此不可用</li>
+<li>不能影响产品新特性的开发</li>
+</ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yue-du-instagram-de-python-sheng-ji-wen-zhang.html">posted at 17:03</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/talks.html" rel="tag">talks</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/talks.html" class="tags">talks</a>
+                </div>
+            </article>            <h4 class="date">Aug 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/dropbox-ceos-speech.html" rel="bookmark" title="Permanent Link to &quot;Dropbox CEO's speech&quot;">Dropbox CEO's speech</a>
+                </h2>
+
+                
+                
+
+                <p>Dropbox CEO's speech</p>
+<p>Bill Gates's first company made software for traffic lights. Steve Jobs's first company made plastic whistles that let you make free phone calls. Both failed, but it's hard to imagine they were too upset about it. That's my favourite thing that changes today. You no longer carry …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/dropbox-ceos-speech.html">posted at 09:25</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/talks.html" rel="tag">talks</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/talks.html" class="tags">talks</a>
+                </div>
+            </article>            <h4 class="date">Aug 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pa-chong-ru-he-jin-liang-mo-ni-liu-lan-qi.html" rel="bookmark" title="Permanent Link to &quot;爬虫如何尽量模拟浏览器&quot;">爬虫如何尽量模拟浏览器</a>
+                </h2>
+
+                
+                
+
+                <h1>http headers</h1>
+<p>发送http请求时，Host, Connection, Accept, User-Agent, Referer, Accept-Encoding, Accept-Language这七个头必须添加，因为正常的浏览器都会有这7个头。
+ 
+其中：</p>
+<ol>
+<li>Host一般各种库都已经填充了</li>
+<li>Connection填Keep-Alive</li>
+<li>Accept一般填text/html 或者application/json</li>
+<li>User-Agent使用自己的爬虫或者伪造浏览器的UA</li>
+<li>Referer一般填当前URL即可，考虑按照真是访问顺序添加referer，初始的referer可以使用google。</li>
+<li>Accept-Encoding 从gzip和deflate中选，好多网站会强行返回gzip的结果</li>
+<li>Aceept-Language根据情况选择，比如zh-CN, en-US</li>
+</ol>
+<h1>cookies</h1>
+<p>cookie是需要更新的
+ </p>
+<h1>others</h1>
+<p>可能有一些人类不可见的陷阱链接，不要访问这些链接</p>
+<h1>爬取间隔自适应</h1>
+<p>就是已经限制了你这个IP的抓取，就不要傻傻重复试，怎么也得休息一会。网易云音乐操作起来比较简单，sleep一下就好了。其实sleep的间隔应该按情况累加，比如第一次sleep 10秒，发现还是被约束。那么久sleep 20秒... 这个间隔的设置已经自适应的最终效果是经验值。</p>
+<p>ref</p>
+<ol>
+<li>http://www.cnblogs …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pa-chong-ru-he-jin-liang-mo-ni-liu-lan-qi.html">posted at 22:21</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Aug 13, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ipython-main-features.html" rel="bookmark" title="Permanent Link to &quot;IPython main features&quot;">IPython main features</a>
+                </h2>
+
+                
+                
+
+                <ul>
+<li>
+<p>use <code>?</code> to get quick help, and use <code>??</code> provides additional detail).</p>
+</li>
+<li>
+<p>Searching through modules and namespaces with * wildcards, both when using the ? system and via the %psearch command.</p>
+</li>
+<li>
+<p>magic commands, % or %% prefixed commands</p>
+</li>
+<li>
+<p>Alias facility for defining your own system aliases.</p>
+</li>
+<li>
+<p>Lines starting with ! are passed directly to the system shell …</p></li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ipython-main-features.html">posted at 03:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 08, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/tu-ling-jiang-huo-de-zhe-john-hopcroptjiang-zuo.html" rel="bookmark" title="Permanent Link to &quot;图灵奖获得者John Hopcropt讲座&quot;">图灵奖获得者John Hopcropt讲座</a>
+                </h2>
+
+                
+                
+
+                <h1>revolutions</h1>
+<p>agri revolutions 10000BC</p>
+<p>industrial revolution 1700 AD</p>
+<p>information revolution 2015 AD</p>
+<h1>jobs</h1>
+<p>there used to be elevator operators, but this job disappears, so will drivers</p>
+<p>what if 25% of the work force will be needed to produce all the goods and services</p>
+<p>we are living in a changing world …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/tu-ling-jiang-huo-de-zhe-john-hopcroptjiang-zuo.html">posted at 17:06</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/talks.html" rel="tag">talks</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/talks.html" class="tags">talks</a>
+                </div>
+            </article>            <h4 class="date">Aug 08, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xiao-hai-xing-de-wang-zhe-rong-yao-gong-lue.html" rel="bookmark" title="Permanent Link to &quot;小海星的王者荣耀攻略&quot;">小海星的王者荣耀攻略</a>
+                </h2>
+
+                
+                
+
+                <h1>选人</h1>
+<p>良好的开始是成功的一半，如果在选人阶段就不和谐，基本就输了一半了。
+一般一个队伍必须要的角色是坦克、射手、法师。虽然说不绝对，但是如果你是高手估计就不会来看攻略了，一般来说这三者是缺一不可的。如果你很想玩某个英雄，请直接先选，一般来说后选的人有责任根据阵容去补位，千万不要拖到最后一刻结果选了一个崩溃的阵容。当然游戏的风气基本上法师和射手都会被抢，这个时候如果你想赢，请还是补上坦克吧。其实这种事也就低端局容易出，只要分数稍微高一点，大家都懂，只要是为了赢而不是赌气的话，都会根据阵容换合适的英雄的。我理解大家尝鲜的心情，不过新手尽量还是不要频繁换不会用的英雄坑人坑己，尽量每个位置的英雄都熟一个，这样不论是却哪个位置都有的选。既然是认真用那几个英雄，当然可以搜一下英雄怎么用，倒不用像学习一样认真，但是了解一下别人的使用经验总比自己摸索要强很多，如果对面选了跟你同样的英雄还用的比你好，要多学习一下别人的思路和连招等等。
+除了那3个位置之外，还有刺客和辅助可以选，定位多样性是好的，但很多刺客英雄对新手来说上手有难度，实在不行选个自己熟练的其它位置，队友通常也不会说你什么的；高端局不是这样，但也没必要来看攻略了- -。
+召唤师技能这个因人而异，但关键还是讲究和英雄本身技能和定位的配合，虽然没有硬性要求，但是例如我就是喜欢闪现我什么英雄都带闪现，这并不是不可以，但是心态就是错的。某些辅助可能拿个治疗术，某些坦克和输出不足的战士可以拿斩杀，位移技能不够强的刺客可以拿急速或闪现等等。</p>
+<h1>开局分路 …</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xiao-hai-xing-de-wang-zhe-rong-yao-gong-lue.html">posted at 04:14</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/sheng-huo.html" rel="tag">生活</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/sheng-huo.html" class="tags">生活</a>
+                </div>
+            </article>            <h4 class="date">Aug 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/deep-learning-de-yi-xie-si-kao.html" rel="bookmark" title="Permanent Link to &quot;Deep Learning 的一些思考&quot;">Deep Learning 的一些思考</a>
+                </h2>
+
+                
+                
+
+                <h1>问自己的问题</h1>
+<ul>
+<li>不同的算法对数据输入有不同的假设。应该如何预处理数据呢？</li>
+<li>如何对数据降维，使用什么降维方法呢？</li>
+<li>如何拆分数据集</li>
+<li>怎样知道是否出现了过拟合</li>
+<li>应该是用什么类型的性能指标</li>
+<li>不同的参数调整会如何影响模型的结果</li>
+<li>模型组合可以达到更好的结果吗</li>
+</ul>
+<h1>关于模型的基本假设</h1>
+<p>基本假设是一个系统运行的基础，然而如果假设是错误的呢？what if the grand truth is not true?
+ 
+比如假设A 和 A<em>是类似的，喜欢 A 的用户也会喜欢 A</em>，但是实际上用户只能在 A 和 A<em>之间选择一个呢，这时候向购买了 A 的顾客再推荐 A</em>就不合适了.
+ 
+比如用户已经买了钻戒用来求婚, 那么再推荐钻戒就不好了. 但是如果用户买了啤酒, 那再推荐一些啤酒也很好啊, 因为啤酒很快就喝完了...
+ 
+维基百科上讲算法的文章一般都写得不怎么样</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/deep-learning-de-yi-xie-si-kao.html">posted at 23:33</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/ji-qi-xue-xi.html" class="tags">机器学习</a>
+                </div>
+            </article>            <h4 class="date">Aug 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wo-de-bian-ma-gui-fan.html" rel="bookmark" title="Permanent Link to &quot;我的编码规范&quot;">我的编码规范</a>
+                </h2>
+
+                
+                
+
+                <h1>指导思想</h1>
+<p>代码要做到<a href="http://jixianqianduan.com/article-translation/2016/06/22/ways-to-write-self-documenting-js.html">自文档化</a></p>
+<h1>Python</h1>
+<ul>
+<li>util模块使用util.py（单数形式），而不是utils.py，因为python标准库使用的是util</li>
+<li>模块的命名：如果只有一个类，比如ItemProcessor，那么可以命名为item_processor.py，否则不能使用名词命名，使用描述性的短语『名词+动词』</li>
+</ul>
+<h2>django</h2>
+<ul>
+<li>使用 queryset 的时候尽量使用 <code>.only()</code>，以减少对数据库的压力</li>
+</ul>
+<h1>devops</h1>
+<ul>
+<li>using mosh is recommended over plain ssh</li>
+<li>using tmux is recommended over screen</li>
+<li>all directories/repositories should use underscore NOT hyphen</li>
+<li>应该使用json schema来验证json是否合规</li>
+<li>每一个调用方都应该使用token或者caller来表明自己的身份 …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wo-de-bian-ma-gui-fan.html">posted at 03:29</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiang-fa.html" class="tags">想法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-import-xi-tong-yu-importlib.html" rel="bookmark" title="Permanent Link to &quot;Python 的 import 系统与 importlib&quot;">Python 的 import 系统与 importlib</a>
+                </h2>
+
+                
+                
+
+                <p>首先</p>
+<p><strong>init</strong>.py is first called before the actual import</p>
+<p>if you have  the following code:</p>
+<div class="highlight"><pre><span></span>foobar/
+    __init__.py
+    baz.py
+</pre></div>
+
+
+<p>runing import foobar will not make foobar.baz available
+you have to add from . import baz to <strong>init</strong>.py</p>
+<p>add <strong>all</strong> to <strong>init.</strong>.py to control which to be …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-import-xi-tong-yu-importlib.html">posted at 01:01</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/iterm2-tricks.html" rel="bookmark" title="Permanent Link to &quot;iterm2 tricks&quot;">iterm2 tricks</a>
+                </h2>
+
+                
+                
+
+                <ul>
+<li>
+<p>如果tmux，vim等程序启用了鼠标支持，只需要使用alt+鼠标就可以轻松拷贝了~</p>
+</li>
+<li>
+<p>可以隐藏标题栏 Profile-&gt;Window-&gt;Style: No Title Bar</p>
+</li>
+</ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/iterm2-tricks.html">posted at 23:19</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiao-ji-qiao.html" class="tags">小技巧</a>
+                    &nbsp;<a href="/tag/xiao-gong-ju.html" class="tags">小工具</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/18" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/20" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 19 of 34</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

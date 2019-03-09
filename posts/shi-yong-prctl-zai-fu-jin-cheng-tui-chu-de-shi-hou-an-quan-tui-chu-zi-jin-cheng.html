@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 使用 prctl 在父进程退出的时候安全退出子进程</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Oct 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-prctl-zai-fu-jin-cheng-tui-chu-de-shi-hou-an-quan-tui-chu-zi-jin-cheng.html" rel="bookmark" title="Permanent Link to &quot;使用 prctl 在父进程退出的时候安全退出子进程&quot;">使用 prctl 在父进程退出的时候安全退出子进程</a>
+                </h2>
+
+                
+                
+
+                <p>在 Linux 中, 当子进程退出的时候, 父进程可以收到信号, 但是当父进程退出的时候, 子进程并不会受到信号. 这样就造成了在父进程崩溃的时候, 子进程并不能同时退出, 而是一直会在后台运行, 比如下面的例子:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">loop_print</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;child alive, </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">if</span> <span class="n">pid</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># parent</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;parent sleep for 2&#39;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;parent quit&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">loop_print</span><span class="p">()</span>
+</pre></div>
+
+
+<p>当父进程退出的时候, 子进程一直在不断地 print, 而没有退出.</p>
+<h1>naive 的方法, 使用 multiprocessing 库</h1>
+<p>昨天我已经吐槽过标准库的 multiprocessing 有很多坑, 不出所望, 在这个问题上 multiprocessing 依然提供了半个解法, 只解决了一半问题......</p>
+<p>在使用 multiprocessing 库创建进程的时候, 可以设置 <code>Process.daemon = True</code>, 这个属性又是模仿 threading 库的 API 来的.</p>
+<p>正常情况下, 当一个程序收到 SIGTERM 或者 SIGHUP 等信号的时候, multiprocessing 会调用每个子进程的 terminate 方法, 这样会给每个子进程发送 SIGTERM 信号, 子进程就可以优雅退出. 然而, 当异常发生的时候, 父进程挂了, 比如说收到了 SIGKILL 信号, 那么子进程就得不到收割, 也就变成了孤儿进程.</p>
+<p>所以说, multiprocessing 库只解决了半个问题, 真遇到问题的时候就会坑你一把.</p>
+<h1>正确解决方法</h1>
+<p>Linux 提供了 prctl 系统调用, 可以由子进程向内核注册父进程退出时候收到什么信号, 我们只要注册一个 SIGTERM 信号就好了.</p>
+<p>在 Python 中可以使用 python-prctl 这个包.</p>
+<h2>安装</h2>
+<div class="highlight"><pre><span></span># apt install libcap-dev &amp;&amp; pip install python-prctl
+</pre></div>
+
+
+<h2>使用</h2>
+<p>以上面的程序为例:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">loop_print</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="kn">import</span> <span class="nn">prctl</span>
+    <span class="kn">import</span> <span class="nn">signal</span>
+    <span class="n">prctl</span><span class="o">.</span><span class="n">set_pdeathsig</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">)</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;child alive, </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">if</span> <span class="n">pid</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># parent</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;parent sleep for 2&#39;</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;parent quit&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">loop_print</span><span class="p">()</span>
+</pre></div>
+
+
+<p>这次我们看到, 在父进程退出的同时, 子进程也推出了.</p>
+<div class="highlight"><pre><span></span>parent sleep for 2
+child alive, 1539676057.5094635
+child alive, 1539676058.5105338
+parent quit
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-prctl-zai-fu-jin-cheng-tui-chu-de-shi-hou-an-quan-tui-chu-zi-jin-cheng.html">posted at 23:50</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

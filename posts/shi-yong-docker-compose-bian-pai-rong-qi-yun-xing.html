@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 使用 docker-compose 编排容器运行</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机,Docker" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-docker-compose-bian-pai-rong-qi-yun-xing.html" rel="bookmark" title="Permanent Link to &quot;使用 docker-compose 编排容器运行&quot;">使用 docker-compose 编排容器运行</a>
+                </h2>
+
+                
+                
+
+                <p>使用 docker run 运行容器的时候经常需要加很多的参数，每次都输入这么多参数很容易出
+错。另外我们经常需要同时运行若干个容器来构成一个服务，此时还是涉及到网络的联通等
+操作。docker compose 可以把docker执行时的参数写成yaml文件，运行的时候只需要
+<code>docker-compose up</code> 一下就可以了。</p>
+<p>话不多说，下面通过一个例子来学习一下 docker-compose.yml 文件的语法。</p>
+<div class="highlight"><pre><span></span>version: &quot;3&quot;
+services:
+  web:
+    build: .
+    depends_on:
+      - db
+      - redis
+  redis:
+    image: redis
+    ports:
+     - &quot;3000&quot;
+     - &quot;3000-3005&quot;
+     - &quot;8000:8000&quot;
+     - &quot;9090-9091:8080-8081&quot;
+     - &quot;49100:22&quot;
+     - &quot;127.0.0.1:8001:8001&quot;
+     - &quot;127.0.0.1:5000-5010:5000-5010&quot;
+     - &quot;6060:6060/udp&quot; 
+  db:
+    image: postgres
+    volumes:
+      - &quot;/var/run/postgres/postgres.sock:/var/run/postgres/postgres.sock&quot;
+      - &quot;dbdata:/var/lib/postgresql/data&quot;
+
+volumes:
+  - dbdata
+</pre></div>
+
+
+<ol>
+<li>version 指定了当前 docker-compose 文件的版本</li>
+<li>services 服务列表，是一个 "服务名：配置" 的字典。这里定义了三个服务：
+   web/redis/db</li>
+<li>build，docker build 命令的参数，用来指定需要构建的 dockerfile</li>
+<li>image，如果镜像不需要自己构建，而是使用dockerhub上的基础镜像，可以直接使用
+   image 指令</li>
+<li>depends_on 指定当前的服务依赖的服务，从而确定启动顺序</li>
+<li>ports 开放的端口的数组，有三种形式：<ol>
+<li>"3000" 容器中开放的端口</li>
+<li>"3000:3000" 开放容器中的端口到宿主机</li>
+<li>"127.0.0.1:3000:3000" 开放容器中的端口到宿主机并绑定IP</li>
+</ol>
+</li>
+<li>environment 环境变量</li>
+<li>volumes 挂载的卷，可以使用named volume或者是挂载目录，建议不要使用匿名卷。如
+   果使用 named volume，必须在volumes下声明</li>
+</ol>
+<p>docker-compose 有以下3个常用命令：</p>
+<ol>
+<li>docker-compose up [-d] SERVICE</li>
+<li>docker-compose run</li>
+<li>docker-compose stop</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-docker-compose-bian-pai-rong-qi-yun-xing.html">posted at 02:11</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags">Docker</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

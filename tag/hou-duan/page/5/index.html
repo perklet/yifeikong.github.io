@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "后端" | Page 5</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/hou-duan/page/5/index.html">后端</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jan 28, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ming-ling-xing-de-yi-xie-xiao-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;命令行的一些小技巧&quot;">命令行的一些小技巧</a>
+                </h2>
+
+                
+                
+
+                <p>最近工作中经常用到的一些组合命令，本来想提交到 commandlinefu.com 上，但是忘记了密码，怎么也登录不上去了，记到这里吧</p>
+<ul>
+<li>脚本所在的目录</li>
+</ul>
+<div class="highlight"><pre><span></span>dirname $0
+</pre></div>
+
+
+<ul>
+<li>文件夹下面按照占用空间大小排序</li>
+</ul>
+<div class="highlight"><pre><span></span>du -sh `ls` | sort -rh
+</pre></div>
+
+
+<ul>
+<li>返回上一个目录</li>
+</ul>
+<div class="highlight"><pre><span></span>cd -
+</pre></div>
+
+
+<ul>
+<li>显示所有的日志的最后几行</li>
+</ul>
+<div class="highlight"><pre><span></span>tail *
+</pre></div>
+
+
+<ul>
+<li>set</li>
+</ul>
+<div class="highlight"><pre><span></span>set -x # 显示每个执行的命令
+set -e # 当有程序返回非0值时直接退出，相当于抛出异常
+</pre></div>
+
+
+<ul>
+<li>here doc</li>
+</ul>
+<div class="highlight"><pre><span></span>cat &lt;&lt; EOF &gt; /tmp/yourfilehere
+These contents will be written to the file.
+        This line is indented.
+EOF
+</pre></div>
+
+
+<ul>
+<li>删除包含某个关键字的所有行</li>
+</ul>
+<div class="highlight"><pre><span></span>fd …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ming-ling-xing-de-yi-xie-xiao-ji-qiao.html">posted at 19:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jan 20, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/da-jian-git-fu-wu-qi-zhong-xin-cang-ku.html" rel="bookmark" title="Permanent Link to &quot;搭建 git 服务器（中心仓库）&quot;">搭建 git 服务器（中心仓库）</a>
+                </h2>
+
+                
+                
+
+                <h1>gitlab</h1>
+<p>建议使用 gitlab 搭建，只需要一个命令就可以了</p>
+<div class="highlight"><pre><span></span>docker run --detach \
+    --hostname gitlab.example.com \
+    --publish 443:443 --publish 80:80 --publish 22:22 \
+    --name gitlab \
+    --restart always \
+    --volume /srv/gitlab/config:/etc/gitlab \
+    --volume /srv/gitlab/logs:/var/log/gitlab \
+    --volume /srv/gitlab/data:/var/opt/gitlab \
+    gitlab/gitlab-ce:latest
+</pre></div>
+
+
+<p>source: https …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/da-jian-git-fu-wu-qi-zhong-xin-cang-ku.html">posted at 22:50</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jan 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-auth-and-user.html" rel="bookmark" title="Permanent Link to &quot;django auth and user&quot;">django auth and user</a>
+                </h2>
+
+                
+                
+
+                <h1>激活</h1>
+<p>django 自带的 auth 模块需要收先创建数据库才能够使用：</p>
+<div class="highlight"><pre><span></span>python manage.py migrate auth
+python manage.py migrate
+</pre></div>
+
+
+<p>request.user.is_anonymous 检查用户是否</p>
+<p>django comes with login/logout forms and views</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">views</span> <span class="k">as</span> <span class="n">auth_views</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^login/$&#39;</span><span class="p">,</span> <span class="n">auth_views …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-auth-and-user.html">posted at 22:53</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jan 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/tiller-for-docker.html" rel="bookmark" title="Permanent Link to &quot;tiller for docker&quot;">tiller for docker</a>
+                </h2>
+
+                
+                
+
+                <h1>Yifei's Notes</h1>
+<p>Tiller SUCKS</p>
+<p>The only good part of tiller is that it makes a docker image can read environment variables and generate config files based on predefined templates, this functionality should easily be achieved by python and jinja2</p>
+<h1>Tiller</h1>
+<p>tiller runs program such as nginx inside docker instead of …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/tiller-for-docker.html">posted at 20:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags">Docker</a>
+                </div>
+            </article>            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-nei-cun-yu-jin-cheng-guan-li-pstopkill.html" rel="bookmark" title="Permanent Link to &quot;Linux 内存与进程管理（ps/top/kill...）&quot;">Linux 内存与进程管理（ps/top/kill...）</a>
+                </h2>
+
+                
+                
+
+                <h1>ps 命令</h1>
+<p>比较有用的选项有</p>
+<div class="highlight"><pre><span></span>-e 显示所有的进程
+-f 显示 uid, pid, ppid, cpu, starttime, tty, cpu usage, command
+-j 显示 user, pid, ppid, pgid, sess, jobc, state, tt, time, command。个人更喜欢 -j 一点
+-l 显示 uid, pid, ppid, flags, cpu, pri, nice, vsz=SZ, rss, wchan, state=S, paddr=ADDR, tty, time …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-nei-cun-yu-jin-cheng-guan-li-pstopkill.html">posted at 04:55</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/fen-bu-shi-xi-tong-zhong-de-suo.html" rel="bookmark" title="Permanent Link to &quot;分布式系统中的锁&quot;">分布式系统中的锁</a>
+                </h2>
+
+                
+                
+
+                <p>分布式系统需要使用分布锁。首先我们来回忆一下在单机情况下的锁。</p>
+<p>当我们的程序在需要访问临界区的时候，我们可以加一个锁，如果是多线程程序，可以使用线程锁，如果是多进程程序，可以使用进程级别的锁。但是在分布式的环境中，如果在不同主机上部署的程序要访问同一个临界区是该怎么做呢？这时候我们需要分布式的锁。</p>
+<p>当部署的服务或者脚本不在同一台机器上时,使用分布式的锁，可以使用zookeeper或者redis实现一个分布式锁。这里主要介绍一下基于redis的分布式锁。</p>
+<p>redis 官方给出的单机redis分布式锁:</p>
+<p>加锁</p>
+<p>NX 命令指定了只有在不存在的时候才会创建，如果已经存在，则会返回失败。EX指定了过期时间，避免进程挂掉后死锁。值设定为了一个随机数，这样只有加锁的进程才知道锁的值是多少</p>
+<div class="highlight"><pre><span></span>SET resource-name my_random_string NX EX max-lock-time
+</pre></div>
+
+
+<p>解锁</p>
+<p>因为解锁时会检查是否提供了随机数的值，所以只有创建锁的进程才能够解锁。</p>
+<div class="highlight"><pre><span></span>if redis.call(&quot;get&quot;,KEYS[1]) == ARGV[1] then
+    return redis.call(&quot;del&quot;,KEYS[1 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/fen-bu-shi-xi-tong-zhong-de-suo.html">posted at 04:42</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 13, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-templates.html" rel="bookmark" title="Permanent Link to &quot;django templates&quot;">django templates</a>
+                </h2>
+
+                
+                
+
+                <h1>marco</h1>
+<p>there is no marco in django template, you just have to use include with parameters</p>
+<div class="highlight"><pre><span></span>{% include &quot;marco.html&quot; with arg=parameter %}
+</pre></div>
+
+
+<h1>variable</h1>
+<div class="highlight"><pre><span></span><span class="cp">{{</span> <span class="nv">my_dict.key</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">my_object.attribute</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">my_list.0</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+
+
+<p>If a variable resolves to a callable, the template system will call it with no arguments and use its result instead …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-templates.html">posted at 11:34</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 16, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shell-bian-cheng-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;shell 编程教程&quot;">shell 编程教程</a>
+                </h2>
+
+                
+                
+
+                <h1>变量和值</h1>
+<p>variables are referenced by $var or ${var}. Global variables are visible to all sub bash sessions, and are often called env variables, local variables are only visible to local session, not subsessions.</p>
+<p>Global variables can be viewed as <code>env</code>, and can be created by <code>export</code>.</p>
+<div class="highlight"><pre><span></span>TEST=testing; export $TEST …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shell-bian-cheng-jiao-cheng.html">posted at 01:38</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/docker-xiao-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;docker 小技巧&quot;">docker 小技巧</a>
+                </h2>
+
+                
+                
+
+                <h1>删除所有停止的容器</h1>
+<div class="highlight"><pre><span></span>docker rm `docker ps -aq`
+</pre></div>
+
+
+<h1>删除所有没有 tag 的镜像</h1>
+<div class="highlight"><pre><span></span>docker rmi `docker images | grep &quot;^&amp;lt;none&amp;gt;&quot; | awk &#39;{print $3}&#39;`
+</pre></div>
+
+
+<h1>进入运行中的镜像</h1>
+<div class="highlight"><pre><span></span>docker exec -it CONTAINER_NAME bash
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/docker-xiao-ji-qiao.html">posted at 21:04</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags">Docker</a>
+                </div>
+            </article>            <h4 class="date">Jul 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/open-sourcing-a-django-project.html" rel="bookmark" title="Permanent Link to &quot;open sourcing a django project&quot;">open sourcing a django project</a>
+                </h2>
+
+                
+                
+
+                <h1>remove sensetive data</h1>
+<ul>
+<li>move settings to seperate settings_secret.py file, and import it in the settings.py</li>
+</ul>
+<p>or</p>
+<ul>
+<li>read all secrets from environment</li>
+</ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/open-sourcing-a-django-project.html">posted at 20:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/4" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/6" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 5 of 7</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles in the "计算机" category | Page 14</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/category/ji-suan-ji/page/14/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 17, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wang-ye-yu-apide-chang-jian-pin-ci-xian-zhi-yu-po-jie.html" rel="bookmark" title="Permanent Link to &quot;网页与API的常见频次限制与破解&quot;">网页与API的常见频次限制与破解</a>
+                </h2>
+
+                
+                
+
+                <p>上线一个新的页面或者接口的时候都需要考虑被爬取，滥用的情况。这篇文章总结一下常见的限制与反制方法。</p>
+<p>从接口的角度来说，匿名的接口一定是可以滥用的，只是破解成本的问题；而有登录状态的接口一般不容易被滥用。</p>
+<h1>第一个例子，自增ID被滥用</h1>
+<p>什么值得买的评测页面，https://test.smzdm.com/pingce/p/40205/，这个链接的最后一个数字就是评测的问题ID，大小才不过几万，也就是说，我只要遍历一下这个数字，就可以把“什么值得买”这个网站的所有评测都爬取一遍，这个是在太容易被利用了。</p>
+<p>对于这个问题，可以不要直接使用数据库的主键作为页面的ID，而是尽量使用没有规律的数字（比如UUID）或者至少大一点的数字作为ID，避免被穷举遍历。</p>
+<h1>第二个例子，列表页面被滥用</h1>
+<p>链家的二手房页面，https://bj.lianjia.com/ershoufang/101102279987.html，这个页面的ID就比较大了，但是我们没办法去遍历这样一个数字。这时候可以从列表页入手，https://bj.lianjia.com/ershoufang/rs …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wang-ye-yu-apide-chang-jian-pin-ci-xian-zhi-yu-po-jie.html">posted at 20:28</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/an-zhuo-kai-fa-zhong-de-context.html" rel="bookmark" title="Permanent Link to &quot;安卓开发中的Context&quot;">安卓开发中的Context</a>
+                </h2>
+
+                
+                
+
+                <p>在安卓当中，Context几乎是无处不在的，每一个Activity是一个Context，每一个Service也是一个Context。</p>
+<p>但是如果你新起了一个线程的话，你需要显式地把Context传递进去。</p>
+<p>比如下面的例子：</p>
+<div class="highlight"><pre><span></span>public class DumpLocationLog extends Thread {
+    LocationManager lm;
+    LocationHelper loc;
+    public DumpLocationLog(Context context) {
+        loc = new LocationHelper();
+        lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+    }
+    public void run() {
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 500.0f, loc);
+    }
+}
+</pre></div>
+
+
+<p>然后使用这个线程的时候，把this，也就是一个context的实例传递进去</p>
+<p><code>new DumpLocationLog(this);</code></p>
+<p>if you are in …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/an-zhuo-kai-fa-zhong-de-context.html">posted at 05:29</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-an-zhuo-bian-yi-64wei-de-dropbear.html" rel="bookmark" title="Permanent Link to &quot;为安卓编译64位的dropbear&quot;">为安卓编译64位的dropbear</a>
+                </h2>
+
+                
+                
+
+                <h2>如何使用dropbear</h2>
+<p>这里主要是需要在安卓上生成 host key，以及把自己的公钥传到安卓上</p>
+<div class="highlight"><pre><span></span>dropbearkey -t rsa -f /data/local/dropbear_host_key # 在安卓上生成key
+adb push ~/.ssh/id_rsa.pub /data/local/authorized_keys # 在宿主机把自己的密钥传过去
+dropbear -F -E -r /data/local/dropbear_host_key -A -N root -C jk -R /data/local/authorized_keys # 按照给定的key启动dropbear
+dropbear -P /data/local/dropbear.pid -r /data/local/dropbear_host_key -A …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-an-zhuo-bian-yi-64wei-de-dropbear.html">posted at 05:13</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/an-zhuo-fan-bian-yi-de-yi-xie-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;安卓反编译的一些笔记&quot;">安卓反编译的一些笔记</a>
+                </h2>
+
+                
+                
+
+                <h1>工具</h1>
+<p>apk studio</p>
+<p>如何 sign：https://www.nevermoe.com/?p=373</p>
+<p>smali code tutorial： https://forum.xda-developers.com/showthread.php?t=2193735</p>
+<p>一篇很好的pdf的文档，利用smali code：http://www.security-assessment.com/files/documents/whitepapers/Bypassing%20SSL%20Pinning%20on%20Android%20via%20Reverse%20Engineering.pdf</p>
+<h1>安卓中 pinning 的原理</h1>
+<p>使用自己的keystore实例化 TrustManagerFactory</p>
+<p>关键语句</p>
+<div class="highlight"><pre><span></span>InputStream in = resources …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/an-zhuo-fan-bian-yi-de-yi-xie-bi-ji.html">posted at 05:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/an-zhuo-de-asynctask.html" rel="bookmark" title="Permanent Link to &quot;安卓的 AsyncTask&quot;">安卓的 AsyncTask</a>
+                </h2>
+
+                
+                
+
+                <p>asynchronusally run task without explicitly creating thread.</p>
+<h1>Usage</h1>
+<div class="highlight"><pre><span></span>doInBackground(Params...)
+onProgressUpdate(Progress...)
+onPostExecute(Result)
+</pre></div>
+
+
+<p>Here is an example of subclassing:</p>
+<div class="highlight"><pre><span></span> private class DownloadFilesTask extends AsyncTask&lt;URL, Integer, Long&gt; {
+     protected Long doInBackground(URL... urls) {
+         int count = urls.length;
+         long totalSize = 0;
+         for (int i = 0; i &lt; count; i++) {
+             totalSize += Downloader.downloadFile …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/an-zhuo-de-asynctask.html">posted at 05:05</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-nei-cun-yu-jin-cheng-guan-li-pstopkill.html" rel="bookmark" title="Permanent Link to &quot;Linux 内存与进程管理（ps/top/kill...）&quot;">Linux 内存与进程管理（ps/top/kill...）</a>
+                </h2>
+
+                
+                
+
+                <h1>ps 命令</h1>
+<p>比较有用的选项有</p>
+<div class="highlight"><pre><span></span>-e 显示所有的进程
+-f 显示 uid, pid, ppid, cpu, starttime, tty, cpu usage, command
+-j 显示 user, pid, ppid, pgid, sess, jobc, state, tt, time, command。个人更喜欢 -j 一点
+-l 显示 uid, pid, ppid, flags, cpu, pri, nice, vsz=SZ, rss, wchan, state=S, paddr=ADDR, tty, time …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-nei-cun-yu-jin-cheng-guan-li-pstopkill.html">posted at 04:55</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/fen-bu-shi-xi-tong-zhong-de-suo.html" rel="bookmark" title="Permanent Link to &quot;分布式系统中的锁&quot;">分布式系统中的锁</a>
+                </h2>
+
+                
+                
+
+                <p>分布式系统需要使用分布锁。首先我们来回忆一下在单机情况下的锁。</p>
+<p>当我们的程序在需要访问临界区的时候，我们可以加一个锁，如果是多线程程序，可以使用线程锁，如果是多进程程序，可以使用进程级别的锁。但是在分布式的环境中，如果在不同主机上部署的程序要访问同一个临界区是该怎么做呢？这时候我们需要分布式的锁。</p>
+<p>当部署的服务或者脚本不在同一台机器上时,使用分布式的锁，可以使用zookeeper或者redis实现一个分布式锁。这里主要介绍一下基于redis的分布式锁。</p>
+<p>redis 官方给出的单机redis分布式锁:</p>
+<p>加锁</p>
+<p>NX 命令指定了只有在不存在的时候才会创建，如果已经存在，则会返回失败。EX指定了过期时间，避免进程挂掉后死锁。值设定为了一个随机数，这样只有加锁的进程才知道锁的值是多少</p>
+<div class="highlight"><pre><span></span>SET resource-name my_random_string NX EX max-lock-time
+</pre></div>
+
+
+<p>解锁</p>
+<p>因为解锁时会检查是否提供了随机数的值，所以只有创建锁的进程才能够解锁。</p>
+<div class="highlight"><pre><span></span>if redis.call(&quot;get&quot;,KEYS[1]) == ARGV[1] then
+    return redis.call(&quot;del&quot;,KEYS[1 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/fen-bu-shi-xi-tong-zhong-de-suo.html">posted at 04:42</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/html-de-yi-xie-xiao-zhi-shi-he-xian-jing.html" rel="bookmark" title="Permanent Link to &quot;html 的一些小知识和陷阱&quot;">html 的一些小知识和陷阱</a>
+                </h2>
+
+                
+                
+
+                <h1>如何自定义favicon</h1>
+<p><code>&lt;link rel="shortcut icon" type="image/png" href="/favicon.png"/&gt;</code></p>
+<h1>html中的空格</h1>
+<p>multiple spaces in html is displayed as one, to show multiple space</p>
+<ol>
+<li>use <code>&lt;pre&gt;</code> around the word</li>
+<li>use <code>&amp;nbsp;</code></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/html-de-yi-xie-xiao-zhi-shi-he-xian-jing.html">posted at 05:53</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 13, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/jie-jue-xiao-nei-cun-ji-qi-mysql-zong-shi-oom-de-wen-ti.html" rel="bookmark" title="Permanent Link to &quot;解决小内存机器 MySQL 总是 OOM 的问题&quot;">解决小内存机器 MySQL 总是 OOM 的问题</a>
+                </h2>
+
+                
+                
+
+                <p>有一台512M内存的小机器总是报数据库错误, 查看了下日志是OOM了</p>
+<p>解决方案:</p>
+<p>一 Add swap file to cloud instance</p>
+<p>http://www.prowebdev.us/2012/05/amazon-ec2-linux-micro-swap-space.html</p>
+<ol>
+<li>Run dd if=/dev/zero of=/swapfile bs=1M count=1024</li>
+<li>Run mkswap /swapfile</li>
+<li>Run swapon /swapfile</li>
+<li>Add this line /swapfile swap swap defaults 0 0 to /etc/fstab  </li>
+</ol>
+<p>Some useful command …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/jie-jue-xiao-nei-cun-ji-qi-mysql-zong-shi-oom-de-wen-ti.html">posted at 21:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 13, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-4-yong-hu-he-quan-xian.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(4) - 用户和权限&quot;">mysql 基础知识(4) - 用户和权限</a>
+                </h2>
+
+                
+                
+
+                <h2>创建用户</h2>
+<div class="highlight"><pre><span></span>CREATE USER &#39;newuser&#39;@&#39;%&#39; IDENTIFIED BY &#39;password&#39;;
+</pre></div>
+
+
+<h2>授权</h2>
+<div class="highlight"><pre><span></span>GRANT ALL PRIVILEGES ON *.* TO &#39;newuser&#39;@&#39;%&#39;;
+</pre></div>
+
+
+<p>其中的 <code>%</code> 代表这个用户可以在任意主机登录.</p>
+<div class="highlight"><pre><span></span>SHOW GRANTS FOR newuser
+</pre></div>
+
+
+<p>用来显示一个用户的当前授权</p>
+<div class="highlight"><pre><span></span>set password for USERNAME = password(&#39;xxx&#39;)
+</pre></div>
+
+
+<p>更改用户密码</p>
+<h2>重置密码</h2>
+<div class="highlight"><pre><span></span>sudo mysqld_safe --skip-grant-tables --skip-networking &amp;
+ 
+use mysql;
+update user set authentication_string=PASSWORD(&quot;&quot;) where User=&#39;root&#39;;
+update user set plugin=&quot;mysql_native_password&quot;; # THIS LINE …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-4-yong-hu-he-quan-xian.html">posted at 14:32</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/13" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/15" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 14 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

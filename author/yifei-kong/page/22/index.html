@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Articles by Yifei Kong</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/author/yifei-kong/page/22/index.html">Yifei Kong</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/docker-ji-chu-gai-nian.html" rel="bookmark" title="Permanent Link to &quot;docker 基础概念&quot;">docker 基础概念</a>
+                </h2>
+
+                
+                
+
+                <p>Docker 是一个进程的容器，<strong>不是虚拟机</strong>。他为一个进程隔离了文件系统、网络和环境变量。最好在其中运行一个且仅运行一个线程，而不是运行多个任务。</p>
+<p>docker 中最好运行的是无状态的服务，这样方便于横向扩展，对于有状态的服务，建议把状态 mount 出来。</p>
+<h1>使用场景</h1>
+<ol>
+<li>为有不同需求的应用创建不同的隔离环境， 比如部署两个脚本，一个需要用 Python 2.7，另一个需要用 Python 3.6</li>
+<li>Micro services. Micro services are easy to scale up. In this way, run only one process in a container, and use orchestration tools such as …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/docker-ji-chu-gai-nian.html">posted at 13:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags">Docker</a>
+                </div>
+            </article>            <h4 class="date">Jun 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/sudo-passwordless.html" rel="bookmark" title="Permanent Link to &quot;sudo passwordless&quot;">sudo passwordless</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span><span class="err">$</span> <span class="n">EDITOR</span><span class="o">=</span><span class="n">vi</span> <span class="n">visudo</span>
+
+<span class="cp"># then add this</span>
+
+<span class="n">ALL</span> <span class="n">ALL</span><span class="o">=</span><span class="p">(</span><span class="n">ALL</span><span class="p">)</span> <span class="nl">NOPASSWD</span><span class="p">:</span> <span class="n">ALL</span>
+<span class="n">username</span> <span class="n">ALL</span><span class="o">=</span><span class="p">(</span><span class="n">ALL</span><span class="p">)</span> <span class="nl">NOPASSWD</span><span class="p">:</span> <span class="n">ALL</span>
+<span class="nf">%group</span> <span class="n">ALL</span><span class="o">=</span><span class="p">(</span><span class="n">ALL</span><span class="p">)</span> <span class="nl">NOPASSWD</span><span class="p">:</span> <span class="n">ALL</span>
+<span class="n">Defaults</span> <span class="n">env_keep</span> <span class="o">+=</span> <span class="s">&quot;EDITOR&quot;</span>
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/sudo-passwordless.html">posted at 13:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 28, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-pa-chong-da-jian-dai-li-ji-qun.html" rel="bookmark" title="Permanent Link to &quot;为爬虫搭建代理集群&quot;">为爬虫搭建代理集群</a>
+                </h2>
+
+                
+                
+
+                <p>爬虫如果只用固定的同一个或者同一组 IP 的话，很容易被封禁，轻者弹验证码，重者直接无法访问。</p>
+<p>这里主要探讨如何构架一个代理 IP 池，从而能够频繁更换代理 IP。</p>
+<p>按照代理 IP 的来源，主要有几个方法：</p>
+<ol>
+<li>去免费代理的网站上爬</li>
+<li>利用 ADSL 重拨会更换 IP 的原理，使用 ADSL 机器搭建集群</li>
+<li>利用云提供商的 API，自动更换 IP</li>
+</ol>
+<h1>搭建一个自己的 adsl 集群</h1>
+<h2>找代理商</h2>
+<p>首先找到一个靠谱的网站就实属不易，这些 adsl 提供商的技术水平普遍不高，往往只能提供 centos 镜像，有 centos 7.1就算不错的了，其中有一家竟然提供了 ubuntu 14.04，结果还是各种问题，坑了我大概半天的时间。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-pa-chong-da-jian-dai-li-ji-qun.html">posted at 02:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Jun 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/dockerfile-ji-chu.html" rel="bookmark" title="Permanent Link to &quot;dockerfile 基础&quot;">dockerfile 基础</a>
+                </h2>
+
+                
+                
+
+                <p>Dockerfile 列出了构建一个docker image 的<strong>可复现</strong>步骤。比起一步一步通过 docker commit 来制作一个镜像，dockerfile更适用于CI自动测试等系统。</p>
+<h1>Dockerfile 命令</h1>
+<ul>
+<li>FROM，指定基础镜像</li>
+<li>MAINTAINER，作者，建议格式（<code>Jon Snow &lt;jonsnow@westros.com&gt;</code>）</li>
+<li>EXPOSE，需要暴露的端口，但是一般也会使用 -p 来制定端口映射</li>
+<li>USER，运行的用户</li>
+<li>WORKDIR，进程的工作目录</li>
+<li>COPY，复制文件到</li>
+<li>RUN，运行shell命令</li>
+<li>CMD，启动进程使用的命令</li>
+<li>ENTRYPOINT，镜像启动的入口，默认是 bash -c</li>
+<li>ENV，设定环境变量</li>
+</ul>
+<h2>几个比较容易混淆的</h2>
+<h3>COPY vs ADD</h3>
+<p>ADD …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/dockerfile-ji-chu.html">posted at 03:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags">Docker</a>
+                </div>
+            </article>            <h4 class="date">Jun 26, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-xiao-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;django 小技巧&quot;">django 小技巧</a>
+                </h2>
+
+                
+                
+
+                <h1>运行开发服务器</h1>
+<div class="highlight"><pre><span></span>python manage.py runserver [host:]port
+</pre></div>
+
+
+<p>可以指定绑定的IP</p>
+<h2>创建用户和更改密码</h2>
+<div class="highlight"><pre><span></span>python manage.py createsuperuser  # 创建超级用户
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>python manage.py changepassword username
+</pre></div>
+
+
+<h2>进入当前项目的shell</h2>
+<p>在这个 python shell 中，可以直接使用 django 的model</p>
+<div class="highlight"><pre><span></span>python manage.py shell
+</pre></div>
+
+
+<h1>timezone aware time</h1>
+<p>在向数据库中保存datetime字段的时候，经常会遇到 django 报警缺少时区信息，可以使用 django 自带的 timezone.now()</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="n">now_aware</span> <span class="o">=</span> <span class="n">timezone …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-xiao-ji-qiao.html">posted at 02:24</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 23, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/thrift-rpc-kuang-jia.html" rel="bookmark" title="Permanent Link to &quot;Thrift RPC 框架&quot;">Thrift RPC 框架</a>
+                </h2>
+
+                
+                
+
+                <p>Thrift 是一个全栈的 RPC 框架，它包含了接口定义语言（IDL）和RPC服务两部分，大概相当于 protobuf + gRPC 的功能。</p>
+<h1>安装</h1>
+<p>可以使用 https://github.com/yifeikong/install 中的脚本来安装</p>
+<h1>Thrift 中的类型与 IDL</h1>
+<p>包括 <code>bool, byte/i8, i16, i32, i64, double, string, binary</code>。</p>
+<ul>
+<li>比较蛋疼的是 thrift 不支持 uint，原因是好多语言里面没有原生无符号类型（无语。。）</li>
+<li>binary 类型相当于某些语言中的 bytes</li>
+<li>string 使用 utf-8 编码</li>
+<li>byte 和 i8 是同一个类型，也是有符号的 …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/thrift-rpc-kuang-jia.html">posted at 15:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 21, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/uwsgi-he-wsgi-xie-yi.html" rel="bookmark" title="Permanent Link to &quot;uwsgi 和 wsgi 协议&quot;">uwsgi 和 wsgi 协议</a>
+                </h2>
+
+                
+                
+
+                <p>uWSGI is a web server than runs python web frameworks. uwsgi(lower case) is the protocol it communicates with front end web servers(nginx)</p>
+<h1>wsgi 协议</h1>
+<p>YN:</p>
+<p>值得注意的是, wsgi实际上定义了一个同步的模型, 也就是每一个客户请求会调用一个同步的函数, 这样也就无法发挥异步的特性.</p>
+<h1>两个最简单的例子</h1>
+<p>其中实现 simple_app 函数也就是实现了wsgi协议.需要注意的有一下三点:</p>
+<ol>
+<li>environ字典中包含的变量</li>
+<li>start_response的参数</li>
+<li>simple_app的调用次序和返回值</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="nx">HELLO_WORLD</span> <span class="o">=</span> <span class="nx">b</span><span class="s2">&quot;Hello world!\n&quot;</span>
+
+<span class="nx">def</span> <span class="nx">simple_app</span><span class="p">(</span><span class="nx">environ</span><span class="p">,</span> <span class="nx">start_response</span><span class="p">)</span><span class="o">:</span>
+    <span class="s2">&quot;&quot;&quot;Simplest possible …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/uwsgi-he-wsgi-xie-yi.html">posted at 15:37</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 20, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/squid-proxy.html" rel="bookmark" title="Permanent Link to &quot;squid proxy&quot;">squid proxy</a>
+                </h2>
+
+                
+                
+
+                <h1>Install squid</h1>
+<p>plain old <code>apt-get update &amp;&amp; apt-get install squid3 apache2-utils -y</code></p>
+<h1>Basic squid conf</h1>
+<p><code>/etc/squid3/squid.conf</code> instead of the super bloated default config file</p>
+<div class="highlight"><pre><span></span># note that on ubuntu 16.04, use squid instead of squid3
+auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid3/passwords
+auth_param basic realm …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/squid-proxy.html">posted at 15:22</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Jun 18, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/gracefully-shutdown-inside-a-event-loop.html" rel="bookmark" title="Permanent Link to &quot;Gracefully shutdown inside a event loop&quot;">Gracefully shutdown inside a event loop</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span><span class="k">try</span><span class="o">:</span>
+    <span class="n">loop</span><span class="o">.</span><span class="na">run_forever</span><span class="o">()</span>
+<span class="n">finally</span><span class="o">:</span>
+    <span class="n">loop</span><span class="o">.</span><span class="na">run_until_complete</span><span class="o">(</span><span class="n">loop</span><span class="o">.</span><span class="na">shutdown_asyncgens</span><span class="o">())</span>
+    <span class="n">loop</span><span class="o">.</span><span class="na">close</span><span class="o">()</span>
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/gracefully-shutdown-inside-a-event-loop.html">posted at 08:37</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 18, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/steal-focus-from-chrome-omnibox-on-new-tab.html" rel="bookmark" title="Permanent Link to &quot;steal focus from chrome omnibox on new tab&quot;">steal focus from chrome omnibox on new tab</a>
+                </h2>
+
+                
+                
+
+                <p>chrome set focus to the omni box when you create a new tab, although there is an api to replace the new tab page. you can't steal the focus from the omni box in the new tab page simply. there are two work-arounds.</p>
+<h1>if you are creating a new tab …</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/steal-focus-from-chrome-omnibox-on-new-tab.html">posted at 03:02</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/21" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/23" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 22 of 34</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

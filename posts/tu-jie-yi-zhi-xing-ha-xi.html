@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 图解一致性哈希</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="算法,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Aug 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/tu-jie-yi-zhi-xing-ha-xi.html" rel="bookmark" title="Permanent Link to &quot;图解一致性哈希&quot;">图解一致性哈希</a>
+                </h2>
+
+                
+                
+
+                <h1>起源</h1>
+<p>比如你有 N 个 cache 服务器（后面简称 cache ），那么如何将一个对象 object 映射到 N 个 cache 上呢，你很可能会采用类似下面的通用方法计算 object 的 hash 值，然后均匀的映射到到 N 个 cache ；</p>
+<div class="highlight"><pre><span></span>hash(object) % N
+</pre></div>
+
+
+<p>一切都运行正常，再考虑如下的两种情况；</p>
+<ol>
+<li>
+<p>一个 cache 服务器 m down 掉了（在实际应用中必须要考虑这种情况），这样所有映射到 cache m 的对象都会失效，怎么办，需要把 cache m 从 cache 中移除，这时候 cache 是 N-1 台，映射公式变成了 <code>hash(object) % (N-1)</code> ；</p>
+</li>
+<li>
+<p>由于访问加重，需要添加 cache ，这时候 cache 是 N+1 台，映射公式变成了 <code>hash(object) % (N+1)</code> ；</p>
+</li>
+</ol>
+<p>1 和 2 意味着什么？这意味着突然之间几乎所有的 cache 都失效了。对于服务器而言，这是一场灾难，洪水般的访问都会直接冲向后台服务器；</p>
+<p>再来考虑第三个问题，由于硬件能力越来越强，你可能想让后面添加的节点多做点活，显然上面的 hash 算法也做不到。</p>
+<p>有什么方法可以改变这个状况呢，这就是 consistent hashing...</p>
+<h1>一致性哈希</h1>
+<p>一致性哈希把哈希值想象成一个环，比如说在 0 ~ 2^32-1 这个范围内，然后将节点（名字、IP等）求哈希之后分不到环上。当有访问请求时，把请求信息求哈希之后，寻找小于该哈希值的下一个节点。</p>
+<p>当有节点宕机的时候，请求会依次查找下一个节点，从而不让所有节点的缓存都失效。</p>
+<p>当加入新节点的时候，只会影响一个区间内的请求，也不会影响其他区间。</p>
+<p>如下图所示：</p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tKfTcly1ftvggxvlwfj315o0djq52.jpg"></p>
+<h1>虚拟节点</h1>
+<p>以上虽然解决了大部分问题，但是还有三个问题：</p>
+<ol>
+<li>节点有可能在分布不均匀。</li>
+<li>当一个节点因为负载过重宕机以后，所有请求会落到下一台主机，这样就有可能使下一台主机也宕机，这就是雪崩问题。</li>
+<li>不同主机处理能力不同如何配置不同的量。</li>
+</ol>
+<p>这时候可以引入虚拟节点。原始的一致性哈希中，每个节点通过哈希之后在环上占有一个位置，可以通过对每个节点多次计算哈希来获得过个虚拟节点。</p>
+<p>比如说，本来我们通过节点的 IP 来计算哈希</p>
+<div class="highlight"><pre><span></span>hash(&#39;10.1.1.1&#39;)  =&gt; n1
+hash(&#39;10.1.1.2&#39;)  =&gt; n2
+hash(&#39;10.1.1.3&#39;)  =&gt; n3
+</pre></div>
+
+
+<p>现在引入两倍的虚拟节点之后</p>
+<div class="highlight"><pre><span></span>hash(&#39;10.1.1.1-1&#39;)  =&gt; n1-1
+hash(&#39;10.1.1.1-2&#39;)  =&gt; n1-2
+hash(&#39;10.1.1.2-1&#39;)  =&gt; n2-1
+hash(&#39;10.1.1.2-2&#39;)  =&gt; n2-2
+hash(&#39;10.1.1.3-1&#39;)  =&gt; n3-1
+hash(&#39;10.1.1.3-2&#39;)  =&gt; n3-2
+</pre></div>
+
+
+<p>如图所示</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tKfTcly1ftvggbzovij315o0en40x.jpg"></p>
+<p>引入虚拟节点之后：</p>
+<ol>
+<li>平衡性得到了直接改善</li>
+<li>主机是交替出现的，所以当一个节点宕机后，所有流量会随机分配给剩余节点</li>
+<li>可以给处理能力强的节点配置更多地虚拟节点。</li>
+</ol>
+<p>最后，一致性哈希可以用跳表或者平衡二叉树来实现</p>
+<p>参考文档：</p>
+<ol>
+<li>https://blog.csdn.net/MBuger/article/details/76189561</li>
+<li>https://www.cnblogs.com/23lalala/p/3588553.html</li>
+<li>https://crossoverjie.top/2018/01/08/Consistent-Hash/</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/tu-jie-yi-zhi-xing-ha-xi.html">posted at 05:43</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

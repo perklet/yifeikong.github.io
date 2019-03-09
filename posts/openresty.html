@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | openresty</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Lua,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/openresty.html" rel="bookmark" title="Permanent Link to &quot;openresty&quot;">openresty</a>
+                </h2>
+
+                
+                
+
+                <ol>
+<li>The *by_lua modules that tweak the nginx behaviour (for ex the rewrite_by_lua that is the lua equivalent of nginx http rewrite) module are always run after the standard nginx modules.</li>
+<li>The choice of *by_lua module to use largely depends upon the problem that you are trying to solve. For example the init_by_lua module is used for initialization operations where as access_by_lua may be used to implement access policies for a location block. Personally among the various directives I find most use for content_by_lua. </li>
+</ol>
+<p>From <a href="http://www.staticshin.com/programming/definitely-an-open-resty-guide/">http://www.staticshin.com/programming/definitely-an-open-resty-guide/</a> </p>
+<p>http://www.londonlua.org/scripting_nginx_with_lua/slides.html</p>
+<p>Lua can access nginx at different phase, the most important directives are:</p>
+<p>Rewrite_by_lua<br>
+Access_by_lua <br>
+Content_by_lua<br>
+Init_by_lua 
+Set_by_lua  </p>
+<p>Rememeber to set lua_code_cache when developing</p>
+<p>Use <code>ngx.location.capture</code> to issue a sub-request to other locations in nginx </p>
+<p><code>ngx.ctx</code> is a lua table to store data with a lifetime</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/openresty.html">posted at 13:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/lua.html" class="tags">Lua</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

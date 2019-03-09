@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | EcmaScript 6</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="JavaScript,大前端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ecmascript-6.html" rel="bookmark" title="Permanent Link to &quot;EcmaScript 6&quot;">EcmaScript 6</a>
+                </h2>
+
+                
+                
+
+                <h2>using es6 with babel</h2>
+<h3>debugging mode</h3>
+<div class="highlight"><pre><span></span><span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">&quot;node_modules/babel-core/browser.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span> 
+<span class="nt">&lt;script</span> <span class="na">type=</span><span class="s">&quot;text/babel&quot;</span><span class="nt">&gt;</span> 
+// Your ES6 code
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+
+<h3>production mode</h3>
+<p><code>babel script.js --out-file script-compiled.js</code></p>
+<h2>Yifei's Notes</h2>
+<p>the main impovements of ES6 are loops and generators, let/const, arrow functions, class syntax
+small pieces are function arguments, destructuring</p>
+<h2>Looping</h2>
+<p>there are 3 ways to loop a sequence in ES5, but there are problems</p>
+<h3>ES5 Loops</h3>
+<p>// not concise
+for (var index = 0; index &lt; myArray.length; index++) { 
+    console.log(myArray[index]);
+}</p>
+<p>// no break or return
+myArray.forEach(function (value) {
+    console.log(value); 
+});</p>
+<p>// for objects, not arrays
+for (var index in myArray) { 
+    // don't actually do this
+    console.log(myArray[index]); 
+}</p>
+<h3>Introducing ES6 Loops</h3>
+<p>// concise and correct
+for (let value of myArray) { 
+    console.log(value); 
+}</p>
+<p>// also works on strings, sets and maps
+for (let chr of "") { 
+    alert(chr); 
+}</p>
+<p>// make a set from an array of words
+ var uniqueWords = new Set(words);
+for (let word of uniqueWords) {
+  console.log(word);
+}</p>
+<p>for (var [key, value] of phoneBookMap) { 
+    console.log(key + "'s phone number is: " + value); 
+}</p>
+<p>// you can even make it work with objects
+// dump an object's own enumerable properties to the console 
+for (var key of Object.keys(someObject)) { console.log(key + ": " + someObject[key]); }</p>
+<h2>Generator</h2>
+<p>Inside a generator-function, yield is a keyword, with syntax rather like return. The difference is that while a function (even a generator-function) can only return once, a generator-function can yield any number of times. The yield expression suspends execution of the generator so it can be resumed again later.</p>
+<p>Generator functions are basically the pause-and-continue-able function. when you call a generator function, it returns an paused Generator object, which has a next() function, each time you call the next() function, a pair of yielded-value and status is returned.</p>
+<p>In technical terms, each time a generator yields, its stack frame—the local variables, arguments, temporary values, and the current position of execution within the generator body—is removed from the stack. However, the Generator object keeps a reference to (or copy of) this stack frame, so that a later .next() call can reactivate it and continue execution.</p>
+<p>function* fibs() {
+  var a = 0;
+  var b = 1;
+  while (true) {
+    yield a;
+    [a, b] = [b, a + b];
+  }
+}</p>
+<p>function* range(start, stop) { for (var i = start; i &lt; stop; i++) yield i; }</p>
+<p>// This should "ding" three times
+for (var value of range(0, 3)) {
+  alert("Ding! at floor #" + value);
+}</p>
+<p>This is possible because generators are iterators. All generators have a built-in implementation of .next() and <a href="">Symbol.iterator</a>.</p>
+<h2>Template Strings</h2>
+<p><code>Hello ${user.name}, welcome to our server for the ${times} times</code></p>
+<h2>Rest Parameters and Defaults</h2>
+<p>ES5 version</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">containsAll</span><span class="p">(</span><span class="nx">haystack</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">needle</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">haystack</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">needle</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>ES6 version</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">containsAll</span><span class="p">(</span><span class="nx">haystack</span><span class="p">,</span> <span class="p">...</span><span class="nx">needles</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">needle</span> <span class="nx">of</span> <span class="nx">needles</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">haystack</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">needle</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>ES6 supports default parameters, The default argument gets evaluated at call time, so unlike e.g. in Python, a new object is created each time the function is called.</p>
+<h2>Class</h2>
+<p>ES6 support static method, supuer, getter/setter
+you can even subclass builtin types</p>
+<p>class Circle {
+    constructor(radius) {
+        this.radius = radius;
+        Circle.circlesMade++;
+    };</p>
+<div class="highlight"><pre><span></span>static draw(circle, canvas) {
+    // Canvas drawing code
+};
+
+static get circlesMade() {
+    return !this._count ? 0 : this._count;
+};
+static set circlesMade(val) {
+    this._count = val;
+};
+
+area() {
+    return Math.pow(this.radius, 2) * Math.PI;
+};
+
+get radius() {
+    return this._radius;
+};
+set radius(radius) {
+    if (!Number.isInteger(radius))
+        throw new Error(&quot;Circle radius must be an integer.&quot;);
+    this._radius = radius;
+};
+</pre></div>
+
+
+<p>}</p>
+<p>var [,,third] = ["foo", "bar", "baz"];
+var [head, ...tail] = [1, 2, 3, 4];
+console.log(tail);
+// [2, 3, 4]</p>
+<p>var robotA = { name: "Bender" };
+var robotB = { name: "Flexo" };</p>
+<p>var { name: nameA } = robotA;
+var { name: nameB } = robotB;</p>
+<p>console.log(nameA);
+// "Bender"
+console.log(nameB);
+// "Flexo"</p>
+<p>// this is a syntax sugar for variable and key share the same name
+var { foo, bar } = { foo: "lorem", bar: "ipsum" };
+console.log(foo);
+// "lorem"
+console.log(bar);
+// "ipsum"</p>
+<p>var [missing = true] = [];
+console.log(missing);
+// true</p>
+<p>var { message: msg = "Something went wrong" } = {};
+console.log(msg);
+// "Something went wrong"</p>
+<p>var { x = 3 } = {};
+console.log(x);
+// 3</p>
+<p>// parameters
+function removeBreakpoint({ url, line, column }) {
+  // ...
+}</p>
+<p>// super works as expected, calling super constructor and access base properties</p>
+<p>// you can even subclass builtin types</p>
+<p>CommonJS</p>
+<p>There is a special object called module.exports, when <code>require</code>ing, the value of module.exports is returned.</p>
+<p>something like that...
+var require = function(path) {
+    // ...
+    return module.exports;
+};</p>
+<p>ES6 export</p>
+<p>use the export keyword</p>
+<p>// lib.js
+export function foo() {}
+export class bar {}
+// or 
+export {baz, foz};
+export {foo as fart};</p>
+<p>// use.js
+import {foo, bar} from "lib.js";
+import {foo as fart} from "lib.js"; // renaming
+import {* as lib} from "lib.js"; // import everything and put in a object</p>
+<p>ES6 import commonJS</p>
+<p>most packages are written in commonJS, for using as ES6 modules:
+import _ from "lodash" // which is 
+import {default as _} from "lodash" // which is
+let _ = require("lodash");</p>
+<p>you can also do module.exports in ES6
+export default value;</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ecmascript-6.html">posted at 13:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

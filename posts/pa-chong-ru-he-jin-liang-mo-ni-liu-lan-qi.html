@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 爬虫如何尽量模拟浏览器</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机,爬虫" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Aug 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pa-chong-ru-he-jin-liang-mo-ni-liu-lan-qi.html" rel="bookmark" title="Permanent Link to &quot;爬虫如何尽量模拟浏览器&quot;">爬虫如何尽量模拟浏览器</a>
+                </h2>
+
+                
+                
+
+                <h1>http headers</h1>
+<p>发送http请求时，Host, Connection, Accept, User-Agent, Referer, Accept-Encoding, Accept-Language这七个头必须添加，因为正常的浏览器都会有这7个头。
+ 
+其中：</p>
+<ol>
+<li>Host一般各种库都已经填充了</li>
+<li>Connection填Keep-Alive</li>
+<li>Accept一般填text/html 或者application/json</li>
+<li>User-Agent使用自己的爬虫或者伪造浏览器的UA</li>
+<li>Referer一般填当前URL即可，考虑按照真是访问顺序添加referer，初始的referer可以使用google。</li>
+<li>Accept-Encoding 从gzip和deflate中选，好多网站会强行返回gzip的结果</li>
+<li>Aceept-Language根据情况选择，比如zh-CN, en-US</li>
+</ol>
+<h1>cookies</h1>
+<p>cookie是需要更新的
+ </p>
+<h1>others</h1>
+<p>可能有一些人类不可见的陷阱链接，不要访问这些链接</p>
+<h1>爬取间隔自适应</h1>
+<p>就是已经限制了你这个IP的抓取，就不要傻傻重复试，怎么也得休息一会。网易云音乐操作起来比较简单，sleep一下就好了。其实sleep的间隔应该按情况累加，比如第一次sleep 10秒，发现还是被约束。那么久sleep 20秒... 这个间隔的设置已经自适应的最终效果是经验值。</p>
+<p>ref</p>
+<ol>
+<li>http://www.cnblogs.com/jexus/p/5471665.html</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pa-chong-ru-he-jin-liang-mo-ni-liu-lan-qi.html">posted at 22:21</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

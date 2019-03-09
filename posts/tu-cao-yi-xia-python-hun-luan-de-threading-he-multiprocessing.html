@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 吐槽一下 Python 混乱的 threading 和 multiprocessing</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Oct 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/tu-cao-yi-xia-python-hun-luan-de-threading-he-multiprocessing.html" rel="bookmark" title="Permanent Link to &quot;吐槽一下 Python 混乱的 threading 和 multiprocessing&quot;">吐槽一下 Python 混乱的 threading 和 multiprocessing</a>
+                </h2>
+
+                
+                
+
+                <p>最近要写一个库往 influxdb 中打点, 因为要被很多程序使用, 而又要创建新的进程, 为了避免引起使用方的异常, 简单深入了解了下 Python 的并发控制, 这才发现标准库真是坑. 之前没过多考虑过, 只是凭感觉在 CPU 密集的时候使用 multiprocessing, 而默认使用 threading, 其实两个还是有很多不一样的, 除了都是并发执行以外还有很大的不同. Python 中试图用 threading 和 multiprocessing 实现类似的接口来统一两方面, 结果导致更混乱了. 本文探讨几个坑.</p>
+<h1>在多线程环境中 fork</h1>
+<p>首先不谈 Python, 我们思考一下, 在多线程环境下如果执行 fork 会怎样? 在新的进程中, 会不会所有线程都在运行? 答案是否定的, <strong>在 fork 之后, 只有执行 fork 的线程在运行</strong>, 而其他线程都不会运行. 这是 POSIX 标准规定的:</p>
+<blockquote>
+<p>A process shall be created with a single thread. If a multi-threaded process calls fork(), the new process shall contain a replica of the calling thread and its entire address space, possibly including the states of mutexes and other resources. Consequently, to avoid errors, the child process may only execute async-signal-safe operations until such time as one of the exec functions is called. Fork handlers may be established by means of the pthread_atfork() function in order to maintain application invariants across fork() calls.</p>
+</blockquote>
+<p>但是这时候其他线程持有的锁并不会自动转化到当前线程, 所以可能造成死锁. 关于在多线程程序中执行 fork 会造成的问题, 有好多文章有详细的讨论:</p>
+<ol>
+<li>http://www.linuxprogrammingblog.com/threads-and-fork-think-twice-before-using-them</li>
+<li>https://stackoverflow.com/questions/1073954/fork-and-existing-threads/1074663#1074663</li>
+</ol>
+<h1>在 python 的 daemon thread 中 fork 又会怎样</h1>
+<p>在 Python 中可以把线程设置为 daemon 状态, 如果一个进程中只有 daemon thread, 这个进程就会自动退出. 那么问题来了, 如果我们 daemon thread 中执行 fork 会怎样呢?</p>
+<p>理论上来说, 既然 fork 之后只有一个线程, 而这个线程又是 daemon 线程, 那么显然这个进程应该直接退出的, 然而并不会这样, 这个进程会一直运行, 直到该线程退出. 这是因为 fork 之后, 唯一的线程自动成为了 main thread, 而 Python 中硬编码了 main thread 不是 daemon thread, 所以这个线程不会退出.</p>
+<p>参考: </p>
+<ol>
+<li>https://stackoverflow.com/questions/31055960/is-it-a-python-bug-that-the-main-thread-of-a-process-created-in-a-daemon-thread</li>
+</ol>
+<h1>在新创建的进程中创建线程又会怎样</h1>
+<p>在普通进程中, 进程在所有非daemon 的线程退出之后才会推出, 但是在新创建的进程中, 不论创建的线程是 daemon thread 还是不是 daemon thread 都会在主线程退出后退出. 这是 Python 的一个 <a href="https://bugs.python.org/issue18966">bug</a>, 这个 bug 最早在 2013-09-08 01:20 报告出来, 而直到 2017-08-16 18:54 的 Python 3.7 才修复...</p>
+<p>如何复现这个 bug</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="k">def</span> <span class="nf">proc</span><span class="p">():</span>
+    <span class="n">mythread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">run</span><span class="p">)</span>
+    <span class="n">mythread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Thread.daemon = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">mythread</span><span class="o">.</span><span class="n">daemon</span><span class="p">)</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="c1">#mythread.join()</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Tick: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">proc</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Process.daemon = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">p</span><span class="o">.</span><span class="n">daemon</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>下面大概说下这个 bug 的原因:</p>
+<ol>
+<li>普通进程会调用 <code>sys.exit()</code> 退出, 在这个函数中会调用 <code>thread.join()</code> 也就是会等待其他线程运行结束</li>
+<li>在 Python 3.4 之前, 默认只会使用 fork 创建线程, 而对于 fork 创建的线程, 会使用 <code>os._exit()</code> 退出, 也就是不会调用 <code>thread.join()</code>. 所以也就不会等待其他线程退出</li>
+<li>在 Python 3.4 中引入了对 <code>spawn</code> 系统调用的支持, 可以通过 <code>multiprocessing.set_start_method</code> 来设定创建进程使用的系统调用. 而使用 <code>spawn</code> 调用创建的进程会通过 <code>sys.exit()</code> 退出, 也就避免了这个 bug 的影响. 而使用 <code>fork</code> 创建的进程依然受到这个 bug 的影响.</li>
+<li>在 Python 3.7 中终于在添加了 <code>thread._shutdown</code> 的调用, 也就是会 join 其他的 thread.</li>
+</ol>
+<h1>fork vs spawn 造成的 OS 平台差异性</h1>
+<p>我们知道, 在 <code>*nix</code> 系统中创建一个一个新的进程可以使用系统调用 <code>fork</code>, 父进程的所有资源都会被复制到子进程中, 当然是 Copy On Write 的. 如果要执行一个新的程序, 必须在 <code>fork</code> 之后调用 <code>exec*</code> 家族的系统调用, 后来 Linux 中添加了 <code>spawn</code> 系统调用, <code>spawn</code> 和 <code>fork</code> 的不同是, 他是从头创建了一个新的子程序, 而不是像 <code>fork</code> 一样复制了一份父进程. </p>
+<p>而在 Windows 上, 从来没有类似 <code>fork</code> 的系统调用, 只有类似 <code>spawn</code> 的系统调用, 也就是从头创建一个新的程序.</p>
+<p>对于 Python 的影响. 在 <code>*nix</code> 操作系统上, 当使用 multiprocessing 的时候, 默认调用的是 fork, 在新的进程中所有导入的包都已经在了, 所以不会再 import 一次. 而在 Windows 系统上, 使用 multiprocessing 创建新的进程时, 所有包都会被在新进程中重新 import 一遍, 如果 import 操作是对外部系统有副作用的, 就会造成不同. </p>
+<p>当然如上文所述, 在 Python 3.4 之后可以选择创建进程时使用的系统调用, 如果选择了 <code>spawn</code>, 那么在各个平台上行为就是统一的了.</p>
+<p>参考:</p>
+<ol>
+<li>为什么要区别 fork 和 exec: https://www.zhihu.com/question/66902460</li>
+<li>fork 和 spawn 造成的有趣影响: https://zhuanlan.zhihu.com/p/39542342</li>
+<li>https://stackoverflow.com/questions/38236211/why-multiprocessing-process-behave-differently-on-windows-and-linux-for-global-o</li>
+</ol>
+<h1>fork 和 asyncio</h1>
+<p>多进程和 Event Loop 也可能引起一些问题, <a href="http://4fish.xyz/posts/asyncio-concurrency/">这篇文章</a> 给了一个很好的例子:</p>
+<p>假设现在有一个场景，主进程运行着一个event loop，在某个时候会fork出一个子进程，子进程再去运行一个新建的event loop：</p>
+<div class="highlight"><pre><span></span>async def coro(loop):
+    pid = os.fork()
+    if pid != 0:  # parent
+        pass
+    else:  # child
+        cloop = asyncio.new_event_loop()
+        cloop.run_forever()
+
+loop = asyncio.get_event_loop()
+asyncio.ensure_future(coro(loop), loop=loop)
+loop.run_forever()
+loop.close()
+</pre></div>
+
+
+<p>这段代码看起来没有什么问题, 在子进程中开了一个新的 Event Loop, 然而在 Python 3.5 和以下, 在真正运行时会报错:</p>
+<div class="highlight"><pre><span></span>...
+cloop.run_forever()
+  File &quot;/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/asyncio/base_events.py&quot;, line 411, in run_forever
+    &#39;Cannot run the event loop while another loop is running&#39;)
+RuntimeError: Cannot run the event loop while another loop is running
+</pre></div>
+
+
+<p>原因就在于标准库的 Event Loop 没有考虑多进程环境, 只是使用一个 thread local 来表示当前的 loop, 在多线程条件下, 这样当然是可以的, 但是在 fork 之后, 数据结构全部都得到了复制, 因此子进程就会检查到已经有 event loop 在运行了.</p>
+<p>在 Python 3.6 中, 这个问题得到了简单粗暴的修复, 在每个 loop 上都标记一个 pid, 检查的时候再加上 pid 验证是不是当前进程就好了.</p>
+<p>总而言之, 尽量不要同时使用多进程和多线程, 如果非要用的话, 首先尽早创建好需要的进程, 然后在进程中再开始创建线程或者开启 Event Loop.</p>
+<p>还有一篇文章没看, 用空了再看下吧, 是讲 multiprocessing.Pool 的坑:</p>
+<ol>
+<li>https://codewithoutrules.com/2018/09/04/python-multiprocessing/</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/tu-cao-yi-xia-python-hun-luan-de-threading-he-multiprocessing.html">posted at 03:21</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | redis 中如何给集合中的元素设置 TTL</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 16, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/redis-zhong-ru-he-gei-ji-he-zhong-de-yuan-su-she-zhi-ttl.html" rel="bookmark" title="Permanent Link to &quot;redis 中如何给集合中的元素设置 TTL&quot;">redis 中如何给集合中的元素设置 TTL</a>
+                </h2>
+
+                
+                
+
+                <p>我们知道在 redis 中可以给每个 key 设置过期时间（TTL），但是没法为每个集合中的每一个元素设置过期时间，可以使用zset来实现这个效果。</p>
+<p>直接上代码吧，Python 版的。</p>
+<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">RedisSet</span>:
+
+    <span class="kt">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">client</span> <span class="o">=</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">StrictRedis</span><span class="p">()</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">key</span> <span class="o">=</span> <span class="nx">key</span>
+
+    <span class="nx">def</span> <span class="nx">add</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">val</span><span class="p">,</span> <span class="nx">ttl</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">now</span> <span class="o">=</span> <span class="nx">time</span><span class="p">.</span><span class="nx">time</span><span class="p">()</span>
+        <span class="err">#</span> <span class="err">把过期时间作为</span> <span class="nx">score</span> <span class="err">添加到</span> <span class="nx">zset</span> <span class="err">中</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nx">zadd</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">now</span> <span class="o">+</span> <span class="nx">ttl</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span>
+        <span class="err">#</span> <span class="err">删除已经过期的元素</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nx">zremrangebyscore</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">now</span><span class="p">,</span> <span class="s1">&#39;+inf&#39;</span><span class="p">)</span>
+
+    <span class="nx">def</span> <span class="nx">getall</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="err">#</span> <span class="err">只读取还没有过期的元素</span>
+        <span class="k">return</span> <span class="nx">self</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nx">zrangebyscore</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="s1">&#39;-inf&#39;</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nx">time</span><span class="p">())</span>
+</pre></div>
+
+
+<p>参考：https://github.com/antirez/redis/issues/135</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/redis-zhong-ru-he-gei-ji-he-zhong-de-yuan-su-she-zhi-ttl.html">posted at 07:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

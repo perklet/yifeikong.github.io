@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | mysql 基础知识(7) - JSON 字段</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 20, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-7-json-zi-duan.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(7) - JSON 字段&quot;">mysql 基础知识(7) - JSON 字段</a>
+                </h2>
+
+                
+                
+
+                <p>在前公司的时候，大家习惯在每个表加一个 extra 字段来表示一些额外的字段，然后在 ORM 中使用的时候再解析出来，方便了扩展字段，但是缺点也很明显，extra 字段只能读取而无法进行查询。MySQL 5.7 终于支持了 json 字段，相当于加入了一些 NoSQL 的特性，这样就可以很方便得查询了。</p>
+<h1>json 字段的使用</h1>
+<p>建表：</p>
+<div class="highlight"><pre><span></span>CREATE TABLE `book` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) NOT NULL,
+  `tags` json DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+</pre></div>
+
+
+<p>直接使用 json 类型就可以了。注意 json 字段不可以作为主键，不可以作为外键，不过既然是 json 字段了，谁会这么做呢。。</p>
+<p>插入：</p>
+<div class="highlight"><pre><span></span>INSERT INTO `book` (`title`, `tags`)
+VALUES (
+  &#39;ECMAScript 2015: A SitePoint Anthology&#39;,
+  &#39;[&quot;JavaScript&quot;, &quot;ES2015&quot;, &quot;JSON&quot;]&#39;
+);
+</pre></div>
+
+
+<p>使用一个 json 字符串作为值插入即可。或者你也可以使用 json 相关的函数来表示json。</p>
+<h1>json 相关函数</h1>
+<h2>json path</h2>
+<div class="highlight"><pre><span></span>-- returns &quot;SitePoint&quot;:
+SELECT JSON_EXTRACT(
+  &#39;{&quot;id&quot;: 1, &quot;website&quot;: &quot;SitePoint&quot;}&#39;, 
+  &#39;$.website&#39;
+);
+</pre></div>
+
+
+<p>json path 的语法，用 $ 开头，然后跟着下面的选择器:</p>
+<ul>
+<li><code>.</code> 点后面跟着跟着一个字典里的名字, 比如 $.website</li>
+<li><code>[N]</code> 表示数组里的第 N 个元素</li>
+<li><code>.[*]</code> 表示选择字典里的所有元素</li>
+<li><code>[*]</code> 表示选择数组里的所有元素</li>
+<li><code>prefix**suffix</code> 表示以 prefix 开头，suffix 结尾的所有路径</li>
+</ul>
+<p>举个栗子</p>
+<div class="highlight"><pre><span></span>{
+  &quot;a&quot;: 1,
+  &quot;b&quot;: 2,
+  &quot;c&quot;: [3, 4],
+  &quot;d&quot;: {
+    &quot;e&quot;: 5,
+    &quot;f&quot;: 6
+  }
+}
+the following paths:
+
+$.a returns 1
+$.c returns [3, 4]
+$.c[1] returns 4
+$.d.e returns 5
+$**.e returns [5]
+</pre></div>
+
+
+<h2>构造、修改 json 的函数</h2>
+<p>函数都比较简单，看注释就明白了。</p>
+<div class="highlight"><pre><span></span>-- returns [1, 2, &quot;abc&quot;]:
+SELECT JSON_ARRAY(1, 2, &#39;abc&#39;);
+
+-- returns {&quot;a&quot;: 1, &quot;b&quot;: 2}:
+SELECT JSON_OBJECT(&#39;a&#39;, 1, &#39;b&#39;, 2);
+
+-- returns [&quot;a&quot;, 1, {&quot;key&quot;: &quot;value&quot;}]:
+SELECT JSON_MERGE(&#39;[&quot;a&quot;, 1]&#39;, &#39;{&quot;key&quot;: &quot;value&quot;}&#39;);
+
+-- returns ARRAY:
+SELECT JSON_TYPE(&#39;[1, 2, &quot;abc&quot;]&#39;);
+
+-- returns OBJECT:
+SELECT JSON_TYPE(&#39;{&quot;a&quot;: 1, &quot;b&quot;: 2}&#39;);
+
+-- returns an error:
+SELECT JSON_TYPE(&#39;{&quot;a&quot;: 1, &quot;b&quot;: 2&#39;);
+
+-- returns 1:
+SELECT JSON_VALID(&#39;[1, 2, &quot;abc&quot;]&#39;);
+</pre></div>
+
+
+<p>还有其他一些函数，可以查看文档：</p>
+<ul>
+<li>JSON_SET(doc, path, val[, path, val]...) —
+inserts or updates data in the document</li>
+<li>JSON_INSERT(doc, path, val[, path, val]...) —
+inserts data into the document</li>
+<li>JSON_REPLACE(doc, path, val[, path, val]...) —
+replaces data in the document</li>
+<li>JSON_MERGE(doc, doc[, doc]...) —
+merges two or more documents</li>
+<li>JSON_ARRAY_APPEND(doc, path, val[, path, val]...) —
+appends values to the end of an array</li>
+<li>JSON_ARRAY_INSERT(doc, path, val[, path, val]...) —
+inserts an array within the document</li>
+<li>JSON_REMOVE(doc, path[, path]...) —
+removes data from the document.</li>
+</ul>
+<h2>查询 json 函数</h2>
+<h3>用于 where 子句中的函数</h3>
+<p>json_contains 用于选取数组中包含某个元素的行</p>
+<div class="highlight"><pre><span></span>-- all books with the &#39;JavaScript&#39; tag:
+SELECT * FROM `book` 
+WHERE JSON_CONTAINS(tags, &#39;[&quot;JavaScript&quot;]&#39;);
+</pre></div>
+
+
+<p>json_search 用于选取字典中包含某个值的行</p>
+<div class="highlight"><pre><span></span>-- all books with tags starting &#39;Java&#39;:
+SELECT * FROM `book` 
+WHERE JSON_SEARCH(tags, &#39;one&#39;, &#39;Java%&#39;) IS NOT NULL;
+</pre></div>
+
+
+<h3>用于 select 子句中的 json 函数</h3>
+<p>可以使用 json path 语法从得到的 json 文档中抽取出某个值。</p>
+<h2>select 语句</h2>
+<p>要想在select语句中使用 json path 抽取元素可以使用下面的语法，也就是 <code>column-&gt;path</code></p>
+<div class="highlight"><pre><span></span>SELECT
+  name,
+  tags-&gt;&quot;$[0]&quot; AS `tag1`
+FROM `book`;
+</pre></div>
+
+
+<p>一个更复杂一点的例子：</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+<th>profile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Craig</td>
+<td _craigbuckler_="“craigbuckler”" _craigbuckler_facebook_:="“@craigbuckler”,“facebook”:" _craigbuckler_googleplus_:="“craigbuckler”,“googleplus”:" _twitter_:="“twitter”:"></td>
+</tr>
+<tr>
+<td>2</td>
+<td>SitePoint</td>
+<td _sitepointdotcom_="“@sitepointdotcom”" _twitter_:="“twitter”:"></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span>SELECT
+  name, profile-&gt;&quot;$.twitter&quot; AS `twitter`
+FROM `user`;
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>SELECT
+  name, profile-&gt;&quot;$.twitter&quot; AS `twitter`
+FROM `user`
+WHERE
+  profile-&gt;&quot;$.twitter&quot; IS NOT NULL;
+</pre></div>
+
+
+<p>REF:</p>
+<ol>
+<li>https://www.sitepoint.com/use-json-data-fields-mysql-databases/</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-7-json-zi-duan.html">posted at 03:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Linux 磁盘管理命令</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ci-pan-guan-li-ming-ling.html" rel="bookmark" title="Permanent Link to &quot;Linux 磁盘管理命令&quot;">Linux 磁盘管理命令</a>
+                </h2>
+
+                
+                
+
+                <h1>挂载磁盘</h1>
+<p><code>mount</code> 命令，用于挂载磁盘以及显示相关信息</p>
+<div class="highlight"><pre><span></span>mount 显示挂载信息
+mount -t TYPE OPTIONS DEVICE DIRECTORY
+比如：
+     mount -t vfat /dev/sdb1 /mnt/media
+</pre></div>
+
+
+<p>常用的参数</p>
+<div class="highlight"><pre><span></span>-a 挂载/etc/fstab 中的所有文件
+-f 模拟挂载
+-r 只读挂载
+-w 读写挂载（默认）
+-L 指定 lebel
+-u 指定uuid
+-o 选项
+    ro 只读
+    rw 读写
+    user 允许普通用户挂载
+    check=none 不检查错误
+    loop 挂载文件，比如iso
+    nofail 失败了也不要汇报
+    remount
+--bind 选择新的挂载点作为alias `mount --rbind olddir newdir`
+--move 移动到新的挂载点 `mount --move olddir newdir`
+</pre></div>
+
+
+<p>使用 mount 命令的最佳实践是在 <code>/etc/fstab</code> 中先输入需要挂载的磁盘对应的配置，然后使用 <code>mount -a</code> 挂载。这样避免在 <code>/etc/fstab</code> 中挂载的命令是错的导致无法开机。</p>
+<h2>卸载</h2>
+<p>umount DIRECTORY/DEVICE 卸载设备</p>
+<h1>磁盘使用</h1>
+<ul>
+<li>查看分区的 uuid：ll /dev/disk/by-uuid。在 <code>etc/fstab</code> 中挂载磁盘最好使用 uuid</li>
+<li>查看分区的类型：parted -l</li>
+<li>df show free disk spaces</li>
+<li>du show disk usage infomation。du -sh <code>ls</code>  # great command</li>
+<li>dd disk dump</li>
+</ul>
+<h1>分区与格式化</h1>
+<p>fdisk DEVICE</p>
+<div class="highlight"><pre><span></span>p   print partition table
+n   new partition
+w   write back to table
+d   删除分区
+</pre></div>
+
+
+<p>创建文件系统</p>
+<div class="highlight"><pre><span></span>mkfs.ext4 PARTITION
+</pre></div>
+
+
+<p>fsck check a file system</p>
+<h1>逻辑卷</h1>
+<p>硬盘称作物理卷，多个物理卷构成一个卷组，一个卷组可以分成多个逻辑卷</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ci-pan-guan-li-ming-ling.html">posted at 04:29</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

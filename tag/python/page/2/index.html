@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "Python" | Page 2</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/python/page/2/index.html">Python</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/curio-de-http-ku-asks-dai-ma-jie-xi.html" rel="bookmark" title="Permanent Link to &quot;curio 的 http 库 asks 代码解析&quot;">curio 的 http 库 asks 代码解析</a>
+                </h2>
+
+                
+                
+
+                <p>asks 是 Python 的异步框架 curio 中的 一个 http 库。</p>
+<h1><strong>init</strong>.py</h1>
+<p>init 函数，初始化 curio 或者 trio 库</p>
+<h1>auth.py</h1>
+<p>auth 相关函数</p>
+<h1>base_funcs.py</h1>
+<p>asks.request 函数，创建一个session，然后做请求，之后再丢弃掉这个session</p>
+<h1>cookie_utils.py</h1>
+<h2>CookieTracker类</h2>
+<p>对外的方法主要有两个 get_additional_cookies 用于获取域名对应的cookie，_store_cookies 用于添加cookie</p>
+<p>errors.py 抛出的异常的类</p>
+<h1>req_structs.py</h1>
+<h2>SocketQ</h2>
+<p>这是一个 socket 的连接池。</p>
+<p>使用一个deque作为存储，实际上相当于又模拟了一个字典{netloc …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/curio-de-http-ku-asks-dai-ma-jie-xi.html">posted at 10:23</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-cao-zuo-ssh.html" rel="bookmark" title="Permanent Link to &quot;Python 操作 ssh&quot;">Python 操作 ssh</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paramiko</span>
+<span class="n">ip</span><span class="o">=</span><span class="s1">&#39;server ip&#39;</span>
+<span class="n">port</span><span class="o">=</span><span class="mi">22</span>
+<span class="n">username</span><span class="o">=</span><span class="s1">&#39;username&#39;</span>
+<span class="n">password</span><span class="o">=</span><span class="s1">&#39;password&#39;</span>
+<span class="n">cmd</span><span class="o">=</span><span class="s1">&#39;some useful command&#39;</span> 
+<span class="n">ssh</span><span class="o">=</span><span class="n">paramiko</span><span class="o">.</span><span class="n">SSHClient</span><span class="p">()</span>
+<span class="n">ssh</span><span class="o">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">paramiko</span><span class="o">.</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
+<span class="n">ssh</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span><span class="n">port</span><span class="p">,</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">)</span>
+<span class="n">stdin</span><span class="p">,</span><span class="n">stdout</span><span class="p">,</span><span class="n">stderr</span><span class="o">=</span><span class="n">ssh</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+<span class="n">outlines</span><span class="o">=</span><span class="n">stdout</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="n">resp</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outlines</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-cao-zuo-ssh.html">posted at 10:21</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhuan-yi-html-shi-ti-zi-fu.html" rel="bookmark" title="Permanent Link to &quot;Python 转义 html 实体字符&quot;">Python 转义 html 实体字符</a>
+                </h2>
+
+                
+                
+
+                <p>在网页中经常出现 <code>&amp;lt;</code>, <code>&amp;amp;</code>, <code>&amp;0x0026;</code> 这些特殊字符，这是 html 实体字符转义，用于防止 XSS 攻击。Python3 标准库中包含了 html.entities 模块，可以用于转义和反转义这些字符。</p>
+<div class="highlight"><pre><span></span>html.entities.entitydefs 中包含了名称到符号的映射：比如{&#39;amp&#39;: &#39;&amp;&#39;}
+html.entities.name2codepoint 中包含了名称到数字的映射：比如 {&#39;amp&#39;: 0x0026}
+html.entities.codepoint2name 中包含了数字到名称的映射：比如 {0x0026: &#39;amp&#39;}
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhuan-yi-html-shi-ti-zi-fu.html">posted at 10:21</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-de-queue-mo-kuai.html" rel="bookmark" title="Permanent Link to &quot;Python 中的 queue 模块&quot;">Python 中的 queue 模块</a>
+                </h2>
+
+                
+                
+
+                <p>在Python中多进程或者多线程之间通信可以使用队列，标准库中实现了一个线程安全的库 queue.Queue，和进程安全的库 multiprocessing.Queue</p>
+<p>There are 3 kind of queues: `Queue LifoQueue HeapQueue</p>
+<div class="highlight"><pre><span></span>q = Queue(size)
+
+get(block=True) return a object
+get_nowait()
+put(item, block=True) put a object 
+
+qsize()
+empty()
+full()
+
+task_done() # indicate one item process finished raise ValueError
+join() # wait until all item processed …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-de-queue-mo-kuai.html">posted at 09:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-functools-zhong-you-yong-de-yi-xie-han-shu.html" rel="bookmark" title="Permanent Link to &quot;Python functools 中有用的一些函数&quot;">Python functools 中有用的一些函数</a>
+                </h2>
+
+                
+                
+
+                <p>functools</p>
+<p>partial partial(fn, <em>args, </em>*kwargs)</p>
+<h1>lru_cache</h1>
+<p>Decorator to wrap a function with a memoizing callable that saves up to the maxsize most recent calls. It can save time when an expensive or I/O bound function is periodically called with the same arguments.
+Since a dictionary is used to …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-functools-zhong-you-yong-de-yi-xie-han-shu.html">posted at 08:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 18, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-nei-zhi-lei-xing-he-han-shu.html" rel="bookmark" title="Permanent Link to &quot;Python 的内置类型和函数&quot;">Python 的内置类型和函数</a>
+                </h2>
+
+                
+                
+
+                <h1>内置类型</h1>
+<p>Python的内置类型按照类来分，包括了 numerics, sequences, mappings, files, classes, instances 和 exceptions
+。对用户自定义类型的实例，如果__nonzero__或者__len__返回是 0 或 False 会被认为是假。</p>
+<h2>注意浅拷贝</h2>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; lists = [[]] * 3
+&gt;&gt;&gt; lists
+[[], [], []]
+&gt;&gt;&gt; lists[0].append(3)
+&gt;&gt;&gt; lists
+[[3], [3], [3]]
+</pre></div>
+
+
+<h2>字典的一些方法</h2>
+<div class="highlight"><pre><span></span>keys()/values()
+iterkeys()/itervalues()
+items()/iteritems()
+update()
+get(key, default)
+</pre></div>
+
+
+<p>可能会抛出</p>
+<p>read/readline/readlines
+write/writelines</p>
+<h2>字符串方法</h2>
+<div class="highlight"><pre><span></span>str.capitalize()    首字母大写 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-nei-zhi-lei-xing-he-han-shu.html">posted at 00:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 13, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-python-ti-qu-zi-mu-wen-jian.html" rel="bookmark" title="Permanent Link to &quot;使用 Python 提取字幕文件&quot;">使用 Python 提取字幕文件</a>
+                </h2>
+
+                
+                
+
+                <p>最近打算做一个字幕相关的 app，需要从字幕文件中提取出单词。对比了几个库之后，发现 PySubs2 还不错，主要原因是他支持三种主流的字幕文件 <code>.srt</code>, <code>.ass</code>, <code>.ssa</code>。而其他的库往往只支持其中一个，实际使用还需要两个库配合，所以不如直接使用 PySubs 2.</p>
+<h1>用法</h1>
+<p>因为我的需求主要是解析提取字幕文件，所以这里只讨论相关问题。对于字幕时间轴和样式的编译，可以查看 pysubs2 的官方文档。</p>
+<p>因为字幕文件本身结构也比较简单，PySubs2 使用也非常简单，核心只有两个类： SSAFile 和 SSAEvent。其中 SSAFile 指的是一个字幕文件，它像一个数组一样，包含了多个 SSAEvent。下面直接看代码吧：</p>
+<h2>安装</h2>
+<p>使用 pip</p>
+<div class="highlight"><pre><span></span>pip install pysubs2
+</pre></div>
+
+
+<p>比如我们有一个srt格式的字幕文件 subtitles.srt：</p>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; SIMPLE_FILE = &quot;&quot;&quot;\
+... 1
+... 00:00 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-python-ti-qu-zi-mu-wen-jian.html">posted at 01:07</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 19, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-fa-bu-python-dai-ma-dao-pypi-shang-2018.html" rel="bookmark" title="Permanent Link to &quot;如何发布 Python 代码到 PyPI 上（2018）&quot;">如何发布 Python 代码到 PyPI 上（2018）</a>
+                </h2>
+
+                
+                
+
+                <p>PyPI 是 Python 的集中仓库。通过把代码上传到 PyPI，其他人就可以使用使用 <code>pip install xxx</code> 安装代码了。</p>
+<p>Python 的安装工具一直在不断演变，PyPI 的地址也从 pypi.python.org 变到了 pypi.org，因此网上的教程大多数都过时了，官方文档更新比较及时，但是也略过繁琐，这里写一篇简要的教程以飨读者。</p>
+<p>本文以作者的库 <a href="https://github.com/yifeikong/aioify">aioify</a> 为例</p>
+<h1>文件结构</h1>
+<div class="highlight"><pre><span></span>.
+├── LICENSE.txt
+├── MANIFEST.in
+├── README.md
+├── aioify
+│   └── __init__.py
+├── setup.cfg
+└── setup.py
+</pre></div>
+
+
+<h2>LICENSE.txt</h2>
+<p>库的开源协议，建议使用 Apache、MIT 等</p>
+<h2>MANIFEST …</h2>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-fa-bu-python-dai-ma-dao-pypi-shang-2018.html">posted at 11:01</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-urllib-mo-kuai.html" rel="bookmark" title="Permanent Link to &quot;Python urllib 模块&quot;">Python urllib 模块</a>
+                </h2>
+
+                
+                
+
+                <p>YN：网络访问的时候一定要记得设置一个合理的超时</p>
+<p>在 Python2 中，有两个urllib：urllib 和 urllib2，urllib基本只使用urllib.urlencode(), urllib.quote函数，其他功能都被对应的 urllib2中的函数替代了。</p>
+<p>Python3 把这两个模块进行了合并并拆分成了子模块，只使用 urllib 就好了。</p>
+<h1>发送 http 请求</h1>
+<h2>直接使用 urlopen</h2>
+<div class="highlight"><pre><span></span>urllib.request.urlopen(url, data=None, [timeout, ] *, context) -&gt; http.client.HTTPResponse
+</pre></div>
+
+
+<p>用于发送 GET 或者 POST 请求，如果有data，则发送的是 POST 请求.返回一个 file-like的http.client.HTTPResponse对象，这个对象也可以作为一个 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-urllib-mo-kuai.html">posted at 14:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-de-iterator-he-generator.html" rel="bookmark" title="Permanent Link to &quot;Python 中的 iterator 和 generator&quot;">Python 中的 iterator 和 generator</a>
+                </h2>
+
+                
+                
+
+                <p>这篇文章里面有不少概念都是错的，需要改进</p>
+<h1>迭代器</h1>
+<p>In Python, iterable and iterator have specific meanings.</p>
+<p>An iterable is an object that has an <strong>iter</strong> method which returns an iterator, or which defines a <strong>getitem</strong> method that can take sequential indexes starting from 0 (and raises an IndexError when the indexes are no longer valid …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-de-iterator-he-generator.html">posted at 06:19</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/3" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 2 of 6</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

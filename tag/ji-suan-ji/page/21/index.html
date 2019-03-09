@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "计算机" | Page 21</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/ji-suan-ji/page/21/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 10, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/thinking-in-vue.html" rel="bookmark" title="Permanent Link to &quot;thinking in vue&quot;">thinking in vue</a>
+                </h2>
+
+                
+                
+
+                <h1>basic usage</h1>
+<p>The created vue instance will proxy its data member </p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;app&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;ol&gt;</span>
+    <span class="nt">&lt;li</span> <span class="na">v-for=</span><span class="s">&quot;company in companies&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;a</span> <span class="na">v-bind:href=</span><span class="s">&quot;company.link&quot;</span><span class="nt">&gt;</span><span class="cp">{{</span> <span class="nv">company.text</span> <span class="cp">}}</span><span class="nt">&lt;/a&gt;</span>  // bind 更新参数
+            <span class="nt">&lt;button</span> <span class="na">v-on:click=</span><span class="s">&quot;reverseText&quot;</span><span class="nt">&gt;</span>逆转消息<span class="nt">&lt;/button&gt;</span>
+    <span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;/ol&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+let vm = new Vue({
+    el: &#39;#app&#39;,
+        data: {
+            companies: [
+                    {text: &#39;Google&#39;, link …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/thinking-in-vue.html">posted at 04:03</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 09, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/chrome-kuo-zhan-cha-jian-kai-fa.html" rel="bookmark" title="Permanent Link to &quot;Chrome 扩展插件开发&quot;">Chrome 扩展插件开发</a>
+                </h2>
+
+                
+                
+
+                <p>A chrome extension can inject script into the page, this is called content script.</p>
+<p>https://developer.chrome.com/extensions/getstarted
+https://developer.chrome.com/extensions/content_scripts
+https://developer.chrome.com/extensions/messaging</p>
+<p>图标变灰的问题</p>
+<p>Add browser_action.default_icon in your manifest.json file</p>
+<div class="highlight"><pre><span></span>{
+  ...
+
+  &quot;browser_action&quot;: {
+    &quot;default_icon&quot;: &quot;icons/icon-32.png&quot;
+  },
+
+  ...
+}
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/chrome-kuo-zhan-cha-jian-kai-fa.html">posted at 05:11</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 09, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/zai-mac-shang-an-zhuang-neovim.html" rel="bookmark" title="Permanent Link to &quot;在 Mac 上安装 neovim&quot;">在 Mac 上安装 neovim</a>
+                </h2>
+
+                
+                
+
+                <p>首先通过 homebrew 安装:</p>
+<p><code>brew install neovim</code></p>
+<p>然后安装 python 支持，好多 vim 插件都需要</p>
+<p><code>pip install neovim</code></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/zai-mac-shang-an-zhuang-neovim.html">posted at 02:42</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/vim.html" class="tags">vim</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>            <h4 class="date">Jun 08, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xue-xi-redis-de-ji-chu-ming-ling.html" rel="bookmark" title="Permanent Link to &quot;学习 redis 的基础命令&quot;">学习 redis 的基础命令</a>
+                </h2>
+
+                
+                
+
+                <p>basically, redis is a data structure server</p>
+<p>string list set sorted set hash</p>
+<h2>key related</h2>
+<div class="highlight"><pre><span></span>keys &lt;pattern&gt;  list all keys share the pattern
+exists key  
+del key 
+expire key expiration   
+expireat key timestamp  
+ttl key 
+rename key  
+type key    
+</pre></div>
+
+
+<h2>string related</h2>
+<div class="highlight"><pre><span></span>set key value   set mystr &quot;hello world&quot;
+setex key …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xue-xi-redis-de-ji-chu-ming-ling.html">posted at 10:19</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 08, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/javascript-selection-and-range.html" rel="bookmark" title="Permanent Link to &quot;JavaScript Selection and Range&quot;">JavaScript Selection and Range</a>
+                </h2>
+
+                
+                
+
+                <h1>basics</h1>
+<p><code>window.getSelection</code> and <code>document.getSelection</code> all returns the <code>Selection</code> object, the selection object is almost useless.</p>
+<p><code>window.getSelection.getRangeAt(0)</code> returns a Range object. for history reasons, there is only one range in each selection.</p>
+<p><code>rangeAncestor = range.commonAncestorContainer;</code> commonAncestorContainer is the common ancestor of the range elements.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/javascript-selection-and-range.html">posted at 09:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 08, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/unicode.html" rel="bookmark" title="Permanent Link to &quot;Unicode&quot;">Unicode</a>
+                </h2>
+
+                
+                
+
+                <h1>Plane（平面）</h1>
+<p>from wikipedia</p>
+<blockquote>
+<p>In the Unicode standard, a plane is a continuous group of 65536 code points. There are 17 planes, identified by the numbers 0 to 16, which corresponds with the possible values 00–10 hexadecimal of the first two positions in six position format (hhhhhh). </p>
+<p>Plane 0 …</p></blockquote>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/unicode.html">posted at 07:17</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-ormde-shi-yong.html" rel="bookmark" title="Permanent Link to &quot;Django ORM的使用&quot;">Django ORM的使用</a>
+                </h2>
+
+                
+                
+
+                <h1>定义模型</h1>
+<p>继承 <code>models.Model</code> 并使用 <code>models.XXXField</code></p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">)</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">authors</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Author</span><span class="p">)</span>
+    <span class="n">publisher</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Publisher</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">DO_NOTHING</span><span class="p">)</span>
+    <span class="n">publication_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">f</span><span class="s2">&quot;&lt;Book {self.title}&gt;&quot;</span>
+
+    <span class="k">class …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-ormde-shi-yong.html">posted at 18:28</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-3-zhong-de-enum.html" rel="bookmark" title="Permanent Link to &quot;Python 3 中的 Enum&quot;">Python 3 中的 Enum</a>
+                </h2>
+
+                
+                
+
+                <p>enum 模块是 Python 3 中新引入的一个用于定义枚举常量的模块。</p>
+<h1>基本使用</h1>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="o">...</span>     <span class="n">RED</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">...</span>     <span class="n">GREEN</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="o">...</span>     <span class="n">BLUE</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">)</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">enum</span> <span class="s1">&#39;Color&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">GREEN</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span>
+<span class="bp">True</span>
+
+<span class="c1"># 可以遍历</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">Color</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">color</span>
+<span class="o">...</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">GREEN</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">BLUE</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">Shape</span><span class="p">)</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">Shape …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-3-zhong-de-enum.html">posted at 16:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/using-mysql-with-django.html" rel="bookmark" title="Permanent Link to &quot;using mysql with django&quot;">using mysql with django</a>
+                </h2>
+
+                
+                
+
+                <p>You probably need to install the followings:</p>
+<div class="highlight"><pre><span></span>pip install mysqlclient
+apt-get install libmysqlclient-dev mysql-server
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/using-mysql-with-django.html">posted at 08:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-incorrect-string-value-error-when-save-unicode-string-in-django.html" rel="bookmark" title="Permanent Link to &quot;MySQL “incorrect string value” error when save unicode string in Django&quot;">MySQL “incorrect string value” error when save unicode string in Django</a>
+                </h2>
+
+                
+                
+
+                <h1>Why this happens?</h1>
+<p>You cannot store 4-byte characters in MySQL with the utf-8 character set.</p>
+<h1>solution</h1>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">MySQLdb</span>
+
+<span class="n">host</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
+<span class="n">passwd</span> <span class="o">=</span> <span class="s2">&quot;passwd&quot;</span>
+<span class="n">user</span> <span class="o">=</span> <span class="s2">&quot;youruser …</span></pre></div></td></tr></table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-incorrect-string-value-error-when-save-unicode-string-in-django.html">posted at 08:47</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/20" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/22" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 21 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

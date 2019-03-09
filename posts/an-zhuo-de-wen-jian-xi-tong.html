@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 安卓的文件系统</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="大前端,Android,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/an-zhuo-de-wen-jian-xi-tong.html" rel="bookmark" title="Permanent Link to &quot;安卓的文件系统&quot;">安卓的文件系统</a>
+                </h2>
+
+                
+                
+
+                <p>let's assume <code>/system</code> is the rom folder</p>
+<table>
+<thead>
+<tr>
+<th>Partition</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/boot</td>
+<td>kernel &amp; Co.</td>
+</tr>
+<tr>
+<td>/cache</td>
+<td>app cache</td>
+</tr>
+<tr>
+<td>/data</td>
+<td>user data partition¹</td>
+</tr>
+<tr>
+<td>/data/data</td>
+<td>app data¹</td>
+</tr>
+<tr>
+<td>/dev</td>
+<td>devices, virtual fs</td>
+</tr>
+<tr>
+<td>/mnt/asec</td>
+<td>encrypted apps (App2SD)</td>
+</tr>
+<tr>
+<td>/mnt/emmc</td>
+<td>internal sdcard³</td>
+</tr>
+<tr>
+<td>/mnt/sdcard</td>
+<td>external sdcard³</td>
+</tr>
+<tr>
+<td>/proc</td>
+<td>process information²</td>
+</tr>
+<tr>
+<td>/recovery</td>
+<td>used in recovery mode</td>
+</tr>
+<tr>
+<td>/system</td>
+<td>system ROM (read-only)</td>
+</tr>
+</tbody>
+</table>
+<h2><code>/data</code> and <code>/data/data</code></h2>
+<p>These are in most cases two separate partitions, but there might be cases where this is handled otherwise. One thing they have in common (add /cache here as well): they get wiped on a factory-reset, while the other partitions are usually left untouched by that.</p>
+<table>
+<thead>
+<tr>
+<th>Directory</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/data/anr</td>
+<td>traces from app crashes (App Not Responding)</td>
+</tr>
+<tr>
+<td>/data/app</td>
+<td>.apk files of apps installed by the user</td>
+</tr>
+<tr>
+<td>/data/backup</td>
+<td>Googles Cloud-Backup stuff</td>
+</tr>
+<tr>
+<td>/data/dalvik-cache</td>
+<td>optimized versions of installed apps¹</td>
+</tr>
+<tr>
+<td>/data/data</td>
+<td>app data²</td>
+</tr>
+<tr>
+<td>/data/local</td>
+<td>temporary files from e.g. Google Play³</td>
+</tr>
+<tr>
+<td>/data/misc</td>
+<td>system configuration (WiFi, VPN, etc.)</td>
+</tr>
+<tr>
+<td>/data/system</td>
+<td>more system related stuff (certs, battstat)</td>
+</tr>
+<tr>
+<td>/data/tombstones</td>
+<td>more crash stuff ("core dumps")</td>
+</tr>
+<tr>
+<td>/data/user</td>
+<td>multi-user support, /data/user/0 is a symlink to /data/data</td>
+</tr>
+</tbody>
+</table>
+<h2>Reference</h2>
+<p>[1] http://android.stackexchange.com/questions/46926/android-folder-hierarchy
+[2] http://android.stackexchange.com/questions/48393/what-kind-of-data-is-stored-in-data-user-directory</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/an-zhuo-de-wen-jian-xi-tong.html">posted at 13:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

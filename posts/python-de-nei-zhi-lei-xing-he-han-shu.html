@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Python 的内置类型和函数</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 18, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-nei-zhi-lei-xing-he-han-shu.html" rel="bookmark" title="Permanent Link to &quot;Python 的内置类型和函数&quot;">Python 的内置类型和函数</a>
+                </h2>
+
+                
+                
+
+                <h1>内置类型</h1>
+<p>Python的内置类型按照类来分，包括了 numerics, sequences, mappings, files, classes, instances 和 exceptions
+。对用户自定义类型的实例，如果__nonzero__或者__len__返回是 0 或 False 会被认为是假。</p>
+<h2>注意浅拷贝</h2>
+<div class="highlight"><pre><span></span>&gt;&gt;&gt; lists = [[]] * 3
+&gt;&gt;&gt; lists
+[[], [], []]
+&gt;&gt;&gt; lists[0].append(3)
+&gt;&gt;&gt; lists
+[[3], [3], [3]]
+</pre></div>
+
+
+<h2>字典的一些方法</h2>
+<div class="highlight"><pre><span></span>keys()/values()
+iterkeys()/itervalues()
+items()/iteritems()
+update()
+get(key, default)
+</pre></div>
+
+
+<p>可能会抛出</p>
+<p>read/readline/readlines
+write/writelines</p>
+<h2>字符串方法</h2>
+<div class="highlight"><pre><span></span>str.capitalize()    首字母大写
+center/ljust/rjust(width, filled_char)  扩充并使得原字符串居中
+decode(codecsm, how_to_handle_erroe)    throws UnicodeError
+encode(codecs, how_to_handle_error)     throws UnicodeError
+startswith(string or tuple) 
+endswith(seq, start, end)   
+find(seq, start, end)   
+isalnum/isalpha/isdigit/islower/isupper/isspace 
+lower()/upper()/title() 
+strip/lstrip/rstrip(chars)  
+partition(seq)  返回一个三元组前半部分，seq，后半部分
+replace(old, new, count)    
+split(seq, count)   
+splitlines(keepends)    
+zfill(width)    左边填零
+</pre></div>
+
+
+<h1>内置函数</h1>
+<h2>函数式编程对应的内置函数</h2>
+<div class="highlight"><pre><span></span>all
+any
+callable
+filter
+iter
+map
+next
+reduce(fn, iter, init)
+reload
+</pre></div>
+
+
+<h2>操作属性的函数</h2>
+<div class="highlight"><pre><span></span>delattr 
+dir return a object&#39;s attributes
+getattr(object, name, default)  when default supplied, no exception thrown
+hasattr 
+globals 
+locals
+</pre></div>
+
+
+<h2>内置数学库</h2>
+<div class="highlight"><pre><span></span>compile 
+complex 
+bin Convert an integer number to a binary string
+abs 
+divmod  
+enumerate   
+eval    
+execfile    
+file    
+hex     
+max/min 
+oct 
+pow
+</pre></div>
+
+
+<h2>类型</h2>
+<div class="highlight"><pre><span></span>frozenset   
+bool    
+dict    
+float   note float(&#39;NaN&#39;), float(&#39;-inf&#39;)     
+int(x, base=10) 
+list    
+long    
+object
+</pre></div>
+
+
+<ul>
+<li>bytearray可以认为是一个可变的 string</li>
+<li>frozenset是一个immutable, hashable的 set</li>
+</ul>
+<h2>其他函数</h2>
+<div class="highlight"><pre><span></span>format
+enumerate
+id
+input/raw_inoput
+isinstance(object, class/class_tuple)
+insubclass(class, class)
+len
+open
+print
+range/xrange(start, stop, step)
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-nei-zhi-lei-xing-he-han-shu.html">posted at 00:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

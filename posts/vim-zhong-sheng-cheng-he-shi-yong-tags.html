@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | vim 中生成和使用 tags</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="vim,计算机,通用工具" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/vim-zhong-sheng-cheng-he-shi-yong-tags.html" rel="bookmark" title="Permanent Link to &quot;vim 中生成和使用 tags&quot;">vim 中生成和使用 tags</a>
+                </h2>
+
+                
+                
+
+                <p>To use go to definition and other advanced IDE feature, we need to generate tag files for vim to figure out where to find the functions or variables.</p>
+<p>To generate a tag file</p>
+<div class="highlight"><pre><span></span>ctags -R
+</pre></div>
+
+
+<p>By default, the generate tag file will be located at ./tags directory, we need to let vim know where to find it by:</p>
+<div class="highlight"><pre><span></span>:set tags+=tags
+</pre></div>
+
+
+<p>To search for a symbol in vim, use</p>
+<div class="highlight"><pre><span></span>:tag [symbol-name]
+:tag /[search-name]
+</pre></div>
+
+
+<p>To go to the definition, we need <code>Ctrl-]</code>, to go back, press <code>Ctrl-t</code></p>
+<div class="highlight"><pre><span></span>:tn next tag
+:tp prev tag
+:ts all tags
+</pre></div>
+
+
+<p>Ref:</p>
+<p>[1] http://usevim.com/2013/01/18/tags/</p>
+<p>vim tags matchlist is not very user friendly. I should write my own that shows the list in quick fix window</p>
+<p>http://vim.1045645.n5.nabble.com/Putting-all-ctags-matches-into-quickfix-td1182150.html</p>
+<p>http://vim.1045645.n5.nabble.com/Open-tags-in-quickfix-window-td1188577.html</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/vim-zhong-sheng-cheng-he-shi-yong-tags.html">posted at 13:03</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/vim.html" class="tags">vim</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

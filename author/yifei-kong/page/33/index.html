@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Articles by Yifei Kong</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/author/yifei-kong/page/33/index.html">Yifei Kong</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/cyu-yan-zhong-de-vargs.html" rel="bookmark" title="Permanent Link to &quot;C语言中的 vargs&quot;">C语言中的 vargs</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span>int max(int n, ...) {
+    va_list arg_pointer;
+    int result = INT_MIN;
+
+    va_start(arg_pointer, n);
+    for (int i = 0; i &lt; n; i++) {
+        int arg = va_arg(arg_pointer, int);
+        if (arg &gt; result)
+            result = arg;
+    }
+    va_end(arg_pointer);
+
+    return result;
+}     
+</pre></div>
+
+
+<h2>Reference</h2>
+<ol>
+<li>
+<p>http://www.cnblogs.com/chinazhangjie/archive/2012/08/18/2645475.html</p>
+</li>
+<li>
+<p>http://wiki.jikexueyuan.com/project …</p></li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/cyu-yan-zhong-de-vargs.html">posted at 15:02</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/get-and-change-android-device-id.html" rel="bookmark" title="Permanent Link to &quot;get and change android device id&quot;">get and change android device id</a>
+                </h2>
+
+                
+                
+
+                <h2>get device id</h2>
+<p><code>String id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);</code></p>
+<h2>set device id</h2>
+<p>As far as Settings.Secure.ANDROID_ID goes, this should do the trick:</p>
+<p><code>adb shell sqlite3 /data/data/com.android.providers.settings/databases/settings.db "UPDATE secure SET value='newid' WHERE name='android_id'"</code></p>
+<p>Where newid is usually the …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/get-and-change-android-device-id.html">posted at 14:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/image-hashing-with-python.html" rel="bookmark" title="Permanent Link to &quot;Image Hashing with Python&quot;">Image Hashing with Python</a>
+                </h2>
+
+                
+                
+
+                <h2>dhash</h2>
+<p>http://www.hackerfactor.com/blog/index.php?/archives/529-Kind-of-Like-That.html
+http://blog.iconfinder.com/detecting-duplicate-images-using-python/</p>
+<h2>ahash</h2>
+<p>http://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html</p>
+<h2>phash</h2>
+<p>https://zh.wikipedia.org/wiki/%E7%A6%BB%E6%95%A3%E4%BD%99%E5%BC%A6%E5%8F%98%E6%8D …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/image-hashing-with-python.html">posted at 14:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/du-web-scraping-with-python.html" rel="bookmark" title="Permanent Link to &quot;读  Web Scraping with Python&quot;">读  Web Scraping with Python</a>
+                </h2>
+
+                
+                
+
+                <h1>Chapter I Introduction</h1>
+<h2>为什么要写爬虫？</h2>
+<ol>
+<li>每个网站都应该提供 API，然而这是不可能的</li>
+<li>即使提供了 API，往往也会限速，不如自己找接口</li>
+</ol>
+<p>注意已知条件（robots.txt 和 sitemap.xml）</p>
+<ol>
+<li>robots.txt 中可能会有陷阱</li>
+<li>sitemap 中可能提供了重要的链接</li>
+</ol>
+<h2>估算网站的大小</h2>
+<p>一个简便方法是使用 site:example.com 查询，然而这种方法对于大站不适用</p>
+<h2>识别网站所使用的技术</h2>
+<ol>
+<li>builtwith 模块</li>
+</ol>
+<div class="highlight"><pre><span></span>pip install builtwith
+builtwith.parse(url) # returns a dict
+</pre></div>
+
+
+<ol>
+<li>python-whois 模块</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">whois</span>
+<span class="kn">import</span> <span class="nn">whois</span>
+<span class="n">whois …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/du-web-scraping-with-python.html">posted at 14:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/du-shu-bi-ji.html" rel="tag">读书笔记</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/du-shu-bi-ji.html" class="tags">读书笔记</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-shi-yao-yao-xie-pa-chong.html" rel="bookmark" title="Permanent Link to &quot;为什么要写爬虫？&quot;">为什么要写爬虫？</a>
+                </h2>
+
+                
+                
+
+                <p>为什么要爬数据？</p>
+<p>To quote Wikipedia</p>
+<blockquote>
+<p>The key element that distinguishes data scraping from regular parsing is that the output being scraped was intended for display to and <em>end-user</em>, rather than as input to another program, and is therefore usually <em>neither documented nor structured</em> for convenient parsing.</p>
+</blockquote>
+<ul>
+<li>爬取整站思路：使用图遍历算法</li>
+<li>爬取更新思路：找列表页，不断刷新获得更新 …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-shi-yao-yao-xie-pa-chong.html">posted at 14:24</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-du-xie-csv-wen-jian.html" rel="bookmark" title="Permanent Link to &quot;Python 读写 CSV 文件&quot;">Python 读写 CSV 文件</a>
+                </h2>
+
+                
+                
+
+                <h2>typical usage</h2>
+<p>注意dictwriter需要提供fieldnames</p>
+<div class="highlight"><pre><span></span>with open(&#39;csvfile&#39;, &#39;wt&#39;, newline=&#39;&#39;) as f:
+    writer = csv.DictWriter(f, fieldnames=[], extrasaction=&#39;ignore&#39;)
+    writer.writeheader()
+    writer.writerow(d) # list of dict if writerows
+
+with open(&#39;csvfile&#39;, &#39;wt&#39;, newline=&#39;&#39;) as f:
+    writer = csv.writer(f)
+    writer.writerow(l) # list of list if writerows
+
+with open(&#39;csvfile&#39;, &#39;rt …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-du-xie-csv-wen-jian.html">posted at 14:14</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/okhttp.html" rel="bookmark" title="Permanent Link to &quot;okhttp&quot;">okhttp</a>
+                </h2>
+
+                
+                
+
+                <p>Good tutorial: http://www.vogella.com/tutorials/JavaLibrary-OkHttp/article.html#creating-request-objects-for-make-network-calls</p>
+<p>注意：很多国产ROM 会限制应用的后台联网，需要把应用加入白名单</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/okhttp.html">posted at 14:08</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/vysorio.html" rel="bookmark" title="Permanent Link to &quot;vysor.io&quot;">vysor.io</a>
+                </h2>
+
+                
+                
+
+                <p>download from here: https://vysornuts.clockworkmod.com/download/osx, basically it's an electorn app</p>
+<h2>How it works</h2>
+<p>http://zke1ev3n.me/2016/07/02/vysor%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8AAndroid%E5%90%8C%E5%B1%8F%E6%96%B9%E6%A1%88/</p>
+<h2>How to …</h2>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/vysorio.html">posted at 13:50</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/an-zhuo-de-wen-jian-xi-tong.html" rel="bookmark" title="Permanent Link to &quot;安卓的文件系统&quot;">安卓的文件系统</a>
+                </h2>
+
+                
+                
+
+                <p>let's assume <code>/system</code> is the rom folder</p>
+<table>
+<thead>
+<tr>
+<th>Partition</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/boot</td>
+<td>kernel &amp; Co.</td>
+</tr>
+<tr>
+<td>/cache</td>
+<td>app cache</td>
+</tr>
+<tr>
+<td>/data</td>
+<td>user data partition¹</td>
+</tr>
+<tr>
+<td>/data/data</td>
+<td>app data¹</td>
+</tr>
+<tr>
+<td>/dev</td>
+<td>devices, virtual fs</td>
+</tr>
+<tr>
+<td>/mnt/asec</td>
+<td>encrypted apps (App2SD)</td>
+</tr>
+<tr>
+<td>/mnt/emmc</td>
+<td>internal sdcard³</td>
+</tr>
+<tr>
+<td>/mnt/sdcard</td>
+<td>external sdcard³</td>
+</tr>
+<tr>
+<td>/proc</td>
+<td>process information²</td>
+</tr>
+<tr>
+<td>/recovery</td>
+<td>used in recovery mode</td>
+</tr>
+<tr>
+<td>/system</td>
+<td>system …</td></tr></tbody></table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/an-zhuo-de-wen-jian-xi-tong.html">posted at 13:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/cross-compiling-on-android.html" rel="bookmark" title="Permanent Link to &quot;cross compiling on android&quot;">cross compiling on android</a>
+                </h2>
+
+                
+                
+
+                <h2>basic knowledge</h2>
+<p>first, we need a cross compiler, which you can download from the source or somewhere.</p>
+<p>second, when we use gcc to build stuff, actually we are implicitly linking to the stdlib of c, if we are cross compiling programs for another platform, then we need another platform's filesystem …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/cross-compiling-on-android.html">posted at 13:27</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/32" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/34" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 33 of 34</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

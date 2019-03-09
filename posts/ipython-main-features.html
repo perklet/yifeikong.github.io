@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | IPython main features</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Aug 13, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ipython-main-features.html" rel="bookmark" title="Permanent Link to &quot;IPython main features&quot;">IPython main features</a>
+                </h2>
+
+                
+                
+
+                <ul>
+<li>
+<p>use <code>?</code> to get quick help, and use <code>??</code> provides additional detail).</p>
+</li>
+<li>
+<p>Searching through modules and namespaces with * wildcards, both when using the ? system and via the %psearch command.</p>
+</li>
+<li>
+<p>magic commands, % or %% prefixed commands</p>
+</li>
+<li>
+<p>Alias facility for defining your own system aliases.</p>
+</li>
+<li>
+<p>Lines starting with ! are passed directly to the system shell, and using !! or var = !cmd captures shell output into python variables for further use.</p>
+</li>
+<li>
+<p>python variable prefixed with $ is expanded. A double $$ allows passing a literal $ to the shell (for access to shell and environment variables like PATH).</p>
+</li>
+<li>
+<p>Filesystem navigation, via a magic %cd command, along with a persistent bookmark system (using %bookmark) for fast access to frequently visited directories.</p>
+</li>
+<li>
+<p>A lightweight persistence framework via the %store command, which allows you to save arbitrary Python variables. These get restored when you run the %store -r command.</p>
+</li>
+<li>
+<p>Automatic indentation and highlighting of code as you type (through the prompt_toolkit library).</p>
+</li>
+<li>
+<p>%macro command. Macros can be stored persistently via %store and edited via %edit.</p>
+</li>
+<li>
+<p>Session logging (you can then later use these logs as code in your programs). Logs can optionally timestamp all input, and also store session output (marked as comments, so the log remains valid Python source code).
+Session restoring: logs can be replayed to restore a previous session to the state where you left it.</p>
+</li>
+<li>
+<p>Auto-parentheses via the %autocall command: callable objects can be executed without parentheses: sin 3 is automatically converted to sin(3)</p>
+</li>
+<li>
+<p>Auto-quoting: using <code>,</code>, or <code>;</code> as the first character forces auto-quoting of the rest of the line: <code>,my_function a b</code> becomes automatically <code>my_function("a","b")</code>, while ;my_function a b becomes my_function("a b").</p>
+</li>
+<li>
+<p>Extensible input syntax. You can define filters that pre-process user input to simplify input in special situations. This allows for example pasting multi-line code fragments which start with &gt;&gt;&gt; or ... such as those from other python sessions or the standard Python documentation.</p>
+</li>
+</ul>
+<p>Flexible configuration system. It uses a configuration file which allows permanent setting of all command-line options, module loading, code and file execution. The system allows recursive file inclusion, so you can have a base file with defaults and layers which load other customizations for particular projects.</p>
+<ul>
+<li>
+<p>Embeddable. You can call IPython as a python shell inside your own python programs. This can be used both for debugging code or for providing interactive abilities to your programs with knowledge about the local namespaces (very useful in debugging and data analysis situations).</p>
+</li>
+<li>
+<p>Easy debugger access. You can set IPython to call up an enhanced version of the Python debugger (pdb) every time there is an uncaught exception. This drops you inside the code which triggered the exception with all the data live and it is possible to navigate the stack to rapidly isolate the source of a bug. The %run magic command (with the -d option) can run any script under pdb’s control, automatically setting initial breakpoints for you. This version of pdb has IPython-specific improvements, including tab-completion and traceback coloring support. For even easier debugger access, try %debug after seeing an exception.</p>
+</li>
+<li>
+<p>Profiler support. You can run single statements (similar to profile.run()) or complete programs under the profiler’s control. While this is possible with standard cProfile or profile modules, IPython wraps this functionality with magic commands (see %prun and %run -p) convenient for rapid interactive work.</p>
+</li>
+<li>
+<p>Simple timing information. You can use the %timeit command to get the execution time of a Python statement or expression. This machinery is intelligent enough to do more repetitions for commands that finish very quickly in order to get a better estimate of their running time.</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span>In [1]: %timeit 1+1
+10000000 loops, best of 3: 25.5 ns per loop
+
+In [2]: %timeit [math.sin(x) for x in range(5000)]
+1000 loops, best of 3: 719 µs per loop
+</pre></div>
+
+
+<p>To get the timing information for more than one expression, use the %%timeit cell magic command.</p>
+<ul>
+<li>Doctest support. The special %doctest_mode command toggles a mode to use doctest-compatible prompts, so you can use IPython sessions as doctest code. By default, IPython also allows you to paste existing doctests, and strips out the leading &gt;&gt;&gt; and ... prompts in them.</li>
+</ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ipython-main-features.html">posted at 03:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

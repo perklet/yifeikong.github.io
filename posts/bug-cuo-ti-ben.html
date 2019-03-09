@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | bug 错题本</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="想法,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/bug-cuo-ti-ben.html" rel="bookmark" title="Permanent Link to &quot;bug 错题本&quot;">bug 错题本</a>
+                </h2>
+
+                
+                
+
+                <p>发现有一些错误是自己经常犯的，不记录下来回顾一下，总是会一直犯。高中的时候还有习惯来记录错题，然而这么好的习惯，到了大学里却莫名其妙的没有了，知道毕业两年后的今天才突然想起。所以第一个场贩的错误就是思想上的——学习是一件终身的事，要延续好习惯。</p>
+<p>对于各种持有资源的连接池对象等，要时刻注意它们是否是线程安全的。</p>
+<h1>Python</h1>
+<h2>更新变量的value的时候，变量名写错了，导致创建了一个没有用的新变量，老变量的value却没有更新</h2>
+<p>解决：</p>
+<ol>
+<li>使用pylint 检查代码，会提示 unused variable；</li>
+<li>在写代码的时候多用自动补全，而不要手动打出每一个变量。</li>
+</ol>
+<p>Python 的变量声明和赋值没有分开，这个是一个坑，只能通过多用工具检查来实现</p>
+<h1>故障排查</h1>
+<ul>
+<li>
+<p>有时候删文件删不掉但是空间还在占用是因为还有程序在使用这个文件</p>
+</li>
+<li>
+<p>CPU wait 比较高说明在做io</p>
+</li>
+<li>
+<p>操作系统相关问题（OOM）</p>
+</li>
+</ul>
+<p><code>dmesg -T</code> 或 <code>tail -200 /var/log/kern.log</code> 查看系统kill进程的日志，可以看到被kill掉时候的内存占用，再用free -m 查看一下是否超出了内存</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/bug-cuo-ti-ben.html">posted at 22:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiang-fa.html" class="tags">想法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "golang"</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/golang.html">golang</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/goyu-yan-du-xie-wen-jian-xiang-guan-han-shu-dui-bi.html" rel="bookmark" title="Permanent Link to &quot;Go语言读写文件相关函数对比&quot;">Go语言读写文件相关函数对比</a>
+                </h2>
+
+                
+                
+
+                <h1>文件 IO</h1>
+<p><code>io.Reader</code> 和 <code>io.Writer</code>。这两个是两个特别重要的 interface。一般来说凡是可以抽象为输入的 IO 操作都会使用 io.Reader。凡是可以抽象为输出的 IO 操作都会使用 io.Writer。</p>
+<h1>io/ioutil</h1>
+<p>对于配置文件等等比较小的常规文件，一般来说我们可以使用 io/ioutil 包中的辅助函数操作就好了，比较快捷方便。</p>
+<table>
+<thead>
+<tr>
+<th>函数签名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>func NopCloser(r io.Reader) io.ReadCloser</code></td>
+<td>把 io.Reader 包装成一个 io.ReadWriter</td>
+</tr>
+<tr>
+<td><code>func ReadAll(r io.Reader) ([]byte, error)</code></td>
+<td>读取所有字符 …</td></tr></tbody></table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/goyu-yan-du-xie-wen-jian-xiang-guan-han-shu-dui-bi.html">posted at 05:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags selected">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/goyu-yan-chu-li-csv-wen-jian.html" rel="bookmark" title="Permanent Link to &quot;Go语言处理 CSV 文件&quot;">Go语言处理 CSV 文件</a>
+                </h2>
+
+                
+                
+
+                <p>在 Go 语言中可以使用 <code>encoding/csv</code> 包来处理 csv 文件。</p>
+<p>csv 包中主要有两个 struct，Reader 和 Writer。Reader 从一个 io.Reader
+中读取每一行的内容，同时提供了一些设置的选项。Writer 用来写入 csv 文件。</p>
+<h1>Reader</h1>
+<div class="highlight"><pre><span></span>r := csv.NewReader(strings.NewReader(in))
+
+for {
+    record, err := r.Read()
+    if err == io.EOF {
+        break
+    }
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    fmt.Println(record …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/goyu-yan-chu-li-csv-wen-jian.html">posted at 04:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags selected">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 02, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/go-yu-yan-chu-ti-yan.html" rel="bookmark" title="Permanent Link to &quot;Go 语言初体验&quot;">Go 语言初体验</a>
+                </h2>
+
+                
+                
+
+                <h1>安装</h1>
+<p>安装 go 很简单，在 mac 上直接使用 <code>brew install go</code> 就可以了。注意的是需要设定GOPATH这个环境变量，这里设定到了 ~/.go 这个目录。</p>
+<div class="highlight"><pre><span></span>export GOPATH=$HOME/.go
+</pre></div>
+
+
+<h1>语法和风格</h1>
+<p>Golang的整个语法还是极其简单的，基本是 C 和 Python 的混合体。Go 语言详尽地规定了代码的风格，所以就不用为了大括号究竟是放在哪儿而开始圣战了。Go 语言对程序员的约束很强，不容易犯错</p>
+<p>Go 语言官方提供了一个工具 goimports 用来管理 import 语句，还不错。</p>
+<p>比如import进来的包必须使用，声明的变量也必须使用。import 语句必须在 package 语句后面.虽然有大括号，但是大括号的位置也是指定的。</p>
+<h1>类型</h1>
+<p>几乎所有的值提供了默认都会初始化到对应的零值，即使没有初始化 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/go-yu-yan-chu-ti-yan.html">posted at 02:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags selected">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 29, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-coroutine-yi-ji-he-goroutine-de-dui-bi.html" rel="bookmark" title="Permanent Link to &quot;Python coroutine 以及和 Goroutine 的对比&quot;">Python coroutine 以及和 Goroutine 的对比</a>
+                </h2>
+
+                
+                
+
+                <h1>Python 中的 coroutine</h1>
+<p>Python 3.5 中终于引入了 <code>async</code> 和 <code>await</code> 关键字，算是在语言层次上支持了 coroutine。</p>
+<h2>coroutine 基础</h2>
+<p>coroutine 又被称为用户级线程，也就是可以在一个系统线程中模拟多个线程构成的并发操作，对于有 GIL 的 Python 来说，反正线程也是费了，不失为多了一种选择，使用 asyncio 来爬取网页可以这样写：</p>
+<p>首先，<code>pip install pulsar lxml</code>。pulsar 是一个异步版的 http 库。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">pulsar.apps</span> <span class="kn">import</span> <span class="n">http</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">HttpClient</span><span class="p">()</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">fetch …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-coroutine-yi-ji-he-goroutine-de-dui-bi.html">posted at 05:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags selected">golang</a>
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 09, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/go-yu-yan-he-pa-chong.html" rel="bookmark" title="Permanent Link to &quot;Go 语言和爬虫&quot;">Go 语言和爬虫</a>
+                </h2>
+
+                
+                
+
+                <h1>爬虫的算法</h1>
+<h2>广度遍历</h2>
+<p>如果把每一个页面看做一个节点，把每个链接看做一个有向边，那么网页之间就构成了一个有向图。爬虫的核心就是对这个图做一个广度优先的遍历：</p>
+<div class="highlight"><pre><span></span>func breadthFirst(visit func(item, string) []string, worklist []string) {
+    seen := make(map[string]bool)
+    for len(worklist) &gt; 0 {
+        items := worklist
+        worklist = nil
+        for _, items := range items {
+            if !seen[item] {
+                seen[item] = true
+                worklist = append(worklist, visit(item)...)
+            }
+        }
+    }
+}
+</pre></div>
+
+
+<h2>终止条件</h2>
+<p>如果我们面对的是一个有限的图，那么用广度遍历一定可以停下来。但是对于互联网来说，甚至于对于某个网站来说，页面的数量都可能是无限的 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/go-yu-yan-he-pa-chong.html">posted at 08:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags selected">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/go-yu-yan-shu-ju-ku-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;Go 语言数据库教程&quot;">Go 语言数据库教程</a>
+                </h2>
+
+                
+                
+
+                <p>在学习 Go 的过程中重新思考了数据库相关的一些知识，之前认为数据库的驱动就是应该有一个 conn 对象表示连接， 然后再有一个 cursor 对象来具体操作。但是 Go 完全没有这么来，而是直接生成一个 db 对象来操作，开始觉得不适应，然而后来我也实在想不起来为什么需要用两个对象了。</p>
+<p>另外，为什么要用 ORM 呢？之前用 Django 的ORM比较多，因为生成后台非常方便，而且自己对 SQL 也不是很熟悉，对数据库的操作基本上都在使用这个ORM。然而，现在感觉到如果想要自己的代码性能比较高的话，自己手工写 SQL 几乎是不可避免的，而且 SQL 其实也没有那么吓人。</p>
+<p>Go语言中的 <code>database/sql</code> 包提供了一个数据库的访问接口，但是对于不同的数据库，还需要不同的驱动。</p>
+<p>一些常见的数据库的驱动参见这里：http://golang.org/s/sqldrivers。</p>
+<h1>连接数据库 …</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/go-yu-yan-shu-ju-ku-jiao-cheng.html">posted at 04:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags selected">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

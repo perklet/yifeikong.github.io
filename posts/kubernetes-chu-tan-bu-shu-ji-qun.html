@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | kubernetes 初探——部署集群</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="架构,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Sep 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-ji-qun.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——部署集群&quot;">kubernetes 初探——部署集群</a>
+                </h2>
+
+                
+                
+
+                <p>随着 docker cloud 的关闭，容器的编排工具之争似乎已经结束了，Docker Swarm 上算是完了，Kubernetes 笑到了最后。然而 k8s 的组件众多，因此部署起来也很麻烦。为此，网上有不少的网上有不少的部署教程和脚本，包括但不限于：</p>
+<ul>
+<li>kubesaz</li>
+<li>minikube</li>
+<li>kubespray</li>
+<li>rke</li>
+<li>kubernetes: the hard way</li>
+</ul>
+<p>有的出于教学目的的单机版本，有的是可以在生产环境部署的版本。研究了一番，发现 rke 这个工具应该是最简单的了。不过 rke 还不太稳定，目前看来，kubespray 声明了可以在生产环境使用</p>
+<p>本文基于 ubuntu 16.04. CentOS 上好多默认设置都需要修改，因此建议大家基于 Ubuntu 部署 k8s。</p>
+<h1>使用 kubespray 安装 k8s</h1>
+<p>(零) 假设我们要在三台机器上安装, 另外一台机器作为控制节点. 其中每台都作为工作节点, 两台作为 master 节点.</p>
+<table>
+<thead>
+<tr>
+<th>IP</th>
+<th>角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.4.17.165</td>
+<td>控制节点, 不参与 k8s 集群</td>
+</tr>
+<tr>
+<td>10.4.17.167</td>
+<td>master, node</td>
+</tr>
+<tr>
+<td>10.4.17.168</td>
+<td>master, node</td>
+</tr>
+<tr>
+<td>10.4.17.169</td>
+<td>node</td>
+</tr>
+</tbody>
+</table>
+<p>(一) 下载 kubespray 安装包, 这里我们使用最新版(2018.10), 可能需要安装 python3, 如果没有安装的话</p>
+<div class="highlight"><pre><span></span>VERSION=2.7.0
+
+# download kubespray
+wget https://github.com/kubernetes-incubator/kubespray/archive/v<span class="cp">${</span><span class="n">VERSION</span><span class="cp">}</span>.tar.gz
+tar xzf v<span class="cp">${</span><span class="n">VERSION</span><span class="cp">}</span>.tar.gz
+
+# install dependencies
+pip3 install -r kubespray-<span class="cp">${</span><span class="n">VERSION</span><span class="cp">}</span>/requirements.txt
+</pre></div>
+
+
+<p>(二) 生成部署的 hosts.ini</p>
+<p>kubespray 中有一个脚本叫做 inventory_builder 用来生成部署的 hosts.ini</p>
+<div class="highlight"><pre><span></span>cd kubespray-v<span class="cp">${</span><span class="n">VERSION</span><span class="cp">}</span>
+cp -r inventory/sample inventory/mycluster
+declare -a IPS=(10.4.17.167 10.4.17.168 10.4.17.169)
+CONFIG_FILE=inventory/mycluster/hosts.ini python3 contrib/inventory_builder/inventory.py <span class="cp">${</span><span class="n">IPS</span><span class="p">[</span><span class="err">@</span><span class="p">]</span><span class="cp">}</span>
+</pre></div>
+
+
+<p>生成之后, 可以查看生成的文件</p>
+<div class="highlight"><pre><span></span>cat inventory/mycluster/host.ini
+
+[k8s-cluster:children]
+kube-master·▸   ·
+kube-node·▸ ·
+
+[all]
+node1 ▸  ansible_host=10.4.17.167 ip=10.4.17.167
+node2 ▸  ansible_host=10.4.17.168 ip=10.4.17.168
+node3 ▸  ansible_host=10.4.17.169 ip=10.4.17.169
+
+[kube-master]
+node1·▸ ·
+node2·▸ ·
+
+[kube-node]
+node1·▸ ·
+node2·▸ ·
+node3·▸ ·
+
+[etcd]
+node1·▸ ·
+node2·▸ ·
+node3·▸ ·
+
+[calico-rr]
+
+[vault]
+node1·▸ ·
+node2·▸ ·
+node3·▸ ·
+</pre></div>
+
+
+<p>(三) 修改一些配置</p>
+<p>代理:</p>
+<p>由于众所周知的原因, k8s 依赖的 gcr.io 在中国大陆范围内无法访问, 我们可以使用代理访问, 关于如何搭建代理超出了本文的范围.
+假设我们的代理是 http://proxy.com:10086, 修改 <code>inventory/mycluster/group_vars/all/all.yml</code>  文件, 设置 http_proxy 和 https_proxy 两个变量.</p>
+<p>下载 kubectl 到本机:</p>
+<p>设置 kubectl_localhost 和 kubeconfig_localhost 两个变量为 true. 安装完成后会在本机安装 kubectl, 并且可以使用 inventory/mycluster/artifacts/admin.conf 使用 kubectl.</p>
+<p>(四) 部署</p>
+<p>这里我们需要使用 tiger 用户, 这个用户需要满足如下条件:</p>
+<ol>
+<li>可以无密码远程登录</li>
+<li>在远程主机上具有无密码 sudo 权限</li>
+</ol>
+<div class="highlight"><pre><span></span>ansible-playbook -i inventory/mycluster/hosts.ini cluster.yml --become --user tiger -v
+</pre></div>
+
+
+<p>大概过十几分钟就部署好了</p>
+<p>(五) 验证</p>
+<div class="highlight"><pre><span></span>cd inventory/mycluster/artifacts
+./kubectl.sh get nodes
+
+
+NAME      STATUS    ROLES         AGE       VERSION
+node1     Ready     master,node   1d        v1.11.3
+node2     Ready     master,node   1d        v1.11.3
+node3     Ready     node          1d        v1.11.3
+</pre></div>
+
+
+<p>参考：</p>
+<ol>
+<li><a href="https://news.ycombinator.com/item?id=16665130">HN 上关于 Docker Cloud 关闭的讨论</a></li>
+<li><a href="http://www.itmuch.com/docker/kubernetes-deploy-by-kubespray/">使用Kubespray部署生产可用的Kubernetes集群</a></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-ji-qun.html">posted at 04:58</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

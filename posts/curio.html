@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | curio</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/curio.html" rel="bookmark" title="Permanent Link to &quot;curio&quot;">curio</a>
+                </h2>
+
+                
+                
+
+                <p>curio 是一个神奇的 Python 库，它完全面向 Python 3.5 增加的 async/await 语法，从低层就没有使用 callback 的语法，因此相比 asyncio 来说设计更简单，API 更优雅，性能却更好。</p>
+<h1>一个例子</h1>
+<p>curio 的文档给了一个很好的例子，下面总结一下这个例子。这个例子模拟了孩子在玩Minecraft，而家长在催促孩子该出发了的情景。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">curio</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">countdonw</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;T-minus&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">await</span> <span class="n">cuiro</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 在异步编程中，不能使用同步代码中的 time.sleep</span>
+        <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+
+<span class="n">start_evt</span> <span class="o">=</span> <span class="n">cruio</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">frined</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;你好, 我叫&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;开始玩 Minecraft&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">await</span> <span class="n">curio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">curio</span><span class="o">.</span><span class="n">CancelledError</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;回家了&#39;</span><span class="p">)</span>
+        <span class="k">raise</span>
+
+<span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">kid</span><span class="p">():</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;可以玩了吗?&#39;</span><span class="p">)</span>
+            <span class="n">await</span> <span class="n">curio</span><span class="o">.</span><span class="n">timeout_after</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">start_evt</span><span class="o">.</span><span class="n">wait</span><span class="p">)</span>  <span class="c1"># 等待一秒</span>
+            <span class="k">break</span>
+        <span class="k">except</span> <span class="n">curio</span><span class="o">.</span><span class="n">TaskTimeout</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;啊啊啊&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;在 Minecraft 中造建筑&#39;</span><span class="p">)</span>
+    <span class="n">async</span> <span class="k">with</span> <span class="n">curio</span><span class="o">.</span><span class="n">TaskGroup</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">await</span> <span class="n">f</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="n">friend</span><span class="p">,</span> <span class="s1">&#39;Max&#39;</span><span class="p">)</span>  <span class="c1"># 生成 friend 协程</span>
+        <span class="n">await</span> <span class="n">f</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="n">friend</span><span class="p">,</span> <span class="s1">&#39;Lilikan&#39;</span><span class="p">)</span>
+        <span class="n">await</span> <span class="n">f</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="n">friend</span><span class="p">,</span> <span class="s1">&#39;Thomas&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+                <span class="n">total</span> <span class="o">+=</span> <span class="n">await</span> <span class="n">curio</span><span class="o">.</span><span class="n">run_in_process</span><span class="p">(</span><span class="n">fib</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>   <span class="c1"># 把计算密集型的任务交给另一个进程</span>
+                <span class="n">await</span> <span class="n">curio</span><span class="o">.</span><span class="n">run_in_thread</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># 会阻塞的，放到其他线程</span>
+            <span class="n">await</span> <span class="n">curio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>  <span class="c1"># 模拟延迟</span>
+        <span class="k">except</span> <span class="n">curio</span><span class="o">.</span><span class="n">CancelledError</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;好的，保存中&#39;</span><span class="p">)</span>  <span class="c1"># 如果被取消了，做好善后工作</span>
+            <span class="k">raise</span>  <span class="c1"># 需要重新跑出异常</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">parent</span><span class="p">():</span>
+    <span class="n">kid_task</span> <span class="o">=</span> <span class="n">await</span> <span class="n">curio</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="n">kid</span><span class="p">)</span>  <span class="c1"># 打开 kid 协程，这里并不会等待kid 运行完毕</span>
+    <span class="n">await</span> <span class="n">curio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;去玩吧&#39;</span><span class="p">)</span>
+    <span class="n">await</span> <span class="n">start_evt</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+    <span class="n">await</span> <span class="n">curio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;该出发了&#39;</span><span class="p">)</span>
+    <span class="n">count_task</span> <span class="o">=</span> <span class="n">await</span> <span class="n">curio</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="n">countdown</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># 开始倒计时协程</span>
+    <span class="n">await</span> <span class="n">count_task</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>  <span class="c1"># 使用 join 等待一个协程完成</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;真的要走了&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">await</span> <span class="n">curio</span><span class="o">.</span><span class="n">timeout_after</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">kid_task</span><span class="o">.</span><span class="n">join</span><span class="p">)</span>  <span class="c1"># 等待 kid 协程运行完毕，最多十秒</span>
+    <span class="k">except</span> <span class="n">curio</span><span class="o">.</span><span class="n">TaksTimeout</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;警告过你了&#39;</span><span class="p">)</span>
+        <span class="n">await</span> <span class="n">kid_task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;出发了&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">curio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">parent</span><span class="err">，</span> <span class="n">with_monitor</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c1"># 开始执行</span>
+    <span class="c1"># with_monitor 可以在另一个窗口实时观察有多少协程在运行</span>
+    <span class="c1"># python3 -m curio.monitor</span>
+</pre></div>
+
+
+<h1>curio monitor 的使用</h1>
+<h3>打开 curio</h3>
+<div class="highlight"><pre><span></span>$ python -m cuiro.monitor
+Curio Monitor: <span class="m">4</span> tasks running
+Type <span class="nb">help</span> <span class="k">for</span> commands
+curio&gt; 
+</pre></div>
+
+
+<h3>使用 ps 列出当前正在执行的任务</h3>
+<div class="highlight"><pre><span></span>curio &gt; ps
+Task   State        Cycles     Timeout Task
+------ ------------ ---------- ------- --------------------------------------------------
+1      FUTURE_WAIT  1          None    Monitor.monitor_task
+2      READ_WAIT    1          None    Kernel._run_coro.&lt;locals&gt;._kernel_task
+3      TASK_JOIN    3          None    parent
+4      TIME_SLEEP   1          None    kid
+curio &gt;
+</pre></div>
+
+
+<h3>使用 where 查看每个协程的调用栈</h3>
+<div class="highlight"><pre><span></span>curio &gt; w 3
+Stack for Task(id=3, name=&#39;parent&#39;, &lt;coroutine object parent at 0x1024796d0&gt;, state=&#39;TASK_JOIN&#39;) (most recent call last):
+  File &quot;hello.py&quot;, line 23, in parent
+    await kid_task.join()
+  File &quot;/Users/beazley/Desktop/Projects/curio/curio/task.py&quot;, line 106, in join
+    await self.wait()
+  File &quot;/Users/beazley/Desktop/Projects/curio/curio/task.py&quot;, line 117, in wait
+    await _scheduler_wait(self.joining, &#39;TASK_JOIN&#39;)
+  File &quot;/Users/beazley/Desktop/Projects/curio/curio/traps.py&quot;, line 104, in _scheduler_wait
+    yield (_trap_sched_wait, sched, state)
+
+curio &gt; w 4
+Stack for Task(id=4, name=&#39;kid&#39;, &lt;coroutine object kid at 0x102479990&gt;, state=&#39;TIME_SLEEP&#39;) (most recent call last):
+  File &quot;hello.py&quot;, line 12, in kid
+    await curio.sleep(1000)
+  File &quot;/Users/beazley/Desktop/Projects/curio/curio/task.py&quot;, line 440, in sleep
+    return await _sleep(seconds, False)
+  File &quot;/Users/beazley/Desktop/Projects/curio/curio/traps.py&quot;, line 80, in _sleep
+    return (yield (_trap_sleep, clock, absolute))
+
+curio &gt;
+</pre></div>
+
+
+<h3>使用cancel取消一个协程</h3>
+<div class="highlight"><pre><span></span>curio &gt; cancel 4
+Cancelling task 4
+*** Connection closed by remote host ***
+</pre></div>
+
+
+<h1>curio 的API</h1>
+<h2>coroutine 与 kernel</h2>
+<p>使用<code>async def</code>来创建一个新的coroutine. 每个coroutine不能够单独执行, 而是需要通过一个<code>kernel</code>来执行(相当于asyncio中的loop). 当然一般情况下, 我们不会主动去生成一个kernel, 而是调用curio.run来交给curio 隐式执行. </p>
+<div class="highlight"><pre><span></span>async def hello(name):
+    print(&#39;hello&#39;, name) 
+
+run(hello, &#39;Guido&#39;)    # Preferred
+run(hello(&#39;Guido&#39;))    # Ok
+</pre></div>
+
+
+<h2>tasks</h2>
+<p>前面说到, 一个coroutine需要交给curio来运行, 但是实际上 curio 运行的并不是这个coroutine, 而是包含了这个coroutine 的 task. task 可以认为是一个线程, 而coroutine则可以看成是target函数. 和线程一样, task 也分为了daemon的和非daemon的. 当所有非daemon的task执行完毕之后, kernel就会自动退出. 这个和线程是类似的, 所有的非daemon的线程执行完毕之后, 整个进程就会退出. 而我们通过 curio.run 创建的那个task实际上就相当于是我们在多线程程序中的主线程了.</p>
+<h3>spawn</h3>
+<div class="highlight"><pre><span></span>await spawn(corofunc, *args, daemon=False)
+</pre></div>
+
+
+<p>在多线程编程中, 我们通过使用 <code>t = Theaad(target=func); t.start()</code> 来开始执行新的线程. 然而, 在curio中,你不能通过 <code>t = Task(target=func); t.start()</code> 来创建新的 task. 而应改通过 <code>t = await spawn(corofunc)</code> 来创建并开始执行新的coroutine.</p>
+<h3>Task join</h3>
+<p>可以使用 <code>r = await task.join()</code> 来等待task运行结束, 并获得返回值. 也可以使用 <code>await task.wait()</code> 但是不会返回值, 必须之后再使用 task.result 获得返回值</p>
+<div class="highlight"><pre><span></span>v = await Task.join()  # 返回返回值
+
+# or 
+
+await task.wait()
+v = task.result  # 如果在task结束之前访问, 会raise RuntimeError
+</pre></div>
+
+
+<h3>Task Group</h3>
+<p>curio 支持使用 taskgroup 来管理一组任务, <code>class TaskGroup(tasks=(), *, wait=all, name=None)</code>.</p>
+<p>在创建task group的时候就可以把已经生成的task放入group中, 或者随后使用 task_group.spawn/add_task 来向group 中添加task.</p>
+<div class="highlight"><pre><span></span>await TaskGroup.spawn(corofunc, *args, ignore_result=False)
+# 生成一个task, 并放入到该task group中
+
+await TaskGroup.add_task(coro)
+# 添加已有的 task 到该 task group 中
+# 以上两个方法分别添加 corofunc 和 task 到当前 group 中
+
+await TaskGroup.join(*, wait=all)
+# 等待所有的task运行结束
+
+await TaskGroup.cancel_remaining()
+# 取消所有还在运行的task
+</pre></div>
+
+
+<h4>用在with语句和迭代器中</h4>
+<p>task group 可以用在with语句中, 这样在with块退出的时候就会隐式地调用 task_group.join().</p>
+<div class="highlight"><pre><span></span>async with TaskGroup() as g:
+    t1 = await g.spawn(func1)
+    t2 = await g.spawn(func2)
+    t3 = await g.spawn(func3)
+
+# all tasks done here
+print(&#39;t1 got&#39;, t1.result)
+print(&#39;t2 got&#39;, t2.result)
+print(&#39;t3 got&#39;, t3.result)
+</pre></div>
+
+
+<p>task group 还可以用作迭代器, 其中包含了所有 task.result</p>
+<div class="highlight"><pre><span></span>async with TaskGroup() as g:
+    t1 = await g.spawn(func1)
+    t2 = await g.spawn(func2)
+    t3 = await g.spawn(func3)
+    async for task in g:
+        print(task, &#39;completed.&#39;, task.result)
+</pre></div>
+
+
+<h3>task local storage</h3>
+<p><code>class Local</code> 类似于threading.Local, 但是随着一个新的 context local storage PEP 的到来, 这个功能会被废弃掉</p>
+<h2>time</h2>
+<p>使用 curio.sleep 而不是 time.sleep, 以为整个协程都是单线程的.</p>
+<h2>workers</h2>
+<p>如果需要运行一些CPU密集的任务或者是一些可能block住的任务, 可以使用workers.</p>
+<h3>有用的函数</h3>
+<div class="highlight"><pre><span></span>await curio.workers.run_in_process(callable, *args)
+</pre></div>
+
+
+<p>如果取消对应的coroutine的话, 相应的进程会收到SIGTERM而立即停止执行</p>
+<div class="highlight"><pre><span></span>await curio.workers.run_in_thread(callable, *args)
+</pre></div>
+
+
+<p>如果取消对应coroutine的话, 相应的线程并不会停止执行, 而是进入一种类似 zombie 的状态, 知道运行结束</p>
+<div class="highlight"><pre><span></span>await curio.workers.block_in_thread(callable, *args)
+</pre></div>
+
+
+<p>类似 run_in_thread, 但是对用同一个callable, 同时只有一个线程在执行.</p>
+<div class="highlight"><pre><span></span>curio.workers.MAX_WORKER_THREADS  # 同一个kernel能使用的最大的线程数, 默认64
+curio.workers.MAX_WORKER_PROCESSES  # 同一个kernel能使用的最大进程数, 默认 CPU 数量
+</pre></div>
+
+
+<h2>文件</h2>
+<p>读取文件可能是个很耗时的工作, 不光是读写磁盘, 如果你的文件是在一个网络文件系统上, 那么将会更加耗时. 如果在协程中发生这种操作, 整个协程kernel 都会被block住.</p>
+<p>curio.file 提供了一些供异步读取文件的机制.</p>
+<div class="highlight"><pre><span></span>curio.file.aopen(*args, **kwargs)
+</pre></div>
+
+
+<p>需要注意的是, 这个函数只能用在 Async Context Manager 中, 而不能直接 <code>f = await aopen()</code></p>
+<div class="highlight"><pre><span></span>async with aopen(filename) as:
+    async for line in f:
+        print(line)
+</pre></div>
+
+
+<h2>原语</h2>
+<p>curio 提供了 <code>Event</code>, <code>Lock</code>, <code>RLock</code>, <code>Semephore</code>, <code>BoundedSemaphore</code>, <code>Condition</code>等</p>
+<h2>queue</h2>
+<p>正如标准库提供了 queue 模块用于多线程之间通信一样, curio 提供了 curio.queue 来实现task 之间的通信. 用法和queue 模块基本上是一样的, 除了一些方法变成了 coroutine function, 而不是普通的函数了.</p>
+<h2>异步线程</h2>
+<p>如果你需要执行很多的同步操作, 但是还是想要能够和 curio 来交互, 可以使用异步线程. 在异步线程内, 可以使用<code>AWAIT</code>函数来实现<code>await</code>关键字的操作, 可以使用普通的<code>with</code> 和 <code>for</code>来实现使用了<code>async with</code>. 也就是实现了不用在coroutine内部而使用 coroutine 的操作.</p>
+<p>另外值得注意的一点是, 如果把定义的async thread当做同步版本的线程来运行, 那么 <code>AWIAT</code> 就是一个 no-op, 也就是说可以直接把他当做同步线程来用.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/curio.html">posted at 14:56</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

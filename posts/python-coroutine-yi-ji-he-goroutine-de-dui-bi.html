@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Python coroutine 以及和 Goroutine 的对比</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="golang,Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 29, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-coroutine-yi-ji-he-goroutine-de-dui-bi.html" rel="bookmark" title="Permanent Link to &quot;Python coroutine 以及和 Goroutine 的对比&quot;">Python coroutine 以及和 Goroutine 的对比</a>
+                </h2>
+
+                
+                
+
+                <h1>Python 中的 coroutine</h1>
+<p>Python 3.5 中终于引入了 <code>async</code> 和 <code>await</code> 关键字，算是在语言层次上支持了 coroutine。</p>
+<h2>coroutine 基础</h2>
+<p>coroutine 又被称为用户级线程，也就是可以在一个系统线程中模拟多个线程构成的并发操作，对于有 GIL 的 Python 来说，反正线程也是费了，不失为多了一种选择，使用 asyncio 来爬取网页可以这样写：</p>
+<p>首先，<code>pip install pulsar lxml</code>。pulsar 是一个异步版的 http 库。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">pulsar.apps</span> <span class="kn">import</span> <span class="n">http</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">HttpClient</span><span class="p">()</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="n">await</span> <span class="n">fetch</span><span class="p">(</span><span class="s2">&quot;http://toutiao.com&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+
+
+<p>注意其中我们使用 <code>async def</code> 定义了一个 <code>coroutine function</code>，并且在其中调用（await）了另一个 coroutine function。在 Python 中只有在使用 async def 定义的函数上下文中才能使用 await。</p>
+<p>如果我们需要下载多个网址呢？</p>
+<h2>coroutine 并发</h2>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">lxml.html</span>
+<span class="kn">from</span> <span class="nn">pulsar.apps</span> <span class="kn">import</span> <span class="n">http</span>
+
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">HttpClient</span><span class="p">()</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_title</span><span class="p">(</span><span class="n">page</span><span class="p">):</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">doc</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;//title/text()&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://www.toutiao.com&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.douban.com&#39;</span><span class="p">,</span> <span class="s1">&#39;https://www.sina.com.cn&#39;</span><span class="p">]</span>
+    <span class="n">futures</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">urls</span><span class="p">:</span>
+        <span class="n">future</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span><span class="n">fetch</span><span class="p">(</span><span class="n">url</span><span class="p">))</span>
+        <span class="n">futures</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">future</span><span class="p">)</span>
+    <span class="n">pages</span> <span class="o">=</span> <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">futures</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">url</span><span class="p">,</span> <span class="n">page</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">urls</span><span class="p">,</span> <span class="n">pages</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">get_title</span><span class="p">(</span><span class="n">page</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+</pre></div>
+
+
+<p>在上面的例子中，我们在 for 循环使用 <code>asyncio.ensure_future</code> 创建了三个 Future 对象。Future 对象指的是可以在未来（future）的某个时间获得结果的一个对象。然后我们使用 <code>asyncio.gather</code> 来同时 <code>await</code> 了这三个 Future。在我们 await 的时候，可以认为这三个 future 是"并发"执行的。如果你了解 JavaScript 的话，可以看出来 Future 就相当于 JS 中的 Promise 对象。注意这里的并发指的是 IO 上可以并发加速，如果从 CPU 上考虑的话，因为都是在一个线程中，也就没有性能提升的，所以说协程特别适合于 IO 密集的应用。</p>
+<p>不过，对于初学者来说，经常会直接 await 每一个协程，导致实际上没有任何并发。比如下面的代码就是错误的：</p>
+<div class="highlight"><pre><span></span>async def main():
+    urls = [&#39;https://www.toutiao.com&#39;, &#39;https://www.douban.com&#39;, &#39;https://www.sina.com.cn&#39;]
+    for url in urls:
+        page = await fetch(url)
+        print(page)
+</pre></div>
+
+
+<p>上面这种错误有人称作 async/await hell，可以参考这篇文章：<a href="https://www.zcfy.cc/article/how-to-escape-async-await-hell">如何避免async/await地狱</a></p>
+<h2>协程的调度</h2>
+<p>我们知道线程是内核进行抢占式的调度的，这样就确保了每个线程都有执行的机会。而 coroutine 运行在同一个线程中，由语言的运行时中的 EventLoop（事件循环）来进行调度。和大多数语言一样，在 Python 中，协程的调度是非抢占式的，也就是说一个协程必须主动让出执行机会，其他协程才有机会运行。让出执行的关键字就是 <code>await</code>。也就是说一个协程如果阻塞了，持续不让出 CPU，那么整个线程就卡住了，没有任何并发。比如下面的例子：</p>
+<div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">cat</span> <span class="n">time_sleep</span><span class="o">.</span><span class="n">py</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">do_work</span><span class="p">():</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">s</span><span class="p">:</span>
+        <span class="n">future</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">ensure_future</span><span class="p">(</span><span class="n">do_work</span><span class="p">())</span>
+        <span class="n">futures</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">future</span><span class="p">)</span>
+    <span class="n">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="o">*</span><span class="n">futures</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+
+<span class="o">%</span> <span class="n">time</span> <span class="n">python</span> <span class="n">time_sleep</span><span class="o">.</span><span class="n">py</span>
+<span class="n">python</span> <span class="n">no_concurrent</span><span class="o">.</span><span class="n">py</span>  <span class="mf">0.13</span><span class="n">s</span> <span class="n">user</span> <span class="mf">0.03</span><span class="n">s</span> <span class="n">system</span> <span class="mi">5</span><span class="o">%</span> <span class="n">cpu</span> <span class="mf">3.173</span> <span class="n">total</span>
+</pre></div>
+
+
+<p>虽然我们使用了 asyncio.gather 来并发执行，但是依然可以看到执行时间是 3.173s。因为 time.sleep 是一个阻塞性的操作，只能顺序执行，所以整个运行时间就是 3s。如果要修复这个程序可以改成这样：</p>
+<div class="highlight"><pre><span></span><span class="c">% cat aio_sleep.py</span>
+
+<span class="c">...</span>
+<span class="n">async</span> <span class="n">def</span> <span class="n">do_work</span><span class="p">():</span>
+    <span class="n">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="c">...</span>
+
+<span class="c">% time python aio_sleep.py</span>
+<span class="n">python</span> <span class="n">aio_sleep</span><span class="p">.</span><span class="n">py</span>  <span class="mf">0.13</span><span class="n">s</span> <span class="n">user</span> <span class="mf">0.03</span><span class="n">s</span> <span class="n">system</span> <span class="mi">13</span><span class="c">% cpu 1.166 total</span>
+</pre></div>
+
+
+<p>使用 asyncio.sleep 替换了阻塞的 time.sleep，执行时间是 1.166s。这样暴露两个问题：</p>
+<ol>
+<li>Python 整个异步编程生态的问题，之前标准库和各种第三方库的阻塞性函数都不能用了，requests 不能用了，redis.py 不能用了，甚至 open 函数都不能用了。所以 Python 的最大问题不是不好用，而是生态环境不好。</li>
+<li>一旦开始采用 async 函数，那么你整个程序都必须是 async 的，不然总会有阻塞的地方，也就是说 async 具有传染性。</li>
+</ol>
+<p>这两点结合在一起导致想要写一个完全异步的 Python 程序还是有一定挑战的。</p>
+<h1>Goroutine</h1>
+<p>最近闲暇时间看了看 Go 语言相关的东西。发现 Go 原生的并发模型非常好用。Go 中的 goroutine 类似于其他语言中的 corouine，最重要的是 goroutine 是 go 与生俱来的特性，所以几乎所有库都是可以直接用的，避免了 Python 中需要把所有库重写一遍的问题。</p>
+<p>用 Go 来重写一下并发下载：</p>
+<div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+    <span class="s2">&quot;fmt&quot;</span>
+    <span class="s2">&quot;io/ioutil&quot;</span>
+    <span class="s2">&quot;log&quot;</span>
+    <span class="s2">&quot;net/http&quot;</span>
+<span class="p">)</span>
+
+<span class="n">func</span> <span class="n">fetch</span><span class="p">(</span><span class="n">url</span> <span class="n">string</span><span class="p">,</span> <span class="n">bodies</span> <span class="n">chan</span> <span class="p">[]</span><span class="n">byte</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">resp</span><span class="p">,</span> <span class="n">err</span> <span class="p">:</span><span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">Fatalf</span><span class="p">(</span><span class="s2">&quot;error </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">defer</span> <span class="n">resp</span><span class="o">.</span><span class="n">Body</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+    <span class="n">body</span><span class="p">,</span> <span class="n">_</span> <span class="p">:</span><span class="o">=</span> <span class="n">ioutil</span><span class="o">.</span><span class="n">ReadAll</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">Body</span><span class="p">)</span>
+    <span class="n">bodies</span> <span class="o">&lt;-</span> <span class="n">body</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">urls</span> <span class="p">:</span><span class="o">=</span> <span class="p">[]</span><span class="n">string</span><span class="p">{</span>
+        <span class="s2">&quot;https://www.toutiao.com&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;https://www.douban.com&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;https://www.sina.com.cn&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">bodies</span> <span class="p">:</span><span class="o">=</span> <span class="n">make</span><span class="p">(</span><span class="n">chan</span> <span class="p">[]</span><span class="n">byte</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">url</span> <span class="p">:</span><span class="o">=</span> <span class="nb">range</span> <span class="n">urls</span> <span class="p">{</span>
+        <span class="n">go</span> <span class="n">fetch</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">bodies</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">urls</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">string</span><span class="p">(</span><span class="o">&lt;-</span><span class="n">bodies</span><span class="p">)[:</span><span class="mi">100</span><span class="p">])</span>
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s2">&quot;--------------------&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">bodies</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h2>Goroutine 的调度</h2>
+<p>Goroutine 中不需要显式使用 await 交出控制权，但是 Go 也不会严格按照时间片去调度 goroutine，而是会在可能阻塞的地方插入调度。Goroutine 的调度可以看做是半抢占式的。</p>
+<h2>和系统线程之间的映射关系</h2>
+<p>Python 中的协程是严格的 1:N 关系，也就是一个线程对应了多个协程。而 Go 中是 M:N 的关系，也就是 N 个协程会映射分配到 M 个线程上，这样带来了两点好处：</p>
+<ol>
+<li>CPU 密集的应用使用 goroutine 也会获得加速；</li>
+<li>即使有少量阻塞的操作，也只会阻塞某个 worker 线程，而不会把整个程序阻塞。</li>
+</ol>
+<p>总之，在高并发方面，Go 语言的确有不少优势。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-coroutine-yi-ji-he-goroutine-de-dui-bi.html">posted at 05:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

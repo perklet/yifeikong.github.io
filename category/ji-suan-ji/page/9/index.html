@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles in the "计算机" category | Page 9</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/category/ji-suan-ji/page/9/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-urllib-mo-kuai.html" rel="bookmark" title="Permanent Link to &quot;Python urllib 模块&quot;">Python urllib 模块</a>
+                </h2>
+
+                
+                
+
+                <p>YN：网络访问的时候一定要记得设置一个合理的超时</p>
+<p>在 Python2 中，有两个urllib：urllib 和 urllib2，urllib基本只使用urllib.urlencode(), urllib.quote函数，其他功能都被对应的 urllib2中的函数替代了。</p>
+<p>Python3 把这两个模块进行了合并并拆分成了子模块，只使用 urllib 就好了。</p>
+<h1>发送 http 请求</h1>
+<h2>直接使用 urlopen</h2>
+<div class="highlight"><pre><span></span>urllib.request.urlopen(url, data=None, [timeout, ] *, context) -&gt; http.client.HTTPResponse
+</pre></div>
+
+
+<p>用于发送 GET 或者 POST 请求，如果有data，则发送的是 POST 请求.返回一个 file-like的http.client.HTTPResponse对象，这个对象也可以作为一个 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-urllib-mo-kuai.html">posted at 14:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-de-iterator-he-generator.html" rel="bookmark" title="Permanent Link to &quot;Python 中的 iterator 和 generator&quot;">Python 中的 iterator 和 generator</a>
+                </h2>
+
+                
+                
+
+                <p>这篇文章里面有不少概念都是错的，需要改进</p>
+<h1>迭代器</h1>
+<p>In Python, iterable and iterator have specific meanings.</p>
+<p>An iterable is an object that has an <strong>iter</strong> method which returns an iterator, or which defines a <strong>getitem</strong> method that can take sequential indexes starting from 0 (and raises an IndexError when the indexes are no longer valid …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-de-iterator-he-generator.html">posted at 06:19</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-forms.html" rel="bookmark" title="Permanent Link to &quot;django forms&quot;">django forms</a>
+                </h2>
+
+                
+                
+
+                <p>django 中的 form 和 model 的用法很像，都是定义一个类，然后指定一些字段就可以了</p>
+<p>最简单的form</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+
+<span class="k">class</span> <span class="nc">ContactForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clean_message</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span>
+        <span class="n">num_words</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">num_words</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-forms.html">posted at 04:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-time-mo-kuai.html" rel="bookmark" title="Permanent Link to &quot;Python time 模块&quot;">Python time 模块</a>
+                </h2>
+
+                
+                
+
+                <p>时间戳，struct_time 可以被认为是一个表示时间的整数序列，一共9项对应于 C 中对应的数据结构，注意其中不包含时区信息</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>time.time</td>
+<td>获取当前时间戳，即 GMT 的 epoch 秒数</td>
+</tr>
+<tr>
+<td>time.clock()</td>
+<td>获取进程时间，即从进程开始执行的时间</td>
+</tr>
+<tr>
+<td>time.sleep()</td>
+<td>停止当前线程若干秒</td>
+</tr>
+<tr>
+<td>time.strftime</td>
+<td>产生可读时间字符串</td>
+</tr>
+<tr>
+<td>time.strptime</td>
+<td>parse time</td>
+</tr>
+<tr>
+<td>time.strftime()/time.mktime()/time.asctime()</td>
+<td>均接受 struct_time 作为参数</td>
+</tr>
+<tr>
+<td>time.gmtime()/time.localtime()/time.strptime()</td>
+<td>返回的是对应时间的struct_time</td>
+</tr>
+</tbody>
+</table>
+<h1>time.time vs …</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-time-mo-kuai.html">posted at 14:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-dump-to-csv.html" rel="bookmark" title="Permanent Link to &quot;django dump to csv&quot;">django dump to csv</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">django.db.models.loading</span> <span class="kn">import</span> <span class="n">get_model</span>
+
+<span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="n">qs</span><span class="p">,</span> <span class="n">outfile_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Takes in a Django queryset and spits out a CSV file.</span>
+
+<span class="sd">    Usage::</span>
+
+<span class="sd">        &gt;&gt; from utils import dump2csv</span>
+<span class="sd">        &gt;&gt; from dummy_app.models import *</span>
+<span class="sd">        &gt;&gt; qs = DummyModel.objects.all()</span>
+<span class="sd">        &gt;&gt; dump2csv.dump(qs, &#39;./data/dump.csv&#39;)</span>
+
+<span class="sd">    Based on a snippet by zbyte64::</span>
+
+<span class="sd">        http …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-dump-to-csv.html">posted at 09:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/css-bu-ju-ji-chu-zhi-shi.html" rel="bookmark" title="Permanent Link to &quot;CSS 布局基础知识&quot;">CSS 布局基础知识</a>
+                </h2>
+
+                
+                
+
+                <h1>布局</h1>
+<p>网页的布局是面向文档流的，也就是每个元素默认都是从左到右，从上到下依次排列的。当然就像文章一样，有些元素比如标题默认就会另起一行，并且单独占据这一行。</p>
+<p>所有的元素都分为三类：inline、inline-block、和 block。</p>
+<p>其中 block 元素占据了一行的位置，即使他们的宽度不够一行，并且他们有自己的宽度和高度，比如 h1 元素。</p>
+<p>inline-block 结合了 inline 和 block 元素的特性，首先他布局是 inline 的，也就是不会另起一行，但是又可以设定单独的高度和宽度。</p>
+<p><code>display: none</code> 将会完全不渲染该元素, <code>visibility: hidden</code> 会渲染这个元素，只是在该显式的地方留下空白</p>
+<h2>使用 inline-box 的布局</h2>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tKfTcly1fquqqp791hj30kr0i1gpe.jpg"></p>
+<h1>定位</h1>
+<p>CSS 中元素的定位有如下几种，可以使用 position 指定</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>static …</td></tr></tbody></table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/css-bu-ju-ji-chu-zhi-shi.html">posted at 07:56</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/css.html" class="tags">CSS</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 29, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-coroutine-yi-ji-he-goroutine-de-dui-bi.html" rel="bookmark" title="Permanent Link to &quot;Python coroutine 以及和 Goroutine 的对比&quot;">Python coroutine 以及和 Goroutine 的对比</a>
+                </h2>
+
+                
+                
+
+                <h1>Python 中的 coroutine</h1>
+<p>Python 3.5 中终于引入了 <code>async</code> 和 <code>await</code> 关键字，算是在语言层次上支持了 coroutine。</p>
+<h2>coroutine 基础</h2>
+<p>coroutine 又被称为用户级线程，也就是可以在一个系统线程中模拟多个线程构成的并发操作，对于有 GIL 的 Python 来说，反正线程也是费了，不失为多了一种选择，使用 asyncio 来爬取网页可以这样写：</p>
+<p>首先，<code>pip install pulsar lxml</code>。pulsar 是一个异步版的 http 库。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">pulsar.apps</span> <span class="kn">import</span> <span class="n">http</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">http</span><span class="o">.</span><span class="n">HttpClient</span><span class="p">()</span>
+
+<span class="n">async</span> <span class="k">def</span> <span class="nf">fetch …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-coroutine-yi-ji-he-goroutine-de-dui-bi.html">posted at 05:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 26, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/han-shu-shi-bian-cheng-zhong-de-pattern-matching-mo-shi-pi-pei.html" rel="bookmark" title="Permanent Link to &quot;函数式编程中的 Pattern Matching (模式匹配)&quot;">函数式编程中的 Pattern Matching (模式匹配)</a>
+                </h2>
+
+                
+                
+
+                <p>以 haskell 为例，简单来说，pattern 就像是数学中的分段函数。通过使用 pattern matching，就可以对不同的参数定义不同的函数体。当调用函数的时候，可以通过对比实参和形参的模式就可以选择正确的函数体。</p>
+<p>比较一下</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1fqq6q36pkij30aq02cglo.jpg" max-width="400px" /></p>
+<p>和对应的 haskell 代码：</p>
+<div class="highlight"><pre><span></span>fib 0 = 1
+fib 1 = 1
+fib n | n &gt;= 2 
+      = fib (n-1) + fib (n-2)
+</pre></div>
+
+
+<p>注意在分段函数中 "n ≥ 2" 这个条件在 haskell 中变成了一个 guard。但是另外两个条件就是简单的 pattern。Pattern 就是可以测试值和结构的条件，比如 <code>x:xs</code>, <code>(x, y, z)</code>, 或者 <code>x</code>。在一个分段函数定义中 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/han-shu-shi-bian-cheng-zhong-de-pattern-matching-mo-shi-pi-pei.html">posted at 09:18</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 17, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yi-yong-python-bian-xie-yi-ge-mo-ban-yin-qing.html" rel="bookmark" title="Permanent Link to &quot;[译] 用 Python 编写一个模板引擎&quot;">[译] 用 Python 编写一个模板引擎</a>
+                </h2>
+
+                
+                
+
+                <p>一直对模板引擎的实现很好奇，正好看到了<a href="http://alexmic.net/building-a-template-engine/">这篇</a>文章，翻译一下，供大家学习、参考。</p>
+<p>我们编写一个最简单的模板引擎，并且探索一下它的底层实现。如果你想直接看代码的话，<a href="https://github.com/alexmic/microtemplates">GitHub</a> 是你的好朋友</p>
+<h1>语言设计</h1>
+<p>这里设计的模板语言非常基础。使用两种标签，变量和块。</p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- 变量使用 `</span><span class="cp">{{</span><span class="err">`</span> <span class="err">和</span> <span class="err">`</span><span class="cp">}}</span><span class="c">` 作为标识--&gt;</span>
+<span class="nt">&lt;div&gt;</span><span class="cp">{{</span><span class="nv">my_var</span><span class="cp">}}</span><span class="nt">&lt;/div&gt;</span>
+
+<span class="c">&lt;!-- 块使用 `{%` 和 `%}` 作为标识--&gt;</span>
+<span class="cp">{%</span> <span class="k">each</span> <span class="nv">items</span> <span class="cp">%}</span>
+    <span class="nt">&lt;div&gt;</span><span class="cp">{{</span><span class="nv">it</span><span class="cp">}}</span><span class="nt">&lt;/div&gt;</span>
+<span class="cp">{%</span> <span class="k">end</span> <span class="cp">%}</span>
+</pre></div>
+
+
+<p>大多数的块需要使用关闭标签，关闭标签使用<code>{% end %}</code>表示。</p>
+<p>这个模板引擎能够处理基本的循环和条件语句，而且也支持在块中使用 callable。在我看来，能够在模板中调用任意的 Python 函数非常方便。</p>
+<h1>循环</h1>
+<p>使用循环可以遍历集合或者 iterable。</p>
+<div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">each</span> <span class="nv">people</span> <span class="cp">%}</span>
+    <span class="nt">&lt;div&gt;</span><span class="cp">{{</span><span class="nv">it.name …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yi-yong-python-bian-xie-yi-ge-mo-ban-yin-qing.html">posted at 07:08</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 13, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-shang-de-dns-huan-cun.html" rel="bookmark" title="Permanent Link to &quot;Linux 上的 DNS 缓存&quot;">Linux 上的 DNS 缓存</a>
+                </h2>
+
+                
+                
+
+                <p>Linux 内核中没有 DNS 缓存</p>
+<p>Firefox 内置了 DNS 缓存</p>
+<p><code>nscd</code> 可以提供本地的 DNS 缓存，好多机器开了，但是据说这个服务有很多问题。</p>
+<p>Python 使用了 <code>getaddrinfo</code> 函数，会使用系统的 DNS 缓存</p>
+<p>像 <code>nslookup</code> 和是dig这样的工具会 bypass 掉 DNS 缓存。</p>
+<p>另外 Go 语言好像也不会使用本机的 DNS 缓存，即使开了</p>
+<p>https://wiki.archlinux.org/index.php/dnsmasq 可以用来做本地缓存</p>
+<p>还可以使用systemd提供的resolved</p>
+<p>1 https://stackoverflow.com/questions/11020027/dns-caching-in-linux …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-shang-de-dns-huan-cun.html">posted at 05:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/8" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/10" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 9 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

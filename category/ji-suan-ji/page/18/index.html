@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles in the "计算机" category | Page 18</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/category/ji-suan-ji/page/18/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-public-key-pinning.html" rel="bookmark" title="Permanent Link to &quot;android public key pinning&quot;">android public key pinning</a>
+                </h2>
+
+                
+                
+
+                <h1>What is public key pinning?</h1>
+<p>to view https traffic, you could sign your own root CA, and perform mitm attack to view the traffic. HPKP (http public key pinning) stops this sniffing by only trust given CA, thus, your self-signed certs will be invalid. To let given app to trust …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-public-key-pinning.html">posted at 08:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-intent.html" rel="bookmark" title="Permanent Link to &quot;android intent&quot;">android intent</a>
+                </h2>
+
+                
+                
+
+                <p>You should use intent to communicate between activities and services</p>
+<h1>intent extra</h1>
+<h2>package data from activity</h2>
+<p>create a intent instance</p>
+<p>Intent intent = new Intent(getBaseContext(), SignoutActivity.class);
+intent.putExtra("key", value);
+startActivity(intent);</p>
+<h2>package data from service</h2>
+<p>Intent intent = new Intent(context, SignoutActivity.class);
+intent.putExtra("key", value);
+startService(intent …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-intent.html">posted at 11:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/androidoshandler.html" rel="bookmark" title="Permanent Link to &quot;android.os.handler&quot;">android.os.handler</a>
+                </h2>
+
+                
+                
+
+                <p>android.os.handler 用于向每个线程的 MessageQueue 发送消息。</p>
+<p>There are two main uses for a Handler: </p>
+<p>(1) to schedule messages and runnables to be executed as some point in the future; and </p>
+<p>(2) to enqueue an action to be performed on a different thread than your own.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/androidoshandler.html">posted at 10:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/android-vpn-service.html" rel="bookmark" title="Permanent Link to &quot;android vpn service&quot;">android vpn service</a>
+                </h2>
+
+                
+                
+
+                <p>VPN Service 运行在 IP 层。它创建了一个虚拟的网络接口，可以配置地址和路由规则，并返回一个 file descriptor。每次读这个 fp 返回一个数据包，每次写发送一个数据包。</p>
+<p>两个最重要的方法分别是<code>prepare(Context)</code> 和 <code>establish()</code>。前者接受用户响应并关闭其他应用的 VPN 链接，后者使用 <code>VpnService.Builder</code> 的参数创建 VPN 接口。</p>
+<p>实现 VpnService 的类必须在 manifest 中声明：</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;service</span> <span class="na">android:name=</span><span class="s">&quot;.ExampleVpnService&quot;</span>
+         <span class="na">android:permission=</span><span class="s">&quot;android.permission.BIND_VPN_SERVICE&quot;</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;intent-filter&gt;</span>
+         <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">&quot;android.net.VpnService&quot;</span><span class="nt">/&gt;</span>
+     <span class="nt">&lt;/intent-filter …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/android-vpn-service.html">posted at 10:07</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/simhash.html" rel="bookmark" title="Permanent Link to &quot;simhash&quot;">simhash</a>
+                </h2>
+
+                
+                
+
+                <h1>shingling</h1>
+<p>n-shingling 就是把一个句子或者文章分成 n 个连续单词的组合，然后去重。</p>
+<p>比如： the cat sat on the cat</p>
+<p>第一步，分组： the cat, cat sat, sat on, on the, the cat
+第二步，去重： the cat, cat sat, sat on, on the</p>
+<p>simhash 计算过程</p>
+<p>生成 shingle</p>
+<h1>Reference</h1>
+<p>[1] http://matpalm.com/resemblance/jaccard_coeff/</p>
+<p>[2] http://blog.csdn …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/simhash.html">posted at 09:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/suan-fa.html" class="tags">算法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-1-cha-xun-shu-ju.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(1) - 查询数据&quot;">mysql 基础知识(1) - 查询数据</a>
+                </h2>
+
+                
+                
+
+                <p><a href="https://mp.weixin.qq.com/s/87BoE2-0mW_3qALyNSpiTw">最全总结</a></p>
+<h1>显示操作</h1>
+<div class="highlight"><pre><span></span>show databases;
+show create database DB;
+show tables;
+show columns from TABLE;
+show create table TABLE;
+show status;
+shou grants;
+</pre></div>
+
+
+<h1>连接数据库</h1>
+<p><code>mysql -u root -p -h HOST -P 3306</code>, 其中的参数代表了用户, 机器地址和密码等, 注意其中的密码必须之后输入, 而不能直接带上, 这样是为了避免把密码记录在bash历史中.</p>
+<p>另一个更好的工具是Python写的mycli, 谁用谁知道~</p>
+<p>使用 <code>use DATABASE</code>来更改指定的数据库.</p>
+<h1>查询数据库</h1>
+<p>下面的部分都使用这个表, 方便讨论.</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>first_name</th>
+<th>last_name</th>
+<th>math_score</th>
+<th>english_score …</th></tr></thead></table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-1-cha-xun-shu-ju.html">posted at 01:22</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 01, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-shi-yong-letsencrypt.html" rel="bookmark" title="Permanent Link to &quot;如何使用 letsencrypt&quot;">如何使用 letsencrypt</a>
+                </h2>
+
+                
+                
+
+                <p>letsencrypt 现在终于支持通配符证书了。</p>
+<p>certbot 比较坑爹的一点是renew时候使用的是和创建证书相同的参数, 而且不能更改, 也就是最好在创建证书的时候就选择使用webroot的方式.</p>
+<h2>install certbot</h2>
+<p>see ~/.dotfiles/installs/install_certbot.sh</p>
+<h2>create new cert</h2>
+<p>sudo certbot certonly --webroot -w /opt/spider/nginx/html/ -d shujutuzi.com -d www.shujutuzi.com</p>
+<p>sudo certbot certonly --standalone --agree-tos --email kongyifei@gmail.com --domain g.yifei.me --preferred-challenges http --non-interactive</p>
+<p>the cert …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-shi-yong-letsencrypt.html">posted at 02:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/docker-ji-chu-gai-nian.html" rel="bookmark" title="Permanent Link to &quot;docker 基础概念&quot;">docker 基础概念</a>
+                </h2>
+
+                
+                
+
+                <p>Docker 是一个进程的容器，<strong>不是虚拟机</strong>。他为一个进程隔离了文件系统、网络和环境变量。最好在其中运行一个且仅运行一个线程，而不是运行多个任务。</p>
+<p>docker 中最好运行的是无状态的服务，这样方便于横向扩展，对于有状态的服务，建议把状态 mount 出来。</p>
+<h1>使用场景</h1>
+<ol>
+<li>为有不同需求的应用创建不同的隔离环境， 比如部署两个脚本，一个需要用 Python 2.7，另一个需要用 Python 3.6</li>
+<li>Micro services. Micro services are easy to scale up. In this way, run only one process in a container, and use orchestration tools such as …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/docker-ji-chu-gai-nian.html">posted at 13:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags">Docker</a>
+                </div>
+            </article>            <h4 class="date">Jun 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/sudo-passwordless.html" rel="bookmark" title="Permanent Link to &quot;sudo passwordless&quot;">sudo passwordless</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span><span class="err">$</span> <span class="n">EDITOR</span><span class="o">=</span><span class="n">vi</span> <span class="n">visudo</span>
+
+<span class="cp"># then add this</span>
+
+<span class="n">ALL</span> <span class="n">ALL</span><span class="o">=</span><span class="p">(</span><span class="n">ALL</span><span class="p">)</span> <span class="nl">NOPASSWD</span><span class="p">:</span> <span class="n">ALL</span>
+<span class="n">username</span> <span class="n">ALL</span><span class="o">=</span><span class="p">(</span><span class="n">ALL</span><span class="p">)</span> <span class="nl">NOPASSWD</span><span class="p">:</span> <span class="n">ALL</span>
+<span class="nf">%group</span> <span class="n">ALL</span><span class="o">=</span><span class="p">(</span><span class="n">ALL</span><span class="p">)</span> <span class="nl">NOPASSWD</span><span class="p">:</span> <span class="n">ALL</span>
+<span class="n">Defaults</span> <span class="n">env_keep</span> <span class="o">+=</span> <span class="s">&quot;EDITOR&quot;</span>
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/sudo-passwordless.html">posted at 13:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 28, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-pa-chong-da-jian-dai-li-ji-qun.html" rel="bookmark" title="Permanent Link to &quot;为爬虫搭建代理集群&quot;">为爬虫搭建代理集群</a>
+                </h2>
+
+                
+                
+
+                <p>爬虫如果只用固定的同一个或者同一组 IP 的话，很容易被封禁，轻者弹验证码，重者直接无法访问。</p>
+<p>这里主要探讨如何构架一个代理 IP 池，从而能够频繁更换代理 IP。</p>
+<p>按照代理 IP 的来源，主要有几个方法：</p>
+<ol>
+<li>去免费代理的网站上爬</li>
+<li>利用 ADSL 重拨会更换 IP 的原理，使用 ADSL 机器搭建集群</li>
+<li>利用云提供商的 API，自动更换 IP</li>
+</ol>
+<h1>搭建一个自己的 adsl 集群</h1>
+<h2>找代理商</h2>
+<p>首先找到一个靠谱的网站就实属不易，这些 adsl 提供商的技术水平普遍不高，往往只能提供 centos 镜像，有 centos 7.1就算不错的了，其中有一家竟然提供了 ubuntu 14.04，结果还是各种问题，坑了我大概半天的时间。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-pa-chong-da-jian-dai-li-ji-qun.html">posted at 02:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/17" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/19" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 18 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

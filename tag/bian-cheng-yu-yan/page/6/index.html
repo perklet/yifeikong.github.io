@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "编程语言" | Page 6</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/bian-cheng-yu-yan/page/6/index.html">编程语言</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 07, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-3-zhong-de-enum.html" rel="bookmark" title="Permanent Link to &quot;Python 3 中的 Enum&quot;">Python 3 中的 Enum</a>
+                </h2>
+
+                
+                
+
+                <p>enum 模块是 Python 3 中新引入的一个用于定义枚举常量的模块。</p>
+<h1>基本使用</h1>
+<div class="highlight"><pre><span></span><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="o">...</span>     <span class="n">RED</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="o">...</span>     <span class="n">GREEN</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="o">...</span>     <span class="n">BLUE</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">)</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">type</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">RED</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">enum</span> <span class="s1">&#39;Color&#39;</span><span class="o">&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="n">GREEN</span><span class="p">,</span> <span class="n">Color</span><span class="p">)</span>
+<span class="bp">True</span>
+
+<span class="c1"># 可以遍历</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">Color</span><span class="p">:</span>
+<span class="o">...</span>     <span class="k">print</span> <span class="n">color</span>
+<span class="o">...</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">RED</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">GREEN</span>
+<span class="n">Color</span><span class="o">.</span><span class="n">BLUE</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">list</span><span class="p">(</span><span class="n">Shape</span><span class="p">)</span>
+<span class="p">[</span><span class="o">&lt;</span><span class="n">Shape …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-3-zhong-de-enum.html">posted at 16:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 02, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-chardet-zi-dong-jian-ce-wen-ben-bian-ma.html" rel="bookmark" title="Permanent Link to &quot;使用 Chardet 自动检测文本编码&quot;">使用 Chardet 自动检测文本编码</a>
+                </h2>
+
+                
+                
+
+                <p>python 中的 chardet 库可以用来猜测文件的编码</p>
+<h1>usage</h1>
+<div class="highlight"><pre><span></span>pip install cchardet
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">cchardet</span> <span class="kn">as</span> <span class="nn">chardet</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">chinese_bytes</span> <span class="o">=</span> <span class="s1">&#39;中文&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">chardet</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">chinese_bytes</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="p">{</span><span class="s1">&#39;confidence&#39;</span><span class="p">:</span> <span class="mf">0.7524999976158142</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">}</span>
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-chardet-zi-dong-jian-ce-wen-ben-bian-ma.html">posted at 06:23</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/lua.html" rel="bookmark" title="Permanent Link to &quot;lua&quot;">lua</a>
+                </h2>
+
+                
+                
+
+                <p>lua_pcall 是使用 c 中的 setjmp 实现的, 对应在lua 中的函数就是 pcall</p>
+<p>pcall/error 大概就相当于其他语言中的 try-catch /throw了</p>
+<div class="highlight"><pre><span></span>local ok, errorobject = pcall(function() 
+    --here goes the protected code 
+    ... 
+end) 
+
+if not ok then 
+    --here goes the error handling code 
+    --(errorobject has more information about the error) 
+    ... 
+end 
+</pre></div>
+
+
+<h1>协程</h1>
+<p>对称协程只有一个关键字: transfer, 类似于 goto 语句, 把控制权移交给其他的任意一个协程 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/lua.html">posted at 13:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/lua.html" class="tags">Lua</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/openresty.html" rel="bookmark" title="Permanent Link to &quot;openresty&quot;">openresty</a>
+                </h2>
+
+                
+                
+
+                <ol>
+<li>The *by_lua modules that tweak the nginx behaviour (for ex the rewrite_by_lua that is the lua equivalent of nginx http rewrite) module are always run after the standard nginx modules.</li>
+<li>The choice of *by_lua module to use largely depends upon the problem that you are trying to solve. For example …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/openresty.html">posted at 13:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/lua.html" class="tags">Lua</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/lua-coroutine.html" rel="bookmark" title="Permanent Link to &quot;lua coroutine&quot;">lua coroutine</a>
+                </h2>
+
+                
+                
+
+                <p>Lua 的协程是非对称的协程也就是 resume 和 yeild 相当于调用和返回</p>
+<p>Python 的协程是对称的协程, 相当于 goto.</p>
+<p>Lua中携程相关的函数都放在coroutine包中
+coroutine.create(function)  返回一个thread类型的值表示一个协程，并且处于suspend状态。
+resume(co, params…) 执行一个协程，并且能够传递参数，返回运行的状态的函数yield返回的结果</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/lua-coroutine.html">posted at 13:43</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/lua.html" class="tags">Lua</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/lua-zhong-de-die-dai-qi.html" rel="bookmark" title="Permanent Link to &quot;Lua 中的迭代器&quot;">Lua 中的迭代器</a>
+                </h2>
+
+                
+                
+
+                <p>Lua中有两种for语句，最基本的是</p>
+<div class="highlight"><pre><span></span>for i = 1, 10 do
+    print i
+end
+</pre></div>
+
+
+<p>还有一种是for in语句</p>
+<p>for I in pairs(t) do
+       print I
+   end</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/lua-zhong-de-die-dai-qi.html">posted at 13:42</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/lua.html" class="tags">Lua</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/lua-san-bu-qu.html" rel="bookmark" title="Permanent Link to &quot;lua 三部曲&quot;">lua 三部曲</a>
+                </h2>
+
+                
+                
+
+                <p>Programming in Lua</p>
+<p>Lua编程手册</p>
+<p>Lua Unofficial FAQ</p>
+<p>知乎上 lua 相关的问题</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/lua-san-bu-qu.html">posted at 13:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/lua.html" class="tags">Lua</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-m.html" rel="bookmark" title="Permanent Link to &quot;Python `-m`&quot;">Python `-m`</a>
+                </h2>
+
+                
+                
+
+                <h2>How <code>-m</code> is invoked</h2>
+<p>if you have a module foo</p>
+<p>write
+foo/
+    <strong>init</strong>.py
+    <strong>main</strong>.py</p>
+<p>then python -m foo will execute <strong>main</strong>.py</p>
+<p>https://pythonwise.blogspot.sg/2015/01/python-m.html</p>
+<p>json pretty print</p>
+<p>cat some_json_file | python -m json.tool</p>
+<p>zipfile</p>
+<p>zipfile.py -l zipfile.zip        # Show listing of …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-m.html">posted at 13:19</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/do-not-subclass-built-in-classes-in-python.html" rel="bookmark" title="Permanent Link to &quot;do not subclass built-in classes in python&quot;">do not subclass built-in classes in python</a>
+                </h2>
+
+                
+                
+
+                <p>In short, they will not behave what you think they will. you think dict.get in implemented in python, like:</p>
+<div class="highlight"><pre><span></span>def get(self, key, default=None):
+    try:
+        return self[key]
+    except KeyError:
+        return default
+</pre></div>
+
+
+<p>However, they dict.get do not call <strong>getitem</strong>, and they are implemented in c separately, and …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/do-not-subclass-built-in-classes-in-python.html">posted at 13:17</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-fu-he-de-list-comprehension.html" rel="bookmark" title="Permanent Link to &quot;Python 中复合的 list comprehension&quot;">Python 中复合的 list comprehension</a>
+                </h2>
+
+                
+                
+
+                <p>Python 中的 list comprehension 可以复合</p>
+<div class="highlight"><pre><span></span>[x for li in lists for x in li if x]
+</pre></div>
+
+
+<p>就相当于</p>
+<div class="highlight"><pre><span></span>[x
+    for li in lists
+        for x in li
+             if x]
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-fu-he-de-list-comprehension.html">posted at 13:17</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/5" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/7" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 6 of 8</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

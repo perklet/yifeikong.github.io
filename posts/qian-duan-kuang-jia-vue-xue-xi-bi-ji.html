@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 前端框架 Vue 学习笔记</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="JavaScript,大前端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Sep 22, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/qian-duan-kuang-jia-vue-xue-xi-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;前端框架 Vue 学习笔记&quot;">前端框架 Vue 学习笔记</a>
+                </h2>
+
+                
+                
+
+                <p>之前在网页里小范围的用了vue, 感觉用起来非常爽, 现在打算做自己的笔记应用. 这次打算做成SPA的形式, 前端全部用vue来写. 需要node的一些东西, 记录下学习过程. 迈向全栈，哈哈 ^_^</p>
+<h1>安装</h1>
+<p>首先, 全局安装vue: </p>
+<div class="highlight"><pre><span></span>npm install --global @vue/cli
+</pre></div>
+
+
+<h1>data 属性</h1>
+<p>只有在创建时提供的 data 属性才是响应式的，在创建之后在添加新元素就不管用了。</p>
+<p>当然还可以使用 app.$watch 方法显式创建一些监听器</p>
+<div class="highlight"><pre><span></span>// $watch 是一个实例方法
+vm.$watch(&#39;a&#39;, function (newValue, oldValue) {
+  // 这个回调将在 `vm.a` 改变后调用
+})
+</pre></div>
+
+
+<h1>methods 和 computed</h1>
+<p>methods 定义了一些可以调用的方法，他的值也可以用来插值。但是最好使用 computed，因为 computed 是有缓存的。</p>
+<p>computed 属性也可以设置 setter，所以实际上，computed 属性相当于对现有属性的一种映射和变化。</p>
+<h1>v-bind 和 v-model</h1>
+<ul>
+<li>v-bind 用于单项绑定：在 HTML 属性中使用 v-bind 绑定, 标签中使用 <code>{{ }}</code>。只能使用表达式，而不能使用语句。</li>
+<li>v-model 用于双向绑定：在 input 这类用户可以输入的组件中，需要双向绑定，使用 v-model.</li>
+</ul>
+<p>v-bind 类似的指令还有 v-once 和 v-html</p>
+<p>v-model 实际上等价于</p>
+<div class="highlight"><pre><span></span>&lt;input v-model=&quot;searchText&quot;&gt;
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>&lt;input
+  v-bind:value=&quot;searchText&quot;
+  v-on:input=&quot;searchText = $event.target.value&quot;
+&gt;
+</pre></div>
+
+
+<p>要想在自定义输入组件中支持 v-model 的话，就需要使用 v-bind 和 v-on 两个方法了，而不能直接使用 v-model。</p>
+<h1>v-if 和 v-for</h1>
+<p>这两个就和所有模板系统中的 if 和 for 一样。vue 中提供的额外方便之处是，可以使用 template 标签，这样就不会多一个标签了</p>
+<p>vue 是懒渲染的，因此会尽可能地复用组件，可以使用 key 来区分</p>
+<p>v-if 是真正的条件式渲染，v-show 则只是在切换 display 属性</p>
+<p>vue 没有代理数组的赋值方法，所以需要使用 app.$set 方法</p>
+<h1>@</h1>
+<p>如果只是指定一个事件处理函数的话，那么参数就是 event。如果自己指定了参数的话，可以使用 $event 来代表 event</p>
+<p>还可以使用 .prevent 和 .stop 等修饰符</p>
+<h1>component</h1>
+<p>vue 中最终要的概念就是组件了。使用组件来模块式得构建应用。需要通过 props 属性来定义组件中的属性</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;app-7&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;ol&gt;</span>
+    <span class="c">&lt;!--</span>
+<span class="c">      现在我们为每个 todo-item 提供 todo 对象</span>
+<span class="c">      todo 对象是变量，即其内容可以是动态的。</span>
+<span class="c">      我们也需要为每个组件提供一个“key”，稍后再</span>
+<span class="c">      作详细解释。</span>
+<span class="c">    --&gt;</span>
+    <span class="nt">&lt;todo-item</span>
+      <span class="na">v-for=</span><span class="s">&quot;item in groceryList&quot;</span>
+      <span class="na">v-bind:todo=</span><span class="s">&quot;item&quot;</span>
+      <span class="na">v-bind:key=</span><span class="s">&quot;item.id&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/todo-item&gt;</span>
+  <span class="nt">&lt;/ol&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+Vue.component(&#39;todo-item&#39;, {
+  // todo-item 组件现在接受一个
+  // &quot;prop&quot;，类似于一个自定义特性。
+  // 这个 prop 名为 todo。
+  props: [&#39;todo&#39;],
+  template: &#39;<span class="nt">&lt;li&gt;</span><span class="cp">{{</span> <span class="nv">todo.text</span> <span class="cp">}}</span><span class="nt">&lt;/li&gt;</span>&#39;
+})
+</pre></div>
+
+
+<p>props 是一个数组，用来声明组建的属性。然后通过属性来传递。</p>
+<p>组件还可以通过 $emit 来发送事件，这些事件可以被所有的组件监听到，就像普通的 DOM 事件一样。</p>
+<h1>声明周期函数</h1>
+<p>在固定的周期，vue 会调用的一些函数 created, mounted 等。需要注意的是，不要使用胖箭头函数。</p>
+<div class="highlight"><pre><span></span>new Vue({
+  data: {
+    a: 1
+  },
+  created: function () {
+    // `this` 指向 vm 实例
+    console.log(&#39;a is: &#39; + this.a)
+  }
+})
+// =&gt; &quot;a is: 1&quot;
+</pre></div>
+
+
+<h1>创建vue应用</h1>
+<p>因为我们会直接通过<code>*.vue</code>文件来编写vue的组件, 因此需要使用webpack打包编译. 另外我们需要使用官方的vue-router来</p>
+<div class="highlight"><pre><span></span>vue init webpack notelet
+</pre></div>
+
+
+<p>这条命令基于 webpack 这个模板创建了notelet这个应用, 也就是我们的笔记应用.</p>
+<p>打开 <code>src/router/index.js</code> 可以看到 vue 创建的router的代码, 其中<code>@</code>是<code>src</code>目录的缩写.</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">Vue</span> <span class="nn">from</span> <span class="s1">&#39;vue&#39;</span>
+  <span class="kn">import</span> <span class="nn">Router</span> <span class="nn">from</span> <span class="s1">&#39;vue-router&#39;</span>
+<span class="kn">import</span> <span class="nn">Hello</span> <span class="nn">from</span> <span class="s1">&#39;@/components/Hello&#39;</span>
+
+<span class="n">Vue</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">Router</span><span class="p">)</span>
+
+<span class="n">export</span> <span class="n">default</span> <span class="n">new</span> <span class="n">Router</span><span class="p">({</span>
+  <span class="n">routes</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+    <span class="err">¦</span> <span class="n">path</span><span class="p">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+    <span class="err">¦</span> <span class="n">name</span><span class="p">:</span> <span class="s1">&#39;Hello&#39;</span><span class="p">,</span>
+    <span class="err">¦</span> <span class="n">component</span><span class="p">:</span> <span class="n">Hello</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">})</span>
+</pre></div>
+
+
+<p>然后打开 <code>src/main.js</code>, 可以看到在里面使用了 <code>App</code> 来作为我们的跟组件</p>
+<div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">The</span> <span class="n">Vue</span> <span class="n">build</span> <span class="n">version</span> <span class="n">to</span> <span class="n">load</span> <span class="k">with</span> <span class="n">the</span> <span class="sb">`import`</span> <span class="n">command</span>
+<span class="o">//</span> <span class="p">(</span><span class="n">runtime</span><span class="o">-</span><span class="n">only</span> <span class="ow">or</span> <span class="n">standalone</span><span class="p">)</span> <span class="n">has</span> <span class="n">been</span> <span class="nb">set</span> <span class="ow">in</span> <span class="n">webpack</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">conf</span> <span class="k">with</span> <span class="n">an</span> <span class="n">alias</span><span class="o">.</span>
+<span class="kn">import</span> <span class="nn">Vue</span> <span class="nn">from</span> <span class="s1">&#39;vue&#39;</span>
+<span class="kn">import</span> <span class="nn">App</span> <span class="nn">from</span> <span class="s1">&#39;./App&#39;</span>
+<span class="kn">import</span> <span class="nn">router</span> <span class="nn">from</span> <span class="s1">&#39;./router&#39;</span>
+
+<span class="n">Vue</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">productionTip</span> <span class="o">=</span> <span class="n">false</span>
+
+<span class="o">/*</span> <span class="n">eslint</span><span class="o">-</span><span class="n">disable</span> <span class="n">no</span><span class="o">-</span><span class="n">new</span> <span class="o">*/</span>
+<span class="n">new</span> <span class="n">Vue</span><span class="p">({</span>
+  <span class="n">el</span><span class="p">:</span> <span class="s1">&#39;#app&#39;</span><span class="p">,</span>
+  <span class="n">router</span><span class="p">,</span>
+  <span class="n">template</span><span class="p">:</span> <span class="s1">&#39;&lt;App/&gt;&#39;</span><span class="p">,</span>
+  <span class="n">components</span><span class="p">:</span> <span class="p">{</span> <span class="n">App</span> <span class="p">}</span>
+<span class="p">})</span>
+</pre></div>
+
+
+<p>执行 <code>npm run dev</code>, 然后打开 http://localhost:8080/ 就可以看到我们的vue应用了. 注意, 在写这篇文章的时候 node 8.x 下似乎有bug, 导致 app.js 加载不出来, 安装 6.x 就好了. 该死的node.</p>
+<p>打开 <code>App.vue</code>, 也就是我们的根组件, 可以看到下面的内容</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;template&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;app&quot;</span><span class="nt">&gt;</span>
+  ¦ <span class="nt">&lt;router-view&gt;&lt;/router-view&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/template&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+export default {
+  name: &#39;app&#39;
+}
+<span class="nt">&lt;/script&gt;</span>
+
+<span class="nt">&lt;style&gt;</span>
+#app {
+  font-family: &#39;Avenir&#39;, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+<span class="nt">&lt;/style&gt;</span>
+</pre></div>
+
+
+<p>注意其中的 router-view 便签, 意思就是路由的内容都在 router-view 中显示.</p>
+<h1>添加一个新的组件和路由</h1>
+<p>接下来我们添加一个"关于"页面. 打开<code>src/router/index.js</code>, 改成下面这样:</p>
+<div class="highlight"><pre><span></span>export default new Router({
+  routes: [
+  ¦ {
+  ¦ ¦ path: &#39;/&#39;,
+  ¦ ¦ name: &#39;Hello&#39;,
+  ¦ ¦ component: Hello
+  ¦ },
+  ¦ {
+  ¦ ¦ path: &#39;/about&#39;,
+  ¦ ¦ name: &#39;About&#39;,
+  ¦ ¦ component: About
+  ¦ }
+  ]
+})
+</pre></div>
+
+
+<p>然后添加 <code>src/components/About.vue</code> 文件</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;template&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;hello&quot;</span><span class="nt">&gt;</span>
+  ¦ <span class="nt">&lt;h1&gt;</span>About Notelet<span class="nt">&lt;/h1&gt;</span>
+  ¦ <span class="nt">&lt;p&gt;</span>This is a simple note app<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/template&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+export default {
+  name: &#39;About&#39;,
+  data () {
+  ¦ return {
+  ¦ ¦ msg: &#39;Hello Vue&#39;
+  ¦ }
+  }
+}
+<span class="nt">&lt;/script&gt;</span>
+</pre></div>
+
+
+<p>然后更改 <code>App.vue</code> 文件</p>
+<div class="highlight"><pre><span></span><span class="nt">&lt;template&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;app&quot;</span><span class="nt">&gt;</span>
+  ¦ <span class="nt">&lt;router-link</span> <span class="na">:to=</span><span class="s">&quot;{name: &#39;Hello&#39;}&quot;</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/router-link&gt;</span>
+  ¦ <span class="nt">&lt;router-link</span> <span class="na">to=</span><span class="s">&quot;/about&quot;</span><span class="nt">&gt;</span>About<span class="nt">&lt;/router-link&gt;</span>
+  ¦ <span class="nt">&lt;router-view&gt;&lt;/router-view&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/template&gt;</span>
+</pre></div>
+
+
+<p>注意, 我们使用about指向了 About 这个组件, 而使用 hello 指向了 Hello 这个组件, 注意其中还动态传递了参数.</p>
+<p>[1] https://scotch.io/tutorials/getting-started-with-vue-router</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/qian-duan-kuang-jia-vue-xue-xi-bi-ji.html">posted at 04:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

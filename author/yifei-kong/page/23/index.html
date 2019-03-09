@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Articles by Yifei Kong</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/author/yifei-kong/page/23/index.html">Yifei Kong</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 17, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yue-du-redis-yuan-ma.html" rel="bookmark" title="Permanent Link to &quot;阅读 redis 源码&quot;">阅读 redis 源码</a>
+                </h2>
+
+                
+                
+
+                <ul>
+<li>https://zhengqm.github.io/code/2015/06/20/Learn-by-hacking-redis-source-code/</li>
+<li>https://github.com/huangz1990/blog/blob/master/diary/2014/how-to-read-redis-source-code.rst</li>
+</ul>
+<h1>字符串</h1>
+<p>redis 内部使用Simple Data String 代表字符串。结构如下：</p>
+<p>sds的内存分配策略：</p>
+<ol>
+<li>如果当前内存不能够放得下需要的字符串，长度翻倍。放得下则直接放。当超过30M时，则每次增长1M</li>
+<li>如果释放内存时，不释放空间</li>
+<li>redis的字符串是二进制安全的</li>
+</ol>
+<h1>链表</h1>
+<p>redis 的 list 是使用链表实现的。</p>
+<div class="highlight"><pre><span></span>typedef struct listNode {
+    struct listNode * prev;
+    struct listNode * next …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yue-du-redis-yuan-ma.html">posted at 02:15</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 17, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/running-chrome-extension-from-command-line.html" rel="bookmark" title="Permanent Link to &quot;running chrome extension from command line&quot;">running chrome extension from command line</a>
+                </h2>
+
+                
+                
+
+                <p>https://stackoverflow.com/questions/22193369/run-chrome-extensions-using-command-prompt</p>
+<p>chrome/firefox 插件源码的位置:</p>
+<ol>
+<li>Chrome <code>~/Library/Application Support/Google/Chrome/Default/Extensions/&lt;EXTENSION_ID&gt;/</code></li>
+<li>Firefox  <code>~/Library/Application Support/Firefox/Profiles/PROFILE_ID/extensions/EXTENSION_ID/</code></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/running-chrome-extension-from-command-line.html">posted at 02:14</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 16, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/chrome-spider.html" rel="bookmark" title="Permanent Link to &quot;chrome spider&quot;">chrome spider</a>
+                </h2>
+
+                
+                
+
+                <p>Write it in javascript, </p>
+<p>start script starts chrome and opens the extension by opening extension's page</p>
+<p>another scripts opens a http server locally to feed the initial command and rules</p>
+<p>the extension then executes as instructed</p>
+<p>see also:</p>
+<p>https://chrome.google.com/webstore/detail/wild-spider/aanpchnfojihjddlocpgoekffmjkhbbe</p>
+<p>https://chrome.google.com …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/chrome-spider.html">posted at 03:23</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-bei-fen-yu-hui-fu.html" rel="bookmark" title="Permanent Link to &quot;MySQL 备份与恢复&quot;">MySQL 备份与恢复</a>
+                </h2>
+
+                
+                
+
+                <h1>基础使用</h1>
+<p>帮助命令很简单</p>
+<div class="highlight"><pre><span></span><span class="n">Usage</span><span class="o">:</span> <span class="n">mysqldump</span> <span class="o">[</span><span class="n">OPTIONS</span><span class="o">]</span> <span class="n">database</span> <span class="o">[</span><span class="n">tables</span><span class="o">]</span>
+<span class="n">OR</span>     <span class="n">mysqldump</span> <span class="o">[</span><span class="n">OPTIONS</span><span class="o">]</span> <span class="o">--</span><span class="n">databases</span> <span class="o">[</span><span class="n">OPTIONS</span><span class="o">]</span> <span class="n">DB1</span> <span class="o">[</span><span class="n">DB2</span> <span class="n">DB3</span><span class="o">...]</span>
+<span class="n">OR</span>     <span class="n">mysqldump</span> <span class="o">[</span><span class="n">OPTIONS</span><span class="o">]</span> <span class="o">--</span><span class="n">all</span><span class="o">-</span><span class="n">databases</span> <span class="o">[</span><span class="n">OPTIONS</span><span class="o">]</span>
+</pre></div>
+
+
+<h1>备份</h1>
+<p><code>mysqldump -u root --password=xxx DB_NAME [TABLE_NAME] &gt; backup.sql</code></p>
+<p><code>--password</code> 可以直接在命令中使用密码</p>
+<p>可以选择只 dump 一个数据库或者一个表。</p>
+<h1>恢复</h1>
+<p><code>mysql -u root -p DB_NAME &lt; backup.sql</code></p>
+<h1>一行操作</h1>
+<div class="highlight"><pre><span></span>mysqldump -u root -pPassword --all-databases …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-bei-fen-yu-hui-fu.html">posted at 07:06</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/developer-mis-charging.html" rel="bookmark" title="Permanent Link to &quot;developer mis-charging&quot;">developer mis-charging</a>
+                </h2>
+
+                
+                
+
+                <p>I find it a little funny how unrealistic people can be when evaluating the cost of their problem. Take this one for example: "We have hundreds of images uploaded to our app each day. The issue is some of these images have text that we want cropped out." -- willing to …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/developer-mis-charging.html">posted at 06:13</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/chuang-ye.html" rel="tag">创业</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/chuang-ye.html" class="tags">创业</a>
+                </div>
+            </article>            <h4 class="date">Jun 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/vim-zhong-de-pin-xie-jian-cha.html" rel="bookmark" title="Permanent Link to &quot;vim 中的拼写检查&quot;">vim 中的拼写检查</a>
+                </h2>
+
+                
+                
+
+                <h1>basic usage</h1>
+<p><code>:set spell</code> to open, <code>:set nospell</code> to disable, <code>:set spell!</code> to toggle.</p>
+<p><code>]s</code> and <code>[s</code> to go to next and previous spell error. <code>z=</code> to see suggestions, but it's not good. use <code>:nnoremap \s ea&lt;C-X&gt;&lt;C-S&gt;</code></p>
+<p>Use <code>set spell</code> to check spellings in vim, if you find …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/vim-zhong-de-pin-xie-jian-cha.html">posted at 04:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/vim.html" class="tags">vim</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>            <h4 class="date">Jun 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/axios-and-fetch.html" rel="bookmark" title="Permanent Link to &quot;axios and fetch&quot;">axios and fetch</a>
+                </h2>
+
+                
+                
+
+                <h1>cookies</h1>
+<p>浏览器中的 JavaScript 运行在一个沙箱中。</p>
+<p>fetch 默认不带 cookie, see https://developer.mozilla.org/en-US/docs/Web/API/Request/credentials</p>
+<p>axios 自动附加请求域名对应的 cookie</p>
+<p>可以使用 JavaScript 设置对应所在域名的 cookie，而 chrome extension 可以设置所有域名的 cookie</p>
+<h1>basic usage</h1>
+<div class="highlight"><pre><span></span>try {
+    let response = axios.get(url)
+} catch (e) {
+    console.log(e)
+}
+
+// 可以使用的几种语法
+axios.get(url)
+axios.post(url …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/axios-and-fetch.html">posted at 01:37</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/chrome-extension-runtime.html" rel="bookmark" title="Permanent Link to &quot;Chrome Extension runtime&quot;">Chrome Extension runtime</a>
+                </h2>
+
+                
+                
+
+                <h1>basic usage</h1>
+<div class="highlight"><pre><span></span>chrome.runtime.getBackgroundPage(function(window) {})  // retrive the background page&#39;s window object
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>chrome.runtime.getURL(path)  // get the absolute url for given file in extension package
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/chrome-extension-runtime.html">posted at 15:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/chrome-extension-tabs.html" rel="bookmark" title="Permanent Link to &quot;Chrome Extension Tabs&quot;">Chrome Extension Tabs</a>
+                </h2>
+
+                
+                
+
+                <h1>permissions</h1>
+<div class="highlight"><pre><span></span>permissions: [
+    &quot;tabs&quot;,
+]
+</pre></div>
+
+
+<h1>usage</h1>
+<h2>chrome.tabs.query to get current tab</h2>
+<div class="highlight"><pre><span></span><span class="nt">chrome</span><span class="p">.</span><span class="nc">tabs</span><span class="p">.</span><span class="nc">query</span><span class="o">(</span><span class="p">{</span><span class="n">active</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span> <span class="n">currentWindow</span><span class="o">:</span> <span class="n">true</span><span class="p">}</span><span class="o">,</span> <span class="nt">function</span><span class="o">(</span><span class="nt">tabs</span><span class="o">)</span> <span class="p">{}</span><span class="o">);</span>  <span class="o">//</span> <span class="nt">tabs</span><span class="cp">[</span><span class="mi">0</span><span class="cp">]</span> <span class="nt">would</span> <span class="nt">be</span> <span class="nt">the</span> <span class="nt">current</span> <span class="nt">tab</span>
+</pre></div>
+
+
+<h2>create new tab</h2>
+<div class="highlight"><pre><span></span>chrome.tabs.create({url: URL}, function(tab) {})
+</pre></div>
+
+
+<h2>kill tab</h2>
+<div class="highlight"><pre><span></span>chrome.tabs.remove(tabId or [tabId], function() {})
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/chrome-extension-tabs.html">posted at 14:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/chrome-extension-storage.html" rel="bookmark" title="Permanent Link to &quot;Chrome Extension storage&quot;">Chrome Extension storage</a>
+                </h2>
+
+                
+                
+
+                <h1>Basic Concepts</h1>
+<p>there are 3 storage area for chrome, <code>sync</code>, <code>local</code>, <code>managed</code> areas. the <code>sync</code> area will be synced with the cloud. managed area is read-only.</p>
+<p>all your extension scripts share the same storage, including content scripts, they don't belong to their domain's localStorage.</p>
+<h1>Usage</h1>
+<div class="highlight"><pre><span></span>chrome.storage.local.get(&#39;key …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/chrome-extension-storage.html">posted at 13:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/22" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/24" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 23 of 34</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

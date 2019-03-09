@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Linux 命令行文件管理</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="命令行,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-wen-jian-guan-li.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行文件管理&quot;">Linux 命令行文件管理</a>
+                </h2>
+
+                
+                
+
+                <h2>get current file path</h2>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash </span>
+<span class="c1"># Absolute path to this script, e.g. /home/user/bin/foo.sh</span>
+<span class="nv">SCRIPT</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="k">)</span>
+<span class="c1"># Absolute path this script is in, thus /home/user/bin</span>
+<span class="nv">SCRIPTPATH</span><span class="o">=</span><span class="k">$(</span>dirname <span class="s2">&quot;</span><span class="nv">$SCRIPT</span><span class="s2">&quot;</span><span class="k">)</span>
+<span class="nb">echo</span> <span class="nv">$SCRIPTPATH</span>
+</pre></div>
+</td></tr></table>
+
+<p>这些程序基本都有一个模式：如果不给定文件作为参数，那么就从stdin读取，从 stdout 输出，非常适合 pipe，而且一般可以接受多个文件作为参数，并把结果合并</p>
+<h2>ls</h2>
+<p>ls 的一个很好用的命令组合 <code>ls -sail</code></p>
+<h2>stat 和 file</h2>
+<p>stat 读取一个文件的所有信息，file 猜测文件的类型</p>
+<h2>cat</h2>
+<p>cat &gt; fiie1 从标准输入读取并插入到file1
+cat -ns file -n命令表示加入行号，-s 表示压缩多个空行到一个</p>
+<h2>chattr</h2>
+<h2>find</h2>
+<h3>Syntax</h3>
+<div class="highlight"><pre><span></span>find &lt;dir&gt; [!] &lt;filter&gt; &lt;action&gt;
+</pre></div>
+
+
+<h3>Filters</h3>
+<div class="highlight"><pre><span></span>-name   后面可以跟通配符
+-wholename  
+-regex  Match on a whole path -iregex 不区分大小写
+-type   文件类型 f 文件 d 目录 l 链接
+-atime/mtime/ctime  使用+-区分未来过去，可以使用的单位smhdw
+-newer file     比
+-size   后面跟大小可以使用ckMGTP
+-user/-group/-nouser    用户
+-perm   权限
+-path   在整个路径中，使用通配符
+</pre></div>
+
+
+<h3>Actions</h3>
+<p>执行的动作跟在-exec/-ok后面</p>
+<div class="highlight"><pre><span></span>find ... -exec command {} + .. # give all files combined to the command
+find ... -exec command {} \; # give each file
+</pre></div>
+
+
+<h3>Tips</h3>
+<p>如果打印出绝对路径，使用find $PWD ...</p>
+<h3>find with xargs</h3>
+<p><code>find ... -print0 | xargs -0 ...</code></p>
+<p>A numeric mode is from one to four octal digits (0-7), derived by adding up the bits with values 4, 2, and 1. Omitted digits are assumed to be leading zeros. The first digit selects the set user ID (4) and set group ID (2) and restricted deletion or sticky (1) attributes. The second digit selects permissions for the user who owns the file: read (4), write (2), and execute (1); the third selects permissions for other users in the file's group, with the same values; and the fourth for other users not in the file's group, with the same values.</p>
+<h2>权限</h2>
+<p>Linux 文件的权限可以使用0-7的四个八进制数字代表, 由1/2/4三个数字相加而成. 省略的数字会被认为是按0打头的. 第一个数字设定了 set user ID(4), set group ID(2) 和 限制删除或者叫 sticky bit(1). 第二个数字设定了文件所有者的权限: read(4), write(2), execute(1). 第三个设定了文件所在组的权限</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-wen-jian-guan-li.html">posted at 12:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

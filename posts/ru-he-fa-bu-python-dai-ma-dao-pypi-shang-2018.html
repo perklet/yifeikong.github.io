@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 如何发布 Python 代码到 PyPI 上（2018）</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 19, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-fa-bu-python-dai-ma-dao-pypi-shang-2018.html" rel="bookmark" title="Permanent Link to &quot;如何发布 Python 代码到 PyPI 上（2018）&quot;">如何发布 Python 代码到 PyPI 上（2018）</a>
+                </h2>
+
+                
+                
+
+                <p>PyPI 是 Python 的集中仓库。通过把代码上传到 PyPI，其他人就可以使用使用 <code>pip install xxx</code> 安装代码了。</p>
+<p>Python 的安装工具一直在不断演变，PyPI 的地址也从 pypi.python.org 变到了 pypi.org，因此网上的教程大多数都过时了，官方文档更新比较及时，但是也略过繁琐，这里写一篇简要的教程以飨读者。</p>
+<p>本文以作者的库 <a href="https://github.com/yifeikong/aioify">aioify</a> 为例</p>
+<h1>文件结构</h1>
+<div class="highlight"><pre><span></span>.
+├── LICENSE.txt
+├── MANIFEST.in
+├── README.md
+├── aioify
+│   └── __init__.py
+├── setup.cfg
+└── setup.py
+</pre></div>
+
+
+<h2>LICENSE.txt</h2>
+<p>库的开源协议，建议使用 Apache、MIT 等</p>
+<h2>MANIFEST.in</h2>
+<p>打包要包含的文件，Python 文件会自动包括在内，但是 README.md 不包含在内，所以需要特别注明：</p>
+<div class="highlight"><pre><span></span>include *.md
+include LICENSE.txt
+</pre></div>
+
+
+<p>具体语法参见</p>
+<h2>README.md</h2>
+<p>说明文件，不多数了</p>
+<h2>aioify</h2>
+<p>这个是具体的代码的仓库</p>
+<h2>setup.cfg</h2>
+<p>用于指定 setup.py 的默认参数</p>
+<div class="highlight"><pre><span></span><span class="k">[metadata]</span>
+<span class="na">description-file</span> <span class="o">=</span> <span class="s">README.md</span>
+</pre></div>
+
+
+<h2>setup.py</h2>
+<p>这个文件是整个打包过程的关键所在了。请参考下面的注释</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">distutils.core</span> <span class="kn">import</span> <span class="n">setup</span>
+
+<span class="c1"># 可选，读取 README 作为下面的 long_description</span>
+<span class="n">here</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">here</span><span class="p">,</span> <span class="s1">&#39;README.md&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">long_description</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;aioify&#39;</span><span class="p">,</span>   <span class="c1"># 包的名字</span>
+    <span class="n">packages</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;aioify&#39;</span><span class="p">],</span>   <span class="c1"># 同上</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;0.1.3&#39;</span><span class="p">,</span>    <span class="c1"># 当前版本</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;Make every python function async/await&#39;</span><span class="p">,</span>  <span class="c1"># 描述</span>
+    <span class="n">long_description</span> <span class="o">=</span> <span class="n">long_description</span><span class="p">,</span>  <span class="c1"># 长描述，会显示在 PyPI 主页上</span>
+    <span class="n">long_description_content_type</span> <span class="o">=</span> <span class="s1">&#39;text/markdown&#39;</span><span class="p">,</span>  <span class="c1"># 长描述的格式，不过好像markdown支持还不是很好</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="s1">&#39;Yifei Kong&#39;</span><span class="p">,</span>  <span class="c1"># 作者</span>
+    <span class="n">author_email</span> <span class="o">=</span> <span class="s1">&#39;kongyifei@gmail.com&#39;</span><span class="p">,</span>  <span class="c1"># 作者邮件</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/yifeikong/aioify&#39;</span><span class="p">,</span>  <span class="c1"># 项目地址</span>
+    <span class="n">download_url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/yifeikong/aioify/archive/0.1.3.tar.gz&#39;</span><span class="p">,</span>  <span class="c1"># 下载链接，可选</span>
+    <span class="n">keywords</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;async&#39;</span><span class="p">,</span> <span class="s1">&#39;await&#39;</span><span class="p">,</span> <span class="s1">&#39;wrap&#39;</span><span class="p">],</span>  <span class="c1"># 关键词</span>
+    <span class="c1"># 分类器，可以认为是 PyPI 的一些栏目，建议参考文档填写，可选</span>
+    <span class="n">classifiers</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Development Status :: 3 - Alpha&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Intended Audience :: Developers&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;License :: OSI Approved :: MIT License&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Programming Language :: Python :: 3&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Programming Language :: Python :: 3.5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Programming Language :: Python :: 3.6&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Programming Language :: Python :: 3.7&#39;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="n">python_requires</span><span class="o">=</span><span class="s1">&#39;&gt;=3.5&#39;</span>  <span class="c1"># 最低 Python 版本</span>
+<span class="p">)</span>
+</pre></div>
+
+
+<h1>上传</h1>
+<h2>本地测试</h2>
+<p>在项目的根目录，可以使用 pip 安装测试一下，看 setup.py 等文件是否有问题</p>
+<div class="highlight"><pre><span></span>pip install -e .
+</pre></div>
+
+
+<h2>注册账户</h2>
+<p>在 pypi.org 注册一个账户。另外，在 test.pypi.org 再注册一个测试账户，因为两个站之间是独立的，所以得注册两次。</p>
+<h2>配置 .pypirc 文件</h2>
+<p>打开 ~/.pypirc 输入一下内容：</p>
+<div class="highlight"><pre><span></span><span class="k">[distutils]</span>
+<span class="na">index-servers</span> <span class="o">=</span><span class="s"></span>
+<span class="s">  pypi</span>
+<span class="s">  testpypi</span>
+
+<span class="k">[pypi]</span>
+<span class="na">username: 你的用户名</span>
+<span class="na">password: 密码</span>
+
+<span class="k">[testpypi]</span>
+<span class="na">repository:https://test.pypi.org/legacy/</span>
+<span class="na">username: 同上</span>
+<span class="na">password: 同上</span>
+</pre></div>
+
+
+<h2>上传到 test.pypi.org</h2>
+<p>test.pypi.org 是专门用来在正式上传前测试的服务器，以免操作失误。</p>
+<p>打包</p>
+<div class="highlight"><pre><span></span>python setup.py sdist
+</pre></div>
+
+
+<p>然后可以看到多出了 dist/ 目录</p>
+<p>上传</p>
+<div class="highlight"><pre><span></span>pip install twine  # 现在官方推荐使用twine工具
+twine upload dist/* --repository testpypi
+</pre></div>
+
+
+<p>然后到 test.pypi.org/projects/xxx 就可以看到你的代码了~</p>
+<h2>上传到 pypi</h2>
+<p>一切验证无误之后，就可以上传到 PyPI 了：</p>
+<div class="highlight"><pre><span></span>twine upload dist/*
+</pre></div>
+
+
+<p>更多细节介绍请参见官方文档：</p>
+<ol>
+<li>https://packaging.python.org/tutorials/distributing-packages/</li>
+<li>https://packaging.python.org/guides/using-testpypi/</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-fa-bu-python-dai-ma-dao-pypi-shang-2018.html">posted at 11:01</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

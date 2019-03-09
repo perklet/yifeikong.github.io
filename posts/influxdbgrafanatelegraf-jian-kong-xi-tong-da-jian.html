@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | influxdb+grafana+telegraf 监控系统搭建</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Sep 20, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/influxdbgrafanatelegraf-jian-kong-xi-tong-da-jian.html" rel="bookmark" title="Permanent Link to &quot;influxdb+grafana+telegraf 监控系统搭建&quot;">influxdb+grafana+telegraf 监控系统搭建</a>
+                </h2>
+
+                
+                
+
+                <p>本文基于 ubuntu 18.04</p>
+<h1>要不要用 docker？</h1>
+<p>这是一个哲学问题，用不用其实都有各自的好处。不过在这里我倾向于不用。因为 influxdb 和 grafana 都有好多的状态，而且不是都可以写到 mysql 中的，所以既然还得 mount 出来，何苦用 docker 呢？telegraf 需要采集系统的相关信息，更不适合放在 docker 里面。</p>
+<h1>搭建过程</h1>
+<h2>influxdb &amp;&amp; telegraf</h2>
+<p>因为这两个都是一家的产品，所以安装步骤都是一样的。按照<a href="https://docs.influxdata.com/influxdb/v1.6/introduction/installation/">官网</a>给的安装步骤，其实很简单的。</p>
+<div class="highlight"><pre><span></span>curl -sL https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+source /etc/lsb-release
+echo &quot;deb https://repos.influxdata.com/<span class="cp">${</span><span class="n">DISTRIB_ID</span><span class="p">,,</span><span class="cp">}</span> <span class="cp">${</span><span class="n">DISTRIB_CODENAME</span><span class="cp">}</span> stable&quot; | sudo tee /etc/apt/sources.list.d/influxdb.list
+
+sudo apt-get update <span class="err">&amp;&amp;</span> sudo apt-get install influxdb telegraf
+sudo systemctl start influxdb telegraf
+</pre></div>
+
+
+<p>我们暂时就不配置了，直接使用默认配置。可以通过 <code>systemctl status influxdb</code> 来查看状态</p>
+<h2>grafana</h2>
+<p>同样参考<a href="http://docs.grafana.org/installation/debian/">官网</a>的教程。</p>
+<div class="highlight"><pre><span></span>VERSION=5.1.4
+wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_<span class="cp">${</span><span class="n">VERSION</span><span class="cp">}</span>_amd64.deb
+apt-get install -y adduser libfontconfig
+dpkg -i grafana_<span class="cp">${</span><span class="n">VERSION</span><span class="cp">}</span>_amd64.deb
+
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable grafana-server
+sudo /bin/systemctl start grafana-server
+</pre></div>
+
+
+<p>然后就 ok 啦，打开 http://ip:3000 就能访问 grafana 的界面了，默认用户名和密码是 admin。如果是在阿里云等云上面，注意要在安全组里面开一下 3000 端口。</p>
+<h1>配置</h1>
+<h2>配置 telegraf 的插件</h2>
+<h2>配置 grafana 的 datasource</h2>
+<p>未完待续</p>
+<h1>参考资料</h1>
+<ol>
+<li>https://blog.csdn.net/w958660278/article/details/80484486</li>
+<li>https://juejin.im/post/5b4568c851882519790c72f3</li>
+<li>https://grafana.com/dashboards/928</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/influxdbgrafanatelegraf-jian-kong-xi-tong-da-jian.html">posted at 19:05</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

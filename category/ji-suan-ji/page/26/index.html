@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles in the "计算机" category | Page 26</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+
+                <li class="ephemeral selected"><a href="/category/ji-suan-ji/page/26/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ngram.html" rel="bookmark" title="Permanent Link to &quot;Ngram&quot;">Ngram</a>
+                </h2>
+
+                
+                
+
+                <p>ng</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ngram.html">posted at 07:42</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/ji-qi-xue-xi.html" class="tags">机器学习</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/decompile-apk.html" rel="bookmark" title="Permanent Link to &quot;decompile apk&quot;">decompile apk</a>
+                </h2>
+
+                
+                
+
+                <h1>jadx[1]</h1>
+<h2>compile and install jadx</h2>
+<p>mkdir jadx
+git clone https://github.com/skylot/jadx.git
+cd jadx
+./gradlew dist   # you might need to wait on this</p>
+<h2>decompile apk</h2>
+<div class="highlight"><pre><span></span>1. change apk to zip file and unzip it
+2. copy out the class.dex file
+3. build/jadx/bin/jadx …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/decompile-apk.html">posted at 07:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-zuo-yi-ge-code-review.html" rel="bookmark" title="Permanent Link to &quot;如何做一个 Code Review&quot;">如何做一个 Code Review</a>
+                </h2>
+
+                
+                
+
+                <p>转载自：https://mp.weixin.qq.com/s?__biz=MzIwMzg1ODcwMw==&amp;mid=2247486399&amp;idx=1&amp;sn=219af64c7ecbf9e6c601cefddd0a0eba&amp;source=41#wechat_redirect</p>
+<p>众所周知，在团队中进行代码审查（Code Review）可以提升代码质量，分享项目知识、明确责任，最终达到构建更好的软件、更好的团队。如果你花几秒钟搜索代码审查的相关信息，你会看到许多关于代码审查带来的价值的文章。也有许多方法来进行代码审查：在GitHub中提pull request，或使用像JetBrains的Upsource之类的工具。然而即使拥有清晰的流程和正确的工具，还遗留了一个大问题需要解决——我们需要找寻哪些问题。</p>
+<p>可能没有明确关于“我们需要找寻哪些问题”的文章，是因为有许多不同的要点需要考虑。正如任何其他的需求，各个团队对各个方面都有不同的优先级。</p>
+<p>本文的目标是列出一些审查者可以找寻的要点，而各个方面的优先级就因各个团队而异了。</p>
+<p>在我们继续之前，让我们考虑一下大家在代码审查时会讨论到的问题。对于代码的格式、样式和命名以及缺少测试这些问题是很常见的几点。如果你想拥有可持续的、可维护的代码 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-zuo-yi-ge-code-review.html">posted at 07:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiang-fa.html" class="tags">想法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-biao-zhun-ku-zhong-de-rong-qi.html" rel="bookmark" title="Permanent Link to &quot;Python 标准库中的容器&quot;">Python 标准库中的容器</a>
+                </h2>
+
+                
+                
+
+                <h2>namedtuple</h2>
+<p>a class template to generated memory efficient class</p>
+<p><code>MyClass = namedtuple('MyClass', [attrib_foo, attrib_bar, ...])</code></p>
+<p>keys and items of a dict can be used as a set.</p>
+<h2>deque</h2>
+<p>deque is implemented as deque, it can be created with maxlen=N</p>
+<p>appendleft, popleft, append, pop</p>
+<h2>defaultdict</h2>
+<p>multidict = defaultdict(list) # builds a multidict …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-biao-zhun-ku-zhong-de-rong-qi.html">posted at 04:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-logging-library.html" rel="bookmark" title="Permanent Link to &quot;python logging library&quot;">python logging library</a>
+                </h2>
+
+                
+                
+
+                <h2>Yifei's Notes</h2>
+<p>Very sad, logging only supports %-style string formatting</p>
+<p><code>logging.exception</code> is the right way to log exceptions, not <code>logging.error</code></p>
+<h2>Basic Usage</h2>
+<p>库只应该定义自己的日志的格式, 而不应该定义自己的日志如何输出, 日志输出应该由最终的使用程序来定义.
+ 
+如果使用systemd来运行程序的话, 直接把所有日志打印到stdout就可以了</p>
+<p><code>logging.basicConfig(level=level, format=fmt_string, filename=file, datefmt=datefmt)</code></p>
+<p>if you don't supply filename, the log is printed to stdout …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-logging-library.html">posted at 03:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python3-venv.html" rel="bookmark" title="Permanent Link to &quot;python3 venv&quot;">python3 venv</a>
+                </h2>
+
+                
+                
+
+                <h1>Yifei's Notes</h1>
+<h2>traps</h2>
+<p>venv puts the current directory's name in its source code generated, so after renaming your directory, you will have to rename the <code>activate</code> file and the <code>pip</code> file.</p>
+<h1>venv</h1>
+<p>In Python 3, there comes a virtual environment shipped with the standard lib called <code>venv</code>.</p>
+<p>to create a …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python3-venv.html">posted at 03:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yong-yu-ti-dai-ajaxde-fetch-api.html" rel="bookmark" title="Permanent Link to &quot;用于替代ajax的 fetch API&quot;">用于替代ajax的 fetch API</a>
+                </h2>
+
+                
+                
+
+                <p>fetch is the new and easy api for js to make request to the server, it replaces XMLHttpRequest.</p>
+<h2>Objects:</h2>
+<p>fetch, Request, Reponse, Headers</p>
+<h2>Usage:</h2>
+<div class="highlight"><pre><span></span>fetch(&#39;/path/to/fetch&#39;,
+    {method: &#39;GET&#39;}
+).then(function (response) {
+    // process response;
+    return response.json(); // returns a json promise
+    return response.text(); // returns a text promise
+
+
+    return …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yong-yu-ti-dai-ajaxde-fetch-api.html">posted at 03:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/list-of-opengl-online-tutorials.html" rel="bookmark" title="Permanent Link to &quot;List of OpenGL online tutorials&quot;">List of OpenGL online tutorials</a>
+                </h2>
+
+                
+                
+
+                <p>So I started to learn OpenGL, but the red book and blue book is just too detailed. I googled around, and knew that modern OpenGL is preferred (version 3 and above), however, the old Nehe's tutorial which is about OpenGL 1.x is still everywhere. To help beginners from digging …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/list-of-opengl-online-tutorials.html">posted at 03:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/tu-xing-xue.html" class="tags">图形学</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kua-guo-chang-cheng-de-jing-xiang.html" rel="bookmark" title="Permanent Link to &quot;跨过长城的镜像&quot;">跨过长城的镜像</a>
+                </h2>
+
+                
+                
+
+                <h2>pip</h2>
+<ol>
+<li>Douban pip mirror： sudo pip install -i http://pypi.douban.com/simple/ flask</li>
+<li>Aliyun pip mirror： http://mirrors.aliyun.com/pypi/simple/</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kua-guo-chang-cheng-de-jing-xiang.html">posted at 03:43</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiao-ji-qiao.html" class="tags">小技巧</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/https-he-ssl-xiang-guan-xin-xi.html" rel="bookmark" title="Permanent Link to &quot;HTTPS 和 SSL 相关信息&quot;">HTTPS 和 SSL 相关信息</a>
+                </h2>
+
+                
+                
+
+                <h1>证书文件</h1>
+<p>the de facto SSL certs format is X.509 v3</p>
+<p>it contains:</p>
+<ul>
+<li>version   </li>
+<li>serial number </li>
+<li>algoirthm </li>
+<li>authority </li>
+<li>validate date </li>
+<li>orgnisation   </li>
+<li>pubkey    </li>
+<li>etc.  </li>
+<li>sign, the ca signs the cert using its private key</li>
+</ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/https-he-ssl-xiang-guan-xin-xi.html">posted at 03:38</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/25" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/27" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 26 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | make 和 premake</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="C 语言,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/make-he-premake.html" rel="bookmark" title="Permanent Link to &quot;make 和 premake&quot;">make 和 premake</a>
+                </h2>
+
+                
+                
+
+                <h1>Rule</h1>
+<div class="highlight"><pre><span></span><span class="n">target</span><span class="o">:</span> <span class="n">dependencies</span><span class="o">(</span><span class="n">sepreated</span> <span class="n">by</span> <span class="n">spaces</span><span class="o">)</span>
+    <span class="n">command</span><span class="o">(</span><span class="n">s</span><span class="o">)</span> <span class="n">to</span> <span class="n">run</span> <span class="n">to</span> <span class="n">build</span> <span class="n">the</span> <span class="n">target</span> <span class="n">from</span> <span class="n">dependencies</span>
+</pre></div>
+
+
+<h1>Basic usage</h1>
+<p>in most projects, we have a <code>.h</code> file for functiont interfaces, and the whole program depends on it.
+typically, all <code>.o</code> files are compiled from corresponding <code>.c</code> source files</p>
+<div class="highlight"><pre><span></span><span class="nv">cc</span> <span class="o">=</span> gcc              <span class="c1"># marco</span>
+<span class="nv">prom</span> <span class="o">=</span> calc
+<span class="nv">deps</span> <span class="o">=</span> calc.h         <span class="c1"># the one .h to rule them all</span>
+<span class="nv">obj</span> <span class="o">=</span> main.o getch.o getop.o stack.o
+<span class="nf">$(prom)</span><span class="o">:</span> <span class="k">$(</span><span class="nv">obj</span><span class="k">)</span>
+    <span class="k">$(</span>CC<span class="k">)</span> -o <span class="k">$(</span>prom<span class="k">)</span> <span class="k">$(</span>obj<span class="k">)</span>
+<span class="nf">%.o</span><span class="o">:</span> %.<span class="n">c</span> <span class="k">$(</span><span class="nv">deps</span><span class="k">)</span>      <span class="c">#pattern rule, which means all .o depends on all .c and $(deps)</span>
+    <span class="k">$(</span>CC<span class="k">)</span> -c $&lt; -o <span class="nv">$@</span> <span class="c1"># $&lt; means the depender and $@ means the dependee</span>
+</pre></div>
+
+
+<h1>Functions</h1>
+<p>we can make the file even smarter by using makefile funcions
+Makefile function syntax $(func params)</p>
+<div class="highlight"><pre><span></span><span class="nv">cc</span> <span class="o">=</span> gcc
+<span class="nv">prom</span> <span class="o">=</span> calc
+<span class="nv">deps</span> <span class="o">=</span> <span class="k">$(</span>shell find ./ -name <span class="s2">&quot;*.h&quot;</span><span class="k">)</span> <span class="c1"># find all header files using the builtin shell function</span>
+<span class="nv">src</span> <span class="o">=</span> <span class="k">$(</span>shell find ./ -name <span class="s2">&quot;*.c&quot;</span><span class="k">)</span>
+<span class="nv">obj</span> <span class="o">=</span> <span class="k">$(</span>src:%.c<span class="o">=</span>%.o<span class="k">)</span> 
+<span class="nf">$(prom)</span><span class="o">:</span> <span class="k">$(</span><span class="nv">obj</span><span class="k">)</span>
+    <span class="k">$(</span>CC<span class="k">)</span> -o <span class="k">$(</span>prom<span class="k">)</span> <span class="k">$(</span>obj<span class="k">)</span>
+<span class="nf">%.o</span><span class="o">:</span> %.<span class="n">c</span> <span class="k">$(</span><span class="nv">deps</span><span class="k">)</span>
+    <span class="k">$(</span>CC<span class="k">)</span> -c $&lt; -o <span class="nv">$@</span>
+<span class="nf">clean</span><span class="o">:</span>                              <span class="c"># empty target to run a commnad</span>
+    rm -rf <span class="k">$(</span>obj<span class="k">)</span> <span class="k">$(</span>prom<span class="k">)</span>
+</pre></div>
+
+
+<h1>Reference</h1>
+<p>http://www.epubit.com.cn/article/546</p>
+<h1>Autotools</h1>
+<p>Autotools is a collection of three tools:</p>
+<ol>
+<li>autoconf — This is used to generate the “configure” shell script. As I mentioned earlier, this is the script that analyzes your system at compile-time. For example, does your system use “cc” or “gcc” as the C compiler?</li>
+<li>automake — This is used to generate Makefiles. It uses information provided by Autoconf. For example, if your system has “gcc”, it will use “gcc” in the Makefile. Or, if it finds “cc” instead, will use “cc” in the Makefile.</li>
+<li>libtool — This is used to create shared libraries, platform-independently.</li>
+</ol>
+<div class="highlight"><pre><span></span>$ autoscan                    <span class="c1">#--&gt; creates `autoscan.scan` file</span>
+$ mv autoscan.scan to <span class="sb">`</span>autoscan.ac<span class="sb">`</span> file
+$ autoconf                    <span class="c1"># --&gt; use autoconf.ac to create `configure` file</span>
+<span class="c1"># we need a `makefile.in` as the template for configure file to use</span>
+$ automake                    <span class="c1"># --&gt; use `makefile.in` to create `makefile`</span>
+$ autoheader                  <span class="c1"># --&gt; generate `config.h.in`</span>
+$ ./configure                 <span class="c1"># --&gt; generate the makefile and config.h</span>
+$ make <span class="o">&amp;&amp;</span> make install        <span class="c1"># horry!</span>
+</pre></div>
+
+
+<p>To be continued at:
+http://markuskimius.wikidot.com/programming:tut:autotools:5</p>
+<h1>premake 基本用法</h1>
+<p>premake 可以生成makefile
+premake gmake
+生成的 makefile 支持 
+make 默认构建
+make help   查看帮助文件
+make config=release 按照 release 构建
+make clean  清除构建
+make config=release clean   清除 release 构建</p>
+<p>premake5脚本的名字是 premake5.lua, 本质上就是一个 lua 脚本, 每一行都是一个函数调用, 因为参数恰好是字符串或者 table, 所以可以省略括号</p>
+<div class="highlight"><pre><span></span>-- premake5.lua
+workspace &quot;HelloWorld&quot;
+   configurations { &quot;Debug&quot;, &quot;Release&quot; }
+project &quot;HelloWorld&quot;
+   kind &quot;ConsoleApp&quot;
+   language &quot;C&quot;
+   targetdir &quot;bin/%{cfg.buildcfg}&quot;
+files { &quot;**.h&quot;, &quot;**.c&quot; }
+filter &quot;configurations:Debug&quot;
+      defines { &quot;DEBUG&quot; }
+      flags { &quot;Symbols&quot; }
+filter &quot;configurations:Release&quot;
+      defines { &quot;NDEBUG&quot; }
+      optimize &quot;On&quot;
+</pre></div>
+
+
+<h2>常用函数</h2>
+<div class="highlight"><pre><span></span>workspace   相当于 vs 的 solution   
+project project 
+kind     指定编译目标类型   ConsoleApp WindowedApp    SharedLib StaticLib     
+location     指定编译目标目录   
+define   定义常量   
+files   添加文件    文件名 *.ext **.ext
+removefiles  屏蔽文件   
+links   链接库 
+libdirs 添加库目录   
+configurations  指定不同的编译选项   需要通过 filter {&quot;configurations:&lt;name&gt;&quot;} 指定具体选项
+platforms    指定不同的平台    和 vs 的 platform 类似, 但是也需要使用 filter 定义
+includedirs 添加 include 目录   
+optimize     设置优化选项  Off On
+buildoptions    编译选项    比如-std=c99
+</pre></div>
+
+
+<h2>作用范围</h2>
+<p>作用范围会发生继承, 使用 <code>workspce '*'</code> 或者 <code>project '*'</code>代表选中了所有workspace 或者 project</p>
+<div class="highlight"><pre><span></span>premake install
+
+newaction {
+   trigger     = &quot;install&quot;,
+   description = &quot;Install the software&quot;,
+   execute = function ()
+      -- copy files, etc. here
+   end
+}
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/make-he-premake.html">posted at 01:21</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

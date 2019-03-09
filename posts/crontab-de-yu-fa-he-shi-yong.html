@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Crontab 的语法和使用</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/crontab-de-yu-fa-he-shi-yong.html" rel="bookmark" title="Permanent Link to &quot;Crontab 的语法和使用&quot;">Crontab 的语法和使用</a>
+                </h2>
+
+                
+                
+
+                <p>Crontab 时间的语法:</p>
+<div class="highlight"><pre><span></span>Minute Hour Day Month DoW
+</pre></div>
+
+
+<p>每一个选项默认都是第几的意思</p>
+<ul>
+<li>Minute, 每小时的第几分, 可选值 0-59</li>
+<li>Hour, 每天的第几个小时, 可选值 0-23</li>
+<li>Day, 每月的第几天, 可选值 1-31</li>
+<li>Month, 每年的第几个月, 可选值 1-12</li>
+<li>DoW, 每周的第几天, 可选值 0-7, 0 和 7 都代表 Sunday</li>
+<li>Command, 要执行的命令</li>
+</ul>
+<p>另外:</p>
+<ul>
+<li>用 * 表示所有</li>
+<li>可以用逗号分隔指定多个</li>
+<li>用 <code>*/xx</code> 表示每 xx 一次</li>
+</ul>
+<p>比如</p>
+<div class="highlight"><pre><span></span>5 * * * * echo &quot;hello world&quot;
+</pre></div>
+
+
+<p>每小时的第五分钟打印 hello world</p>
+<p>更多地例子</p>
+<div class="highlight"><pre><span></span>* * * * *   每分钟
+12 * * * *  每小时第 12 分
+0,15,30,45 * * * * 每小时的第 0, 15, 30, 45 分, 也就是每15分钟一次
+0 4 * * *   每天的凌晨 4 点
+0 4 * * 2   每周二的凌晨 4 点
+*/4 2-6 * * *   2点和6点之间每 4 分钟一次, 也就是 0, 4, 8...
+</pre></div>
+
+
+<h1>crontab 命令</h1>
+<p>应该使用 crontab 命令来编辑 crontab 文件, tab 就是 table 的缩写</p>
+<div class="highlight"><pre><span></span>crontab -e # 编辑 crontab
+crontab -l # 列出 crontab
+crontab -u # 指定用户
+</pre></div>
+
+
+<p>crontab 还支持一些特殊语法</p>
+<div class="highlight"><pre><span></span>@hourly 相当于 0 * * * * 也就是每小时执行
+@daily  相当于 0 0 * * * 也就是每天执行
+@weekly 相当于 0 0 0 0 0
+monthly
+@yearly
+@reboot at reboot
+</pre></div>
+
+
+<p>NOTE:</p>
+<div class="highlight"><pre><span></span># add these line to tweak cron behavior
+SHELL=/bin/bash
+HOME=/
+MAILTO=&quot;example@digitalocean.com&quot;
+</pre></div>
+
+
+<h1>Cron 表达式的局限性</h1>
+<p>cron 表达式难以表达 "every x" 这个语义。比如说每隔 9 个小时如何， 每隔 13 分钟如何如何。</p>
+<h1>cron 的实现</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/crontab-de-yu-fa-he-shi-yong.html">posted at 15:41</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

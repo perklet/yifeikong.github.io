@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "想法"</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/xiang-fa.html">想法</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/zzru-he-gao-xiao-di-xue-xi-bian-cheng-yu-yan.html" rel="bookmark" title="Permanent Link to &quot;[zz]如何高效地学习编程语言&quot;">[zz]如何高效地学习编程语言</a>
+                </h2>
+
+                
+                
+
+                <p>个人观点，我觉得记住这些是有用的——当学习一门编程语言的时候，你实际上正在学四件事情。</p>
+<ul>
+<li>怎么写代码：语法、语义以及资源管理</li>
+<li>语言的范式：面向对象，函数式，逻辑等</li>
+<li>产出物的生态圈：如何构建、运行可执行文件以及如何使用库</li>
+<li>工具：编辑器，编译器，调试器，代码质量检测器（linter）</li>
+</ul>
+<p>这四项很容易搞混，不幸的结果是，当你遇到问题最终完全找错了地方。</p>
+<p>http://lambeta.com/2017/04/18/Techniques-for-Efficiently-Learning-Programming-Languages/</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/zzru-he-gao-xiao-di-xue-xi-bian-cheng-yu-yan.html">posted at 05:26</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiang-fa.html" class="tags selected">想法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/bug-cuo-ti-ben.html" rel="bookmark" title="Permanent Link to &quot;bug 错题本&quot;">bug 错题本</a>
+                </h2>
+
+                
+                
+
+                <p>发现有一些错误是自己经常犯的，不记录下来回顾一下，总是会一直犯。高中的时候还有习惯来记录错题，然而这么好的习惯，到了大学里却莫名其妙的没有了，知道毕业两年后的今天才突然想起。所以第一个场贩的错误就是思想上的——学习是一件终身的事，要延续好习惯。</p>
+<p>对于各种持有资源的连接池对象等，要时刻注意它们是否是线程安全的。</p>
+<h1>Python</h1>
+<h2>更新变量的value的时候，变量名写错了，导致创建了一个没有用的新变量，老变量的value却没有更新</h2>
+<p>解决：</p>
+<ol>
+<li>使用pylint 检查代码，会提示 unused variable；</li>
+<li>在写代码的时候多用自动补全，而不要手动打出每一个变量。</li>
+</ol>
+<p>Python 的变量声明和赋值没有分开，这个是一个坑，只能通过多用工具检查来实现</p>
+<h1>故障排查</h1>
+<ul>
+<li>
+<p>有时候删文件删不掉但是空间还在占用是因为还有程序在使用这个文件</p>
+</li>
+<li>
+<p>CPU wait 比较高说明在做io</p>
+</li>
+<li>
+<p>操作系统相关问题（OOM）</p>
+</li>
+</ul>
+<p><code>dmesg -T</code> 或 <code>tail -200 /var/log/kern.log</code> 查看系统kill进程的日志，可以看到被kill掉时候的内存占用，再用free -m 查看一下是否超出了内存 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/bug-cuo-ti-ben.html">posted at 22:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiang-fa.html" class="tags selected">想法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 16, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-nian-xue-hui-bian-cheng.html" rel="bookmark" title="Permanent Link to &quot;十年学会编程&quot;">十年学会编程</a>
+                </h2>
+
+                
+                
+
+                <p>对编程产生感兴趣并因为乐趣而写程序。确信你自始至终都能乐在其中，这样你才愿意将十年光阴投入编程事业.</p>
+<p>与其他程序员交流；阅读别人的代码。这比任何书任何培训都重要。</p>
+<p>记住在 “计算机科学” 中包括”计算机” 这个词。要知道你的计算机执行一条指令需要多久，到内存中取一个字需要多久(缓存是否击中), 到磁盘读取连续的字需要多久，而磁盘的定位又需要多久. </p>
+<p>Fred Brooks (人月神话作者) 在他的文章 没有银弹 中指出，发掘卓越软体设计者的三部曲：</p>
+<ol>
+<li>尽早尽可能地以系统化的方式发掘最佳设计人员。</li>
+<li>给有潜力者指派生涯规划师，并谨慎地规划他们的职业生涯。</li>
+<li>提供机会给正在成长的程序员，让他们能相互影响，彼此激励。</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-nian-xue-hui-bian-cheng.html">posted at 23:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiang-fa.html" class="tags selected">想法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wo-de-bian-ma-gui-fan.html" rel="bookmark" title="Permanent Link to &quot;我的编码规范&quot;">我的编码规范</a>
+                </h2>
+
+                
+                
+
+                <h1>指导思想</h1>
+<p>代码要做到<a href="http://jixianqianduan.com/article-translation/2016/06/22/ways-to-write-self-documenting-js.html">自文档化</a></p>
+<h1>Python</h1>
+<ul>
+<li>util模块使用util.py（单数形式），而不是utils.py，因为python标准库使用的是util</li>
+<li>模块的命名：如果只有一个类，比如ItemProcessor，那么可以命名为item_processor.py，否则不能使用名词命名，使用描述性的短语『名词+动词』</li>
+</ul>
+<h2>django</h2>
+<ul>
+<li>使用 queryset 的时候尽量使用 <code>.only()</code>，以减少对数据库的压力</li>
+</ul>
+<h1>devops</h1>
+<ul>
+<li>using mosh is recommended over plain ssh</li>
+<li>using tmux is recommended over screen</li>
+<li>all directories/repositories should use underscore NOT hyphen</li>
+<li>应该使用json schema来验证json是否合规</li>
+<li>每一个调用方都应该使用token或者caller来表明自己的身份 …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wo-de-bian-ma-gui-fan.html">posted at 03:29</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiang-fa.html" class="tags selected">想法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-zuo-yi-ge-code-review.html" rel="bookmark" title="Permanent Link to &quot;如何做一个 Code Review&quot;">如何做一个 Code Review</a>
+                </h2>
+
+                
+                
+
+                <p>转载自：https://mp.weixin.qq.com/s?__biz=MzIwMzg1ODcwMw==&amp;mid=2247486399&amp;idx=1&amp;sn=219af64c7ecbf9e6c601cefddd0a0eba&amp;source=41#wechat_redirect</p>
+<p>众所周知，在团队中进行代码审查（Code Review）可以提升代码质量，分享项目知识、明确责任，最终达到构建更好的软件、更好的团队。如果你花几秒钟搜索代码审查的相关信息，你会看到许多关于代码审查带来的价值的文章。也有许多方法来进行代码审查：在GitHub中提pull request，或使用像JetBrains的Upsource之类的工具。然而即使拥有清晰的流程和正确的工具，还遗留了一个大问题需要解决——我们需要找寻哪些问题。</p>
+<p>可能没有明确关于“我们需要找寻哪些问题”的文章，是因为有许多不同的要点需要考虑。正如任何其他的需求，各个团队对各个方面都有不同的优先级。</p>
+<p>本文的目标是列出一些审查者可以找寻的要点，而各个方面的优先级就因各个团队而异了。</p>
+<p>在我们继续之前，让我们考虑一下大家在代码审查时会讨论到的问题。对于代码的格式、样式和命名以及缺少测试这些问题是很常见的几点。如果你想拥有可持续的、可维护的代码 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-zuo-yi-ge-code-review.html">posted at 07:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiang-fa.html" class="tags selected">想法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/li-jie-cheng-xu-de-zhi-xing-guo-cheng.html" rel="bookmark" title="Permanent Link to &quot;理解程序的执行过程&quot;">理解程序的执行过程</a>
+                </h2>
+
+                
+                
+
+                <p>想象一个函数是一个流水线，每一个函数调用都是在当前函数旁边新开了一个流水线。</p>
+<p>新的调用是从调用者分出的一条叉，所有的调用构成了一个从左向右的栈。</p>
+<p>把每个循环想象成一个并行执行的流水线</p>
+<p>把每一个 if/case 语句想象为一个流水线的一个分叉点，当然两条叉可能最后会聚合。</p>
+<p>把一个类当做相关的动作和分享同一个状态的一个集合</p>
+<p><img alt="" src="https://ww2.sinaimg.cn/large/006tNbRwgy1fg35hmla6ij30j9087t94.jpg"></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/li-jie-cheng-xu-de-zhi-xing-guo-cheng.html">posted at 01:49</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiang-fa.html" class="tags selected">想法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

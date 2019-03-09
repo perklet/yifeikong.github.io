@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | kubernetes 初探——使用 helm 部署服务</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="架构,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Oct 06, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-shi-yong-helm-bu-shu-fu-wu.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——使用 helm 部署服务&quot;">kubernetes 初探——使用 helm 部署服务</a>
+                </h2>
+
+                
+                
+
+                <p>前几篇写了一写 k8s 部署方面的东西, 后来发现阿里云的 k8s 集群还很好用...何苦自己研究几天部署呢...?</p>
+<p>------分隔线------</p>
+<p>在 k8s 上部署一个应用还是有些复杂的, 自己的应用当然需要自己一步一步部署, 但是对于一些通用的应用, 比如说 mysql/grafana 这种就没必要自己手工一步一步部署了. 这时候就有了 helm, 通俗的来说他就是 kubernetes 上的 AppStore, 常见的应用都已经在了, 而且你也可以按照他的格式打包自己的应用部署.</p>
+<h1>安装</h1>
+<p>在 helm 的 release 页面下载, 然后拷贝到本地的 /usr/local/bin/ 目录就好了. helm 运行的时候会使用 ~/.kube/config 文件, 所以本地 kubectl 可以使用就好了.</p>
+<p>helm 分为两部分, helm 是本地命令, tiller 是服务端, 作为一个 pod 运行在, 两者的版本需要保持一致. 理论上来说, 安装好 helm 之后, 只需要执行 helm init 就可以自动在 k8s 集群中安装 tiller 了, 但是由于一些众所周知的原因, 在中国大陆地区并不能安装成功, 需要使用阿里云或者中科大的镜像:</p>
+<div class="highlight"><pre><span></span>
+</pre></div>
+
+
+<h1>使用</h1>
+<h2>概念</h2>
+<ul>
+<li>Chart, 大概相当于 package 的意思</li>
+<li>Repository, Helm 的中心仓库</li>
+<li>Release, 每次运行一个 Chart 都会生成一个 Release, 每个 release 之间是独立的. Chart/Release 的关系就好比 Docker 的 Image/Container 一样.</li>
+<li>Revision, 每次更新 Release 都会产生一个新的版本, 可以回滚</li>
+</ul>
+<h2>基础命令</h2>
+<p>helm search 查找相关的软件包(chart), 现在 stable 仓库中大概有 200 多个包可以安装.</p>
+<p>helm install --name NAME PACKAGE 会安装对应的 chart. 如果不指定 name, 会自动生成一个.</p>
+<p>helm status NAME 可以查看对应的包的信息, 一般包括了如何连接使用这个包等信息, 可以当做帮助来用.</p>
+<h2>在安装包之前更改配置</h2>
+<p>每个 helm chart 都定义了一些默认的配置, 可以在安装之前查看并修改这些值.</p>
+<p>helm inspect values stable/mysql 查看 mysql 的默认值. 或者去 GitHub 上看这个仓库的 readme.</p>
+<p>把需要覆盖的变量写到 OVERRIDE.yml 文件中, helm install -f OVERRIDE.yml stable/mysql 就可以使用自己的配置了</p>
+<h2>更新 release</h2>
+<p>如果需要更新一个 release, 可以使用 helm upgrade -f OVERRIDE.yml RELEASE_NAME 命令更新相关的配置. 这时就会创建一个新的版本.</p>
+<p>使用 helm list 可以查看当前部署的 release, 这时候我们可以看到部署的版本变成了 2 (最初是1).</p>
+<div class="highlight"><pre><span></span>-&gt; % helm ls
+NAME    REVISION        UPDATED                         STATUS          CHART           NAMESPACE
+mysql   1               Sat Oct  6 15:44:25 2018        DEPLOYED        mysql-0.3.0     default
+</pre></div>
+
+
+<p>如果当前的更新有误, 可以回退到之前的版本, 语法是 helm rollback [RELEASE] [REVISION]</p>
+<h2>管理 repo</h2>
+<p>helm repo list 列出当前添加的 repo</p>
+<div class="highlight"><pre><span></span>$ helm repo list
+NAME            URL
+stable          https://kubernetes-charts.storage.googleapis.com
+<span class="nb">local</span>           http://localhost:8879/charts
+mumoshu         https://mumoshu.github.io/charts
+</pre></div>
+
+
+<p>添加新的 repo</p>
+<div class="highlight"><pre><span></span>$ helm repo add dev https://example.com/dev-charts
+</pre></div>
+
+
+<h1>参考文献</h1>
+<ol>
+<li>https://docs.helm.sh/</li>
+<li>https://ezmo.me/2017/09/24/helm-quick-toturial/</li>
+<li>https://help.aliyun.com/document_detail/58587.html</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-shi-yong-helm-bu-shu-fu-wu.html">posted at 02:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 如何破解被 JS 加密的数据</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机,爬虫" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-po-jie-bei-js-jia-mi-de-shu-ju.html" rel="bookmark" title="Permanent Link to &quot;如何破解被 JS 加密的数据&quot;">如何破解被 JS 加密的数据</a>
+                </h2>
+
+                
+                
+
+                <p>由于网页和JavaScript都是明文的，导致很多API接口都直接暴露在爬虫的眼里，所以好多
+网站选择使用混淆后的 JavaScript 来加密接口。其中有分为两大类：</p>
+<ol>
+<li>通过 JavaScript 计算一个参数或者 Cookie 作为接口的签名验证</li>
+<li>返回的数据是加密的，需要使用 JavaScript 解密</li>
+</ol>
+<p>不过总的来说，这两种加密的破解思路都是一样的。</p>
+<ol>
+<li>找到相关的网络请求。如果找不到，清空缓存，尝试触发</li>
+<li>打断点找到相关代码，可以是 ajax 断点或者 js 断点。或者直接看网络请求的
+   initiator</li>
+<li>逐层分析，找到加密函数</li>
+<li>使用 node 执行js代码获得数据</li>
+</ol>
+<h1>具体步骤</h1>
+<p>有空了再写。。</p>
+<p>参考：</p>
+<ol>
+<li><a href="https://cuiqingcai.com/5024.html">中国天气质量网返回结果加密的破解</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/32139007">破解 Google 翻译的token</a></li>
+<li><a href="https://github.com/jhao104/spider/tree/master/PyV8%E7%A0%B4%E8%A7%A3JS%E5%8A%A0%E5%AF%86Cookie">JavaScript 生成 Cookie</a></li>
+<li><a href="http://liehu.tass.com.cn/archives/1016">常见加密算法</a></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-po-jie-bei-js-jia-mi-de-shu-ju.html">posted at 04:32</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | jQuery and un-jQuery</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="JavaScript,大前端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/jquery-and-un-jquery.html" rel="bookmark" title="Permanent Link to &quot;jQuery and un-jQuery&quot;">jQuery and un-jQuery</a>
+                </h2>
+
+                
+                
+
+                <h1>jQuery</h1>
+<p>$el.append(htmlString)
+$el.prepend(htmlString)</p>
+<p>$newEl.insertBefore(queryString)
+$newEl.insertAfter(queryString)</p>
+<h1>un-jQuery</h1>
+<h2>DOM 操作</h2>
+<p>选择器可以使用 querySelector 和 querySelectorAll, 但是这两个的性能太差了, 最好使用 getElementById, getElementsByTagName, getElementsByClassName</p>
+<p>$el.val() 对应 el.value</p>
+<h3>获取 attr</h3>
+<div class="highlight"><pre><span></span>$el.attr(&#39;id&#39;);
+el.getAttribute(&#39;id);
+el.setAttribute(attr, value)
+</pre></div>
+
+
+<h3>parent and children</h3>
+<div class="highlight"><pre><span></span>$el.children
+$el.parent()
+el.children
+el.parentNode
+</pre></div>
+
+
+<h3>设置 css</h3>
+<div class="highlight"><pre><span></span><span class="o">$</span><span class="nt">el</span><span class="o">.</span> <span class="nt">css</span><span class="o">(</span><span class="p">{</span><span class="k">color</span><span class="p">:</span> <span class="s1">&#39;#000&#39;</span><span class="p">}</span><span class="o">);</span>
+<span class="nt">el</span><span class="p">.</span><span class="nc">style</span><span class="p">.</span><span class="nc">color</span> <span class="o">=</span> <span class="s1">&#39;#000&#39;</span><span class="o">;</span>
+<span class="o">$</span><span class="nt">el</span><span class="p">.</span><span class="nc">css</span><span class="o">(</span><span class="s1">&#39;color&#39;</span><span class="o">);</span>
+<span class="nt">window</span><span class="p">.</span><span class="nc">getComputedStyle</span><span class="o">(</span><span class="nt">el</span><span class="o">)</span><span class="cp">[</span><span class="s1">&#39;color&#39;</span><span class="cp">]</span><span class="o">;</span>
+</pre></div>
+
+
+<p>特别地
+$(el).hide(); // jQuery
+el.style.display = 'none'; // native
+$(el).show(); // jQuery
+el.style.dispaly = ''</p>
+<h3>设置 class</h3>
+<p>$el.addClass(className) // remove, has, toggle
+el.classList.add(className) // remove, contains, toggle</p>
+<p>设置text
+Get text
+// jQuery
+$el.text();
+// Native
+el.textContent;</p>
+<p>Set text
+// jQuery
+$el.text(string);</p>
+<p>// Native
+el.textContent = string;</p>
+<h2>设置html</h2>
+<p>Get HTML
+// jQuery
+$el.html();</p>
+<p>// Native
+el.innerHTML;
+Set HTML
+// jQuery
+$el.html(htmlString);</p>
+<p>// Native
+el.innerHTML = htmlString;</p>
+<h2>inserting html fragment to document</h2>
+<p>Have a look at <code>insertAdjacentHTML</code></p>
+<div class="highlight"><pre><span></span>var element = document.getElementById(&quot;one&quot;);
+var newElement = &#39;<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;two&quot;</span><span class="nt">&gt;</span>two<span class="nt">&lt;/div&gt;</span>&#39;
+element.insertAdjacentHTML( &#39;afterend&#39;, newElement )
+// new DOM structure: <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;one&quot;</span><span class="nt">&gt;</span>one<span class="nt">&lt;/div&gt;&lt;div</span> <span class="na">id=</span><span class="s">&quot;two&quot;</span><span class="nt">&gt;</span>two<span class="nt">&lt;/div&gt;</span>
+position is the position relative to the element you are inserting adjacent to:
+</pre></div>
+
+
+<p><code>beforebegin</code> Before the element itself</p>
+<p><code>afterbegin</code> Just inside the element, before its first child</p>
+<p><code>beforeend</code> Just inside the element, after its last child</p>
+<p><code>afterend</code> After the element itself</p>
+<p>事件</p>
+<p>绑定事件 
+$el.on(eventName, eventHandler);  // jQuery
+el.addEventListener(eventName, eventHandler);  // Native</p>
+<p>解绑事件
+$el.off(eventName, eventHandler);  // jQuery
+el.removeEventListener(eventName, eventHandler);  // Native</p>
+<p>触发事件
+// 用户事件
+$(el).trigger('custom-event', {key1: 'data'});  // jQuery
+// Native, note that
+const event = new CustomEvent('custom-event', {detail: {key1: 'data'}});
+el.dispatchEvent(event);</p>
+<p>// 原生事件
+$(el).trigger('change');
+var ev = new Event("look", {"bubbles":true, "cancelable":false});
+document.dispatchEvent(ev);</p>
+<h2>ajax</h2>
+<p>getJSON
+jQuery
+$.getJSON('/my/url', function(data) {
+});
+IE9+
+var request = new XMLHttpRequest();
+request.open('GET', '/my/url', true);
+request.onload = function() {
+  if (request.status &gt;= 200 &amp;&amp; request.status &lt; 400) {
+    // Success!
+    var data = JSON.parse(request.responseText);
+  } else {
+    // We reached our target server, but it returned an error
+}
+};
+request.onerror = function() {
+  // There was a connection error of some sort
+};
+request.send();
+Post
+jQuery
+$.ajax({
+  type: 'POST',
+  url: '/my/url',
+  data: data
+});
+IE8+
+var request = new XMLHttpRequest();
+request.open('POST', '/my/url', true);
+request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+request.send(data);
+Request
+jQuery
+$.ajax({
+  type: 'GET',
+  url: '/my/url',
+  success: function(resp) {
+},
+  error: function() {
+}
+});
+IE9+
+var request = new XMLHttpRequest();
+request.open('GET', '/my/url', true);
+request.onload = function() {
+  if (request.status &gt;= 200 &amp;&amp; request.status &lt; 400) {
+    // Success!
+    var resp = request.responseText;
+  } else {
+    // We reached our target server, but it returned an error
+}
+};
+request.onerror = function() {
+  // There was a connection error of some sort
+};
+request.send();</p>
+<p>DOM Ready</p>
+<p>https://github.com/oneuijs/You-Dont-Need-jQuery/blob/master/README.zh-CN.md
+http://youmightnotneedjquery.com/</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/jquery-and-un-jquery.html">posted at 13:41</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

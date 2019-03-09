@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 消息队列：从一脸懵逼到 Kafka</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xiao-xi-dui-lie-cong-yi-lian-meng-bi-dao-kafka.html" rel="bookmark" title="Permanent Link to &quot;消息队列：从一脸懵逼到 Kafka&quot;">消息队列：从一脸懵逼到 Kafka</a>
+                </h2>
+
+                
+                
+
+                <p>消息队列是分布式系统中分离解耦、削峰填谷、横向扩展的一个利器。而其中尤其以 kafka 为代表，在性能等各方面都很出众。</p>
+<p>Kafka 使用 ZK 作为协调器，原生支持集群。每条消息有一个 <key, value, timestamp> 组成。</p>
+<p>每个 partition 可以有多台机器，其中的 leader 负责所有读写，而 follower 复制 leader 的所有操作。如果 leader 挂了， follower 就会顶上去。生产者既可以使用 RR 这些算法来往不同的 partition 发东西，做负载均衡，也可以按照某些业务规则，发到指定的 partition。</p>
+<p>消息队列有两种模型，Queue 和 PubSub。Kafka 通过 Consumer Group 这个概念很好地解决了这个问题</p>
+<h1>术语</h1>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Explain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Broker</td>
+<td>Kafka 集群中的机器</td>
+</tr>
+<tr>
+<td>Topic</td>
+<td>不同的消息队列</td>
+</tr>
+<tr>
+<td>Partition</td>
+<td>每个 topic 被分成不同的分区</td>
+</tr>
+<tr>
+<td>Producer</td>
+<td>生产者</td>
+</tr>
+<tr>
+<td>Consumer</td>
+<td>消费者</td>
+</tr>
+<tr>
+<td>Consumer Group</td>
+<td>消费组，每个消费组对于同一条消息，只消费一次</td>
+</tr>
+</tbody>
+</table>
+<h1>Basics</h1>
+<p>Kafka 非常强大，基本实现了一个后端工程师对消息队列的所有幻想。excat once 语义、消息是基本有序的、可以回放消息（rewind）。唯一的一个致命缺点是：部署实在太复杂了，不光是要依赖 zookeeper，而且还有其他负载的部署步骤。另外 kafka 对内存的需求不小，官方建议不要小于 32G，不过对于企业来说这也不是什么问题。</p>
+<p>虽然 kafka 本身能够做到 exactly once 语义，</p>
+<p>Like many publish-subscribe messaging systems, Kafka maintains feeds of messages
+in topics. Producers write data to topics and consumers read from topics. Since
+Kafka is a distributed system, topics are partitioned and replicated across
+multiple nodes.[1]</p>
+<p>What makes Kafka unique is that Kafka treats each topic partition as a log (an
+ordered set of messages). Messages are stored as file in each partition and new
+messages are appended to the file, which is very fast op for hard disk(even
+faster than RAM access).</p>
+<p>Kafka retains all messages for a set amount of time, and consumers are
+responsible to track their location in each log. Consequently, Kafka can support
+a large number of consumers and retain large amounts of data with very little
+overhead. Thus, consumers can rewind to a old message, which is very useful in
+practice.</p>
+<p>There is no message ids in kafka, message is identified by offset. messages are
+appended to each partition. Hard dist appendation can be veri fast, even faster
+than RAM access, which is why kafka</p>
+<p>messages with the same key are sent to the same partition</p>
+<h1>Consumer Group</h1>
+<p>kafka implements broadcast and unicast by Consumer Group. If one message is
+consumed by only one consumer, then it's a unicast, otherwise, it's a broadcast.</p>
+<p>offsets in one partition are stored in ZooKeeper. each Consumer Group has its
+own offset. Consumer Group are globally in Kafka, not constrained to one topic.
+by default, a consumer is in the default group.</p>
+<p>each message can be consumed only once for one consumer group.</p>
+<p>messages in partitions are not equally distributed to each consumer, they are
+just simply fixed to one consumer. which is easy to implement and more
+efficient.</p>
+<h1>Python 客户端</h1>
+<p>使用 confluent-python-kafka。性能最好，而且是官方客户端。Kafka-python 这个库可能丢消息。</p>
+<h1>管理工具</h1>
+<p>使用命令行管理 Kafka 功能最全面也最强大，但是因为命令不常用，所以也要经常查文档。而图形界面虽然不是很高效，但是对于偶尔使用来说，还是最方便的。</p>
+<h1>Q&amp;A</h1>
+<h2>kafka 中可以有成千上万的 topic 吗？</h2>
+<p>不可以。因为 leader 选举的一些限制，上万都不可能。最好的方式实在 topic 中分 partition。分 partition 又是静态的。</p>
+<ol>
+<li>https://stackoverflow.com/questions/32950503/can-i-have-100s-of-thousands-of-topics-in-a-kafka-cluser</li>
+<li>https://grokbase.com/t/kafka/users/133v60ng6v/limit-on-number-of-kafka-topic</li>
+</ol>
+<h2>Kafka 为什么这么快？</h2>
+<p>硬盘顺序读写可以达到 600 MiB/s 的速度，而随机读写只有 100 KiB/s，也就是说 6000 倍的差距。甚至于顺序读写比内存访问还要快。</p>
+<p>使用 sendfile 可以使数据直接从 page cache 发送到网卡，避免了拷贝到用户空间的开销。</p>
+<ol>
+<li>https://kafka.apache.org/documentation/#design_filesystem</li>
+</ol>
+<h2>push vs pull</h2>
+<p>Push 指的是 broker 向消费端推送消息，而 pull 指的是消费者主动从 Consumer 中拉取消息。Kafka 采用了 pull 模型。如果消费者处理不过来了就堆在 Kafka 中，当处理能力跟上来了再主动追上就好了。</p>
+<h1>其他</h1>
+<h2>nsq</h2>
+<p>topic: 发布消息的管道，第一次向某个topic发消息就会创建它.
+channel: 消费消息的管道，一个 topic 可以对应几个 channel，每份消息都会复制到每个channel 中
+message：消息</p>
+<p>nsq 建议 co-location 的部署，也就是在每个发送nsq消息的机器上部署一个 nsqd</p>
+<h2>nsq 的缺点</h2>
+<ol>
+<li>消息不是 exact once，可能有重复消息</li>
+<li>消息不能保证顺序</li>
+<li>消息可能丢，没有硬盘持久化</li>
+</ol>
+<h2>redis stream</h2>
+<p>redis stream 看起来很好，但是实际上用处却不大。redis stream 虽然模仿了 kafka 的消息模型，但是 kafka 的强势在于消息堆积能力，而 redis stream 把消息放在内存里，也没有很好的 replica 机制。</p>
+<h1>Reference:</h1>
+<ol>
+<li>https://segment.com/blog/scaling-nsq/</li>
+<li><a href="http://blog.cloudera.com/blog/2014/09/apache-kafka-for-beginners/">Apache Kafka for beginners</a></li>
+<li>http://lihaoquan.me/2016/6/20/using-nsq.html</li>
+<li>Kafka Tutorial https://www.tutorialspoint.com/apache_kafka/apache_kafka_basic_operations.htm</li>
+<li>http://www.infoq.com/cn/news/2015/02/nsq-distributed-message-platform</li>
+<li>https://danielmiessler.com/blog/data-processing-using-the-unix-philosophy/</li>
+<li>http://www.confluent.io/blog/apache-kafka-samza-and-the-unix-philosophy-of-distributed-data</li>
+<li>http://sookocheff.com/post/kafka/kafka-in-a-nutshell/</li>
+<li>https://www.infoq.cn/article/2017/09/kafka-python-confluent-kafka</li>
+<li>https://www.confluent.io/blog/introduction-to-apache-kafka-for-python-programmers/</li>
+</ol>
+<h1>TO READ</h1>
+<ol>
+<li>https://stackoverflow.com/questions/49276785/monitoring-ui-for-apache-kafka-kafka-manager-vs-kafka-monitor/49292872</li>
+<li>https://kafka.apache.org/quickstart</li>
+<li>https://cwiki.apache.org/confluence/display/KAFKA/Ecosystem</li>
+<li>https://zhuanlan.zhihu.com/p/37016944</li>
+<li>https://www.confluent.io/blog/introduction-to-apache-kafka-for-python-programmers/</li>
+<li>https://github.com/confluentinc/confluent-kafka-python/tree/master/examples</li>
+<li>https://docs.confluent.io/current/clients/confluent-kafka-python/</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xiao-xi-dui-lie-cong-yi-lian-meng-bi-dao-kafka.html">posted at 04:35</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

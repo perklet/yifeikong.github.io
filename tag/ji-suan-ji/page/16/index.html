@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "计算机" | Page 16</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/ji-suan-ji/page/16/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Aug 20, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xpath-generator-shi-ru-he-shi-xian-de.html" rel="bookmark" title="Permanent Link to &quot;xpath generator 是如何实现的?&quot;">xpath generator 是如何实现的?</a>
+                </h2>
+
+                
+                
+
+                <p>写爬虫的话做到最后基本上最终没法自动化的就是指定要抽取的元素的xpath了, 要定向爬一个网站的内容基本上都会归结到去找下一页和数据元素的xpath. 如果能把xpath的生成交给不会写程序的运营同学来做的话, 能够极大地解放程序员的生产力.</p>
+<p>毕竟xpath也算是一个DSL, 对于不会编程的同学还是有一定难度的. SQL写得熟练的PM多得是, 想找一个会写xpath的运营同学则是很困难, 毕竟术业有专攻, 运营需要面对的问题和我们程序猿还是有很大不同. 多年的经验, 感觉能教会他们yaml已经是极限了...</p>
+<p>那么能不能有一个图形化的工具来生成xpath呢? 答案显然是有的, chrome浏览器就内置了生成xpath的工具, 如下图所示:</p>
+<p><img alt="chrome xpath" src="https://ws4.sinaimg.cn/large/006tNc79ly1flhwpu64uvj31f20keaj4.jpg"></p>
+<p>这幅图生成的xpath是: <code>//*[@id="fc_B_pic"]/ul[1]/li[1]/a[1]</code></p>
+<p>然而chrome的xpath生成却有几个缺点:</p>
+<ol>
+<li>chrome的xpath只会想上去找带有id的元素, 而根据实际的情况, 往往找到带有class的元素就可以保证找的xpath是对的了.</li>
+<li>chrome生成的元素是尽量保证元素唯一的, 也就是当你想要搞一个能能够选中多个元素的xpath时, chrome 无能为力, 还是需要自己去改写.</li>
+<li>另外就是生成之后不能方便的用图形工具去验证.</li>
+</ol>
+<p>未完待续</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xpath-generator-shi-ru-he-shi-xian-de.html">posted at 18:57</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/liu-lan-qi-kuo-zhan.html" class="tags">浏览器扩展</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 16, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pa-chong-pa-lai-de-shu-ju-shi-fou-ke-xin.html" rel="bookmark" title="Permanent Link to &quot;爬虫爬来的数据是否可信&quot;">爬虫爬来的数据是否可信</a>
+                </h2>
+
+                
+                
+
+                <p>如果用来分析的数据本来就是错的，那么得出的结论必然也是有问题的。比如2016年美国大选中，由于川普的支持者经常被侮辱，导致在电话调查选民中，大家都声称自己支持希拉里，可是实际上大家都投给了川普。电话调查的结果本来就是错的，所以大家都认为希拉里会赢。川普团队则采取的是问选民你认为你的邻居会投谁，从而得到了正确结果。</p>
+<p>爬虫爬到的数据中也有可能是有问题的，比如租房网站的假房源，招聘网站上的虚假职位，用户故意不填写真实信息以保护隐私等等；微信文章被刷多的阅读数；而且编写不良的爬虫很可能误入蜜罐，得到的数据更有问题。</p>
+<p>比如说借助爬来的新闻分析房产数据，实际上住建部禁止发布涨价相关预测，也就是对于市场的情绪表达是有影响的，那么我们如果按照这个数据来做预测显然是不对的。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pa-chong-pa-lai-de-shu-ju-shi-fou-ke-xin.html">posted at 23:25</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Aug 16, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-nian-xue-hui-bian-cheng.html" rel="bookmark" title="Permanent Link to &quot;十年学会编程&quot;">十年学会编程</a>
+                </h2>
+
+                
+                
+
+                <p>对编程产生感兴趣并因为乐趣而写程序。确信你自始至终都能乐在其中，这样你才愿意将十年光阴投入编程事业.</p>
+<p>与其他程序员交流；阅读别人的代码。这比任何书任何培训都重要。</p>
+<p>记住在 “计算机科学” 中包括”计算机” 这个词。要知道你的计算机执行一条指令需要多久，到内存中取一个字需要多久(缓存是否击中), 到磁盘读取连续的字需要多久，而磁盘的定位又需要多久. </p>
+<p>Fred Brooks (人月神话作者) 在他的文章 没有银弹 中指出，发掘卓越软体设计者的三部曲：</p>
+<ol>
+<li>尽早尽可能地以系统化的方式发掘最佳设计人员。</li>
+<li>给有潜力者指派生涯规划师，并谨慎地规划他们的职业生涯。</li>
+<li>提供机会给正在成长的程序员，让他们能相互影响，彼此激励。</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-nian-xue-hui-bian-cheng.html">posted at 23:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiang-fa.html" class="tags">想法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 14, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pa-chong-ru-he-jin-liang-mo-ni-liu-lan-qi.html" rel="bookmark" title="Permanent Link to &quot;爬虫如何尽量模拟浏览器&quot;">爬虫如何尽量模拟浏览器</a>
+                </h2>
+
+                
+                
+
+                <h1>http headers</h1>
+<p>发送http请求时，Host, Connection, Accept, User-Agent, Referer, Accept-Encoding, Accept-Language这七个头必须添加，因为正常的浏览器都会有这7个头。
+ 
+其中：</p>
+<ol>
+<li>Host一般各种库都已经填充了</li>
+<li>Connection填Keep-Alive</li>
+<li>Accept一般填text/html 或者application/json</li>
+<li>User-Agent使用自己的爬虫或者伪造浏览器的UA</li>
+<li>Referer一般填当前URL即可，考虑按照真是访问顺序添加referer，初始的referer可以使用google。</li>
+<li>Accept-Encoding 从gzip和deflate中选，好多网站会强行返回gzip的结果</li>
+<li>Aceept-Language根据情况选择，比如zh-CN, en-US</li>
+</ol>
+<h1>cookies</h1>
+<p>cookie是需要更新的
+ </p>
+<h1>others</h1>
+<p>可能有一些人类不可见的陷阱链接，不要访问这些链接</p>
+<h1>爬取间隔自适应</h1>
+<p>就是已经限制了你这个IP的抓取，就不要傻傻重复试，怎么也得休息一会。网易云音乐操作起来比较简单，sleep一下就好了。其实sleep的间隔应该按情况累加，比如第一次sleep 10秒，发现还是被约束。那么久sleep 20秒... 这个间隔的设置已经自适应的最终效果是经验值。</p>
+<p>ref</p>
+<ol>
+<li>http://www.cnblogs …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pa-chong-ru-he-jin-liang-mo-ni-liu-lan-qi.html">posted at 22:21</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/pa-chong.html" class="tags">爬虫</a>
+                </div>
+            </article>            <h4 class="date">Aug 13, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ipython-main-features.html" rel="bookmark" title="Permanent Link to &quot;IPython main features&quot;">IPython main features</a>
+                </h2>
+
+                
+                
+
+                <ul>
+<li>
+<p>use <code>?</code> to get quick help, and use <code>??</code> provides additional detail).</p>
+</li>
+<li>
+<p>Searching through modules and namespaces with * wildcards, both when using the ? system and via the %psearch command.</p>
+</li>
+<li>
+<p>magic commands, % or %% prefixed commands</p>
+</li>
+<li>
+<p>Alias facility for defining your own system aliases.</p>
+</li>
+<li>
+<p>Lines starting with ! are passed directly to the system shell …</p></li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ipython-main-features.html">posted at 03:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 06, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/deep-learning-de-yi-xie-si-kao.html" rel="bookmark" title="Permanent Link to &quot;Deep Learning 的一些思考&quot;">Deep Learning 的一些思考</a>
+                </h2>
+
+                
+                
+
+                <h1>问自己的问题</h1>
+<ul>
+<li>不同的算法对数据输入有不同的假设。应该如何预处理数据呢？</li>
+<li>如何对数据降维，使用什么降维方法呢？</li>
+<li>如何拆分数据集</li>
+<li>怎样知道是否出现了过拟合</li>
+<li>应该是用什么类型的性能指标</li>
+<li>不同的参数调整会如何影响模型的结果</li>
+<li>模型组合可以达到更好的结果吗</li>
+</ul>
+<h1>关于模型的基本假设</h1>
+<p>基本假设是一个系统运行的基础，然而如果假设是错误的呢？what if the grand truth is not true?
+ 
+比如假设A 和 A<em>是类似的，喜欢 A 的用户也会喜欢 A</em>，但是实际上用户只能在 A 和 A<em>之间选择一个呢，这时候向购买了 A 的顾客再推荐 A</em>就不合适了.
+ 
+比如用户已经买了钻戒用来求婚, 那么再推荐钻戒就不好了. 但是如果用户买了啤酒, 那再推荐一些啤酒也很好啊, 因为啤酒很快就喝完了...
+ 
+维基百科上讲算法的文章一般都写得不怎么样</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/deep-learning-de-yi-xie-si-kao.html">posted at 23:33</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/ji-qi-xue-xi.html" class="tags">机器学习</a>
+                </div>
+            </article>            <h4 class="date">Aug 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wo-de-bian-ma-gui-fan.html" rel="bookmark" title="Permanent Link to &quot;我的编码规范&quot;">我的编码规范</a>
+                </h2>
+
+                
+                
+
+                <h1>指导思想</h1>
+<p>代码要做到<a href="http://jixianqianduan.com/article-translation/2016/06/22/ways-to-write-self-documenting-js.html">自文档化</a></p>
+<h1>Python</h1>
+<ul>
+<li>util模块使用util.py（单数形式），而不是utils.py，因为python标准库使用的是util</li>
+<li>模块的命名：如果只有一个类，比如ItemProcessor，那么可以命名为item_processor.py，否则不能使用名词命名，使用描述性的短语『名词+动词』</li>
+</ul>
+<h2>django</h2>
+<ul>
+<li>使用 queryset 的时候尽量使用 <code>.only()</code>，以减少对数据库的压力</li>
+</ul>
+<h1>devops</h1>
+<ul>
+<li>using mosh is recommended over plain ssh</li>
+<li>using tmux is recommended over screen</li>
+<li>all directories/repositories should use underscore NOT hyphen</li>
+<li>应该使用json schema来验证json是否合规</li>
+<li>每一个调用方都应该使用token或者caller来表明自己的身份 …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wo-de-bian-ma-gui-fan.html">posted at 03:29</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiang-fa.html" class="tags">想法</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-import-xi-tong-yu-importlib.html" rel="bookmark" title="Permanent Link to &quot;Python 的 import 系统与 importlib&quot;">Python 的 import 系统与 importlib</a>
+                </h2>
+
+                
+                
+
+                <p>首先</p>
+<p><strong>init</strong>.py is first called before the actual import</p>
+<p>if you have  the following code:</p>
+<div class="highlight"><pre><span></span>foobar/
+    __init__.py
+    baz.py
+</pre></div>
+
+
+<p>runing import foobar will not make foobar.baz available
+you have to add from . import baz to <strong>init</strong>.py</p>
+<p>add <strong>all</strong> to <strong>init.</strong>.py to control which to be …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-import-xi-tong-yu-importlib.html">posted at 01:01</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jul 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/iterm2-tricks.html" rel="bookmark" title="Permanent Link to &quot;iterm2 tricks&quot;">iterm2 tricks</a>
+                </h2>
+
+                
+                
+
+                <ul>
+<li>
+<p>如果tmux，vim等程序启用了鼠标支持，只需要使用alt+鼠标就可以轻松拷贝了~</p>
+</li>
+<li>
+<p>可以隐藏标题栏 Profile-&gt;Window-&gt;Style: No Title Bar</p>
+</li>
+</ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/iterm2-tricks.html">posted at 23:19</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/xiao-ji-qiao.html" class="tags">小技巧</a>
+                    &nbsp;<a href="/tag/xiao-gong-ju.html" class="tags">小工具</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>            <h4 class="date">Jul 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-readability-yuan-ma-yue-du.html" rel="bookmark" title="Permanent Link to &quot;python-readability 源码阅读&quot;">python-readability 源码阅读</a>
+                </h2>
+
+                
+                
+
+                <p>readability 是一个可以从杂乱无章的网页中抽取出无特殊格式，适合再次排版阅读的文章的库，比如我们常见的手机浏览器的阅读模式很大程度上就是采用的这个库，还有 evernote 的 webclipper 之类的应用也都是利用了类似的库。readability 的各个版本都源自readability.js这个库，之前尝试阅读过js版本，无关的辅助函数太多了，而且 js 的 dom api 实在称不上优雅，读起来晦涩难通，星期天终于有时间拜读了一下python-readability的代码。</p>
+<p>readability核心是一个Document类，这个类代表了一个 HTML 文件，同时可以输出一个格式化的文件</p>
+<h1>几个核心方法和概念</h1>
+<p><em>summary，抽取一篇文章
+</em>get_article， 获得一篇文章</p>
+<h2>summary</h2>
+<p>summary 方法是核心方法，可以抽取出一篇文章。可能需要对文章抽取多次才能获得符合条件的文章，这个方法的核心思想是：</p>
+<div class="highlight"><pre><span></span>1. 第一次尝试抽取设定 ruthless，也就是强力模式，可能会误伤到一些标签
+2. 把给定的 input 解析一次并记录到 self.html，并去除所有的 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-readability-yuan-ma-yue-du.html">posted at 22:11</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/15" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/17" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 16 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

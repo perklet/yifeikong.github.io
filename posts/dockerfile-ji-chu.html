@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | dockerfile 基础</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机,Docker" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/dockerfile-ji-chu.html" rel="bookmark" title="Permanent Link to &quot;dockerfile 基础&quot;">dockerfile 基础</a>
+                </h2>
+
+                
+                
+
+                <p>Dockerfile 列出了构建一个docker image 的<strong>可复现</strong>步骤。比起一步一步通过 docker commit 来制作一个镜像，dockerfile更适用于CI自动测试等系统。</p>
+<h1>Dockerfile 命令</h1>
+<ul>
+<li>FROM，指定基础镜像</li>
+<li>MAINTAINER，作者，建议格式（<code>Jon Snow &lt;jonsnow@westros.com&gt;</code>）</li>
+<li>EXPOSE，需要暴露的端口，但是一般也会使用 -p 来制定端口映射</li>
+<li>USER，运行的用户</li>
+<li>WORKDIR，进程的工作目录</li>
+<li>COPY，复制文件到</li>
+<li>RUN，运行shell命令</li>
+<li>CMD，启动进程使用的命令</li>
+<li>ENTRYPOINT，镜像启动的入口，默认是 bash -c</li>
+<li>ENV，设定环境变量</li>
+</ul>
+<h2>几个比较容易混淆的</h2>
+<h3>COPY vs ADD</h3>
+<p>ADD 会自动解压压缩包，在不需要特殊操作的时候，最好使用COPY。</p>
+<h3>ENTRYPOINT vs CMD</h3>
+<p>entrypoint 指定了 Docker 镜像要运行的二进制文件（当然也包括参数），而 cmd 则指定了运行这个二进制文件的参数。不过因为默认 entrypoint 是 bash -c，所以实际上 CMD 指定的也是要运行的命令。</p>
+<p>另外，docker run 时候包含命令行参数，会执行命令行参数，而不是 CMD 的内容。如果使用 /bin/bash 作为命令行的指令，这样便替换掉 CMD 的内容，从而进入镜像中查看编译出的镜像究竟是什么样的。</p>
+<p>个人倾向于<strong>只使用 CMD，而不使用 ENTRYPOINT</strong>。</p>
+<p>参考：https://stackoverflow.com/a/34245657/1061155</p>
+<h2>使用Dockerfile 还是 commit 来构建镜像</h2>
+<p>如果可能的话，尽量使用 dockerfile</p>
+<blockquote>
+<p>I've been wondering the same thing, and my impression (which could be totally wrong) it that it's really the same case as with VMs --&gt; you don't want to not know how to recreate the vm image. In my case I have regular .sh scripts to install, and am wondering why I can't just maintain these, run docker and effectively call these, and create the golden version image that way. My scripts work to get it installed on a local PC, and the reason I want to use docker is to deal with conflicts of multiple instances of programs/have clean file system/etc 
+https://stackoverflow.com/questions/26110828/should-i-use-dockerfiles-or-image-commits</p>
+</blockquote>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/dockerfile-ji-chu.html">posted at 03:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/docker.html" class="tags">Docker</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Python 中的 GC（垃圾回收）</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 19, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-de-gcla-ji-hui-shou.html" rel="bookmark" title="Permanent Link to &quot;Python 中的 GC（垃圾回收）&quot;">Python 中的 GC（垃圾回收）</a>
+                </h2>
+
+                
+                
+
+                <h1>引用计数（reference counting）</h1>
+<p>CPython 中默认使用的垃圾回收算法是 Reference Counting。也就是对每个元素标记有多少个其他元素引用了它，当引用数降到零的时候就删除。</p>
+<ol>
+<li>当对象增加一个引用，比如赋值给变量，属性或者传入一个方法，引用计数执行加1运算。</li>
+<li>当对象减少一个引用，比如变量离开作用域，属性被赋值为另一个对象引用，属性所在的对象被回收或者之前传入参数的方法返回，引用计数执行减1操作。</li>
+<li>当引用计数变为0，代表该对象不被引用，可以标记成垃圾进行回收。</li>
+</ol>
+<p>为了解决循环引用的问题，CPython 使用了 Cyclic GC，遍历所有的环，并且把每一个元素的引用减一，来检测每一个引用环是不是循环应用。</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tKfTcly1ftg5mu2087j30we0i6gv5.jpg"></p>
+<h1>标记删除（Mark and Sweep）</h1>
+<ol>
+<li>从某一个已知的还活着的对象开始，便利对象，如果经过了某个对象就认为是活着的</li>
+<li>如果没有被标记的就删除</li>
+</ol>
+<p>避免了循环引用的问题</p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tKfTcly1ftf9x2kejlj30wo0ic11s.jpg"></p>
+<p>实际的处理过程</p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tKfTcly1ftfa55k2e7j30wi0ick3k.jpg"></p>
+<p><img alt="" src="https://ws3.sinaimg.cn/large/006tKfTcly1ftfa6amfmmj30wc0iedr8.jpg"></p>
+<p>Pluggable
+Generational
+Incremental</p>
+<p>参考资料：</p>
+<ol>
+<li>https://www.youtube.com/watch?v=iHVs_HkjdmI</li>
+<li>https://droidyue.com/blog/2015/06/05/how-garbage-collector-handles-circular-references/</li>
+<li>https://www.cnblogs.com/Xjng/p/5128269.html</li>
+<li>https://foofish.net/python-gc.html</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-de-gcla-ji-hui-shou.html">posted at 08:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

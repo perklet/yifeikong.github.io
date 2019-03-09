@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Python 的多线程和多进程</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 08, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-duo-xian-cheng-he-duo-jin-cheng.html" rel="bookmark" title="Permanent Link to &quot;Python 的多线程和多进程&quot;">Python 的多线程和多进程</a>
+                </h2>
+
+                
+                
+
+                <h1>高层次多线程</h1>
+<p>使用 threading 模块，threading.Thread</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;thread worker function&quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s1">&#39;Worker {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="n">threads</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;worker&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="p">,))</span>
+    <span class="n">threads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>by default, it does not start running</p>
+<div class="highlight"><pre><span></span>t.start  # start executing the thread
+t.is_alive
+t.join   # wait for a thread, daemon thread can&#39;t be joined
+</pre></div>
+
+
+<p>直接子类化 Thread 是不推荐的，因为这样会使代码和线程耦合在一起。</p>
+<p>Each Thread has its own stack, so when a child thread throws a exception, the main thread will not catch it</p>
+<p>http://stackoverflow.com/questions/2829329/catch-a-threads-exception-in-the-caller-thread-in-python</p>
+<h1>Daemon 化线程</h1>
+<p>默认情况下，主线程等待所有子线程的执行。设定为 Daemon 线程后，主线程继续执行，并不等待，但当主线程退出时会杀掉所有子线程。如果想要使用Ctrl-C, 必须设定为daemon</p>
+<p>使用 t.daemon = True 设定为 Daemon 线程</p>
+<p>使用 <code>t.join(timeout)</code> 等待子线程完成，如果 timeout 之内没有完成，继续执行</p>
+<p><code>threading.enumerate()</code> 返回所有活动的线程</p>
+<p><code>threading.current_thread()</code> 返回当前进程</p>
+<h1>长时间运行的守护进程</h1>
+<p>头条的代码是如何处理的：</p>
+<ol>
+<li>主线程等待</li>
+<li>所有的 worker 线程 daemon 化</li>
+<li>使用 systemd 管理进程</li>
+</ol>
+<p>关于 coroutine，首先，他们是线程，用户级线程，也就是说虽然他们的代价比较小，但是如果递归调用，很可能会创建大量的协程。在线程中，我们显然不能创建数量过大的线程，因此，也不能无限地创造过多的协程。</p>
+<h1>线程池和进程池</h1>
+<ul>
+<li><code>multiprocessing.Pool</code> 进程池，只能接受 marshalable 作为 worker</li>
+<li><code>multiprocessing.ThreadPool</code> 线程池，同样受到了 GIL 的影响。</li>
+</ul>
+<p>用法如下:</p>
+<div class="highlight"><pre><span></span>multiporcessing.Pool.map(fn, iterable)
+</pre></div>
+
+
+<p>线程池的例子</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">multiprocessing.pool</span> <span class="kn">import</span> <span class="n">ThreadPool</span>
+ 
+<span class="k">def</span> <span class="nf">square_number</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span>
+ 
+<span class="c1"># function to be mapped over</span>
+<span class="k">def</span> <span class="nf">calculate_parallel</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">pool</span> <span class="o">=</span> <span class="n">ThreadPool</span><span class="p">(</span><span class="n">threads</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">square_number</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span>
+    <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>  <span class="c1"># NOTE close before join</span>
+    <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">results</span>
+ 
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+    <span class="n">squared_numbers</span> <span class="o">=</span> <span class="n">calculate_parallel</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">squared_numbers</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+
+
+<p>使用pool的一个陷阱是不太好debug, 爆出的异常往往看不清问题, 需要使用单线程调试之后再去使用</p>
+<h1><code>concurrent.futures</code></h1>
+<p>参考：</p>
+<ol>
+<li>https://medium.com/python-pandemonium/asyncio-coroutine-patterns-beyond-await-a6121486656f</li>
+<li>http://lucumr.pocoo.org/2016/10/30/i-dont-understand-asyncio/</li>
+<li>https://medium.com/@yeraydiazdiaz/asyncio-coroutine-patterns-errors-and-cancellation-3bb422e961ff</li>
+<li>https://pymotw.com/2/threading/</li>
+<li>https://news.ycombinator.com/item?id=9793466</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-duo-xian-cheng-he-duo-jin-cheng.html">posted at 19:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

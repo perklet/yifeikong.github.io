@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "编程语言" | Page 4</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/bian-cheng-yu-yan/page/4/index.html">编程语言</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/sqlite3-he-zai-python-zhong-de-shi-yong-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;sqlite3 和在 Python 中的使用教程&quot;">sqlite3 和在 Python 中的使用教程</a>
+                </h2>
+
+                
+                
+
+                <p>Yifei's notes:</p>
+<p>所谓的事务、锁、存储过程、外键等等不适合互联网公司的业务场景，而更适合于“企业级”“IOE”这些应用。</p>
+<h1>sqlite3</h1>
+<p>% sqlite3 DATABASE</p>
+<div class="highlight"><pre><span></span><span class="na">.databases</span>  <span class="no">show</span> <span class="no">databases</span> <span class="no">connected</span> <span class="no">to</span>
+<span class="na">.dump</span> <span class="no">TABLE</span> <span class="no">dump</span> <span class="no">table</span> <span class="no">in</span> <span class="no">SQL</span> <span class="no">format</span>
+<span class="na">.import</span> <span class="no">FILE</span> <span class="err">?</span><span class="no">TABLE</span><span class="err">?</span>    <span class="no">import</span> <span class="no">SQL</span> <span class="no">data</span> <span class="no">into</span> <span class="no">table</span>
+<span class="na">.indices</span> <span class="err">?</span><span class="no">TABLE</span><span class="err">?</span>    <span class="no">show</span> <span class="no">indices</span> <span class="no">of</span> <span class="no">table</span>
+<span class="na">.mode</span> <span class="no">MODE</span>  <span class="no">set</span> <span class="no">output</span> <span class="no">mode</span><span class="p">(</span><span class="no">csv</span><span class="p">,</span> <span class="no">column</span>
+<span class="na">.read</span> <span class="no">FILE</span>  <span class="no">excute</span> <span class="no">FILE …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/sqlite3-he-zai-python-zhong-de-shi-yong-jiao-cheng.html">posted at 05:17</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/go-yu-yan-shu-ju-ku-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;Go 语言数据库教程&quot;">Go 语言数据库教程</a>
+                </h2>
+
+                
+                
+
+                <p>在学习 Go 的过程中重新思考了数据库相关的一些知识，之前认为数据库的驱动就是应该有一个 conn 对象表示连接， 然后再有一个 cursor 对象来具体操作。但是 Go 完全没有这么来，而是直接生成一个 db 对象来操作，开始觉得不适应，然而后来我也实在想不起来为什么需要用两个对象了。</p>
+<p>另外，为什么要用 ORM 呢？之前用 Django 的ORM比较多，因为生成后台非常方便，而且自己对 SQL 也不是很熟悉，对数据库的操作基本上都在使用这个ORM。然而，现在感觉到如果想要自己的代码性能比较高的话，自己手工写 SQL 几乎是不可避免的，而且 SQL 其实也没有那么吓人。</p>
+<p>Go语言中的 <code>database/sql</code> 包提供了一个数据库的访问接口，但是对于不同的数据库，还需要不同的驱动。</p>
+<p>一些常见的数据库的驱动参见这里：http://golang.org/s/sqldrivers。</p>
+<h1>连接数据库 …</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/go-yu-yan-shu-ju-ku-jiao-cheng.html">posted at 04:10</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Dec 17, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-dan-yuan-ce-shi.html" rel="bookmark" title="Permanent Link to &quot;Python 的单元测试&quot;">Python 的单元测试</a>
+                </h2>
+
+                
+                
+
+                <h1>编写测试的基本原则</h1>
+<p>每一个测试单元必须是完全独立的。每一个必须能够独立运行以及在其他的测试组中运行，不管他们的顺序如何。加载和清空数据应该使用 setUp() 和 tearDown() 方法（如果使用unittest）。</p>
+<p><strong>sans-io</strong>。也就是把逻辑和 IO 分开来，这样在测试的时候方便指定输入，以及捕获输出。</p>
+<p>尽量让测试跑的快一点。如果一个测试在几毫秒之内跑不完的话，开发就会慢下来，以至于没有人再去跑这些测试了。如果实在有很花时间的测试，把他们单独放在一起定期执行。</p>
+<p>如果你正在开发某样东西的过程中被打断的话，可以写一个测试，这样当你回过头来的时候还能很快想起来需要做什么。</p>
+<p>使用有描述性的长名字。实际代码中你可能使用 <code>square()</code> 这样的名字，但是在测试用你要用 <code>test_square_of_number_2</code> 这样的名字。</p>
+<p>测试代码的另一个用途是作为新手的介绍。让别人来看你的代码的时候，看看测试就知道他是干什么的了。</p>
+<h1>编写测试的思路</h1>
+<p>按照代码逻辑分支测试，把代码的每一个分支的</p>
+<ol>
+<li>入口参数是什么</li>
+<li>出口参数是什么</li>
+<li>副作用是什么</li>
+<li>产生的异常是什么</li>
+</ol>
+<p>都测试到。</p>
+<h1>工具选择</h1>
+<p>Python 常用的测试工具有三种：</p>
+<ol>
+<li>标准库自带的 unittest</li>
+<li>nose[2 …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-dan-yuan-ce-shi.html">posted at 20:26</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Dec 10, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/lispy-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;lispy 笔记&quot;">lispy 笔记</a>
+                </h2>
+
+                
+                
+
+                <p>阅读 norvig 文章<a href="http://norvig.com/lispy.html">(How to Write a (Lisp) Interpreter (in Python))</a>的笔记。</p>
+<p>作为从数学系转过来的学生，之前并没有学过编译原理，只是自己在一些文章中读过关于编译器的只言片语，借这篇文章了解一些编辑器的基本知识吧。</p>
+<p>这篇文章主要是用 Python 实现了一个 lisp 的解释器。lisp 语言的语法非常简单，可以说lisp语言本身就是 AST 。一个解释器基本有两个部分。一部分是 parser，生成AST，另一部分是执行，运行AST。</p>
+<div class="highlight"><pre><span></span>code --&gt; (parse)  --&gt; AST --&gt; (eval) --&gt; result
+</pre></div>
+
+
+<p>也就是我们只要去实现 parse 和 eval 两个函数就好了～</p>
+<h1>类型定义</h1>
+<p>这里使用了几个类型，都是直接衍生自Python 的原生类型</p>
+<div class="highlight"><pre><span></span>Symbol = str  # 变量
+Number = (int …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/lispy-bi-ji.html">posted at 05:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 27, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/pdb.html" rel="bookmark" title="Permanent Link to &quot;pdb&quot;">pdb</a>
+                </h2>
+
+                
+                
+
+                <p>常用命令</p>
+<ul>
+<li>[n]ext 下一步</li>
+<li>[s]tep into 进入函数</li>
+<li>[r]eturn 跳出函数</li>
+<li>[b]reakpoint 打断点</li>
+</ul>
+<p>pdb</p>
+<p>pdb is fine, just don’t have so many features</p>
+<p>Usage: import pdb; pdb.set_trace()</p>
+<p>Ipdb is better</p>
+<p>Usage: import ipdb; ipdb.set_trace()
+n   next
+p   print
+pp  pprint
+s   setp into
+c   continue to …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/pdb.html">posted at 23:47</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/c-zi-mian-liang.html" rel="bookmark" title="Permanent Link to &quot;C++ 字面量&quot;">C++ 字面量</a>
+                </h2>
+
+                
+                
+
+                <h1>C++中的字典字面量</h1>
+<p>You can actually do this:</p>
+<div class="highlight"><pre><span></span><span class="x">std::map&lt;std::string, int&gt; mymap = </span><span class="cp">{{</span><span class="s2">&quot;one&quot;</span><span class="o">,</span> <span class="m">1</span><span class="o">},</span> <span class="o">{</span><span class="s2">&quot;two&quot;</span><span class="o">,</span> <span class="m">2</span><span class="o">},</span> <span class="o">{</span><span class="s2">&quot;three&quot;</span><span class="o">,</span> <span class="m">3</span><span class="cp">}}</span><span class="x">;</span>
+</pre></div>
+
+
+<p>What is actually happening here is that std::map stores an std::pair of the key value types, in this case std::pair<const std::string,int>. This is only possible because of c++11's …</const></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/c-zi-mian-liang.html">posted at 02:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 11, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-bu-shuang-de-di-fang.html" rel="bookmark" title="Permanent Link to &quot;Python 中不爽的地方&quot;">Python 中不爽的地方</a>
+                </h2>
+
+                
+                
+
+                <h1>GIL</h1>
+<p>之前用多线程都是做一些IO密集的内容, 比如爬网页的时候开一个ThreadPool, 处理速度立马就翻了几倍. 所以一直没把GIL放在心上, 前几天要跑一些处理敏感词的数据, 大概要对几百万篇文章做正则匹配. 想都没想就用了多线程, 吃饭回来发现并没有跑完, 这才想起来正则匹配这种东西是CPU密集的, 用Python的线程并没有任何卵用. 这时候换成multiprocessing.Pool速度又飚起来了, 然而使用进程池终究还是不如线程池方便, 所有传入的函数必须是marshallable, 有时候还是不能直接替换的.</p>
+<h1>函数式编程</h1>
+<p>没有真正的闭包, 必须使用nonlocal关键词才能实现一些闭包的功能</p>
+<p>也没有真正的lambda表达式, 自带的lambda表达式局限非常大</p>
+<h1>其他</h1>
+<p>bytes的格式化输出竟然是 b'xxx'</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-bu-shuang-de-di-fang.html">posted at 11:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 08, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-duo-xian-cheng-he-duo-jin-cheng.html" rel="bookmark" title="Permanent Link to &quot;Python 的多线程和多进程&quot;">Python 的多线程和多进程</a>
+                </h2>
+
+                
+                
+
+                <h1>高层次多线程</h1>
+<p>使用 threading 模块，threading.Thread</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;thread worker function&quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s1">&#39;Worker {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="n">threads</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;worker&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="p">,))</span>
+    <span class="n">threads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>by default, it does not start running</p>
+<div class="highlight"><pre><span></span>t.start  # start executing the …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-duo-xian-cheng-he-duo-jin-cheng.html">posted at 19:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 13, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ipython-main-features.html" rel="bookmark" title="Permanent Link to &quot;IPython main features&quot;">IPython main features</a>
+                </h2>
+
+                
+                
+
+                <ul>
+<li>
+<p>use <code>?</code> to get quick help, and use <code>??</code> provides additional detail).</p>
+</li>
+<li>
+<p>Searching through modules and namespaces with * wildcards, both when using the ? system and via the %psearch command.</p>
+</li>
+<li>
+<p>magic commands, % or %% prefixed commands</p>
+</li>
+<li>
+<p>Alias facility for defining your own system aliases.</p>
+</li>
+<li>
+<p>Lines starting with ! are passed directly to the system shell …</p></li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ipython-main-features.html">posted at 03:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Aug 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-import-xi-tong-yu-importlib.html" rel="bookmark" title="Permanent Link to &quot;Python 的 import 系统与 importlib&quot;">Python 的 import 系统与 importlib</a>
+                </h2>
+
+                
+                
+
+                <p>首先</p>
+<p><strong>init</strong>.py is first called before the actual import</p>
+<p>if you have  the following code:</p>
+<div class="highlight"><pre><span></span>foobar/
+    __init__.py
+    baz.py
+</pre></div>
+
+
+<p>runing import foobar will not make foobar.baz available
+you have to add from . import baz to <strong>init</strong>.py</p>
+<p>add <strong>all</strong> to <strong>init.</strong>.py to control which to be …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-import-xi-tong-yu-importlib.html">posted at 01:01</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags selected">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/3" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/5" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 4 of 8</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

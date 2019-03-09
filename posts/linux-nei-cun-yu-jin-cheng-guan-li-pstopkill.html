@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Linux 内存与进程管理（ps/top/kill...）</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-nei-cun-yu-jin-cheng-guan-li-pstopkill.html" rel="bookmark" title="Permanent Link to &quot;Linux 内存与进程管理（ps/top/kill...）&quot;">Linux 内存与进程管理（ps/top/kill...）</a>
+                </h2>
+
+                
+                
+
+                <h1>ps 命令</h1>
+<p>比较有用的选项有</p>
+<div class="highlight"><pre><span></span>-e 显示所有的进程
+-f 显示 uid, pid, ppid, cpu, starttime, tty, cpu usage, command
+-j 显示 user, pid, ppid, pgid, sess, jobc, state, tt, time, command。个人更喜欢 -j 一点
+-l 显示 uid, pid, ppid, flags, cpu, pri, nice, vsz=SZ, rss, wchan, state=S, paddr=ADDR, tty, time, and command=CMD.
+-v 显示 pid, state, time, sl, re, pagein, vsz, rss, lim, tsiz, %cpu, %mem, and command
+
+-L 显示能够排序的关键字（mac）
+L 显示能排序的关键字（Linux）
+-o/-O 指定显示的列，-o 只显示指定的列，-O有默认的几列，等价于：-o pid,format,state,tname,time,command
+
+-S 把所有已经退出的进程的时间计算到父进程上（mac）
+S 把所有已经退出的进程的时间计算到父进程上（Linux）
+-u 按照 uid/username 过滤
+-p/--pid 限制 pid
+-g/--gid 限制 gid
+-C 按照命令过滤
+--ppid 按照 ppid 过滤
+--ssid 按照 ssid 过滤
+--tid 按照 tty 过滤
+
+-E 显示环境变量
+-H/--forest 按照进程树显示
+
+--sort 按照某一列排序
+
+-ww 不要限制显示的输出宽度
+</pre></div>
+
+
+<h2>例子</h2>
+<ol>
+<li>使用ps显示占用内存最多的进程</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="c">% ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head</span>
+</pre></div>
+
+
+<ol>
+<li>显示所有进程树</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="c">% ps -ejH</span>
+</pre></div>
+
+
+<h2>其他相关命令</h2>
+<p>pstree 查看进程树</p>
+<p>pgrep process_name 按照名字查找进程 pid</p>
+<h1>top 命令</h1>
+<p>定时刷新系统的进程状态的监控程序。mac 上的默认排序是pid，Linux 上是 %CPU。mac 上的 top 程序和 Linux 上非常不一样。</p>
+<ul>
+<li>top 教程：https://linoxide.com/linux-command/linux-top-command-examples-screenshots/</li>
+<li>htop 教程：http://www.cnblogs.com/lizhenghn/p/3728610.html</li>
+<li>atop 教程：http://www.cnblogs.com/bangerlee/archive/2011/12/23/2294090.html</li>
+</ul>
+<h2>atop</h2>
+<p>atop 用来分析机器在历史上的负载情况。通过 crontab 固定时间采样，组合起来形成一个 atop 日志文件，可以使用 atop -r XXX 对日志文件查看。</p>
+<p>atop 每天以一个 <code>/var/log/atop/atop_YYYYMMDD</code> 的形式生成一个日志文件。</p>
+<p>常用命令</p>
+<ul>
+<li>b mm:ss 到指定时间</li>
+<li>t 查看后十秒</li>
+<li>T 查看前十秒</li>
+<li>m 按照内存排序</li>
+<li>C 按照CPU排序</li>
+<li>c 查看详细命令</li>
+</ul>
+<h1>kill 命令系列</h1>
+<p>kill -s SIGNAL pid</p>
+<p>或者 pkill xxx，不要使用 killall ，<a href="https://unix.stackexchange.com/questions/91527/whats-the-difference-between-pkill-and-killall">use pkill over killall</a></p>
+<h1>调整 nice 值</h1>
+<p>使用 nice 和 renice。nice 的范围是 -20 ~ 19，nice值越低，优先级越高。</p>
+<p>nice -n 10 COMMAND  # 以 10 为初始nice值启动命令
+renice 10 -p pid</p>
+<h1>jobs 命令相关</h1>
+<p><code>jobs</code> list all jobs</p>
+<p><code>command &amp;</code>  put job in the background</p>
+<p><code>fg N</code> to put it in the foreground</p>
+<p><code>bg N</code> to put it in the background</p>
+<p><code>ctrl-z</code> to put a job to sleep</p>
+<p><code>kill %n</code> to kill job number n</p>
+<h1>lsof</h1>
+<p>lsof -i:port  列出指定端口对应的进程</p>
+<p>lsof -u username 指定用户</p>
+<p>lsof -c process_name 指定进程名</p>
+<p>lsof -p pid 指定pid</p>
+<p>使用dmesg 查看当前的内核日志，debian上可以查看 /var/log/kern.log /var/log/dmesg.0</p>
+<p>RSS is Resident Set Size (physically resident memory - this is currently occupying space in the machine's physical memory), and VSZ is Virtual Memory Size (address space allocated - this has addresses allocated in the process's memory map, but there isn't necessarily any actual memory behind it all right now).[1]</p>
+<p>[1] https://stackoverflow.com/questions/7880784/what-is-rss-and-vsz-in-linux-memory-management</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-nei-cun-yu-jin-cheng-guan-li-pstopkill.html">posted at 04:55</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

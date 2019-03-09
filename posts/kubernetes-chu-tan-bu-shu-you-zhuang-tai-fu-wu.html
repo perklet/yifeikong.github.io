@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | kubernetes 初探——部署有状态服务</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="架构,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Oct 05, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-you-zhuang-tai-fu-wu.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——部署有状态服务&quot;">kubernetes 初探——部署有状态服务</a>
+                </h2>
+
+                
+                
+
+                <p>为了部署我们自己的应用, 首先需要把基础设施部署上去, 其中数据库就占了大头. 有人说数据库等应用不是和容器化部署, 但是也有人认为所有的应用都适合容器化部署. 在这里我们不讨论这些观点，仅以部署 MySQL 为例说明一下如何在 K8S 上部署有状态服务。</p>
+<h1>相关概念</h1>
+<ul>
+<li>PersistentVolume(PV) 是集群之中的一块网络存储。跟 Node 一样，也是集群的资源。PV 跟 Volume 类似，不过会有独立于 Pod 的生命周期。这一 API 对象包含了存储的实现细节，例如 NFS、iSCSI 或者其他的云提供商的存储系统。</li>
+<li>PersistentVolumeClaim (PVC) 是用户的一个请求。他跟 Pod 类似。Pod 消费 Node 的资源，PVC 消费 PV 的资源。Pod 能够申请特定的资源（CPU 和 内存）；Claim 能够请求特定的尺寸和访问模式（例如可以加载一个读写，以及多个只读实例）</li>
+<li>Stateful Set. Deployment 是无状态的服务，而 StatefulSets 旨在与有状态的应用及分布式系统一起使用。</li>
+<li>ConfigMap 用来保存非密码的配置. configmap 可以以配置文件或者环境变量等方式挂在到 pod 中</li>
+<li>Secret 用来保存密码等私密数据</li>
+<li>Init Container 用于初始化的容器. 有点类似于 docker build 的过程</li>
+</ul>
+<h1>动态 PV vs 静态 PV</h1>
+<h1>使用 Deployment PVC 还是 Stateful Set</h1>
+<p>可以看出我们即可以使用普通的 Deployment + PVC 来部署 MySQL, 也可以使用 Stateful Set 来部署, 那么哪种方式更好呢?</p>
+<p>个人理解：</p>
+<ul>
+<li>对于需要使用挂载一定资源的，使用 PVC 就好了，甚至只需要只读挂载就好。</li>
+<li>对于强状态依赖的服务，比如数据库，肯定要使用 PVC</li>
+</ul>
+<p>Stack Overflow 上的一个问题[2]也很值得参考. </p>
+<h1>MySQL 主从集群</h1>
+<p>本文中我们要部署一个一主多从的 MySQL 集群. 关于一主多从的优点不是本文的重点, 这里就不多说了, 可以参考下面:</p>
+<blockquote>
+<ol>
+<li>扩容解决方案：在多个slave之间扩展负载以提高性能。在这种模式下，所有的写入和更新操作都必须在主服务器上进行。然而，读取操作通过slave镜像。该模型可以提高写入操作的性能，同时，也能够通过增加slave的节点数量，从而显著地提升读取速度。</li>
+<li>数据安全：数据从master被复制到slave，并且slave可以暂停复制过程。因此，可以在不损坏master的情况下，在slave上运行备份服务。</li>
+<li>分析：现场数据可以在master上创建，而对信息的分析可以在slave进行，而不影响master的性能。</li>
+<li>远程数据分发：可以使用复制为远程站点创建本地数据的副本，而不必一直通过访问master。</li>
+</ol>
+</blockquote>
+<h1>参考</h1>
+<ol>
+<li><a href="https://blog.csdn.net/sweatOtt/article/details/81092484">使用 PVC 和 Deployment 部署单实例 MySQL 集群</a></li>
+<li>https://stackoverflow.com/questions/41732819/why-statefulsets-cant-a-stateless-pod-use-persistent-volumes</li>
+<li><a href="https://kubernetes.io/docs/tasks/run-application/run-single-instance-stateful-application/">使用普通 Deployment 部署单节点 mysql</a></li>
+<li>https://kubernetes.io/cn/docs/tutorials/stateful-application/basic-stateful-set/</li>
+<li><a href="https://www.cnblogs.com/zhenyuyaodidiao/p/6594410.html">如何使用 ConfigMap</a></li>
+<li><a href="https://kubernetes.io/cn/docs/concepts/configuration/secret/">Secret 文档</a></li>
+<li>https://stackoverflow.com/questions/41583672/kubernetes-deployments-vs-statefulsets</li>
+<li><a href="https://yq.aliyun.com/articles/640212">阿里云挂载 OSS Volume</a></li>
+<li>https://jimmysong.io/posts/kubernetes-persistent-volume/</li>
+<li>https://kubernetes.io/docs/concepts/storage/volumes/</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-you-zhuang-tai-fu-wu.html">posted at 08:02</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

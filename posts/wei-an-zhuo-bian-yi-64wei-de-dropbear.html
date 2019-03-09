@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 为安卓编译64位的dropbear</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="大前端,Android,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 15, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-an-zhuo-bian-yi-64wei-de-dropbear.html" rel="bookmark" title="Permanent Link to &quot;为安卓编译64位的dropbear&quot;">为安卓编译64位的dropbear</a>
+                </h2>
+
+                
+                
+
+                <h2>如何使用dropbear</h2>
+<p>这里主要是需要在安卓上生成 host key，以及把自己的公钥传到安卓上</p>
+<div class="highlight"><pre><span></span>dropbearkey -t rsa -f /data/local/dropbear_host_key # 在安卓上生成key
+adb push ~/.ssh/id_rsa.pub /data/local/authorized_keys # 在宿主机把自己的密钥传过去
+dropbear -F -E -r /data/local/dropbear_host_key -A -N root -C jk -R /data/local/authorized_keys # 按照给定的key启动dropbear
+dropbear -P /data/local/dropbear.pid -r /data/local/dropbear_host_key -A -N root -C jk -R /data/local/authorized_keys # 以daemon形式启动dropbear
+</pre></div>
+
+
+<h2>如何为64位的安卓机器编译 dropbear</h2>
+<p>需要更改如下代码（svr-chansession.c）:</p>
+<div class="highlight"><pre><span></span>addnewvar(&quot;LD_LIBRARY_PATH&quot;, &quot;/system/lib&quot;);
+
+to:
+
+addnewvar(&quot;LD_LIBRARY_PATH&quot;, &quot;/system/lib64&quot;);
+</pre></div>
+
+
+<h2>使用AIL把dropbear添加为服务</h2>
+<div class="highlight"><pre><span></span>service sshd /system/xbin/dropbear -s
+   user  root
+   group root
+   oneshot
+</pre></div>
+
+
+<p>试过了，但是没有成功</p>
+<h2>如何重启adb(wifi)</h2>
+<div class="highlight"><pre><span></span>setprop service.adb.tcp.port 5555
+stop adbd
+start adbd
+</pre></div>
+
+
+<h1>关闭 ssh key 验证</h1>
+<div class="highlight"><pre><span></span>Host *
+    StrictHostKeyChecking no
+</pre></div>
+
+
+<p>mount -o remount,rw /system</p>
+<p>参考</p>
+<ol>
+<li>http://forum.xda-developers.com/nexus-7-2013/general/guide-compiling-dropbear-2016-73-t3351671</li>
+<li>http://forum.xda-developers.com/nexus-7-2013/general/guide-compiling-dropbear-2015-67-t3142412/page3</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-an-zhuo-bian-yi-64wei-de-dropbear.html">posted at 05:13</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

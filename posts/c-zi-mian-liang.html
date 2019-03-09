@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | C++ 字面量</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="C 语言,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/c-zi-mian-liang.html" rel="bookmark" title="Permanent Link to &quot;C++ 字面量&quot;">C++ 字面量</a>
+                </h2>
+
+                
+                
+
+                <h1>C++中的字典字面量</h1>
+<p>You can actually do this:</p>
+<div class="highlight"><pre><span></span><span class="x">std::map&lt;std::string, int&gt; mymap = </span><span class="cp">{{</span><span class="s2">&quot;one&quot;</span><span class="o">,</span> <span class="m">1</span><span class="o">},</span> <span class="o">{</span><span class="s2">&quot;two&quot;</span><span class="o">,</span> <span class="m">2</span><span class="o">},</span> <span class="o">{</span><span class="s2">&quot;three&quot;</span><span class="o">,</span> <span class="m">3</span><span class="cp">}}</span><span class="x">;</span>
+</pre></div>
+
+
+<p>What is actually happening here is that std::map stores an std::pair of the key value types, in this case std::pair<const std::string,int>. This is only possible because of c++11's new uniform initialization syntax which in this case calls a constructor overload of std::pair<const std::string,int>. In this case std::map has a constructor with an std::intializer_list which is responsible for the outside braces.</p>
+<p>So unlike python's any class you create can use this syntax to initialize itself as long as you create a constructor that takes an initializer list (or uniform initialization syntax is applicable)</p>
+<p>https://stackoverflow.com/a/20230177/1061155</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/c-zi-mian-liang.html">posted at 02:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | decompile apk</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="大前端,Android,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/decompile-apk.html" rel="bookmark" title="Permanent Link to &quot;decompile apk&quot;">decompile apk</a>
+                </h2>
+
+                
+                
+
+                <h1>jadx[1]</h1>
+<h2>compile and install jadx</h2>
+<p>mkdir jadx
+git clone https://github.com/skylot/jadx.git
+cd jadx
+./gradlew dist   # you might need to wait on this</p>
+<h2>decompile apk</h2>
+<div class="highlight"><pre><span></span>1. change apk to zip file and unzip it
+2. copy out the class.dex file
+3. build/jadx/bin/jadx -d OUTDIR PATH_TO_CLASS.DEX
+or jadxgui PATH
+</pre></div>
+
+
+<h1>工具</h1>
+<p>apk studio</p>
+<p>如何 sign：https://www.nevermoe.com/?p=373</p>
+<p>smali code tutorial： https://forum.xda-developers.com/showthread.php?t=2193735</p>
+<p>一篇很好的pdf的文档，利用smali code：http://www.security-assessment.com/files/documents/whitepapers/Bypassing%20SSL%20Pinning%20on%20Android%20via%20Reverse%20Engineering.pdf</p>
+<p>安卓中 pinning 的原理</p>
+<p>使用自己的keystore实例化 TrustManagerFactory</p>
+<p>关键语句</p>
+<p>InputStream in = resources.openRawResource(certificateRawResource);//file name of res/raw keyStore = KeyStore.getInstance("BKS"); keyStore.load(resourceStream, password);</p>
+<p>http://fdwills.github.io/diary/2014/06/13/ssl-pinning.html</p>
+<p>一些现成的 工具</p>
+<p>https://github.com/ac-pm/SSLUnpinning_Xposed  xposed 插件，已测试不好用
+https://github.com/iSECPartners/Android-SSL-TrustKiller 需要cydia</p>
+<p>豌豆荚商店中有一个 xposed installer miui专版，使用这个可以很好地安装 xposed</p>
+<p>之后安装</p>
+<p>另一只种思路，找到，找到bks文件，替换掉，重新打包，签名</p>
+<p>https://stackoverflow.com/questions/30708548/how-to-modify-the-data-in-the-assets-folder-in-existing-apk-programmatically</p>
+<p>另外一些工具</p>
+<p>https://github.com/ac-pm/Inspeckage</p>
+<p>https://github.com/iSECPartners/Android-SSL-TrustKiller  需要cydia</p>
+<p>https://github.com/iSECPartners/android-ssl-bypass 一个基础工具，通过替换trust manager实现</p>
+<p>arm 汇编教程</p>
+<p>https://mp.weixin.qq.com/s/DKeXqzE6bj5t0eWTkLLCBQ</p>
+<p>[1] http://www.jianshu.com/p/65c2f447946e</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/decompile-apk.html">posted at 07:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

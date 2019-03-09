@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 学习 redis 的基础命令</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 08, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/xue-xi-redis-de-ji-chu-ming-ling.html" rel="bookmark" title="Permanent Link to &quot;学习 redis 的基础命令&quot;">学习 redis 的基础命令</a>
+                </h2>
+
+                
+                
+
+                <p>basically, redis is a data structure server</p>
+<p>string list set sorted set hash</p>
+<h2>key related</h2>
+<div class="highlight"><pre><span></span>keys &lt;pattern&gt;  list all keys share the pattern
+exists key  
+del key 
+expire key expiration   
+expireat key timestamp  
+ttl key 
+rename key  
+type key    
+</pre></div>
+
+
+<h2>string related</h2>
+<div class="highlight"><pre><span></span>set key value   set mystr &quot;hello world&quot;
+setex key timeout value set key with expiration
+setnx key value set only not exist
+get key -&gt; value    get mystr
+getset key new -&gt; old   get old and set new
+setrange key offset value   
+getrange key start end  returns the value, inclusive
+mget key... returns a list of values
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>incr key    mynum
+decr key    mynum
+incrby key value    mynum
+decrby key value    mynum
+getset  
+</pre></div>
+
+
+<h1>hash</h1>
+<div class="highlight"><pre><span></span>hmset key f v ...   store kv pair in hash
+hgetall key 
+hdel key f  
+hexists key f   
+hkeys key   
+hlen key    
+hvals key   
+</pre></div>
+
+
+<h1>lists</h1>
+<p>list is implemented as a double-linked list</p>
+<div class="highlight"><pre><span></span>lpush key value1 value2 value3   lpushx only pushes if not exist
+rpush   
+lpop key    
+rpop    
+rpoplpush src dst   
+blpop key... timeout    block until one value is avaliable
+lindex key index    
+llen key    
+lrange key start end    inclusive
+linsert key     
+lrem key count value    
+lset key index value    
+ltrim key start end 
+</pre></div>
+
+
+<h1>tricks</h1>
+<p>to get all elements with lrange: use <code>lrange KYE 0 -1</code></p>
+<h1>Persistense</h1>
+<p>RDB
+AOF</p>
+<h1>Transaction</h1>
+<div class="highlight"><pre><span></span>MULTI用来组装一个事务；
+EXEC用来执行一个事务；
+DISCARD用来取消一个事务；
+WATCH用来监视一些key，一旦这些key在事务执行之前被改变，则取消事务的执行。
+</pre></div>
+
+
+<h1>zset</h1>
+<p>rank is which place the value ranked by score in the zset.</p>
+<h2>add and remove cookies</h2>
+<div class="highlight"><pre><span></span>zadd KEY SCORE MEMBER           # add a value to a zset
+zincrby KEY SCORE MEMBER        # increment the member&#39;s score NOTE redis-py implements wrongly
+zrem KEY MEMBER...              # remove a value from zset
+zremrangebyrank KEY START STOP  # removes all values in the set within the give index
+zremrangebyscore KEY MIN MAX    # removes all values in the set within the given scores
+</pre></div>
+
+
+<h2>get zset stats</h2>
+<p>this is zismember command, just use zscore KEY MEMBER is None to check</p>
+<div class="highlight"><pre><span></span>zcard KEY                       # get the number of elements in a zset
+zcount KEY MIN MAX              # count the members in a sorted set with scores within the given scores
+zrank KEY MEMBER                # get the index of member in zset
+zrevrank KEY MEMBER             # the reverse index of member
+zscore KEY MEMBER               # get the score of member in zset
+</pre></div>
+
+
+<h2>read member(s)</h2>
+<div class="highlight"><pre><span></span>zrange KEY START END            # a range of members by index
+zrevrange KEY START END         # a range of memvers by index, sorted from high to low
+zrangebyscore KEY MIN MAX       # a range of members within given scores
+zrevrangebyscore KEY MAX MIN    # a range of members within given scores, from max to min
+</pre></div>
+
+
+<h2>set manipulation</h2>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/xue-xi-redis-de-ji-chu-ming-ling.html">posted at 10:19</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

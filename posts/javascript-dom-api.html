@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | JavaScript DOM API</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="JavaScript,大前端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/javascript-dom-api.html" rel="bookmark" title="Permanent Link to &quot;JavaScript DOM API&quot;">JavaScript DOM API</a>
+                </h2>
+
+                
+                
+
+                <h2>document object</h2>
+<p>attributes of document object</p>
+<div class="highlight"><pre><span></span>document.title               //设置文档标题等价于HTML的&lt;title&gt;标签
+document.URL                 //设置URL属性从而在同一窗口打开另一网页
+document.fileCreatedDate     //文件建立日期，只读属性
+document.fileModifiedDate    //文件修改日期，只读属性
+document.fileSize            //文件大小，只读属性
+document.cookie              //设置和读出cookie
+document.charset             //设置字符集 简体中文:gb2312
+document.body         // body 元素
+document.location.hash/host/href/port          // location
+</pre></div>
+
+
+<p>methods of document object</p>
+<div class="highlight"><pre><span></span>getElementById() // 返回一个 Element
+getElementsByName() // 根据 name 属性获得元素, 返回一个 NodeList
+getElementsByTagName() // 返回一个 HTMLCollection/NodeList(Webkit)
+getElementsByClassName() // 返回一个 HTMLCollection
+querySelector() // 返回一个符合的元素, 性能很差
+querySelectorAll() // 返回所有符合的元素组成的 NodeList, 性能很差
+document.write()
+document.createElement()
+</pre></div>
+
+
+<h2>window object</h2>
+<h3>functions in window object</h3>
+<div class="highlight"><pre><span></span>setTimeout(func, milliseconds, parameters...)
+setInterval(func, milliseconds, parameters...)
+</pre></div>
+
+
+<p>NOTE: javascript is asynchonous, even if you set 0 timeout, the function is just put into the execute queue, not invoked immediately.</p>
+<h3>window.location</h3>
+<div class="highlight"><pre><span></span>location    setting location will cause the page to redirect to new page
+location.href   
+location.protocol   
+location.host   
+location.hostname   
+location.port   
+location.pathname   
+location.search 
+location.hash   
+location.assign()    go to a new address
+location.replace()   go to a new address and do not disturb the history
+location.reload()   reload the page
+</pre></div>
+
+
+<h3>window.history</h3>
+<div class="highlight"><pre><span></span>history.back()  
+history.forward()   
+history.go(number)  
+</pre></div>
+
+
+<h3>window.screen</h3>
+<p>window.screen.width screen width, not the viewport width
+window.screen.height    screen height</p>
+<h3>alert, confirm and prompt</h3>
+<p>alert   show a message
+confirm return a bool by user action
+prompt  </p>
+<h2>Same Origin Policy</h2>
+<p>document.domain is the key to decide the origin of a script.</p>
+<p>scripts under different subdomain can set the their document.domain to a same domain, and then then can share the same cookie or communicate</p>
+<p>Cross-Origin Resource Sharing</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/javascript-dom-api.html">posted at 09:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

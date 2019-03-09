@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | lispy 笔记</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Dec 10, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/lispy-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;lispy 笔记&quot;">lispy 笔记</a>
+                </h2>
+
+                
+                
+
+                <p>阅读 norvig 文章<a href="http://norvig.com/lispy.html">(How to Write a (Lisp) Interpreter (in Python))</a>的笔记。</p>
+<p>作为从数学系转过来的学生，之前并没有学过编译原理，只是自己在一些文章中读过关于编译器的只言片语，借这篇文章了解一些编辑器的基本知识吧。</p>
+<p>这篇文章主要是用 Python 实现了一个 lisp 的解释器。lisp 语言的语法非常简单，可以说lisp语言本身就是 AST 。一个解释器基本有两个部分。一部分是 parser，生成AST，另一部分是执行，运行AST。</p>
+<div class="highlight"><pre><span></span>code --&gt; (parse)  --&gt; AST --&gt; (eval) --&gt; result
+</pre></div>
+
+
+<p>也就是我们只要去实现 parse 和 eval 两个函数就好了～</p>
+<h1>类型定义</h1>
+<p>这里使用了几个类型，都是直接衍生自Python 的原生类型</p>
+<div class="highlight"><pre><span></span>Symbol = str  # 变量
+Number = (int, float)
+Atom = (Symbol, Number)
+List = list
+Exp = (Atom, List)
+Env = dict
+</pre></div>
+
+
+<h1>parse</h1>
+<p>parse 传统意义上应该分为两部分，一部分是词法分析(Lexical Analysis)，也就是 tokenize，把代码转换成一系列的 token。另一部分是语法分析，也就是合成 AST。常用的工具有 lex，ply 等</p>
+<p>在 Lispy 中，我们直接使用 Python 的 str.split 来实现 tokenize</p>
+<div class="highlight"><pre><span></span>def tokenize(chars: str) -&gt; list:
+    return chars.replace(&#39;(&#39;, &#39; ( &#39;).replace(&#39;)&#39;, &#39; ) &#39;).split()
+</pre></div>
+
+
+<p>然后使用 read_from_tokens 构建一颗语法树。</p>
+<div class="highlight"><pre><span></span>def read_from_tokens(tokens: list) -&gt; Exp:
+    if len(tokens) == 0:
+        raise SyntaxError(&#39;unexpected EOF&#39;)
+    token = tokens.pop(0)  # 从左向右依次处理
+    if token == &#39;(&#39;:
+        L = []
+        while token[0] != &#39;)&#39;:
+            L.append(read_from_tokens(tokens))  # 构建子树
+        tokens.pop(0)  #  弹出 &#39;(&#39;
+        return L
+    elif token == &#39;)&#39;:
+        raise SyntaxError(&#39;unexpected )&#39;)
+    else:
+        return atom(token)
+
+def atom(token: str) -&gt; Atom:
+    try:
+        return int(token)
+    except ValueError:
+        try:
+            return float(token)
+        except ValueError:
+            return Symbol(token)
+
+def parse(program: str) -&gt; Exp:
+    return read_from_tokens(tokenize(program))
+</pre></div>
+
+
+<h1>environment</h1>
+<p>环境大概和scope是相关的一个概念了。比如 <code>sqrt</code> 和 <code>max</code> 都是全局环境中的函数。</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Env</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">(),</span> <span class="n">args</span><span class="o">=</span><span class="p">(),</span> <span class="n">outer</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">args</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outer</span> <span class="o">=</span> <span class="n">outer</span>
+    <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="k">if</span> <span class="p">(</span><span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">outer</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+
+
+
+
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">operator</span> <span class="kn">as</span> <span class="nn">op</span>
+
+<span class="k">def</span> <span class="nf">standard_env</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Env</span><span class="p">:</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">Env</span><span class="p">()</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="n">math</span><span class="p">))</span>  <span class="c1"># 引入python math 模块的方法</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+        <span class="s1">&#39;+&#39;</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">sub</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">truediv</span><span class="p">,</span>
+        <span class="s1">&#39;&gt;&#39;</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">gt</span><span class="p">,</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">lt</span><span class="p">,</span> <span class="s1">&#39;&gt;=&#39;</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">ge</span><span class="p">,</span> <span class="s1">&#39;&lt;=&#39;</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">le</span><span class="p">,</span> <span class="s1">&#39;=&#39;</span><span class="p">:</span><span class="n">op</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span>
+        <span class="s1">&#39;abs&#39;</span><span class="p">:</span> <span class="nb">abs</span><span class="p">,</span>
+        <span class="s1">&#39;append&#39;</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">add</span><span class="p">,</span>
+        <span class="s1">&#39;apply&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">proc</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">proc</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">),</span>
+        <span class="s1">&#39;begin&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+        <span class="s1">&#39;car&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="s1">&#39;cdr&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+        <span class="s1">&#39;cons&#39;</span><span class="p">:</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="p">,</span>
+        <span class="s1">&#39;eq?&#39;</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">is_</span><span class="p">,</span>
+        <span class="s1">&#39;expt&#39;</span><span class="p">:</span> <span class="nb">pow</span><span class="p">,</span>
+        <span class="s1">&#39;equal?&#39;</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span>
+        <span class="s1">&#39;length&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">,</span>
+        <span class="s1">&#39;list&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="n">List</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+        <span class="s1">&#39;list?&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">List</span><span class="p">),</span>
+        <span class="s1">&#39;map&#39;</span><span class="p">:</span> <span class="nb">map</span><span class="p">,</span>
+        <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="nb">max</span><span class="p">,</span>
+        <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="nb">min</span><span class="p">,</span>
+        <span class="s1">&#39;not&#39;</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">not_</span><span class="p">,</span>
+        <span class="s1">&#39;null?&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">==</span> <span class="p">[],</span>
+        <span class="s1">&#39;number?&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Number</span><span class="p">),</span>
+        <span class="s1">&#39;print&#39;</span><span class="p">:</span> <span class="k">print</span><span class="p">,</span>
+        <span class="s1">&#39;procedure?&#39;</span><span class="p">:</span> <span class="nb">callable</span><span class="p">,</span>
+        <span class="s1">&#39;round&#39;</span><span class="p">:</span> <span class="nb">round</span><span class="p">,</span>
+        <span class="s1">&#39;symbol?&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Symbol</span><span class="p">),</span>
+    <span class="p">})</span>
+    <span class="k">return</span> <span class="n">env</span>
+
+<span class="n">global_env</span> <span class="o">=</span> <span class="n">standard_env</span><span class="p">()</span>
+</pre></div>
+
+
+<h1>eval</h1>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>语法</th>
+<th>语义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>变量引用</td>
+<td>symbol</td>
+<td>写出变量名就是表示引用这个变量</td>
+</tr>
+<tr>
+<td>常量</td>
+<td>number</td>
+<td><code>10</code></td>
+</tr>
+<tr>
+<td>条件式</td>
+<td>(if test conseq alt)</td>
+<td><code>(if  (&gt; 10 20) (+ 1 1) (+ 3 3)</code> =&gt; 6</td>
+</tr>
+<tr>
+<td>定义变量</td>
+<td>(define symbol exp)</td>
+<td>定义一个新的变量 <code>(define r 10)</code></td>
+</tr>
+<tr>
+<td>过程调用</td>
+<td>(proc args...)</td>
+<td><code>(sqrt (* 2 8))</code> =&gt; 4</td>
+</tr>
+<tr>
+<td>quotation</td>
+<td>(quote exp)</td>
+<td>返回表达式，而不是执行它。<code>(quote (+ 1 2))</code> =&gt; <code>(+ 1 2)</code>而不是3</td>
+</tr>
+<tr>
+<td>赋值</td>
+<td>(set! symbol exp)</td>
+<td>注意和定义变量的区别</td>
+</tr>
+<tr>
+<td>过程</td>
+<td>(lambda (symbols...) exp)</td>
+<td>定义一个新的过程 <code>(lambda (r) (* pi (* r r)))</code></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">Procedure</span>:
+    <span class="kt">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">params</span><span class="p">,</span> <span class="nx">body</span><span class="p">,</span> <span class="nx">env</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">params</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">env</span> <span class="o">=</span> <span class="nx">params</span><span class="p">,</span> <span class="nx">body</span><span class="p">,</span> <span class="nx">env</span>
+    <span class="nx">def</span> <span class="nx">__call__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="o">*</span><span class="nx">args</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span> <span class="nx">Env</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">params</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">env</span><span class="p">))</span>
+
+<span class="nx">def</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">x</span>: <span class="kt">Exp</span><span class="p">,</span> <span class="nx">env</span><span class="o">=</span><span class="nx">global_env</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">Exp</span>:
+    <span class="kt">if</span> <span class="nx">isinstance</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">Symbol</span><span class="p">)</span><span class="o">:</span>      <span class="err">#</span> <span class="err">变量引用</span>
+        <span class="k">return</span> <span class="nx">env</span><span class="p">[</span><span class="nx">x</span><span class="p">]</span>
+    <span class="nx">elif</span> <span class="nx">not</span> <span class="nx">isinstance</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">List</span><span class="p">)</span><span class="o">:</span>  <span class="err">#</span> <span class="err">常量</span>
+        <span class="k">return</span> <span class="nx">x</span>
+    <span class="nx">op</span><span class="p">,</span> <span class="o">*</span><span class="nx">args</span> <span class="o">=</span> <span class="nx">x</span>
+    <span class="k">if</span> <span class="nx">op</span> <span class="o">==</span> <span class="s1">&#39;quote&#39;</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nx">elif</span> <span class="nx">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;if&#39;</span><span class="o">:</span>            <span class="err">#</span> <span class="err">条件表达式</span>
+       <span class="nx">test</span><span class="p">,</span> <span class="nx">conseq</span><span class="p">,</span> <span class="nx">alt</span> <span class="o">=</span> <span class="nx">args</span>
+       <span class="nx">exp</span> <span class="o">=</span> <span class="nx">conseq</span> <span class="k">if</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">test</span><span class="p">,</span> <span class="nx">env</span><span class="p">)</span> <span class="k">else</span> <span class="nx">alt</span>
+       <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">exp</span><span class="p">,</span> <span class="nx">env</span><span class="p">)</span>
+    <span class="nx">elif</span> <span class="nx">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;define&#39;</span><span class="o">:</span>        <span class="err">#</span> <span class="err">定义变量</span>
+       <span class="nx">_</span><span class="p">,</span> <span class="nx">symbol</span><span class="p">,</span> <span class="nx">exp</span> <span class="o">=</span> <span class="nx">x</span>
+       <span class="nx">env</span><span class="p">[</span><span class="nx">symbol</span><span class="p">]</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">exp</span><span class="p">,</span> <span class="nx">env</span><span class="p">)</span>
+    <span class="nx">elif</span> <span class="nx">op</span> <span class="o">==</span> <span class="s1">&#39;set!&#39;</span><span class="o">:</span>         <span class="err">#</span> <span class="err">变量赋值</span>
+        <span class="nx">symbol</span><span class="p">,</span> <span class="nx">exp</span> <span class="o">=</span> <span class="nx">args</span>
+        <span class="nx">env</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">symbol</span><span class="p">)[</span><span class="nx">symbol</span><span class="p">]</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">exp</span><span class="p">,</span> <span class="nx">env</span><span class="p">)</span>
+    <span class="nx">elif</span> <span class="nx">op</span> <span class="o">==</span> <span class="s1">&#39;lambda&#39;</span><span class="o">:</span>        <span class="err">#</span> <span class="err">定义过程</span>
+        <span class="nx">params</span><span class="p">,</span> <span class="nx">body</span> <span class="o">=</span> <span class="nx">args</span>
+        <span class="k">return</span> <span class="nx">Procedure</span><span class="p">(</span><span class="nx">params</span><span class="p">,</span> <span class="nx">body</span><span class="p">,</span> <span class="nx">env</span><span class="p">)</span>
+    <span class="k">else</span><span class="o">:</span>                        <span class="err">#</span> <span class="err">过程调用</span> <span class="nx">List</span>
+        <span class="nx">proc</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">env</span><span class="p">)</span>
+        <span class="nx">args</span> <span class="o">=</span> <span class="p">[</span><span class="nb">eval</span><span class="p">(</span><span class="nx">arg</span><span class="p">,</span> <span class="nx">env</span><span class="p">)</span> <span class="k">for</span> <span class="nx">arg</span> <span class="k">in</span> <span class="nx">x</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="nx">proc</span><span class="p">(</span><span class="o">*</span><span class="nx">args</span><span class="p">)</span>
+</pre></div>
+
+
+<h1>repl</h1>
+<p>repl 的意思是 Read-Eval-Print-Loop，也就是我们常用的“解释器”。</p>
+<div class="highlight"><pre><span></span>def repl(prompt=&#39;lis.py&gt; &#39;):
+    while True:
+        val = eval(parse(input(prompt)))
+        if val is not None:
+            print(schemestr(val))
+
+def schemestr(exp):
+    if isinstance(exp, List):
+        return f&#39;({&quot; &quot;.join(map(schemestr, exp))})&#39;)
+    else:
+        return str(exp)
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/lispy-bi-ji.html">posted at 05:44</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

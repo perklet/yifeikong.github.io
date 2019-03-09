@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | python3 venv</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python3-venv.html" rel="bookmark" title="Permanent Link to &quot;python3 venv&quot;">python3 venv</a>
+                </h2>
+
+                
+                
+
+                <h1>Yifei's Notes</h1>
+<h2>traps</h2>
+<p>venv puts the current directory's name in its source code generated, so after renaming your directory, you will have to rename the <code>activate</code> file and the <code>pip</code> file.</p>
+<h1>venv</h1>
+<p>In Python 3, there comes a virtual environment shipped with the standard lib called <code>venv</code>.</p>
+<p>to create a new venv, you can simply call:</p>
+<div class="highlight"><pre><span></span>python3 -m venv &amp;lt;venv-name&amp;gt;
+virtualenv VENV_NAME  # for python 2
+    --system-site-pakcages to bring system packages
+</pre></div>
+
+
+<p>to activate the venv, you need source the generated shell script</p>
+<div class="highlight"><pre><span></span>source &amp;lt;venv-name&amp;gt;/bin/activate
+</pre></div>
+
+
+<p>Note: the generated activate script contains directory infomation based on your local computer and projects, so it's NOT portable.</p>
+<p>to deactivate it:</p>
+<div class="highlight"><pre><span></span>deactivate
+</pre></div>
+
+
+<p>But, in most times, we don't really care about the name of the virtual env, so let's simply call it <code>.venv</code>, and you can add the following to your <code>.bashrc</code> for convinence</p>
+<div class="highlight"><pre><span></span>DEFAULT_VENV_NAME=&quot;.venv&quot;
+alias create-venv=&quot;python3 -m venv $DEFAULT_VENV_NAME&quot;
+alias activate=&quot;source $DEFAULT_VENV_NAME/bin/activate&quot;
+</pre></div>
+
+
+<p>after you activated you venv, there would be a prompt before your shell prompt. You can see that <code>python3</code> and <code>pip3</code> is set to the venv copy of python3 by running:</p>
+<div class="highlight"><pre><span></span>which python3 # -&amp;gt; .venv/bin/python3
+</pre></div>
+
+
+<p>if you run <code>pip install</code>, the packages will be install in your local venv directory, so no sudo needed!</p>
+<p>since the venv directory is not portable, the best practice would be save your dependencies is your <code>requirements.txt</code> file.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python3-venv.html">posted at 03:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

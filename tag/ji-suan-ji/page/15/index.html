@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "计算机" | Page 15</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/ji-suan-ji/page/15/index.html">计算机</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 13, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-templates.html" rel="bookmark" title="Permanent Link to &quot;django templates&quot;">django templates</a>
+                </h2>
+
+                
+                
+
+                <h1>marco</h1>
+<p>there is no marco in django template, you just have to use include with parameters</p>
+<div class="highlight"><pre><span></span>{% include &quot;marco.html&quot; with arg=parameter %}
+</pre></div>
+
+
+<h1>variable</h1>
+<div class="highlight"><pre><span></span><span class="cp">{{</span> <span class="nv">my_dict.key</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">my_object.attribute</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">my_list.0</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+
+
+<p>If a variable resolves to a callable, the template system will call it with no arguments and use its result instead …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-templates.html">posted at 11:34</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-2-cha-ru-shan-chu-xiu-gai.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(2) - 插入删除修改&quot;">mysql 基础知识(2) - 插入删除修改</a>
+                </h2>
+
+                
+                
+
+                <p>我们还是使用上篇文章定义的例子来说明问题</p>
+<h1>插入数据</h1>
+<p>使用 <code>INSERT</code> 语句.</p>
+<div class="highlight"><pre><span></span>insert into students(**field_names) values(**VALUES), values(**VALUES);
+</pre></div>
+
+
+<h2>批量插入</h2>
+<p>如果一次要插入所有数据的话, 可以直接省略前面的字段名. MySQL 可以一次插入多行数据或者一行数据, 但是这并不是SQL标准规定的. 使用批量插入可以大幅度提高性能。</p>
+<p>在批量插入的语句中，如果有一行是错的，那么就会导致整个插入失败，可以使用 insert ignore 语句。</p>
+<p>如果要在批量插入不同的表，可以一次执行多个语句，而不是只执行一个。</p>
+<h1>insert or update</h1>
+<p>如果要实现 insert or update 的功能，可以使用 insert on duplicate update 语句。</p>
+<h1>更新数据</h1>
+<p>使用 <code>UPDATE</code> 语句.</p>
+<div class="highlight"><pre><span></span>update students …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-2-cha-ru-shan-chu-xiu-gai.html">posted at 15:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 12, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/c-zi-mian-liang.html" rel="bookmark" title="Permanent Link to &quot;C++ 字面量&quot;">C++ 字面量</a>
+                </h2>
+
+                
+                
+
+                <h1>C++中的字典字面量</h1>
+<p>You can actually do this:</p>
+<div class="highlight"><pre><span></span><span class="x">std::map&lt;std::string, int&gt; mymap = </span><span class="cp">{{</span><span class="s2">&quot;one&quot;</span><span class="o">,</span> <span class="m">1</span><span class="o">},</span> <span class="o">{</span><span class="s2">&quot;two&quot;</span><span class="o">,</span> <span class="m">2</span><span class="o">},</span> <span class="o">{</span><span class="s2">&quot;three&quot;</span><span class="o">,</span> <span class="m">3</span><span class="cp">}}</span><span class="x">;</span>
+</pre></div>
+
+
+<p>What is actually happening here is that std::map stores an std::pair of the key value types, in this case std::pair<const std::string,int>. This is only possible because of c++11's …</const></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/c-zi-mian-liang.html">posted at 02:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 11, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-bu-shuang-de-di-fang.html" rel="bookmark" title="Permanent Link to &quot;Python 中不爽的地方&quot;">Python 中不爽的地方</a>
+                </h2>
+
+                
+                
+
+                <h1>GIL</h1>
+<p>之前用多线程都是做一些IO密集的内容, 比如爬网页的时候开一个ThreadPool, 处理速度立马就翻了几倍. 所以一直没把GIL放在心上, 前几天要跑一些处理敏感词的数据, 大概要对几百万篇文章做正则匹配. 想都没想就用了多线程, 吃饭回来发现并没有跑完, 这才想起来正则匹配这种东西是CPU密集的, 用Python的线程并没有任何卵用. 这时候换成multiprocessing.Pool速度又飚起来了, 然而使用进程池终究还是不如线程池方便, 所有传入的函数必须是marshallable, 有时候还是不能直接替换的.</p>
+<h1>函数式编程</h1>
+<p>没有真正的闭包, 必须使用nonlocal关键词才能实现一些闭包的功能</p>
+<p>也没有真正的lambda表达式, 自带的lambda表达式局限非常大</p>
+<h1>其他</h1>
+<p>bytes的格式化输出竟然是 b'xxx'</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-bu-shuang-de-di-fang.html">posted at 11:16</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 11, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/rocksdb-ji-chu-cao-zuo-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;RocksDB 基础操作教程&quot;">RocksDB 基础操作教程</a>
+                </h2>
+
+                
+                
+
+                <h2>打开一个数据库</h2>
+<div class="highlight"><pre><span></span>  <span class="cp">#include</span> <span class="cpf">&lt;cassert&gt;</span><span class="cp"></span>
+  <span class="cp">#include</span> <span class="cpf">&quot;rocksdb/db.h&quot;</span><span class="cp"></span>
+
+  <span class="n">rocksdb</span><span class="o">::</span><span class="n">DB</span><span class="o">*</span> <span class="n">db</span><span class="p">;</span>
+  <span class="n">rocksdb</span><span class="o">::</span><span class="n">Options</span> <span class="n">options</span><span class="p">;</span>
+  <span class="n">options</span><span class="p">.</span><span class="n">create_if_missing</span> <span class="o">=</span> <span class="kr">true</span><span class="p">;</span>
+  <span class="n">options</span><span class="p">.</span><span class="n">error_if_exists</span> <span class="o">=</span> <span class="kr">true</span><span class="p">;</span>
+  <span class="n">rocksdb</span><span class="o">::</span><span class="n">Status</span> <span class="n">status</span> <span class="o">=</span> <span class="n">rocksdb</span><span class="o">::</span><span class="n">DB</span><span class="o">::</span><span class="n">Open</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="s">&quot;/tmp/testdb&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">db</span><span class="p">);</span>
+  <span class="n">assert</span><span class="p">(</span><span class="n">status</span><span class="p">.</span><span class="n">ok</span><span class="p">());</span>
+  <span class="p">...</span>
+</pre></div>
+
+
+<p>通过options制定一些属性, 然后用 <code>rocksdb::DB::Open</code>打开. RocksDB 会把使用的配置保存在 <code>OPTIONS-xxxx</code> 文件中.</p>
+<p>注意上面返回的那个status变量, 在RocksDB中所有会遇到错误的函数都会返回这个变量, 可以用来检查有没有出错.</p>
+<div class="highlight"><pre><span></span>   <span class="nt">rocksdb</span><span class="p">::</span><span class="nd">Status</span> <span class="nt">s</span> <span class="o">=</span> <span class="o">...;</span>
+   <span class="nt">if</span> <span class="o">(!</span><span class="nt">s …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/rocksdb-ji-chu-cao-zuo-jiao-cheng.html">posted at 03:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 11, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/rocksdb-chang-jian-wen-ti.html" rel="bookmark" title="Permanent Link to &quot;RocksDB 常见问题&quot;">RocksDB 常见问题</a>
+                </h2>
+
+                
+                
+
+                <h2>RocksDB 会抛出异常吗?</h2>
+<p>不会, RocksDB会返回一个Status表示成功或者失败, 但是RocksDB并没有捕获STL中的异常, 比如bad_alloc这种</p>
+<h2>基础操作是线程安全的吗?</h2>
+<p>是的</p>
+<h2>可以使用多个进程(process)同时读写 RocksDB 吗?</h2>
+<p>不可以, 当然只读模式随意</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/rocksdb-chang-jian-wen-ti.html">posted at 03:34</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 09, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/rocksdb-ji-chu-gai-nian-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;RocksDB 基础概念教程&quot;">RocksDB 基础概念教程</a>
+                </h2>
+
+                
+                
+
+                <p>RocksDB起源于LevelDB, 并且从HBase中吸取了不少代码[1]. RocksDB 设计的初衷是能够利用好SSD和内存的高性能, 而且可以通过配置来承载高强度的读或者高强度的写.</p>
+<p>RocksDB 是一个嵌入式的key-value数据库, 并且所有的键都是有序的. RocksDB 支持的常用操作有 <code>Get(Key)</code>, <code>Put(Key)</code>, <code>Delete(Key)</code>, <code>Scan(Key)</code>.</p>
+<p>RocksDB 中三个最基础的结构分别是 memtable, sstfile 和 logfile. memtable 是一个内存数据结构, 新的写入首先写入到memtable, 然后有可能写入到 logfile 中. logfile 是一个在硬盘上顺序写入的文件. 当 memtable 存满了之后, 它会被 flush 到 sstfile, 然后相应的 logfile 就可以安全的删除了. sstfile 中的数据为了方便查找key排序.</p>
+<h2>RocksDB 的功能</h2>
+<p><code>Get</code> 可以从数据库中读出一个kv对, <code>MultiGet …</code></p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/rocksdb-ji-chu-gai-nian-jiao-cheng.html">posted at 09:12</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 08, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-de-duo-xian-cheng-he-duo-jin-cheng.html" rel="bookmark" title="Permanent Link to &quot;Python 的多线程和多进程&quot;">Python 的多线程和多进程</a>
+                </h2>
+
+                
+                
+
+                <h1>高层次多线程</h1>
+<p>使用 threading 模块，threading.Thread</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;thread worker function&quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s1">&#39;Worker {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="n">threads</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;worker&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="p">,))</span>
+    <span class="n">threads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>by default, it does not start running</p>
+<div class="highlight"><pre><span></span>t.start  # start executing the …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-de-duo-xian-cheng-he-duo-jin-cheng.html">posted at 19:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Sep 22, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/qian-duan-kuang-jia-vue-xue-xi-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;前端框架 Vue 学习笔记&quot;">前端框架 Vue 学习笔记</a>
+                </h2>
+
+                
+                
+
+                <p>之前在网页里小范围的用了vue, 感觉用起来非常爽, 现在打算做自己的笔记应用. 这次打算做成SPA的形式, 前端全部用vue来写. 需要node的一些东西, 记录下学习过程. 迈向全栈，哈哈 ^_^</p>
+<h1>安装</h1>
+<p>首先, 全局安装vue: </p>
+<div class="highlight"><pre><span></span>npm install --global @vue/cli
+</pre></div>
+
+
+<h1>data 属性</h1>
+<p>只有在创建时提供的 data 属性才是响应式的，在创建之后在添加新元素就不管用了。</p>
+<p>当然还可以使用 app.$watch 方法显式创建一些监听器</p>
+<div class="highlight"><pre><span></span>// $watch 是一个实例方法
+vm.$watch(&#39;a&#39;, function (newValue, oldValue) {
+  // 这个回调将在 `vm.a` 改变后调用
+})
+</pre></div>
+
+
+<h1>methods 和 computed</h1>
+<p>methods 定义了一些可以调用的方法，他的值也可以用来插值。但是最好使用 computed，因为 computed …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/qian-duan-kuang-jia-vue-xue-xi-bi-ji.html">posted at 04:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                </div>
+            </article>            <h4 class="date">Sep 04, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/http-ren-zheng-jie-shao.html" rel="bookmark" title="Permanent Link to &quot;HTTP 认证介绍&quot;">HTTP 认证介绍</a>
+                </h2>
+
+                
+                
+
+                <p>周末给一个库添加http代理的支持，发现对http basic auth不甚了解，阅读了一下相关的文档，写篇备忘。</p>
+<p>http 中的认证主要是 basic auth 和 digest auth 两种，其中 digest auth 比较复杂，而且也没有提升安全性，已经不建议使用了。</p>
+<p>RFC 7235 [1] 描述了客户端（通常是浏览器）和服务器如何通过http进行身份认证的一些机制。客户端和 http代理之间也可以使用 http auth 来做验证。
+  </p>
+<h1>验证流程</h1>
+<ol>
+<li>当客户端访问一个页面时，如果只有验证后才能访问，或者验证后有更多内容，服务器应该发送 401 Unauthorized，提出一个chanllenge，设定 <code>WWW-Authenticate</code> header，并指定验证的 type 和 realm，具体定义下文有讲。</li>
+<li>客户端这时通常应该提示用户输入密钥，一般是浏览器弹出用户名密码对话框供用户填写，然后使用 …</li></ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/http-ren-zheng-jie-shao.html">posted at 03:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/http.html" class="tags">HTTP</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags selected">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/14" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/16" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 15 of 30</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

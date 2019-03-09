@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | HAR 格式解析</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机,网络" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Nov 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/har-ge-shi-jie-xi.html" rel="bookmark" title="Permanent Link to &quot;HAR 格式解析&quot;">HAR 格式解析</a>
+                </h2>
+
+                
+                
+
+                <p>HAR(HTTP Archive) 文件是一种常见的用来保存 HTTP 请求和响应的格式。本质上，HAR 文件其实就是一个 JSON 文件。</p>
+<p>每一个 HAR Entry 都可以有以下记录存在：</p>
+<ul>
+<li>log</li>
+<li>creator</li>
+<li>browser</li>
+<li>pages<ul>
+<li>pageTimings</li>
+</ul>
+</li>
+<li>entries<ul>
+<li>request<ul>
+<li>queryString</li>
+<li>postData</li>
+<li>params</li>
+</ul>
+</li>
+<li>response<ul>
+<li>cookies</li>
+<li>headers</li>
+<li>content</li>
+</ul>
+</li>
+<li>cache</li>
+<li>timings</li>
+</ul>
+</li>
+</ul>
+<h1>log</h1>
+<p>这个是一个 HAR 文件的根字段，其他字段都是该字段的子字段</p>
+<div class="highlight"><pre><span></span>{
+    &quot;log&quot;: {
+        &quot;version&quot; : &quot;1.2&quot;,
+        &quot;creator&quot; : {},
+        &quot;browser&quot; : {},
+        &quot;pages&quot;: [],
+        &quot;entries&quot;: [],
+        &quot;comment&quot;: &quot;&quot;
+    }
+}
+</pre></div>
+
+
+<h1>creator</h1>
+<div class="highlight"><pre><span></span>&quot;creator&quot;: {
+    &quot;name&quot;: &quot;Firebug&quot;,
+    &quot;version&quot;: &quot;1.6&quot;,
+    &quot;comment&quot;: &quot;&quot;
+}
+</pre></div>
+
+
+<h1>browser</h1>
+<p>同 creator 结构完全一样</p>
+<h1>pages</h1>
+<div class="highlight"><pre><span></span>&quot;pages&quot;: [
+    {
+        &quot;startedDateTime&quot;: &quot;2009-04-16T12:07:25.123+01:00&quot;,
+        &quot;id&quot;: &quot;page_0&quot;,
+        &quot;title&quot;: &quot;Test Page&quot;,
+        &quot;pageTimings&quot;: {...},
+        &quot;comment&quot;: &quot;&quot;
+    }
+]
+</pre></div>
+
+
+<h2>pageTimings</h2>
+<div class="highlight"><pre><span></span>&quot;pageTimings&quot;: {
+    &quot;onContentLoad&quot;: 1720,
+    &quot;onLoad&quot;: 2500,
+    &quot;comment&quot;: &quot;&quot;
+}
+</pre></div>
+
+
+<h1>entries</h1>
+<div class="highlight"><pre><span></span>&quot;entries&quot;: [
+    {
+        &quot;pageref&quot;: &quot;page_0&quot;,
+        &quot;startedDateTime&quot;: &quot;2009-04-16T12:07:23.596Z&quot;,
+        &quot;time&quot;: 50,
+        &quot;request&quot;: {...},
+        &quot;response&quot;: {...},
+        &quot;cache&quot;: {...},
+        &quot;timings&quot;: {},
+        &quot;serverIPAddress&quot;: &quot;10.0.0.1&quot;,
+        &quot;connection&quot;: &quot;52492&quot;,
+        &quot;comment&quot;: &quot;&quot;
+    }
+]
+</pre></div>
+
+
+<h2>request</h2>
+<div class="highlight"><pre><span></span>&quot;request&quot;: {
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;url&quot;: &quot;http://www.example.com/path/?param=value&quot;,
+    &quot;httpVersion&quot;: &quot;HTTP/1.1&quot;,
+    &quot;cookies&quot;: [],
+    &quot;headers&quot;: [],
+    &quot;queryString&quot; : [],
+    &quot;postData&quot; : {},
+    &quot;headersSize&quot; : 150,
+    &quot;bodySize&quot; : 0,
+    &quot;comment&quot; : &quot;&quot;
+}
+</pre></div>
+
+
+<h3>queryString</h3>
+<div class="highlight"><pre><span></span>&quot;queryString&quot;: [
+    {
+        &quot;name&quot;: &quot;param1&quot;,
+        &quot;value&quot;: &quot;value1&quot;,
+        &quot;comment&quot;: &quot;&quot;
+    },
+    {
+        &quot;name&quot;: &quot;param1&quot;,
+        &quot;value&quot;: &quot;value1&quot;,
+        &quot;comment&quot;: &quot;&quot;
+    }
+]
+</pre></div>
+
+
+<h3>postData</h3>
+<div class="highlight"><pre><span></span>&quot;postData&quot;: {
+    &quot;mimeType&quot;: &quot;multipart/form-data&quot;,
+    &quot;params&quot;: [],
+    &quot;text&quot; : &quot;plain posted data&quot;,
+    &quot;comment&quot;: &quot;&quot;
+}
+</pre></div>
+
+
+<h4>params</h4>
+<div class="highlight"><pre><span></span>&quot;params&quot;: [
+    {
+        &quot;name&quot;: &quot;paramName&quot;,
+        &quot;value&quot;: &quot;paramValue&quot;,
+        &quot;fileName&quot;: &quot;example.pdf&quot;,
+        &quot;contentType&quot;: &quot;application/pdf&quot;,
+        &quot;comment&quot;: &quot;&quot;
+    }
+]
+</pre></div>
+
+
+<h2>response</h2>
+<div class="highlight"><pre><span></span>&quot;response&quot;: {
+    &quot;status&quot;: 200,
+    &quot;statusText&quot;: &quot;OK&quot;,
+    &quot;httpVersion&quot;: &quot;HTTP/1.1&quot;,
+    &quot;cookies&quot;: [],
+    &quot;headers&quot;: [],
+    &quot;content&quot;: {},
+    &quot;redirectURL&quot;: &quot;&quot;,
+    &quot;headersSize&quot; : 160,
+    &quot;bodySize&quot; : 850,
+    &quot;comment&quot; : &quot;&quot;
+ }
+</pre></div>
+
+
+<h3>content</h3>
+<div class="highlight"><pre><span></span>&quot;content&quot;: {
+    &quot;size&quot;: 33,
+    &quot;compression&quot;: 0,
+    &quot;mimeType&quot;: &quot;text/html; charset=utf-8&quot;,
+    &quot;text&quot;: &quot;\n&quot;,
+    &quot;comment&quot;: &quot;&quot;
+}
+</pre></div>
+
+
+<h3>cookies</h3>
+<div class="highlight"><pre><span></span>&quot;cookies&quot;: [
+    {
+        &quot;name&quot;: &quot;TestCookie&quot;,
+        &quot;value&quot;: &quot;Cookie Value&quot;,
+        &quot;path&quot;: &quot;/&quot;,
+        &quot;domain&quot;: &quot;www.janodvarko.cz&quot;,
+        &quot;expires&quot;: &quot;2009-07-24T19:20:30.123+02:00&quot;,
+        &quot;httpOnly&quot;: false,
+        &quot;secure&quot;: false,
+        &quot;comment&quot;: &quot;&quot;
+    }
+]
+</pre></div>
+
+
+<h3>headers</h3>
+<div class="highlight"><pre><span></span>&quot;headers&quot;: [
+    {
+        &quot;name&quot;: &quot;Accept-Encoding&quot;,
+        &quot;value&quot;: &quot;gzip,deflate&quot;,
+        &quot;comment&quot;: &quot;&quot;
+    },
+    {
+        &quot;name&quot;: &quot;Accept-Language&quot;,
+        &quot;value&quot;: &quot;en-us,en;q=0.5&quot;,
+        &quot;comment&quot;: &quot;&quot;
+    }
+]
+</pre></div>
+
+
+<h2>cache</h2>
+<div class="highlight"><pre><span></span>&quot;cache&quot;: {
+    &quot;beforeRequest&quot;: {},
+    &quot;afterRequest&quot;: {},
+    &quot;comment&quot;: &quot;&quot;
+}
+</pre></div>
+
+
+<h3>beforeRequest</h3>
+<div class="highlight"><pre><span></span>&quot;beforeRequest&quot;: {
+    &quot;expires&quot;: &quot;2009-04-16T15:50:36&quot;,
+    &quot;lastAccess&quot;: &quot;2009-16-02T15:50:34&quot;,
+    &quot;eTag&quot;: &quot;&quot;,
+    &quot;hitCount&quot;: 0,
+    &quot;comment&quot;: &quot;&quot;
+}
+</pre></div>
+
+
+<h2>timings</h2>
+<div class="highlight"><pre><span></span>&quot;timings&quot;: {
+    &quot;blocked&quot;: 0,
+    &quot;dns&quot;: -1,
+    &quot;connect&quot;: 15,
+    &quot;send&quot;: 20,
+    &quot;wait&quot;: 38,
+    &quot;receive&quot;: 12,
+    &quot;ssl&quot;: -1,
+    &quot;comment&quot;: &quot;&quot;
+}
+</pre></div>
+
+
+<h1>参考资料</h1>
+<ol>
+<li>http://www.softwareishard.com/blog/har-12-spec/#response</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/har-ge-shi-jie-xi.html">posted at 20:29</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

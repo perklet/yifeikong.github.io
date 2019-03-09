@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Page 27</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/lua-coroutine.html" rel="bookmark" title="Permanent Link to &quot;lua coroutine&quot;">lua coroutine</a>
+                </h2>
+
+                
+                
+
+                <p>Lua 的协程是非对称的协程也就是 resume 和 yeild 相当于调用和返回</p>
+<p>Python 的协程是对称的协程, 相当于 goto.</p>
+<p>Lua中携程相关的函数都放在coroutine包中
+coroutine.create(function)  返回一个thread类型的值表示一个协程，并且处于suspend状态。
+resume(co, params…) 执行一个协程，并且能够传递参数，返回运行的状态的函数yield返回的结果</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/lua-coroutine.html">posted at 13:43</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/lua.html" class="tags">Lua</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/lua-zhong-de-die-dai-qi.html" rel="bookmark" title="Permanent Link to &quot;Lua 中的迭代器&quot;">Lua 中的迭代器</a>
+                </h2>
+
+                
+                
+
+                <p>Lua中有两种for语句，最基本的是</p>
+<div class="highlight"><pre><span></span>for i = 1, 10 do
+    print i
+end
+</pre></div>
+
+
+<p>还有一种是for in语句</p>
+<p>for I in pairs(t) do
+       print I
+   end</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/lua-zhong-de-die-dai-qi.html">posted at 13:42</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/lua.html" class="tags">Lua</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/jquery-and-un-jquery.html" rel="bookmark" title="Permanent Link to &quot;jQuery and un-jQuery&quot;">jQuery and un-jQuery</a>
+                </h2>
+
+                
+                
+
+                <h1>jQuery</h1>
+<p>$el.append(htmlString)
+$el.prepend(htmlString)</p>
+<p>$newEl.insertBefore(queryString)
+$newEl.insertAfter(queryString)</p>
+<h1>un-jQuery</h1>
+<h2>DOM 操作</h2>
+<p>选择器可以使用 querySelector 和 querySelectorAll, 但是这两个的性能太差了, 最好使用 getElementById, getElementsByTagName, getElementsByClassName</p>
+<p>$el.val() 对应 el.value</p>
+<h3>获取 attr</h3>
+<div class="highlight"><pre><span></span>$el.attr(&#39;id&#39;);
+el.getAttribute(&#39;id);
+el.setAttribute(attr, value)
+</pre></div>
+
+
+<h3>parent and children</h3>
+<div class="highlight"><pre><span></span>$el.children
+$el.parent()
+el …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/jquery-and-un-jquery.html">posted at 13:41</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/lua-san-bu-qu.html" rel="bookmark" title="Permanent Link to &quot;lua 三部曲&quot;">lua 三部曲</a>
+                </h2>
+
+                
+                
+
+                <p>Programming in Lua</p>
+<p>Lua编程手册</p>
+<p>Lua Unofficial FAQ</p>
+<p>知乎上 lua 相关的问题</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/lua-san-bu-qu.html">posted at 13:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/lua.html" class="tags">Lua</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-m.html" rel="bookmark" title="Permanent Link to &quot;Python `-m`&quot;">Python `-m`</a>
+                </h2>
+
+                
+                
+
+                <h2>How <code>-m</code> is invoked</h2>
+<p>if you have a module foo</p>
+<p>write
+foo/
+    <strong>init</strong>.py
+    <strong>main</strong>.py</p>
+<p>then python -m foo will execute <strong>main</strong>.py</p>
+<p>https://pythonwise.blogspot.sg/2015/01/python-m.html</p>
+<p>json pretty print</p>
+<p>cat some_json_file | python -m json.tool</p>
+<p>zipfile</p>
+<p>zipfile.py -l zipfile.zip        # Show listing of …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-m.html">posted at 13:19</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/do-not-subclass-built-in-classes-in-python.html" rel="bookmark" title="Permanent Link to &quot;do not subclass built-in classes in python&quot;">do not subclass built-in classes in python</a>
+                </h2>
+
+                
+                
+
+                <p>In short, they will not behave what you think they will. you think dict.get in implemented in python, like:</p>
+<div class="highlight"><pre><span></span>def get(self, key, default=None):
+    try:
+        return self[key]
+    except KeyError:
+        return default
+</pre></div>
+
+
+<p>However, they dict.get do not call <strong>getitem</strong>, and they are implemented in c separately, and …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/do-not-subclass-built-in-classes-in-python.html">posted at 13:17</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-fu-he-de-list-comprehension.html" rel="bookmark" title="Permanent Link to &quot;Python 中复合的 list comprehension&quot;">Python 中复合的 list comprehension</a>
+                </h2>
+
+                
+                
+
+                <p>Python 中的 list comprehension 可以复合</p>
+<div class="highlight"><pre><span></span>[x for li in lists for x in li if x]
+</pre></div>
+
+
+<p>就相当于</p>
+<div class="highlight"><pre><span></span>[x
+    for li in lists
+        for x in li
+             if x]
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-fu-he-de-list-comprehension.html">posted at 13:17</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ad-talks.html" rel="bookmark" title="Permanent Link to &quot;ad talks&quot;">ad talks</a>
+                </h2>
+
+                
+                
+
+                <p>广告检索相当于先验知识，如果先验知识有效后可以放开</p>
+<p>定向给广告主可见，哈哈</p>
+<p>应定向和软定向。。</p>
+<p>如果slave长期处于 standby 状态，真切过去的时候会不会 slave 根本不可用呢？要不要长期监控 salve 是不是好的</p>
+<p>广告预控，取决于预估CPM与CPM的匹配程度，在快要达到预扣费的时候开始减慢速度。</p>
+<p>PID 老一套，但是调参就可以根据历史数据由机器来调了，很好</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ad-talks.html">posted at 13:13</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/talks.html" rel="tag">talks</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/talks.html" class="tags">talks</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/vim-zhong-sheng-cheng-he-shi-yong-tags.html" rel="bookmark" title="Permanent Link to &quot;vim 中生成和使用 tags&quot;">vim 中生成和使用 tags</a>
+                </h2>
+
+                
+                
+
+                <p>To use go to definition and other advanced IDE feature, we need to generate tag files for vim to figure out where to find the functions or variables.</p>
+<p>To generate a tag file</p>
+<div class="highlight"><pre><span></span>ctags -R
+</pre></div>
+
+
+<p>By default, the generate tag file will be located at ./tags directory, we need to …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/vim-zhong-sheng-cheng-he-shi-yong-tags.html">posted at 13:03</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/vim.html" class="tags">vim</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-inspect-library.html" rel="bookmark" title="Permanent Link to &quot;python inspect library&quot;">python inspect library</a>
+                </h2>
+
+                
+                
+
+                <p>inspect.iscoroutinefunction(fn)</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-inspect-library.html">posted at 13:00</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/26" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/28" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 27 of 34</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

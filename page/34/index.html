@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Page 34</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/an-zhuo-de-adbgong-ju-yu-ming-ling-xing.html" rel="bookmark" title="Permanent Link to &quot;安卓的adb工具与命令行&quot;">安卓的adb工具与命令行</a>
+                </h2>
+
+                
+                
+
+                <h1>Yifei's Notes</h1>
+<p>adb is pretty unstable, it's meant for debug usage, NOT for a long-running service.</p>
+<h1>Install</h1>
+<p>install on ubuntu: <code>apt-get install android-tools-adb android-tools-fastboot</code></p>
+<p>install on mac: <code>brew install android-platform-tools</code></p>
+<h1>Connect model</h1>
+<p>there is a server on PC called adb server, if not started, will be started on first adb …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/an-zhuo-de-adbgong-ju-yu-ming-ling-xing.html">posted at 12:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/android.html" class="tags">Android</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-zhang-hu-guan-li.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行账户管理&quot;">Linux 命令行账户管理</a>
+                </h2>
+
+                
+                
+
+                <p>执行 <code>sudo vi /etc/suduers</code>, 然后输入：</p>
+<p><code>username ALL=(ALL) NOPASSWD: ALL</code></p>
+<div class="highlight"><pre><span></span>useradd -m USERNAME  # add a user
+userdel USERNAME  # delete a user
+passwd -e  # password expire next time user login
+
+groups username  # view username groups
+usermod -G groupname username  # add user to a group
+usermod -g groupname username # set user …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-zhang-hu-guan-li.html">posted at 12:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/tcp-wo-shou-chang-jian-kao-dian.html" rel="bookmark" title="Permanent Link to &quot;TCP 握手常见考点&quot;">TCP 握手常见考点</a>
+                </h2>
+
+                
+                
+
+                <h1>连接建立</h1>
+<p><img alt="" src="https://ws3.sinaimg.cn/large/006tKfTcly1ftppcaaoz7j30i40bdgn0.jpg"></p>
+<p>上面的图说的已经很好了，不再赘述。</p>
+<h2>为什么需要三次握手</h2>
+<p>这主要是为了防止已失效的连接请求报文段突然又传送到了服务端，服务端建立一个新的连接，因而产生错误。 </p>
+<p>所谓已失效的连接请求报文段是这样产生的。A发送连接请求，但因连接请求报文丢失而未收到确认，于是A重发一次连接请求，成功后建立了连接。数据传输完毕后就释放了连接。</p>
+<p>现在假定A发出的第一个请求报文段并未丢失，而是在某个网络节点长时间滞留了，以致延误到连接释放以后的某个时间才到达B。本来这是一个早已失效的报文段。但B收到此失效的连接请求报文段后，就误以为A又发了一次新的连接请求，于是向A发出确认报文段，同意建立连接。假如不采用三次握手，那么只要B发出确认，新的连接就建立了。 </p>
+<p>由于A并未发出建立连接的请求，因此不会理睬B的确认，也不会向B发送数据。但B却以为新的运输连接已经建立了，并一直等待A发来数据，因此白白浪费了许多资源。 </p>
+<p>采用TCP三次握手的方法可以防止上述现象发生。例如在刚才的情况下，由于A不会向B的确认发出确认，连接就不会建立。</p>
+<h2>如果在TCP第三次握手中的报文段丢失了会发生什么情况?</h2>
+<p>Client认为这个连接已经建立，如果Client端向Server写数据，Server端将以RST包响应，方能感知到Server的错误。</p>
+<h1>链接释放</h1>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tKfTcly1ftppdqkfzij311g0rok0s.jpg"></p>
+<p>需要注意的是，TCP 是全双工的协议，因此链接建立之后就没有客户端服务器的概念了，两边是对等的，都可以释放链接</p>
+<p>MSS（最长报文长度）, 由两端的较短值决定, 在以太网中的典型值为1460 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/tcp-wo-shou-chang-jian-kao-dian.html">posted at 11:47</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/bi-ji-sheng-ya.html" rel="bookmark" title="Permanent Link to &quot;笔记生涯&quot;">笔记生涯</a>
+                </h2>
+
+                
+                
+
+                <p>写笔记也有几年时间了，最开始自然用的是开山鼻祖 Evernote，当时并没有什么独立思考的能力，大概是看到有什么好的文章，一时消化不了或者想着会回头来看，便用 Evernote Webclipper 剪辑下来，到最后这些『笔记』自然是没有看过多少，翻了翻，仅剩下几篇还算是自己写的其余便都删了。</p>
+<p>后来开始读研，国内的笔记软件也多了起来，听说 wiz 对 markdown 的支持是最好的，又是一个小团队出品，甚和我心，用了一年有余，记笔记也不多，然而总是感觉有些不顺手，遂弃之</p>
+<p>虽然从大三开始便用 ubuntu 做主力系统，然而竟直到研二才算是习惯 vi 的操作方式，甚至用熟悉 shell 竟是第一份工作之后的事，当然这是后话了。用熟了 vi，直接用一个命令(vilog)写 markdown 文件好了，半年有余，算是日志，也是笔记吧，唯一的不满就是表格太不方便表达了。</p>
+<p>再后来用半年挣来的外快终于有闲钱够得一天 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/bi-ji-sheng-ya.html">posted at 01:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/configuring-openwrt-in-tp-link-702n.html" rel="bookmark" title="Permanent Link to &quot;Configuring OpenWrt in TP-Link 702n&quot;">Configuring OpenWrt in TP-Link 702n</a>
+                </h2>
+
+                
+                
+
+                <h1>如何重置一个损坏的 OpenWrt</h1>
+<p>删除 overlay 下的文件即可</p>
+<div class="highlight"><pre><span></span>rm -rf /overlay/*
+</pre></div>
+
+
+<h1>网络配置</h1>
+<h3>1.Assign a Password for Root</h3>
+<p>telnet 192.168.1.1
+    passwd root
+    exit</p>
+<h3>2.Interface config: <code>/etc/config/network</code></h3>
+<div class="highlight"><pre><span></span>        config interface &#39;loopback&#39;
+            option ifname &#39;lo&#39;
+            option proto &#39;static&#39;
+            option ipaddr &#39;127.0.0.1&#39;
+            option netmask &#39;255.0.0.0 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/configuring-openwrt-in-tp-link-702n.html">posted at 01:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/iot.html" class="tags">IoT</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/cyu-yan-zhong-de-setjmplongjmp.html" rel="bookmark" title="Permanent Link to &quot;C语言中的 setjmp/longjmp&quot;">C语言中的 setjmp/longjmp</a>
+                </h2>
+
+                
+                
+
+                <p>首先吐槽一下这个缩写, 好好地 jump 单词才四个字母不用, 非要缩写成 jmp 三个字母, 每次都打错, 蛋疼</p>
+<p>在 C 中，goto 语句是不能跨越函数的，而执行这类跳转功能的是 <code>setjmp</code> 和 <code>longjmp</code> 宏。这两个宏对于处理发生在深层嵌套函数调用中的出错情况是非常有用的。</p>
+<p>此即为：非局部跳转。非局部指的是，这不是由普通 C 语言 goto 语句在一个函数内实施的跳转，而是在栈上跳过若干调用帧，返回到当前函数调用路径的某个函数中。</p>
+<div class="highlight"><pre><span></span>#include &amp;lt;setjmp.h&amp;gt;
+int  setjmp (jmp_buf env) ;  /*设置调转点*/
+void longjmp (jmp_buf env,  int val) ;  /*跳转*/
+</pre></div>
+
+
+<p><code>setjmp</code> 参数 env …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/cyu-yan-zhong-de-setjmplongjmp.html">posted at 01:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/cyu-yan-zhong-yi-jing-fei-qi-de-han-shu.html" rel="bookmark" title="Permanent Link to &quot;C语言中已经废弃的函数&quot;">C语言中已经废弃的函数</a>
+                </h2>
+
+                
+                
+
+                <p>由于安全性原因，C 标准库中的不少函数已经被废弃了，同时增加了对应的替换函数。</p>
+<div class="highlight"><pre><span></span>sprintf --&gt; snprintf
+gets --&gt; fgets
+strcat --&gt; strncat
+strcpy --&gt; strncpy
+</pre></div>
+
+
+<p><code>strtok</code>函数用于分解字符串，需要一个变量保存内部分解进度
+<code>strtok_r</code>是它的可重入版本</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/cyu-yan-zhong-yi-jing-fei-qi-de-han-shu.html">posted at 01:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/c-yu-yan.html" class="tags">C 语言</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-li-yong-sui-pian-shi-jian.html" rel="bookmark" title="Permanent Link to &quot;如何利用碎片时间&quot;">如何利用碎片时间</a>
+                </h2>
+
+                
+                
+
+                <ol>
+<li>歇一会</li>
+<li>把下一件事提前开始做，不适用于地铁上，一个人吃饭等时间</li>
+<li>和同学聊聊天</li>
+<li>回顾一下今天干了什么，或者准备一下接下来的重要事情</li>
+<li>CoC，BoomBeach</li>
+<li>复习一些短小的东西，函数参考之类3</li>
+<li>背单词</li>
+</ol>
+<p>一定不要去做大块时间才能做的事，一定不能去给接下来的大块时间挖坑</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-li-yong-sui-pian-shi-jian.html">posted at 01:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/fan-si-yu-zong-jie.html" rel="tag">反思与总结</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/fan-si-yu-zong-jie.html" class="tags">反思与总结</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/vim-goto-yu-li-shi-dao-hang.html" rel="bookmark" title="Permanent Link to &quot;vim goto 与历史导航&quot;">vim goto 与历史导航</a>
+                </h2>
+
+                
+                
+
+                <p>Vim command of g<key>
+ </p>
+<div class="highlight"><pre><span></span>gd  本地定义
+gD  全局声明
+g*  搜索
+g#  反向搜索
+gf  打开文件
+g]  跳到tag定义的地方
+</pre></div>
+
+
+<p><code>Ctrl-O</code> to go back to files</p>
+<p><code>Ctrl-I</code> to go to new files</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/vim-goto-yu-li-shi-dao-hang.html">posted at 01:09</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/vim.html" class="tags">vim</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/tong-yong-gong-ju.html" class="tags">通用工具</a>
+                </div>
+            </article>            <h4 class="date">Dec 27, 2016</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/rss-he-atom-xie-yi-xiang-jie-he-bu-zu.html" rel="bookmark" title="Permanent Link to &quot;RSS 和 Atom 协议详解和不足&quot;">RSS 和 Atom 协议详解和不足</a>
+                </h2>
+
+                
+                
+
+                <h1>关于CDATA</h1>
+<p>CDATA stands for Character Data and it means that the data in between these strings includes data that could be interpreted as XML markup, but should not be.</p>
+<p>So we could use CDATA to smuggle some HTML into the XML document, so that the HTML doesn't confuse the XML …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/rss-he-atom-xie-yi-xiang-jie-he-bu-zu.html">posted at 11:35</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/33" class="prev_page">&larr;&nbsp;Previous</a>
+                    <span>Page 34 of 34</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

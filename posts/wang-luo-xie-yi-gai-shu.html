@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 网络协议概述</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="计算机,网络" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Aug 02, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wang-luo-xie-yi-gai-shu.html" rel="bookmark" title="Permanent Link to &quot;网络协议概述&quot;">网络协议概述</a>
+                </h2>
+
+                
+                
+
+                <p>网络每层的头部基本上就是添加上本层的地址，还有一些校验和控制位</p>
+<p>运输层的 MAC 地址是点到点的，没传递一次就会把发送者和接受者用 ARP 转换，替换为经过的路由器的MAC地址。而 IP 层的地址和端口号是端到端，从发送到结束始终不变。除非经过上层协议改变了地址和端口号，比如代理服务器或者 NAPT 路由器。</p>
+<p>交换机没有任何地址，只有端口的概念。内部有一个转发表，记录了物理端口和MAC的对应关系，通过自主学习来建立。每台主机上都有自己的高速 ARP 地址缓存和路由表。可以通过 <code>ip n</code> 和 <code>ip r</code> 命令查看。</p>
+<p>VLAN 可以理解为逻辑上将一台交换机分割成数台虚拟交换机，且这些虚拟交换机互不相通。Vlan 是广播域，而通常两个广播域之间由路由器相连接，广播域之间来往的数据帧通过路由器中继。因此 Vlan间的通信也需要路由器（或者三层交换机）提供中继服务，即“Vlan间路由”。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wang-luo-xie-yi-gai-shu.html">posted at 17:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                    &nbsp;<a href="/tag/wang-luo.html" class="tags">网络</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

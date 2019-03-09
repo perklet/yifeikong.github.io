@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Mysql 的 wait_timeout 问题</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,Django,后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 23, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-de-wait_timeout-wen-ti.html" rel="bookmark" title="Permanent Link to &quot;Mysql 的 wait_timeout 问题&quot;">Mysql 的 wait_timeout 问题</a>
+                </h2>
+
+                
+                
+
+                <p>Mysql 中默认的 wait_timeout 和 interactive_timeout 的值是八小时，也就是一个连接（交互式和非交互式的）只有在 8 小时没有活动之后才会被关闭掉。对于互联网公司来说，这个值实在太大了，一个库可能被很多脚本和服务访问，可能只是一个简短的查询就不需要数据库了，如果每个查询都占据了8小时的时间，那么 mysql 很快连接数就会满了，报出 too many connections 错误。</p>
+<p>mysql 默认的连接数可以修改 max_connections 参数，但是一个服务器能支撑的连接数显然是由硬件决定的。</p>
+<p>设置 wait_timeout 过短可能会造成一些问题，如果在 django 中两次查询的之间时间大于 wait_timeout，就会报 (2006, 'MySQL server has gone away')。django 官方给的建议是：</p>
+<ol>
+<li>当你的脚本不需要使用数据库的时候，主动关闭连接 <code>from django.db import connection; connection.close()</code></li>
+<li>增大 wait_timeout 的值</li>
+</ol>
+<p>不过django默认 CONN_MAX_AGE 是 0，也就是在查询数据库之后会立即关闭链接，理论上应该不会报这个错误。但是这样不能复用链接，会造成对数据压力很大。</p>
+<p>CONN_MAX_AGE应该小于数据库本身的最大连接时间wait_timeout，否则应用程序可能会获取到连接超时的数据库连接，这时会出现MySQL server has gone away的报错。</p>
+<p>可以在 settings.py 中动态地获取并填充这个值，然后写到 CONN_MAX_AGE 中</p>
+<p>理论上这样就不会再报错了，但是难免数据库重启或者什么时候会报错，总是使用 close_old_connections 还是很烦。</p>
+<p>有一种思路是在检测到和数据库链接断开的时候，自动重连，但是这样会破坏 django.db.atomic，但是可以实现一种不同的backend。可以参考这两个：</p>
+<ol>
+<li>
+<p>https://github.com/django/django/pull/2740/commits/38f58aa4d751ad83f1dc76d5b945a1036239584f</p>
+</li>
+<li>
+<p>https://github.com/django/django/pull/2454/commits/36b8bf870cab183b7ad63c0d8e7e8c02e314a053#diff-f8a587a973ef4c3a94d7550a5b85342c</p>
+</li>
+</ol>
+<p>还有一种解决思路是使用 connection pooling，我们可以使用 sqlalchemy 的 连接池作为django连接数据库的工具。参考这里：http://menendez.com/blog/mysql-connection-pooling-django-and-sqlalchemy/, 不过这种方法比较 hack。</p>
+<p>参考</p>
+<ol>
+<li>https://code.djangoproject.com/ticket/21597#no2</li>
+<li>https://github.com/django/django/commit/2ee21d9f0d9eaed0494f3b9cd4b5bc9beffffae5</li>
+<li>https://stackoverflow.com/questions/1125504/django-persistent-database-connection</li>
+<li>django 优化https://blog.csdn.net/u011546806/article/details/45576669</li>
+<li>https://docs.djangoproject.com/en/2.1/ref/databases/#persistent-connections</li>
+<li>如何设置 max_age https://stackoverflow.com/questions/19937257/what-is-a-good-value-for-conn-max-age-in-django</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-de-wait_timeout-wen-ti.html">posted at 02:28</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

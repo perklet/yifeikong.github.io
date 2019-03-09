@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | sqlite3 和在 Python 中的使用教程</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="数据库,Python,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Apr 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/sqlite3-he-zai-python-zhong-de-shi-yong-jiao-cheng.html" rel="bookmark" title="Permanent Link to &quot;sqlite3 和在 Python 中的使用教程&quot;">sqlite3 和在 Python 中的使用教程</a>
+                </h2>
+
+                
+                
+
+                <p>Yifei's notes:</p>
+<p>所谓的事务、锁、存储过程、外键等等不适合互联网公司的业务场景，而更适合于“企业级”“IOE”这些应用。</p>
+<h1>sqlite3</h1>
+<p>% sqlite3 DATABASE</p>
+<div class="highlight"><pre><span></span><span class="na">.databases</span>  <span class="no">show</span> <span class="no">databases</span> <span class="no">connected</span> <span class="no">to</span>
+<span class="na">.dump</span> <span class="no">TABLE</span> <span class="no">dump</span> <span class="no">table</span> <span class="no">in</span> <span class="no">SQL</span> <span class="no">format</span>
+<span class="na">.import</span> <span class="no">FILE</span> <span class="err">?</span><span class="no">TABLE</span><span class="err">?</span>    <span class="no">import</span> <span class="no">SQL</span> <span class="no">data</span> <span class="no">into</span> <span class="no">table</span>
+<span class="na">.indices</span> <span class="err">?</span><span class="no">TABLE</span><span class="err">?</span>    <span class="no">show</span> <span class="no">indices</span> <span class="no">of</span> <span class="no">table</span>
+<span class="na">.mode</span> <span class="no">MODE</span>  <span class="no">set</span> <span class="no">output</span> <span class="no">mode</span><span class="p">(</span><span class="no">csv</span><span class="p">,</span> <span class="no">column</span>
+<span class="na">.read</span> <span class="no">FILE</span>  <span class="no">excute</span> <span class="no">FILE</span>
+<span class="na">.schema</span> <span class="err">?</span><span class="no">TABLE</span><span class="err">?</span> <span class="no">show</span> <span class="no">create</span> <span class="no">statement</span>
+<span class="na">.restore</span>  <span class="err">?</span><span class="no">DB</span><span class="err">?</span> <span class="no">FILE</span> <span class="no">restore</span> <span class="no">db</span> <span class="no">from</span> <span class="no">file</span>
+<span class="na">.headers</span> <span class="no">ON</span><span class="err">|</span><span class="no">OFF</span> <span class="no">show</span> <span class="no">headers</span>
+</pre></div>
+
+
+<h2>美化输出</h2>
+<p>让 sqlite 的输出更美观，使用 <code>.mode column</code> 和 <code>.headers on</code> 两个命令</p>
+<div class="highlight"><pre><span></span>sqlite&gt; select * from foo;
+234|kshitiz|dba.se
+
+sqlite&gt; .mode column
+sqlite&gt; select * from foo;
+234         kshitiz     dba.se
+
+sqlite&gt; .headers on
+sqlite&gt; select * from foo;
+bar         baz         baf
+----------  ----------  ----------
+234         kshitiz     dba.se
+</pre></div>
+
+
+<h2>导入导出 csv</h2>
+<p>导出</p>
+<div class="highlight"><pre><span></span>sqlite&gt; .mode csv   -- use &#39;.separator SOME_STRING&#39; for something other than a comma.
+sqlite&gt; .headers on 
+sqlite&gt; .out file.dmp 
+sqlite&gt; select * from MyTable;
+</pre></div>
+
+
+<p>导入</p>
+<div class="highlight"><pre><span></span><span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="n">mode</span> <span class="n">csv</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="o">.</span><span class="kn">import</span> <span class="nn">CSV_FILE</span> <span class="nn">TABLE_NAME</span>
+</pre></div>
+
+
+<h2>备份还原</h2>
+<p>sqlite3 DATABASE .dump &gt; backup.sql
+sqlite3 DATABASE &lt; backup.sql</p>
+<p>或者</p>
+<div class="highlight"><pre><span></span>sqlite3&gt; .read backup.sql
+sqlite3&gt; .dump backup.sql
+</pre></div>
+
+
+<h1>在 Python 中使用 SQLite</h1>
+<p>首先连接到数据库，获得 connection 对象，然后再获得 cursor，使用 cursor 来执行 sql 语句并获取结果。</p>
+<h2>连接</h2>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
+
+<span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;database.db&#39;</span><span class="p">)</span>  <span class="c1"># connections</span>
+<span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>  <span class="c1"># get cursor</span>
+<span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;CREATE TABLE books (id int primary key, name text)&#39;</span><span class="p">)</span>
+<span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;INSERT INTO books (name) VALUES (&#39;</span> <span class="n">sophie</span><span class="s1">&#39;s choice&#39;</span><span class="p">)</span><span class="s1">&#39;)</span>
+<span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;INSERT INTO books (name) VALUES (&#39;</span><span class="n">the</span> <span class="n">bible</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># always remember to commit</span>
+<span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;SELECT * FROM books&#39;</span><span class="p">)</span>
+
+<span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+
+<p>或者使用 with 语句</p>
+<div class="highlight"><pre><span></span>with sqlite3.connect(&#39;db&#39;) as conn:
+    cursor = conn.cursor()
+    # cursor executes
+</pre></div>
+
+
+<h2>构建语句</h2>
+<div class="highlight"><pre><span></span># fabricating statement
+cursor.execute(&#39;select from books where name = ?&#39;, (&#39;the bible&#39;,)) 
+# NOTE the param must be a sequence
+
+# You could also use named placeholders
+cursor.execute(&#39;insert into books (name) values (:name)&#39;, {name: &#39;the bible&#39;})
+</pre></div>
+
+
+<h2>获取数据</h2>
+<p>有两种方式:</p>
+<p>使用 fetchone, fetchmany(n), fetchall</p>
+<div class="highlight"><pre><span></span>r = c.execute(&#39;SELECT id FROM stocks WHERE name = &#39;MSFT&#39;&#39;)
+id = r.fetchone()[0]
+</pre></div>
+
+
+<p>直接迭代返回结果</p>
+<div class="highlight"><pre><span></span>for row in c.execute(&#39;SELECT * FROM stocks ORDER BY price&#39;):
+    print row[0], row[1], row[&#39;id&#39;], row[&#39;name&#39;]
+</pre></div>
+
+
+<p>注意结果每行是一个 tuple 或者一个 dict，即使 select 了一个元素，结果也是 tuple。</p>
+<h2>其他</h2>
+<p>lastrowid</p>
+<p>This read-only attribute provides the rowid of the last modified row. It is only set if you issued a INSERT statement using the execute()method. For operations other than INSERT or when executemany() is called, lastrowid is set to None.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/sqlite3-he-zai-python-zhong-de-shi-yong-jiao-cheng.html">posted at 05:17</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

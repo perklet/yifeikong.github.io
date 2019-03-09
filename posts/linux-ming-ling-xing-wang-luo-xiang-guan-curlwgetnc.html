@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Linux 命令行网络相关（curl/wget/nc...）</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 31, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-wang-luo-xiang-guan-curlwgetnc.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行网络相关（curl/wget/nc...）&quot;">Linux 命令行网络相关（curl/wget/nc...）</a>
+                </h2>
+
+                
+                
+
+                <p>有待整理。。。</p>
+<h1>fuser</h1>
+<p>view which program is using which port.</p>
+<div class="highlight"><pre><span></span>fuser XXX/tcp  # see which program is using tcp port XXX
+fuser XXX/upd  # see which program is using udp port XXX
+fuser -k XXX/tcp  # kill the program, if you have right permissions
+</pre></div>
+
+
+<h1>curl</h1>
+<p>wget 功能很有限，httpie 虽然比较人性化但是有很多 bug，还是 curl 比较好用。</p>
+<p>curl -L/--follow http://example.com           follow redirect
+curl -I/--head http://example.com             only headers 
+curl -o/--output file http://example.com      http -d
+curl -v/--verbose http://example.com  <br>
+curl --data "key=value" http://example.com<br>
+curl --data-urlencode "key=
+curl -X/--request GET/POST http://example.com <br>
+curl -H/--header "Accept: utf-8"  <br>
+curl --referer http://x.com http://example.com
+curl --user-agent 
+curl --cookie</p>
+<h2>使用代理</h2>
+<p>curl -x <protocol>://<user>:<password>@<host>:<port> --proxy-anyauth <url></p>
+<h2>cookies</h2>
+<p>curl -v --cookie "USER_TOKEN=Yes" http://127.0.0.1:5000/</p>
+<ul>
+<li>
+<p>According to the man page, for option -b, --cookie, e.g. curl -b <file-or-pairs>, if the argument is a string having the '=' symbol, it's passed as is, otherwise it's treated as a filename to read cookie from. – ryenus Oct 21 '14 at 2:10 </p>
+</li>
+<li>
+<p>multiple cookies can be set with semicolons --cookie "key1=val1;key2=val2;..."</p>
+</li>
+</ul>
+<h1>查看网络情况</h1>
+<p>需要注意的是，在 Linux 上 netstat 已经废弃了，应该使用新的 ss 命令。不过在 macOS 等Unix系统中，还是只有netstat</p>
+<div class="highlight"><pre><span></span>netstat -a  list all ports
+netstat -at list all tcp ports
+netstat -l  all listening ports
+</pre></div>
+
+
+<p>netstat -in 查看提供网络接口的信息</p>
+<p>netstat -rn 显示路由表</p>
+<p>ifconfig eth0 显示接口的状态</p>
+<p>ifconfig -a 所有接口的状态</p>
+<p>ip addr eth0 全新的命令</p>
+<p>Mac</p>
+<p>和 Linux 基本相同, 但是缺少 ip 指令, 需要安装 iproute2mac 包</p>
+<p>traceroute</p>
+<p>nslookup</p>
+<p>host</p>
+<p>wget --noproxy</p>
+<p>mtr</p>
+<p>bt download</p>
+<p>sudo add-apt-repository ppa:t-tujikawa/ppa 
+sudo apt-get update 
+sudo apt-get install aria2</p>
+<h1>使用 rsync 同步</h1>
+<p>rsync -azP local_dir remote_dir</p>
+<ul>
+<li><code>-a</code> archive，表示归档</li>
+<li><code>-n</code> dry-run，只显示要执行的操作而不具体执行</li>
+<li><code>-z</code> compress，压缩</li>
+<li><code>-P</code> --progress + --partial，显示进度同时断点续传</li>
+<li><code>--exclude=&lt;dir&gt;</code> exclude directory from being rsynced</li>
+</ul>
+<p>默认情况下，rsync 使用增量同步，而不会删除文件。使用 <code>--delete</code> 删除文件</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-wang-luo-xiang-guan-curlwgetnc.html">posted at 06:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

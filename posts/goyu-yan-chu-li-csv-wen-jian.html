@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Go语言处理 CSV 文件</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="golang,编程语言,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jul 15, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/goyu-yan-chu-li-csv-wen-jian.html" rel="bookmark" title="Permanent Link to &quot;Go语言处理 CSV 文件&quot;">Go语言处理 CSV 文件</a>
+                </h2>
+
+                
+                
+
+                <p>在 Go 语言中可以使用 <code>encoding/csv</code> 包来处理 csv 文件。</p>
+<p>csv 包中主要有两个 struct，Reader 和 Writer。Reader 从一个 io.Reader
+中读取每一行的内容，同时提供了一些设置的选项。Writer 用来写入 csv 文件。</p>
+<h1>Reader</h1>
+<div class="highlight"><pre><span></span>r := csv.NewReader(strings.NewReader(in))
+
+for {
+    record, err := r.Read()
+    if err == io.EOF {
+        break
+    }
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    fmt.Println(record)
+}
+</pre></div>
+
+
+<table>
+<thead>
+<tr>
+<th>函数签名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>func NewReader(r io.Reader) *Reader</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>func (r *Reader) Read() (record []string, err error)</code></td>
+<td>返回 []string 类型数据</td>
+</tr>
+<tr>
+<td><code>func (r *Reader) ReadAll() (records [][]string, err error)</code></td>
+<td>直接返回所有数据</td>
+</tr>
+</tbody>
+</table>
+<h1>Writer</h1>
+<div class="highlight"><pre><span></span>records := [][]string{
+    {&quot;first_name&quot;, &quot;last_name&quot;, &quot;username&quot;},
+    {&quot;Rob&quot;, &quot;Pike&quot;, &quot;rob&quot;},
+    {&quot;Ken&quot;, &quot;Thompson&quot;, &quot;ken&quot;},
+    {&quot;Robert&quot;, &quot;Griesemer&quot;, &quot;gri&quot;},
+}
+
+w := csv.NewWriter(os.Stdout)
+
+for _, record := range records {
+    if err := w.Write(record); err != nil {
+        log.Fatalln(&quot;error writing record to csv:&quot;, err)
+    }
+}
+
+// Write any buffered data to the underlying writer (standard output).
+w.Flush()
+
+if err := w.Error(); err != nil {
+    log.Fatal(err)
+}
+</pre></div>
+
+
+<table>
+<thead>
+<tr>
+<th>函数签名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>func NewWriter(w io.Writer) *Writer</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>func (w *Writer) Error() error</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>func (w *Writer) Flush()</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>func (w *Writer) Write(record []string) error</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>func (w *Writer) WriteAll(records [][]string) error</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/goyu-yan-chu-li-csv-wen-jian.html">posted at 04:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

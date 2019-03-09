@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "后端" | Page 7</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/hou-duan/page/7/index.html">后端</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 05, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/git-shi-yong-ji-qiao.html" rel="bookmark" title="Permanent Link to &quot;Git 使用技巧&quot;">Git 使用技巧</a>
+                </h2>
+
+                
+                
+
+                <p>最佳实践，每次提交前都使用git status查看已经更改的文件，然后使用git add逐条添加文件,然后再看git status提交的文件是不是都对的. 认真编写.gitignore文件，最好能够做到每次可以使用<code>git add .</code>是安全的。</p>
+<h1>取消与重置</h1>
+<p>当你的 commit 已经 push 之后就不能再撤销了，只能使用 revert。</p>
+<h2>取消上一个 commit</h2>
+<div class="highlight"><pre><span></span>git reset HEAD~1
+</pre></div>
+
+
+<ul>
+<li>reset --mixed will reset the index not the working dir</li>
+<li>reset --soft will only move the HEAD</li>
+<li>reset --hard will even reset the …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/git-shi-yong-ji-qiao.html">posted at 10:30</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/git.html" class="tags">git</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 31, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-wang-luo-xiang-guan-curlwgetnc.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行网络相关（curl/wget/nc...）&quot;">Linux 命令行网络相关（curl/wget/nc...）</a>
+                </h2>
+
+                
+                
+
+                <p>有待整理。。。</p>
+<h1>fuser</h1>
+<p>view which program is using which port.</p>
+<div class="highlight"><pre><span></span>fuser XXX/tcp  # see which program is using tcp port XXX
+fuser XXX/upd  # see which program is using udp port XXX
+fuser -k XXX/tcp  # kill the program, if you have right permissions
+</pre></div>
+
+
+<h1>curl</h1>
+<p>wget 功能很有限，httpie 虽然比较人性化但是有很多 bug，还是 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-wang-luo-xiang-guan-curlwgetnc.html">posted at 06:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linuxbrew.html" rel="bookmark" title="Permanent Link to &quot;linuxbrew&quot;">linuxbrew</a>
+                </h2>
+
+                
+                
+
+                <p>It can be installed in your home directory and does not require root access.</p>
+<p>ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
+PATH="$HOME/.linuxbrew/bin:$PATH"</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linuxbrew.html">posted at 14:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-wen-ben-chu-li-sedawkgrep.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行文本处理（sed/awk/grep...）&quot;">Linux 命令行文本处理（sed/awk/grep...）</a>
+                </h2>
+
+                
+                
+
+                <h1>sort</h1>
+<div class="highlight"><pre><span></span>-d 按照字典排序(默认)
+-n 按照数字大小排序
+-f 忽略大小写
+-g 按照浮点数排序
+-M 按照 Jan Feb 等排序
+
+-r 逆序
+-k 指定第 k 列排序 -t 指定分隔符
+-b 忽略行首空格字符
+-m 把两个已经排序的文件合并
+</pre></div>
+
+
+<h1>uniq 合并重复</h1>
+<p>uniq 命令假定文件是已经排序的，因此基本要接着 sort 使用</p>
+<ul>
+<li><code>sort unsorted.txt | uniq</code> 删除重复行</li>
+<li><code>sort unsorted.txt | uniq -c</code> 统计行数</li>
+<li><code>sort unsorted.txt | uniq -d …</code></li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-wen-ben-chu-li-sedawkgrep.html">posted at 12:37</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-wen-jian-guan-li.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行文件管理&quot;">Linux 命令行文件管理</a>
+                </h2>
+
+                
+                
+
+                <h2>get current file path</h2>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash </span>
+<span class="c1"># Absolute path to this script, e.g. /home/user/bin/foo.sh</span>
+<span class="nv">SCRIPT</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="k">)</span>
+<span class="c1"># Absolute path this script is in, thus /home/user/bin</span>
+<span class="nv">SCRIPTPATH</span><span class="o">=</span><span class="k">$(</span>dirname <span class="s2">&quot;</span><span class="nv">$SCRIPT</span><span class="s2">&quot;</span><span class="k">)</span>
+<span class="nb">echo</span> <span class="nv">$SCRIPTPATH</span>
+</pre></div>
+</td></tr></table>
+
+<p>这些程序基本都有一个模式：如果不给定文件作为参数，那么就从stdin读取，从 stdout 输出，非常适合 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-wen-jian-guan-li.html">posted at 12:31</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ming-ling-xing-ya-suo-tu-pian-de-gong-ju.html" rel="bookmark" title="Permanent Link to &quot;命令行压缩图片的工具&quot;">命令行压缩图片的工具</a>
+                </h2>
+
+                
+                
+
+                <p>加载速度对于网页的体验还是很重要的, 而每个页面比较耗费带宽的资源就是图片了, 所以在页面发布后对图像做适当的压缩是很有必要的.</p>
+<p>常用的图片格式基本有三种: jpg, png 和 gif, 分别有不同的压缩工具</p>
+<p>JPG 压缩建议使用 jpegoptim, 实测压缩比在40%左右, 最常用的语法是</p>
+<p><code>jpegoptim -p -m&lt;dd&gt;  &lt;imagefile&gt;</code></p>
+<p>其中 -p 是保留 mtime 的意思, 也可以用 --perserve, -m 后面跟两个数字表示, 压缩的比例, 一般用90即可, 肉眼无法分辨, 且能够压缩掉40%左右</p>
+<p>png 压缩有两个选项, 常规的 optipng 和另一个新一点 pngquant, 测试了一下, 发现 optipng 速度慢而且压缩效率低, pngquant 则表现相当优秀, 但是需要注意 pngquant 是有损压缩.</p>
+<p>pngquant …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ming-ling-xing-ya-suo-tu-pian-de-gong-ju.html">posted at 01:42</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/converting-mp4-to-gif.html" rel="bookmark" title="Permanent Link to &quot;converting mp4 to gif&quot;">converting mp4 to gif</a>
+                </h2>
+
+                
+                
+
+                <h2>Converting MP4 to gif</h2>
+<p>To convert the entire video to GIF, use the following command:</p>
+<p><code>ffmpeg -i small.mp4 small.gif</code></p>
+<p>To convert just a portion of a video clip to GIF, use the following command:</p>
+<p><code>ffmpeg -t 3 -ss 00:00:02 -i small.webm small-clip.gif</code></p>
+<p>The snippet …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/converting-mp4-to-gif.html">posted at 01:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/crontab-de-yu-fa-he-shi-yong.html" rel="bookmark" title="Permanent Link to &quot;Crontab 的语法和使用&quot;">Crontab 的语法和使用</a>
+                </h2>
+
+                
+                
+
+                <p>Crontab 时间的语法:</p>
+<div class="highlight"><pre><span></span>Minute Hour Day Month DoW
+</pre></div>
+
+
+<p>每一个选项默认都是第几的意思</p>
+<ul>
+<li>Minute, 每小时的第几分, 可选值 0-59</li>
+<li>Hour, 每天的第几个小时, 可选值 0-23</li>
+<li>Day, 每月的第几天, 可选值 1-31</li>
+<li>Month, 每年的第几个月, 可选值 1-12</li>
+<li>DoW, 每周的第几天, 可选值 0-7, 0 和 7 都代表 Sunday</li>
+<li>Command, 要执行的命令</li>
+</ul>
+<p>另外:</p>
+<ul>
+<li>用 * 表示所有</li>
+<li>可以用逗号分隔指定多个</li>
+<li>用 <code>*/xx</code> 表示每 xx 一次</li>
+</ul>
+<p>比如</p>
+<div class="highlight"><pre><span></span>5 * * * * echo &quot;hello world&quot;
+</pre></div>
+
+
+<p>每小时的第五分钟打印 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/crontab-de-yu-fa-he-shi-yong.html">posted at 15:41</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/linux-ming-ling-xing-zhang-hu-guan-li.html" rel="bookmark" title="Permanent Link to &quot;Linux 命令行账户管理&quot;">Linux 命令行账户管理</a>
+                </h2>
+
+                
+                
+
+                <p>执行 <code>sudo vi /etc/suduers</code>, 然后输入：</p>
+<p><code>username ALL=(ALL) NOPASSWD: ALL</code></p>
+<div class="highlight"><pre><span></span>useradd -m USERNAME  # add a user
+userdel USERNAME  # delete a user
+passwd -e  # password expire next time user login
+
+groups username  # view username groups
+usermod -G groupname username  # add user to a group
+usermod -g groupname username # set user …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/linux-ming-ling-xing-zhang-hu-guan-li.html">posted at 12:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ming-ling-xing.html" class="tags">命令行</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags selected">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/6" class="prev_page">&larr;&nbsp;Previous</a>
+                    <span>Page 7 of 7</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

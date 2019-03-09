@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | JavaScript 学习笔记</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="JavaScript,大前端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/javascript-xue-xi-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;JavaScript 学习笔记&quot;">JavaScript 学习笔记</a>
+                </h2>
+
+                
+                
+
+                <h2>Values</h2>
+<p>类型转换</p>
+<p>Object to bool，全部转换为True，包括 [] {}和new Boolean(false)</p>
+<p>to string 首先调用toString()，如果没有然后调用valueOf()</p>
+<p>to number 首先调用valueOf(),如果没有然后调用toString()</p>
+<h2>Array</h2>
+<div class="highlight"><pre><span></span>Array.join()    
+Array.reverse() 
+Array.sort([func])  // function cmp(a, b) {return a - b;}, implace
+Array.concat(val or array)  // combination of python append and extend, will not recursively smash array, return new
+Array.slice(a, b)  // allow negative
+Array.splice(a, b, replacements...)  // both a and b are inclusive
+push/pop    
+unshift/shift   
+indexOf/lastIndexOf  // return the first find index or -1 if not found
+forEach  // no way to good stop the iteration
+map  // return a new array
+filter   //return the selected elements
+every/some  // return true or false, return immediately after the result is dicided 
+reduce  //reduce(function(a, b) {}, initial_value), when not supplied, the first element is used as initial value on empty array, no initial value will throw error
+</pre></div>
+
+
+<h2>ES5 functional array methods</h2>
+<p>they are both defined as Array.prototype.method and Array.method in firefox</p>
+<h3>common pattern</h3>
+<p>array.method(function(value, index, array) {}, this) // second parameter is treated as this in the function</p>
+<h3>using strings as arrays</h3>
+<p>Array.method.call(str, parameters)</p>
+<h2>this</h2>
+<h3>normal function</h3>
+<p>in ES3 and ES5, this is window by default.
+in ES5 strict mode, this is undefined.
+in ES6 arrow function, this is inherited from outer function</p>
+<h3>constructor function</h3>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">MyClass</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">y</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p><code>var m = new MyClass(3, 5);</code></p>
+<p><code>this</code> is the new constructed object, But, if something is returned from the constructor, then the temporary object is thrown</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">MyOtherClass</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">m</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyOtherClass</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
+</pre></div>
+
+
+<h3>method function</h3>
+<div class="highlight"><pre><span></span>point.setX = function (x) {
+    this.x = x;
+}
+</pre></div>
+
+
+<p><code>this</code> is the object</p>
+<h4>tricky closure</h4>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">constfuncs() {</span>
+    <span class="kd">var</span> <span class="nx">funcs</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">funcs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="nx">i</span><span class="p">;}</span> <span class="c1">// they refers to only one i in the closure, which is 10 in the end</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">funcs</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">funcs</span> <span class="o">=</span> <span class="nx">constfuncs</span><span class="p">();</span>
+<span class="nx">funcs</span><span class="p">[</span><span class="mi">5</span><span class="p">]()</span> <span class="c1">// returns 10,</span>
+</pre></div>
+
+
+<h3>call and apply</h3>
+<p><code>func.call(obj, params...)</code> is equal to obj.func(params...)
+<code>func.apply(obj, [params...])</code>
+<code>func.bind(obj)</code> will return a function with <code>this</code> bound as obj to the function</p>
+<p>call any method against null or undefined will result in TypeError
+ 
+by default <code>this</code> for a function in strict mode is undefined
+ 
++ prefer both operands to be numbers, comparison prefers both operands to be strings
+ 
+if a property is not found in a object, it's looked up in the prototype, if not, it's looked up
+object created by new 's prototype is the constructor's prototype
+object created by
+ 
+ </p>
+<h1>class</h1>
+<p>if two instances inherited from the same prototype, we say then are inherited from the same class. by default, the prototype is constructor's prototype
+ </p>
+<h2>subclassing</h2>
+<p>SubClass.prototype = Object.create(Base.prototype)
+SubClass.prototype.constructor = SubClass
+ </p>
+<h1>Regular Expression</h1>
+<p>syntax: /regexp/modifier
+ 
+Modifiers:
+ 
+i
+ignore case
+g
+global, if not sepcified, return only one match
+m
+multiline
+ 
+String expression methods:
+ 
+String.search(pattern)
+return first matched index or -1
+String.replace(pattern, replacement)
+back reference is used as $n, replacement can be a function
+String.match(pattern)
+return an array of matched groups, [0] is the whole match, [n] being each group
+String.split(pattern)
+return a splited elements
+ 
+Regexp methods:
+ 
+regexp.exec(String)
+equals to String.match(regexp)
+regexp.test(String)
+true or false
+regexp.exec(String) can be called multitimes for a string when regexp is not global mode. Each returns the 
+ </p>
+<h1>Date</h1>
+<h2>Constructs</h2>
+<p>new Data();
+new Date(milliseconds);
+new Data(datestring);
+new Data(y, m, d, h, m, s, ms);
+ </p>
+<h2>methods</h2>
+<p>date.toString() return  a time string
+date.valueOf() returns timestamp
+Date.now() returns current timestamp
+Date.parse() returns a timestamp
+Date.UTC(y, m, d, h, m, s, ms) returns utc timestamp
+ </p>
+<h1>Globals</h1>
+<p>encodeURI()
+encode URI to %xx syntax
+encodeURIComponent
+encode every character including /?=+,#
+decodeURI
+ 
+decodeURIComponent
+ 
+isFinite()
+ 
+isNaN
+ 
+parseInt
+ 
+parseFloat
+ 
+Infinity
+ 
+ 
+ </p>
+<h1>Math</h1>
+<p>Math.random() // -&gt; random number between 0 and 1
+ 
+Number
+ 
+Number.MAX_VALUE, Number.MIN_VALUE, Number.NaN, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY
+ </p>
+<h1>String</h1>
+<p>String.charAt()
+String.charCodeAt()
+String.concat()
+String.indexOf/lastIndexOf()
+String.slice()
+String.substr(start, length)
+String.substring(from, to)
+String.toLowerCase()/toUpperCase()
+String.trim()</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/javascript-xue-xi-bi-ji.html">posted at 07:53</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/javascript.html" class="tags">JavaScript</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

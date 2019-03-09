@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 云时代的个人存储搭建</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Feb 16, 2019</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yun-shi-dai-de-ge-ren-cun-chu-da-jian.html" rel="bookmark" title="Permanent Link to &quot;云时代的个人存储搭建&quot;">云时代的个人存储搭建</a>
+                </h2>
+
+                
+                
+
+                <p>昨天想用 iPad 上的 GoodReader 看一本书，但是从 iCloud 同步的时候出了些问题，进度始终为零。由于国内糟糕的网络环境，这种同步失败的问题时有发生。虽然可以直接通过 WiFi 把书从电脑上传过来，但是因为偶尔需要在另一个 iPad 上查看，为了同步进度，还是最终决定还是自己搭建一套云存储设施。</p>
+<h1>ftp 与 webdav</h1>
+<p>ftp 协议有诸多问题，现在用的已经很少了。WebDav 协议基于 HTTP，相比 FTP 有不少有点，可以参见文章1。另外不少开源的网盘客户端也支持 webdav。NextCloud 支持 webdav，后面会讲到</p>
+<h1>sftp 和 sshfs</h1>
+<p>sftp 则和 ftp 是完全独立的两个东西，虽然最终目的是一样的。好比海豚和鲨鱼都是在海里的生物，但是一个是哺乳动物，而一个是鱼类。sftp 基于 ssh 协议。</p>
+<p>sshfs 相比 sftp 则更近了一步，通过 sftp 把远程的文件系统直接映射到本地，从而无缝衔接。</p>
+<h2>搭建</h2>
+<p>sftp 直接基于 linux 的用户和文件权限系统。</p>
+<h3>添加相应的用户和分组，以用户名 sftp，分组名 ftpaccess 为例。</h3>
+<div class="highlight"><pre><span></span><span class="c">% sudo groupadd ftpaccess</span>
+<span class="c">% sudo useradd -m sftp -g ftpaccess -s /usr/sbin/nologin</span>
+<span class="c">% sudo passwd sftp  # 更改密码</span>
+<span class="c">% sudo mkdir /var/sftp</span>
+<span class="c">% sudo chown root /var/sftp  # 这一步非常坑，切记不可省略，后面讲为什么</span>
+<span class="c">% sudo mkdir -p /var/sftp/files</span>
+<span class="c">% sudo chown sftp:ftpaccess /var/sftp/files</span>
+</pre></div>
+
+
+<h3>修改 /etc/ssh/sshd_config 文件</h3>
+<p>注释掉这一行 <code>Subsystem sftp /usr/lib/openssh/sftp-server</code></p>
+<p>然后在文件的结尾添加</p>
+<div class="highlight"><pre><span></span>Subsystem sftp internal-sftp
+Match group ftpaccess
+ChrootDirectory /var/sftp  # 这里可以随便指定你想要的顶级目录
+X11Forwarding no
+AllowTcpForwarding no
+ForceCommand internal-sftp
+PasswordAuthentication yes
+</pre></div>
+
+
+<p>ssh 的安全配置要求 ChrootDirectory 本身必须是 root 所有的，所以登录都的根目录我们是不可写的，但是可以在新建的目录中读写。</p>
+<h3>重启 ssh 服务</h3>
+<div class="highlight"><pre><span></span><span class="c">% sudo systemctl restart ssh</span>
+</pre></div>
+
+
+<p>可以使用客户端链接啦~ 如果需要使用 publickey 登录的话，只需要像普通的用户一样，把文件传到 ~sftp 的对应目录就可以了。</p>
+<h3>使用 sshfs mount 到本地</h3>
+<div class="highlight"><pre><span></span><span class="c">% brew install sshfs</span>
+<span class="c">% brew cask install osxfuse</span>
+<span class="c">% sshfs -o allow_other,defer_permissions -o volname=sftp_files sftp@your.example.com:/files $HOME/sftp_files</span>
+</pre></div>
+
+
+<p><img alt="" src="https://ws3.sinaimg.cn/large/006tKfTcly1g09iu47ttpj30i207cabm.jpg"></p>
+<h1>nextcloud</h1>
+<p>未完待续</p>
+<h1>参考资料</h1>
+<ol>
+<li>https://stackoverflow.com/questions/11216884/which-file-access-is-the-best-webdav-or-ftp</li>
+<li><a href="https://github.com/osxfuse/osxfuse/wiki/SSHFS">SSHFS</a></li>
+<li><a href="https://askubuntu.com/questions/420652/how-to-setup-a-restricted-sftp-server-on-ubuntu">搭建 sftp 服务器</a></li>
+<li><a href="https://www.minstrel.org.uk/papers/sftp/builtin/">sftp 的一个坑</a></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yun-shi-dai-de-ge-ren-cun-chu-da-jian.html">posted at 22:27</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

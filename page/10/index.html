@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Page 10</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 20, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-7-json-zi-duan.html" rel="bookmark" title="Permanent Link to &quot;mysql 基础知识(7) - JSON 字段&quot;">mysql 基础知识(7) - JSON 字段</a>
+                </h2>
+
+                
+                
+
+                <p>在前公司的时候，大家习惯在每个表加一个 extra 字段来表示一些额外的字段，然后在 ORM 中使用的时候再解析出来，方便了扩展字段，但是缺点也很明显，extra 字段只能读取而无法进行查询。MySQL 5.7 终于支持了 json 字段，相当于加入了一些 NoSQL 的特性，这样就可以很方便得查询了。</p>
+<h1>json 字段的使用</h1>
+<p>建表：</p>
+<div class="highlight"><pre><span></span>CREATE TABLE `book` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(200) NOT NULL,
+  `tags` json DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+</pre></div>
+
+
+<p>直接使用 json …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/mysql-ji-chu-zhi-shi-7-json-zi-duan.html">posted at 03:39</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/shu-ju-ku.html" class="tags">数据库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 19, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ru-he-fa-bu-python-dai-ma-dao-pypi-shang-2018.html" rel="bookmark" title="Permanent Link to &quot;如何发布 Python 代码到 PyPI 上（2018）&quot;">如何发布 Python 代码到 PyPI 上（2018）</a>
+                </h2>
+
+                
+                
+
+                <p>PyPI 是 Python 的集中仓库。通过把代码上传到 PyPI，其他人就可以使用使用 <code>pip install xxx</code> 安装代码了。</p>
+<p>Python 的安装工具一直在不断演变，PyPI 的地址也从 pypi.python.org 变到了 pypi.org，因此网上的教程大多数都过时了，官方文档更新比较及时，但是也略过繁琐，这里写一篇简要的教程以飨读者。</p>
+<p>本文以作者的库 <a href="https://github.com/yifeikong/aioify">aioify</a> 为例</p>
+<h1>文件结构</h1>
+<div class="highlight"><pre><span></span>.
+├── LICENSE.txt
+├── MANIFEST.in
+├── README.md
+├── aioify
+│   └── __init__.py
+├── setup.cfg
+└── setup.py
+</pre></div>
+
+
+<h2>LICENSE.txt</h2>
+<p>库的开源协议，建议使用 Apache、MIT 等</p>
+<h2>MANIFEST …</h2>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ru-he-fa-bu-python-dai-ma-dao-pypi-shang-2018.html">posted at 11:01</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 02, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/go-yu-yan-chu-ti-yan.html" rel="bookmark" title="Permanent Link to &quot;Go 语言初体验&quot;">Go 语言初体验</a>
+                </h2>
+
+                
+                
+
+                <h1>安装</h1>
+<p>安装 go 很简单，在 mac 上直接使用 <code>brew install go</code> 就可以了。注意的是需要设定GOPATH这个环境变量，这里设定到了 ~/.go 这个目录。</p>
+<div class="highlight"><pre><span></span>export GOPATH=$HOME/.go
+</pre></div>
+
+
+<h1>语法和风格</h1>
+<p>Golang的整个语法还是极其简单的，基本是 C 和 Python 的混合体。Go 语言详尽地规定了代码的风格，所以就不用为了大括号究竟是放在哪儿而开始圣战了。Go 语言对程序员的约束很强，不容易犯错</p>
+<p>Go 语言官方提供了一个工具 goimports 用来管理 import 语句，还不错。</p>
+<p>比如import进来的包必须使用，声明的变量也必须使用。import 语句必须在 package 语句后面.虽然有大括号，但是大括号的位置也是指定的。</p>
+<h1>类型</h1>
+<p>几乎所有的值提供了默认都会初始化到对应的零值，即使没有初始化 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/go-yu-yan-chu-ti-yan.html">posted at 02:54</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/golang.html" class="tags">golang</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-urllib-mo-kuai.html" rel="bookmark" title="Permanent Link to &quot;Python urllib 模块&quot;">Python urllib 模块</a>
+                </h2>
+
+                
+                
+
+                <p>YN：网络访问的时候一定要记得设置一个合理的超时</p>
+<p>在 Python2 中，有两个urllib：urllib 和 urllib2，urllib基本只使用urllib.urlencode(), urllib.quote函数，其他功能都被对应的 urllib2中的函数替代了。</p>
+<p>Python3 把这两个模块进行了合并并拆分成了子模块，只使用 urllib 就好了。</p>
+<h1>发送 http 请求</h1>
+<h2>直接使用 urlopen</h2>
+<div class="highlight"><pre><span></span>urllib.request.urlopen(url, data=None, [timeout, ] *, context) -&gt; http.client.HTTPResponse
+</pre></div>
+
+
+<p>用于发送 GET 或者 POST 请求，如果有data，则发送的是 POST 请求.返回一个 file-like的http.client.HTTPResponse对象，这个对象也可以作为一个 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-urllib-mo-kuai.html">posted at 14:36</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-de-iterator-he-generator.html" rel="bookmark" title="Permanent Link to &quot;Python 中的 iterator 和 generator&quot;">Python 中的 iterator 和 generator</a>
+                </h2>
+
+                
+                
+
+                <p>这篇文章里面有不少概念都是错的，需要改进</p>
+<h1>迭代器</h1>
+<p>In Python, iterable and iterator have specific meanings.</p>
+<p>An iterable is an object that has an <strong>iter</strong> method which returns an iterator, or which defines a <strong>getitem</strong> method that can take sequential indexes starting from 0 (and raises an IndexError when the indexes are no longer valid …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-de-iterator-he-generator.html">posted at 06:19</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 01, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-forms.html" rel="bookmark" title="Permanent Link to &quot;django forms&quot;">django forms</a>
+                </h2>
+
+                
+                
+
+                <p>django 中的 form 和 model 的用法很像，都是定义一个类，然后指定一些字段就可以了</p>
+<p>最简单的form</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+
+<span class="k">class</span> <span class="nc">ContactForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">subject</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clean_message</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span>
+        <span class="n">num_words</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">num_words</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-forms.html">posted at 04:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-time-mo-kuai.html" rel="bookmark" title="Permanent Link to &quot;Python time 模块&quot;">Python time 模块</a>
+                </h2>
+
+                
+                
+
+                <p>时间戳，struct_time 可以被认为是一个表示时间的整数序列，一共9项对应于 C 中对应的数据结构，注意其中不包含时区信息</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>time.time</td>
+<td>获取当前时间戳，即 GMT 的 epoch 秒数</td>
+</tr>
+<tr>
+<td>time.clock()</td>
+<td>获取进程时间，即从进程开始执行的时间</td>
+</tr>
+<tr>
+<td>time.sleep()</td>
+<td>停止当前线程若干秒</td>
+</tr>
+<tr>
+<td>time.strftime</td>
+<td>产生可读时间字符串</td>
+</tr>
+<tr>
+<td>time.strptime</td>
+<td>parse time</td>
+</tr>
+<tr>
+<td>time.strftime()/time.mktime()/time.asctime()</td>
+<td>均接受 struct_time 作为参数</td>
+</tr>
+<tr>
+<td>time.gmtime()/time.localtime()/time.strptime()</td>
+<td>返回的是对应时间的struct_time</td>
+</tr>
+</tbody>
+</table>
+<h1>time.time vs …</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-time-mo-kuai.html">posted at 14:40</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/wei-xin-kai-fa-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;微信开发笔记&quot;">微信开发笔记</a>
+                </h2>
+
+                
+                
+
+                <p>可以使用微信的测试号学习如何开发
+http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login</p>
+<p>公众号对于消息的处理相当于使用了微信的服务器做转发代理, 发送到公众号的后端服务器, 而一旦进入网页就相当于直接同服务器通信了.  微信会使用 POST 发送消息到服务器</p>
+<p>对于消息的处理有一个签名的过程, 这样后端服务器可以判断消息是否来自微信, 从而防止 API 被恶意滥用盗用.</p>
+<p>所以这些繁杂的事情不如交个框架去处理</p>
+<p>APPID/APPSECRET 相当于公众号的账号和密码, 通过这两个组合获取一个 access_token 用于平时访问, access_token 是有有效期的, 即使明文传送被泄露了也问题不大</p>
+<p>问题是, 服务器需要记得去刷新这个 token, 所以这些东西应该交给框架最好了</p>
+<p>微信开放了 JS SDK 可以使用图片语音地图等一系列的应用, 不错</p>
+<p>常用的一些 meta 标签</p>
+<ol>
+<li><meta content=”width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;” name=”viewport” /> </li>
+<li><meta content=”yes” name=”apple-mobile-web-app-capable” />  <!--允许全屏模式浏览--></li>
+<li><meta content=”black” name=”apple-mobile-web-app-status-bar-style” />  <!--滚动条样式--></li>
+<li><meta content=”telephone=no” name=”format-detection” />  <!--禁止识别电话号码--></li>
+</ol>
+<p>iOS中浏览器直接访问站点时，navigator.standalone为false,从 主屏启动webapp …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/wei-xin-kai-fa-bi-ji.html">posted at 10:05</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/chuang-ye.html" rel="tag">创业</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/chuang-ye.html" class="tags">创业</a>
+                    &nbsp;<a href="/tag/ji-qi-ren-tui-yan.html" class="tags">机器人推广</a>
+                    &nbsp;<a href="/tag/yun-ying-yu-chan-pin.html" class="tags">运营与产品</a>
+                </div>
+            </article>            <h4 class="date">Apr 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/django-dump-to-csv.html" rel="bookmark" title="Permanent Link to &quot;django dump to csv&quot;">django dump to csv</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">django.db.models.loading</span> <span class="kn">import</span> <span class="n">get_model</span>
+
+<span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="n">qs</span><span class="p">,</span> <span class="n">outfile_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Takes in a Django queryset and spits out a CSV file.</span>
+
+<span class="sd">    Usage::</span>
+
+<span class="sd">        &gt;&gt; from utils import dump2csv</span>
+<span class="sd">        &gt;&gt; from dummy_app.models import *</span>
+<span class="sd">        &gt;&gt; qs = DummyModel.objects.all()</span>
+<span class="sd">        &gt;&gt; dump2csv.dump(qs, &#39;./data/dump.csv&#39;)</span>
+
+<span class="sd">    Based on a snippet by zbyte64::</span>
+
+<span class="sd">        http …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/django-dump-to-csv.html">posted at 09:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/django.html" class="tags">Django</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Apr 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/css-bu-ju-ji-chu-zhi-shi.html" rel="bookmark" title="Permanent Link to &quot;CSS 布局基础知识&quot;">CSS 布局基础知识</a>
+                </h2>
+
+                
+                
+
+                <h1>布局</h1>
+<p>网页的布局是面向文档流的，也就是每个元素默认都是从左到右，从上到下依次排列的。当然就像文章一样，有些元素比如标题默认就会另起一行，并且单独占据这一行。</p>
+<p>所有的元素都分为三类：inline、inline-block、和 block。</p>
+<p>其中 block 元素占据了一行的位置，即使他们的宽度不够一行，并且他们有自己的宽度和高度，比如 h1 元素。</p>
+<p>inline-block 结合了 inline 和 block 元素的特性，首先他布局是 inline 的，也就是不会另起一行，但是又可以设定单独的高度和宽度。</p>
+<p><code>display: none</code> 将会完全不渲染该元素, <code>visibility: hidden</code> 会渲染这个元素，只是在该显式的地方留下空白</p>
+<h2>使用 inline-box 的布局</h2>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tKfTcly1fquqqp791hj30kr0i1gpe.jpg"></p>
+<h1>定位</h1>
+<p>CSS 中元素的定位有如下几种，可以使用 position 指定</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>static …</td></tr></tbody></table>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/css-bu-ju-ji-chu-zhi-shi.html">posted at 07:56</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/css.html" class="tags">CSS</a>
+                    &nbsp;<a href="/tag/da-qian-duan.html" class="tags">大前端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/9" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/11" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 10 of 34</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

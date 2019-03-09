@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | Page 7</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Jun 23, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ruan-jian-gong-cheng-zhong-de-3-de-gui-ze.html" rel="bookmark" title="Permanent Link to &quot;软件工程中的 “3” 的规则&quot;">软件工程中的 “3” 的规则</a>
+                </h2>
+
+                
+                
+
+                <p>我注意到了一个神奇的软件工程法则：在你正确地解决问题之前，你至少需要3个例子。</p>
+<p>具体说来是这样的：</p>
+<ol>
+<li>不要试图在两个类之间共享代码，至少等到你有三个类的时候。</li>
+<li>解决问题的前两次尝试一定会失败，因为你还没完全理解这个问题。第三次才行</li>
+<li>任何想要早期就能设计好的尝试都会导致对于巧合情形的过度拟合。</li>
+</ol>
+<h1>你在说什么？请给个例子</h1>
+<p>比如说你在实现一个类，从银行抓取数据。下面是一个非常傻瓜的版本，但是应该说明了问题：</p>
+<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">ChaseScraper</span>:
+    <span class="kt">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">_username</span> <span class="o">=</span> <span class="nx">username</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">_password</span> <span class="o">=</span> <span class="nx">password</span>
+
+    <span class="nx">def</span> <span class="nx">scrape</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">session</span> <span class="o">=</span> <span class="nx">requests</span><span class="p">.</span><span class="nx">Session</span><span class="p">()</span>
+        <span class="nx">sessions</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;https://chase.com/rest/login.aspx&#39;</span><span class="p">,</span>
+                 <span class="nx">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;username&#39;</span><span class="o">:</span> <span class="nx">self</span><span class="p">.</span><span class="nx">_username</span><span class="p">,</span>
+                   <span class="s1">&#39;password&#39;</span><span class="o">:</span> <span class="nx">self</span><span class="p">.</span><span class="nx">_password …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ruan-jian-gong-cheng-zhong-de-3-de-gui-ze.html">posted at 02:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-ru-he-ya-suo-wen-jian.html" rel="bookmark" title="Permanent Link to &quot;Python 中如何压缩文件&quot;">Python 中如何压缩文件</a>
+                </h2>
+
+                
+                
+
+                <p>basic usage</p>
+<p>import gzip/bz2
+with gzip.open('file.gz', 'rt') as f:
+    text = f.read()</p>
+<p>NOTE: the default mode is binary.</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-ru-he-ya-suo-wen-jian.html">posted at 14:02</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/curio-de-http-ku-asks-dai-ma-jie-xi.html" rel="bookmark" title="Permanent Link to &quot;curio 的 http 库 asks 代码解析&quot;">curio 的 http 库 asks 代码解析</a>
+                </h2>
+
+                
+                
+
+                <p>asks 是 Python 的异步框架 curio 中的 一个 http 库。</p>
+<h1><strong>init</strong>.py</h1>
+<p>init 函数，初始化 curio 或者 trio 库</p>
+<h1>auth.py</h1>
+<p>auth 相关函数</p>
+<h1>base_funcs.py</h1>
+<p>asks.request 函数，创建一个session，然后做请求，之后再丢弃掉这个session</p>
+<h1>cookie_utils.py</h1>
+<h2>CookieTracker类</h2>
+<p>对外的方法主要有两个 get_additional_cookies 用于获取域名对应的cookie，_store_cookies 用于添加cookie</p>
+<p>errors.py 抛出的异常的类</p>
+<h1>req_structs.py</h1>
+<h2>SocketQ</h2>
+<p>这是一个 socket 的连接池。</p>
+<p>使用一个deque作为存储，实际上相当于又模拟了一个字典{netloc …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/curio-de-http-ku-asks-dai-ma-jie-xi.html">posted at 10:23</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-cao-zuo-ssh.html" rel="bookmark" title="Permanent Link to &quot;Python 操作 ssh&quot;">Python 操作 ssh</a>
+                </h2>
+
+                
+                
+
+                <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">paramiko</span>
+<span class="n">ip</span><span class="o">=</span><span class="s1">&#39;server ip&#39;</span>
+<span class="n">port</span><span class="o">=</span><span class="mi">22</span>
+<span class="n">username</span><span class="o">=</span><span class="s1">&#39;username&#39;</span>
+<span class="n">password</span><span class="o">=</span><span class="s1">&#39;password&#39;</span>
+<span class="n">cmd</span><span class="o">=</span><span class="s1">&#39;some useful command&#39;</span> 
+<span class="n">ssh</span><span class="o">=</span><span class="n">paramiko</span><span class="o">.</span><span class="n">SSHClient</span><span class="p">()</span>
+<span class="n">ssh</span><span class="o">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">paramiko</span><span class="o">.</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
+<span class="n">ssh</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span><span class="n">port</span><span class="p">,</span><span class="n">username</span><span class="p">,</span><span class="n">password</span><span class="p">)</span>
+<span class="n">stdin</span><span class="p">,</span><span class="n">stdout</span><span class="p">,</span><span class="n">stderr</span><span class="o">=</span><span class="n">ssh</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+<span class="n">outlines</span><span class="o">=</span><span class="n">stdout</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+<span class="n">resp</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outlines</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-cao-zuo-ssh.html">posted at 10:21</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhuan-yi-html-shi-ti-zi-fu.html" rel="bookmark" title="Permanent Link to &quot;Python 转义 html 实体字符&quot;">Python 转义 html 实体字符</a>
+                </h2>
+
+                
+                
+
+                <p>在网页中经常出现 <code>&amp;lt;</code>, <code>&amp;amp;</code>, <code>&amp;0x0026;</code> 这些特殊字符，这是 html 实体字符转义，用于防止 XSS 攻击。Python3 标准库中包含了 html.entities 模块，可以用于转义和反转义这些字符。</p>
+<div class="highlight"><pre><span></span>html.entities.entitydefs 中包含了名称到符号的映射：比如{&#39;amp&#39;: &#39;&amp;&#39;}
+html.entities.name2codepoint 中包含了名称到数字的映射：比如 {&#39;amp&#39;: 0x0026}
+html.entities.codepoint2name 中包含了数字到名称的映射：比如 {0x0026: &#39;amp&#39;}
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhuan-yi-html-shi-ti-zi-fu.html">posted at 10:21</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-de-queue-mo-kuai.html" rel="bookmark" title="Permanent Link to &quot;Python 中的 queue 模块&quot;">Python 中的 queue 模块</a>
+                </h2>
+
+                
+                
+
+                <p>在Python中多进程或者多线程之间通信可以使用队列，标准库中实现了一个线程安全的库 queue.Queue，和进程安全的库 multiprocessing.Queue</p>
+<p>There are 3 kind of queues: `Queue LifoQueue HeapQueue</p>
+<div class="highlight"><pre><span></span>q = Queue(size)
+
+get(block=True) return a object
+get_nowait()
+put(item, block=True) put a object 
+
+qsize()
+empty()
+full()
+
+task_done() # indicate one item process finished raise ValueError
+join() # wait until all item processed …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-de-queue-mo-kuai.html">posted at 09:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yue-du-python-hitchhiker-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;阅读《Python hitchhiker》笔记&quot;">阅读《Python hitchhiker》笔记</a>
+                </h2>
+
+                
+                
+
+                <p>Package</p>
+<p>A file modu.py in the directory pack/ is imported with the statement import pack.modu. This statement will look for an <strong>init</strong>.py file in pack, execute all of its top-level statements. Then it will look for a file named pack/modu.py and execute all of its …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yue-du-python-hitchhiker-bi-ji.html">posted at 09:06</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/du-shu-bi-ji.html" rel="tag">读书笔记</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/du-shu-bi-ji.html" class="tags">读书笔记</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-functools-zhong-you-yong-de-yi-xie-han-shu.html" rel="bookmark" title="Permanent Link to &quot;Python functools 中有用的一些函数&quot;">Python functools 中有用的一些函数</a>
+                </h2>
+
+                
+                
+
+                <p>functools</p>
+<p>partial partial(fn, <em>args, </em>*kwargs)</p>
+<h1>lru_cache</h1>
+<p>Decorator to wrap a function with a memoizing callable that saves up to the maxsize most recent calls. It can save time when an expensive or I/O bound function is periodically called with the same arguments.
+Since a dictionary is used to …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-functools-zhong-you-yong-de-yi-xie-han-shu.html">posted at 08:59</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/duan-shi-pin-yu-ji-qi-xue-xi.html" rel="bookmark" title="Permanent Link to &quot;短视频与机器学习&quot;">短视频与机器学习</a>
+                </h2>
+
+                
+                
+
+                <p>机器学习需要 Ground Truth
+modality是什么意思...</p>
+<h1>浅度学习</h1>
+<h2>短视频如何火</h2>
+<p>为什么: 大多数的短视频1天之后都销声匿迹了
+数据集: 10个vine用户的follower广度优先, 获得十万种子用户</p>
+<p>大V发布的(social), 声音很好(audio), 美感很好(visual), #hashtag选的好(text)</p>
+<p>从以上四个方面抽取特征.</p>
+<p>social 的影响最大</p>
+<h2>预测地理标签</h2>
+<p>1.2%才有地理标签, 预测是会议室/篮球场/公园等, 最重要的是visual feature</p>
+<h1>深度学习</h1>
+<h2>声音相关</h2>
+<p>freesound 是一个免费的声音库. 从一个标签开始, 抽不同的标签的声音. 查找不同的声音</p>
+<p>深度学习加迁移学习</p>
+<p>alexnet-7是啥</p>
+<h2>sequential and sparse</h2>
+<p>字典学习是啥?</p>
+<p>什么事共空间?</p>
+<h1>未来</h1>
+<p>用户的兴趣是动态的, 但是推荐却是固定的.</p>
+<p>无法搜索没有文字的视频 比如 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/duan-shi-pin-yu-ji-qi-xue-xi.html">posted at 06:07</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/talks.html" rel="tag">talks</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/talks.html" class="tags">talks</a>
+                </div>
+            </article>            <h4 class="date">Jun 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/suan-fa-she-ji-yu-fen-xi-ji-chu-bi-ji.html" rel="bookmark" title="Permanent Link to &quot;《算法设计与分析基础》笔记&quot;">《算法设计与分析基础》笔记</a>
+                </h2>
+
+                
+                
+
+                <p>http://blog.csdn.net/wangyunyun00/article/details/23464359</p>
+<p>差值查找</p>
+<p>折半查找这种查找方式，还是有改进空间的，并不一定是折半的！
+mid = （low+high）/ 2, 即 mid = low + 1/2 * (high - low);
+改进为 下面的计算机方案（不知道具体过程）：
+mid = low + (key - a[low]) / (a[high] - a[low]) * (high - low)，
+也就是将上述的比例参数1/2改进了，根据关键字在整个有序表中所处的位置，让mid值的变化更靠近关键字key，这样也就间接地减少了比较次 数。</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/suan-fa-she-ji-yu-fen-xi-ji-chu-bi-ji.html">posted at 05:46</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/du-shu-bi-ji.html" rel="tag">读书笔记</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/du-shu-bi-ji.html" class="tags">读书笔记</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/6" class="prev_page">&larr;&nbsp;Previous</a>
+                    <a href="/page/8" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 7 of 34</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

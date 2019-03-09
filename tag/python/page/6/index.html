@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "Python" | Page 6</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/python/page/6/index.html">Python</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-de-yi-chang-zong-jie.html" rel="bookmark" title="Permanent Link to &quot;Python 中的异常总结&quot;">Python 中的异常总结</a>
+                </h2>
+
+                
+                
+
+                <h2>User defined class</h2>
+<p>for user defined exceptions, just subclass Exception</p>
+<h2>Catching Exceptions</h2>
+<div class="highlight"><pre><span></span>except Exception as e: # SystemExit, KeyboardInterrupt, GeneratorExit is not captured
+    log(&#39;Reason&#39;, e)    # the baseline is to record
+</pre></div>
+
+
+<h2>容易抛出异常的地方</h2>
+<ul>
+<li>网络读取，requests.get</li>
+<li>调用其他命令超时，subprocess.call</li>
+<li>读取他人的数据，IndexError</li>
+</ul>
+<h3>容易阻塞的地方</h3>
+<p>网络</p>
+<h2>内置的异常树</h2>
+<div class="highlight"><pre><span></span>BaseException
+ +-- SystemExit
+ +-- *KeyboardInterrupt*
+ +-- GeneratorExit
+ +-- Exception
+      +-- *StopIteration*
+      +-- *StandardError*
+      |    +-- BufferError …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-de-yi-chang-zong-jie.html">posted at 03:01</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-de-xu-lie-hua-ku.html" rel="bookmark" title="Permanent Link to &quot;Python 中的序列化库&quot;">Python 中的序列化库</a>
+                </h2>
+
+                
+                
+
+                <h2>basic usage</h2>
+<div class="highlight"><pre><span></span>pickle.dumps(obj)  # dumps a object to a bytes, not binary safe
+pickle.loads(bytes)  # loads a object from a bytes.
+</pre></div>
+
+
+<h2>tricks</h2>
+<p>pickling dict is stable</p>
+<div class="highlight"><pre><span></span>In [5]: pickle.dumps({&#39;a&#39;: &#39;b&#39;, &#39;1&#39;: &#39;2&#39;})
+Out[5]: b&#39;\x80\x03}q\x00(X\x01\x00\x00\x001q\x01X\x01 …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-de-xu-lie-hua-ku.html">posted at 01:47</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-zhong-de-bytesiostringio.html" rel="bookmark" title="Permanent Link to &quot;Python 中的 bytesio/stringio&quot;">Python 中的 bytesio/stringio</a>
+                </h2>
+
+                
+                
+
+                <p>Python 中的io 包提供了 BytesIO 和 StringIO，分别可以把一个对象作为一个内存中的二进制文件和文本文件，除了文件的read/write/readline等操作外，支持 getvalue 操作。</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">io</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>  <span class="c1"># 二进制文件只能写 b&#39;xxx&#39;</span>
+<span class="n">f</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+<span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-zhong-de-bytesiostringio.html">posted at 01:46</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/yaml-yu-yan-he-python-zhong-de-shi-yong.html" rel="bookmark" title="Permanent Link to &quot;YAML 语言和 Python 中的使用&quot;">YAML 语言和 Python 中的使用</a>
+                </h2>
+
+                
+                
+
+                <h2>Install</h2>
+<div class="highlight"><pre><span></span>pip install pyyaml
+</pre></div>
+
+
+<h2>Basic Example</h2>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yaml</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">yaml_string</span><span class="p">)</span> <span class="c1"># to python list or dict</span>
+<span class="n">string</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">py_object</span><span class="p">)</span>
+<span class="c1"># NOTE: unlike the json module, the method here is load/dump, not loads/dumps</span>
+</pre></div>
+
+
+<h2>Yaml</h2>
+<p>YAML uses three dashes (“---”) to separate documents within a stream. Three dots ( “...”) indicate the …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/yaml-yu-yan-he-python-zhong-de-shi-yong.html">posted at 15:20</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">May 29, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-du-xie-csv-wen-jian.html" rel="bookmark" title="Permanent Link to &quot;Python 读写 CSV 文件&quot;">Python 读写 CSV 文件</a>
+                </h2>
+
+                
+                
+
+                <h2>typical usage</h2>
+<p>注意dictwriter需要提供fieldnames</p>
+<div class="highlight"><pre><span></span>with open(&#39;csvfile&#39;, &#39;wt&#39;, newline=&#39;&#39;) as f:
+    writer = csv.DictWriter(f, fieldnames=[], extrasaction=&#39;ignore&#39;)
+    writer.writeheader()
+    writer.writerow(d) # list of dict if writerows
+
+with open(&#39;csvfile&#39;, &#39;wt&#39;, newline=&#39;&#39;) as f:
+    writer = csv.writer(f)
+    writer.writerow(l) # list of list if writerows
+
+with open(&#39;csvfile&#39;, &#39;rt …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-du-xie-csv-wen-jian.html">posted at 14:14</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/python.html" class="tags selected">Python</a>
+                    &nbsp;<a href="/tag/bian-cheng-yu-yan.html" class="tags">编程语言</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/5" class="prev_page">&larr;&nbsp;Previous</a>
+                    <span>Page 6 of 6</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

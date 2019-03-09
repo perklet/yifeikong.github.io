@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | 使用 supervisord 部署服务</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="后端,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 24, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-supervisord-bu-shu-fu-wu.html" rel="bookmark" title="Permanent Link to &quot;使用 supervisord 部署服务&quot;">使用 supervisord 部署服务</a>
+                </h2>
+
+                
+                
+
+                <p>在某一刻你会意识到你需要写一个长期运行的服务。如果有错误，这些脚本不应该停止运行，而且当系统重启的时候应该自动把这些脚本拉起来。</p>
+<p>为了实现这一点，我们需要一些东西来监控脚本。这些工具在脚本挂掉的时候重启他们，并且在系统启动的时候拉起他们。</p>
+<h1>脚本</h1>
+<p>这样的工具应该是怎样的呢？我们安装的大多数东西都带了某种进程监控的机制。比如说Upstart和Systemd。这些工具被许多系统用力啊监控重要的进程。当我们安装php5-fpm，Apache 和nginx的时候，他们通常已经和系统集成好了，以便于他们不会默默挂掉。</p>
+<p>然而，我们有时候需要一些简单点儿的解决方案。比如说我经常写一些 nodejs 的脚本来监控github上的某个动态并作相应的动作。node可以处理 http请求并且同时处理他们，也就是很适合作为一个一次性运行的服务。</p>
+<p>这些小的脚本可能不值得使用 Upstart 或者 Systemd 这种重量级的东西。</p>
+<p>下面是我们用来举例的脚本 我们把它放在 /srv/http.js 中</p>
+<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">serve</span><span class="p">(</span><span class="nx">ip</span><span class="p">,</span> <span class="nx">port</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;text/plain&#39;</span><span class="p">});</span>
+            <span class="nx">res</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;\nSome Secrets:&quot;</span><span class="p">);</span>
+            <span class="nx">res</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="o">+</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">SECRET_PASSPHRASE</span><span class="p">);</span>
+            <span class="nx">res</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="o">+</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">SECRET_TWO</span><span class="p">);</span>
+            <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="s2">&quot;\nThere&#39;s no place like &quot;</span><span class="o">+</span><span class="nx">ip</span><span class="o">+</span><span class="s2">&quot;:&quot;</span><span class="o">+</span><span class="nx">port</span><span class="o">+</span><span class="s2">&quot;\n&quot;</span><span class="p">);</span>
+        <span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span> <span class="nx">ip</span><span class="p">);</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Server running at http://&#39;</span><span class="o">+</span><span class="nx">ip</span><span class="o">+</span><span class="s1">&#39;:&#39;</span><span class="o">+</span><span class="nx">port</span><span class="o">+</span><span class="s1">&#39;/&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Create a server listening on all networks</span>
+<span class="nx">serve</span><span class="p">(</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="mi">9000</span><span class="p">);</span>
+</pre></div>
+
+
+<p>All this service does is take a web request and print out a message. It's not useful in reality, but good for our purposes. We just want a service to run and monitor.</p>
+<p>Note that the service prints out two environmental variables: "SECRET_PASSPHRASE" and "SECRET_TWO". We'll see how we can pass these into a watched process.</p>
+<p>这个服务仅仅是接受一个 http 请求并打印一条消息。在现实中并没有什么卵用，但是用来演示很好。我们只是需要一个服务来运行和监控。</p>
+<p>注意到这个服务打印两个变量 "SECRET_PASSPHRASE" 和 "SECRET_TWO"。我们将会演示如何把这个传递个被监控的进程。</p>
+<h1>Supervisord</h1>
+<p>Supervisord is a simple and popular choice for process monitoring.</p>
+<p>Supervisord 是一个使用很广也很简单的进程监控工具。</p>
+<h2>安装</h2>
+<p>建议使用系统的包管理器安装，虽然可能版本稍微老一点，但是。不过 supervisor 还不支持 python 3，所以必须使用 python 2 版本。</p>
+<div class="highlight"><pre><span></span>brew install supervisor
+</pre></div>
+
+
+<p>在 linux 上可以通过apt-get来安装 supervisor，同样的命令。</p>
+<div class="highlight"><pre><span></span>apt-get install supervisor
+service supervisor start
+</pre></div>
+
+
+<h2>配置</h2>
+<p>下面我们来配置一个 supervisor 服务。</p>
+<p>打开 /etc/supervisor/supervisord.conf，我们可以看到最后一行：</p>
+<div class="highlight"><pre><span></span><span class="k">[include]</span>
+<span class="na">files</span> <span class="o">=</span> <span class="s">/etc/supervisor/conf.d/*.conf</span>
+</pre></div>
+
+
+<p>所以我们只需要把我们的配置文件放在 /etc/supervisor/conf.d 文件夹下就好了。</p>
+<div class="highlight"><pre><span></span><span class="k">[program:nodehook]</span>
+<span class="na">command</span><span class="o">=</span><span class="s">/usr/bin/node /srv/http.js</span>
+<span class="na">directory</span><span class="o">=</span><span class="s">/srv</span>
+<span class="na">autostart</span><span class="o">=</span><span class="s">true</span>
+<span class="na">autorestart</span><span class="o">=</span><span class="s">true</span>
+<span class="na">startretries</span><span class="o">=</span><span class="s">3</span>
+<span class="na">stderr_logfile</span><span class="o">=</span><span class="s">/var/log/webhook/nodehook.err.log</span>
+<span class="na">stdout_logfile</span><span class="o">=</span><span class="s">/var/log/webhook/nodehook.out.log</span>
+<span class="na">user</span><span class="o">=</span><span class="s">www-data</span>
+<span class="na">environment</span><span class="o">=</span><span class="s">SECRET_PASSPHRASE=&#39;this is secret&#39;,SECRET_TWO=&#39;another secret&#39;</span>
+</pre></div>
+
+
+<p>每个选项如下：</p>
+<ul>
+<li>[program:nodehook] 定义运行的服务的名字。</li>
+<li>command 启动被监控的服务的命令，如果你需要传递命令行参数的话，也放在这里</li>
+<li>directory 设定进程的运行目录</li>
+<li>autostart 是否需要在 supervisord 启动的时候自动拉起</li>
+<li>autorestart 是否在程序挂掉的时候自动重新拉起</li>
+<li>startretries 如果启动失败，重试多少次</li>
+<li>stderr_logfile 标准错误输出写入到哪个文件</li>
+<li>stdout_logfile 标准输出写入到哪个文件</li>
+<li>user 运行进程的用户</li>
+<li>environment 传递给进程的环境变量</li>
+</ul>
+<p>需要注意的是，supervisor 不会自动创建日志文件夹，所以需要我们首先创建好。</p>
+<div class="highlight"><pre><span></span>sudo mkdir /var/log/webhook
+</pre></div>
+
+
+<p>supervisor 配置文件的搜索路径包括：</p>
+<div class="highlight"><pre><span></span>/usr/local/etc/supervisord.conf
+/usr/local/supervisord.conf
+supervisord.conf  # 当前目录
+etc/supervisord.conf
+/etc/supervisord.conf
+/etc/supervisor/supervisord.conf
+</pre></div>
+
+
+<h2>控制进程</h2>
+<p>可以使用 supervisorctl 来控制对应的服务了。不过需要首先启动 supervisord 的daemon 才行。</p>
+<div class="highlight"><pre><span></span>supervisorctl reread
+supervisorctl update
+</pre></div>
+
+
+<p>这样就可以启动刚刚定义的服务。supervisorctl 的其他功能可以查看帮助</p>
+<h1>Web 界面</h1>
+<p>We can configure a web interface which comes with Supervisord. This lets us see a list of all processes being monitored, as well as take action on them (restarting, stopping, clearing logs and checking output).</p>
+<p>supervisor 自带了一个 web 界面。这样我们就可以通过浏览器来管理进程了。</p>
+<p>Inside of /etc/supervisord.conf, add this:</p>
+<p>在 /etc/supervisord.conf 中添加：</p>
+<div class="highlight"><pre><span></span><span class="k">[inet_http_server]</span>
+<span class="na">port</span> <span class="o">=</span> <span class="s">9001</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">user # Basic auth username</span>
+<span class="na">password</span> <span class="o">=</span> <span class="s">pass # Basic auth password</span>
+</pre></div>
+
+
+<p>If we access our server in a web browser at port 9001, we'll see the web interface:</p>
+<p><img alt="" src="https://ws4.sinaimg.cn/large/006tNc79ly1frmjham7zcj319i0c2mz7.jpg"></p>
+<p>ref: https://serversforhackers.com/c/monitoring-processes-with-supervisord</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-supervisord-bu-shu-fu-wu.html">posted at 00:32</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

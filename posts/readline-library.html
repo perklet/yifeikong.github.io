@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | readline library</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+
+    <meta name="keywords" content="库,计算机" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">May 30, 2017</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/readline-library.html" rel="bookmark" title="Permanent Link to &quot;readline library&quot;">readline library</a>
+                </h2>
+
+                
+                
+
+                <p>readline is widely used input lib, all the key bindings are from emacs</p>
+<p>GNU readline key bindings</p>
+<div class="highlight"><pre><span></span>key action  note
+^a  moves the cursor to the beginning of the line    a 是第一个字母
+^b  moves it one position to the left    b 是 back 的缩写
+^c  send SIGINT or KeybordInterrupt 
+^d  send eof on empty line  
+^d  erase next char 
+^e  to the end   e 表示 end
+^f   把光标向前移动一格   f 表示 forward
+^h   把光标向前删除     h 表示 histroy?
+^i  自动补全, 和 tab 功能一样    
+^k  删除到行尾    k表示kill
+^y  粘贴删除的字符  y 表示 yank
+^_  undo    
+^p  previous    
+^n  next    
+^r  reverse search  r for reverse
+^s  search  s for search
+</pre></div>
+
+
+<p>Using readline in python</p>
+<p>actually the input function is just readline enabled, the missing functionality is history support</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/readline-library.html">posted at 12:51</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/ku.html" class="tags">库</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>

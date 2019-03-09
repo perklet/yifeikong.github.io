@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Yifei Kong | articles tagged "架构"</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/feed/atom-all.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Full Atom Feed" />
+    <link href="/feed/rss-all.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong Full RSS Feed" />
+    <link href="/feed/atom.xml" type="application/atom+xml" rel="alternate" title="Yifei Kong Atom Feed" />
+    <link href="/feed/rss.xml" type="application/rss+xml" rel="alternate" title="Yifei Kong RSS Feed" />
+    <link rel="stylesheet" href="/theme/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <meta name="generator" content="Pelican" />
+    <meta name="description" content="" />
+    <meta name="author" content="Yifei Kong" />
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="ephemeral selected"><a href="/tag/jia-gou.html">架构</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="https://github.com/">GitHub</a></li>
+                <li><a href="/tags">Tags</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/archives">Archives</a></li>
+            </ul>
+        </nav>
+        <div class="header_box">
+            <h1><a href="/">Yifei Kong</a></h1>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="content">            <h4 class="date">Feb 12, 2019</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-zai-master-jie-dian-bu-shu-pod.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——在 Master 节点部署 Pod&quot;">kubernetes 初探——在 Master 节点部署 Pod</a>
+                </h2>
+
+                
+                
+
+                <p>虽然 K8S 本身不建议在 Master 节点中部署 Pod，但是实际上也是可以的。</p>
+<div class="highlight"><pre><span></span>kubectl taint nodes --all node-role.kubernetes.io/master-
+</pre></div>
+
+
+<p>这行命令的意思是移除所有节点的 master taint，这样就可以在 master 节点部署 pod 啦~</p>
+<h1>原理解释——taint 和 toleration</h1>
+<ol>
+<li>https://www.ibm.com/support/knowledgecenter/en/SSCKRH_1.0.1/platform/install_pod_scheduling.html</li>
+<li>https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/</li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-zai-master-jie-dian-bu-shu-pod.html">posted at 19:57</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags selected">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jan 25, 2019</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/gu-zhang-pai-cha-ji-lu.html" rel="bookmark" title="Permanent Link to &quot;故障排查记录&quot;">故障排查记录</a>
+                </h2>
+
+                
+                
+
+                <p>Case 1：</p>
+<p>CPU 和内存都被打满了，同时发现硬盘 IO 也很高。</p>
+<div class="highlight"><pre><span></span>ps -eo pid,ppid,cmd,%mem,mem,%cpu --sort=-%mem | head -n 50
+</pre></div>
+
+
+<p>发现 kswapd0 偶尔会占用很高的 CPU，而这个进程是在内存满的时候负责在内存和 swap 之间交换。也就是问题的根源是内存满了，而 kswapd0 开始在内存和 swap 之间反复读写文件，导致 CPU 和 IO 也涨了起来，这时候应该找到内存暴涨的根源，进而解决问题。</p>
+<p>[1] https://askubuntu.com/questions/259739/kswapd0-is-taking-a-lot-of-cpu</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/gu-zhang-pai-cha-ji-lu.html">posted at 18:03</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags selected">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jan 18, 2019</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-fu-wu-zhi-li.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——服务治理&quot;">kubernetes 初探——服务治理</a>
+                </h2>
+
+                
+                
+
+                <p>服务治理有两种方式：</p>
+<ul>
+<li>一种是直接在服务中集成熔断降级等操作</li>
+<li>一种是使用 sidecar 模式，有公共组件来处理</li>
+</ul>
+<p>两种模式的区别如图：</p>
+<p><img alt="" src="https://ws1.sinaimg.cn/large/006tNc79ly1fzbu3a41c3j30gw09jabr.jpg"></p>
+<h1>参考资料</h1>
+<ol>
+<li><a href="https://mp.weixin.qq.com/s/1zAxecTzeZToaWFymeY-sw">Service Mesh 的本质、价值和应用探索 </a></li>
+<li><a href="https://www.kubernetes.org.cn/2350.html">Istio, K8S 的微服务支持</a></li>
+<li><a href="https://blog.csdn.net/aa1215018028/article/details/81700796">微服务之熔断、降级、限流</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzI1NzYzODk4OQ==&amp;mid=2247484925&amp;idx=1&amp;sn=5c15ba98fb03a2a0d9c823136f34e162">微服务化之服务拆分与服务发现</a></li>
+</ol>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-fu-wu-zhi-li.html">posted at 21:33</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags selected">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Nov 22, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/shi-yong-nomad-bian-pai-fu-wu.html" rel="bookmark" title="Permanent Link to &quot;使用 Nomad 编排服务&quot;">使用 Nomad 编排服务</a>
+                </h2>
+
+                
+                
+
+                <p>2019-01-02 更新：相对于 Kubernetes 来说，Nomad 还是太简陋了，弃坑</p>
+<p>Nomad 是 HashiCorp 出品的一个容器编排服务，相较于重量级的 Kubernetes 来说，Nomad 的特点在于</p>
+<ol>
+<li>轻量级，只有一个二进制文件。K8s 的安装可能就要花上半天，在国内还有万恶的防火墙问题。</li>
+<li>概念也比较清晰，专注于任务的调度的编排，而不像 Kubernetes 一样引入了各种五花八门的概念。</li>
+<li>除了编排容器之外，Nomad 还可以直接编排普通应用，使用 cgroups 安全运行应用。</li>
+</ol>
+<h1>安装</h1>
+<p>从官网下载二进制文件，复制到 /usr/local/bin 就好了，不再赘述</p>
+<h1>使用</h1>
+<div class="highlight"><pre><span></span>$ sudo nomad agent -dev
+
+$ nomad node status
+ID …</pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/shi-yong-nomad-bian-pai-fu-wu.html">posted at 22:57</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags selected">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Oct 16, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/python-influxdb-grafana-de-jian-kong-xi-tong.html" rel="bookmark" title="Permanent Link to &quot;Python + Influxdb + Grafana 的监控系统&quot;">Python + Influxdb + Grafana 的监控系统</a>
+                </h2>
+
+                
+                
+
+                <h1>influxdb</h1>
+<p>为什么我们要把监控数据存到 influxdb 呢? 存到 MySQL 或者 MongoDB 甚至 Elasticsearch 不好么?</p>
+<p>数据模型上, 监控数据是和时间相关的, 脱离点产生的时间, 那么数据将毫无意义, 传统数据库中并没又强调这一点.</p>
+<p>性能上, influxdb 是时间序列数据库, 这类数据库面临的问题是写入非常多, 而读取比较少. 而普通的数据库一般都是读比较多, 而写入较少, 并且要保证写入的正确性. </p>
+<p>监控打点显然是一个面向时间序列的过程, 并且写入非常多, 而一般只有在触发告警, 排查问题的时候可能读取才比较多. 所以从性能和功能考虑上来说, 传统数据库都是不适用的.</p>
+<p>influxdb 中常见的存储数据格式:</p>
+<div class="highlight"><pre><span></span>cpu_usage value=49 1502043216
+cpu_usage value=50 1502193042
+cpu_usage value=5 1502196258
+</pre></div>
+
+
+<h2>influxdb 数据模型</h2>
+<p>我们以一个 measurement(测量) 作为一个表 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/python-influxdb-grafana-de-jian-kong-xi-tong.html">posted at 02:18</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags selected">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Oct 06, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-shi-yong-helm-bu-shu-fu-wu.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——使用 helm 部署服务&quot;">kubernetes 初探——使用 helm 部署服务</a>
+                </h2>
+
+                
+                
+
+                <p>前几篇写了一写 k8s 部署方面的东西, 后来发现阿里云的 k8s 集群还很好用...何苦自己研究几天部署呢...?</p>
+<p>------分隔线------</p>
+<p>在 k8s 上部署一个应用还是有些复杂的, 自己的应用当然需要自己一步一步部署, 但是对于一些通用的应用, 比如说 mysql/grafana 这种就没必要自己手工一步一步部署了. 这时候就有了 helm, 通俗的来说他就是 kubernetes 上的 AppStore, 常见的应用都已经在了, 而且你也可以按照他的格式打包自己的应用部署.</p>
+<h1>安装</h1>
+<p>在 helm 的 release 页面下载, 然后拷贝到本地的 /usr/local/bin/ 目录就好了. helm 运行的时候会使用 ~/.kube/config 文件, 所以本地 kubectl 可以使用就好了.</p>
+<p>helm 分为两部分, helm 是本地命令, tiller 是服务端 …</p>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-shi-yong-helm-bu-shu-fu-wu.html">posted at 02:52</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags selected">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Oct 05, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-you-zhuang-tai-fu-wu.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——部署有状态服务&quot;">kubernetes 初探——部署有状态服务</a>
+                </h2>
+
+                
+                
+
+                <p>为了部署我们自己的应用, 首先需要把基础设施部署上去, 其中数据库就占了大头. 有人说数据库等应用不是和容器化部署, 但是也有人认为所有的应用都适合容器化部署. 在这里我们不讨论这些观点，仅以部署 MySQL 为例说明一下如何在 K8S 上部署有状态服务。</p>
+<h1>相关概念</h1>
+<ul>
+<li>PersistentVolume(PV) 是集群之中的一块网络存储。跟 Node 一样，也是集群的资源。PV 跟 Volume 类似，不过会有独立于 Pod 的生命周期。这一 API 对象包含了存储的实现细节，例如 NFS、iSCSI 或者其他的云提供商的存储系统。</li>
+<li>PersistentVolumeClaim (PVC) 是用户的一个请求。他跟 Pod 类似。Pod 消费 Node 的资源，PVC 消费 PV 的资源。Pod 能够申请特定的资源（CPU …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-you-zhuang-tai-fu-wu.html">posted at 08:02</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags selected">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Oct 04, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-wu-zhuang-tai-ying-yong.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——部署无状态应用&quot;">kubernetes 初探——部署无状态应用</a>
+                </h2>
+
+                
+                
+
+                <p>kubernetes 架构图</p>
+<p><img alt="" src="https://ws2.sinaimg.cn/large/006tNbRwly1fvxa7izqb8j30mb0gcmzk.jpg"></p>
+<ul>
+<li>Master. 用于控制整个集群部署的机器, 为了高可用, 可以使用多台，一般至少三台为宜。</li>
+<li>Node. 工作节点, 用于部署服务. 一台机器可以既是 Master 也是 Worker，当然最好 Master 不要做 Worker。</li>
+<li>Pod. k8s 部署的最小单元, 一个 Pod 中可能包含多个 container. Pod 随时可能挂掉，也可能被替换。</li>
+<li>Label. Pod 的标签, 可以通过这些标签（组合）来选择对应的 Pod。</li>
+<li>Replica Set. 作为一个高可用的系统, 每个服务一般来说可能有多个 Pod. Replication Set 用来创建并保证有足够的 Pod 副本。RS 的名字总是 <Deployment的名字>-<pod template的hash值> 格式的。</li>
+<li>Deployment. 用户一般来说不会直接创建 …</li></ul>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-wu-zhuang-tai-ying-yong.html">posted at 17:45</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags selected">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Sep 30, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-ji-qun.html" rel="bookmark" title="Permanent Link to &quot;kubernetes 初探——部署集群&quot;">kubernetes 初探——部署集群</a>
+                </h2>
+
+                
+                
+
+                <p>随着 docker cloud 的关闭，容器的编排工具之争似乎已经结束了，Docker Swarm 上算是完了，Kubernetes 笑到了最后。然而 k8s 的组件众多，因此部署起来也很麻烦。为此，网上有不少的网上有不少的部署教程和脚本，包括但不限于：</p>
+<ul>
+<li>kubesaz</li>
+<li>minikube</li>
+<li>kubespray</li>
+<li>rke</li>
+<li>kubernetes: the hard way</li>
+</ul>
+<p>有的出于教学目的的单机版本，有的是可以在生产环境部署的版本。研究了一番，发现 rke 这个工具应该是最简单的了。不过 rke 还不太稳定，目前看来，kubespray 声明了可以在生产环境使用</p>
+<p>本文基于 ubuntu 16.04. CentOS 上好多默认设置都需要修改，因此建议大家基于 Ubuntu 部署 k8s。</p>
+<h1>使用 kubespray 安装 …</h1>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/kubernetes-chu-tan-bu-shu-ji-qun.html">posted at 04:58</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags selected">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>            <h4 class="date">Jun 23, 2018</h4>
+
+            <article class="post">
+                <h2 class="title">
+                    <a href="/posts/ruan-jian-gong-cheng-zhong-de-3-de-gui-ze.html" rel="bookmark" title="Permanent Link to &quot;软件工程中的 “3” 的规则&quot;">软件工程中的 “3” 的规则</a>
+                </h2>
+
+                
+                
+
+                <p>我注意到了一个神奇的软件工程法则：在你正确地解决问题之前，你至少需要3个例子。</p>
+<p>具体说来是这样的：</p>
+<ol>
+<li>不要试图在两个类之间共享代码，至少等到你有三个类的时候。</li>
+<li>解决问题的前两次尝试一定会失败，因为你还没完全理解这个问题。第三次才行</li>
+<li>任何想要早期就能设计好的尝试都会导致对于巧合情形的过度拟合。</li>
+</ol>
+<h1>你在说什么？请给个例子</h1>
+<p>比如说你在实现一个类，从银行抓取数据。下面是一个非常傻瓜的版本，但是应该说明了问题：</p>
+<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">ChaseScraper</span>:
+    <span class="kt">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">username</span><span class="p">,</span> <span class="nx">password</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">_username</span> <span class="o">=</span> <span class="nx">username</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">_password</span> <span class="o">=</span> <span class="nx">password</span>
+
+    <span class="nx">def</span> <span class="nx">scrape</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">session</span> <span class="o">=</span> <span class="nx">requests</span><span class="p">.</span><span class="nx">Session</span><span class="p">()</span>
+        <span class="nx">sessions</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;https://chase.com/rest/login.aspx&#39;</span><span class="p">,</span>
+                 <span class="nx">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;username&#39;</span><span class="o">:</span> <span class="nx">self</span><span class="p">.</span><span class="nx">_username</span><span class="p">,</span>
+                   <span class="s1">&#39;password&#39;</span><span class="o">:</span> <span class="nx">self</span><span class="p">.</span><span class="nx">_password …</span></pre></div>
+                <div class="clear"></div>
+
+                <div class="info">
+                    <a href="/posts/ruan-jian-gong-cheng-zhong-de-3-de-gui-ze.html">posted at 02:48</a>
+                    &nbsp;&middot;&nbsp;<a href="/category/ji-suan-ji.html" rel="tag">计算机</a>
+                    &nbsp;&middot;
+                    &nbsp;<a href="/tag/jia-gou.html" class="tags selected">架构</a>
+                    &nbsp;<a href="/tag/hou-duan.html" class="tags">后端</a>
+                    &nbsp;<a href="/tag/ji-suan-ji.html" class="tags">计算机</a>
+                </div>
+            </article>
+
+                <div class="clear"></div>
+                <div class="pages">
+
+                    <a href="/page/2" class="next_page">Next&nbsp;&rarr;</a>
+                    <span>Page 1 of 2</span>
+                </div>
+
+            <div class="clear"></div>
+            <footer>
+                <p>
+                <a href="https://github.com/jody-frankowski/blue-penguin">Blue Penguin</a> Theme
+                &middot;
+                Powered by <a href="http://getpelican.com">Pelican</a>
+                &middot;
+                <a href="/feed/atom-all.xml" rel="alternate">Atom Feed</a>
+                &middot;
+                <a href="/feed/rss-all.xml" rel="alternate">Rss Feed</a>
+            </footer>
+        </div>
+        <div class="clear"></div>
+    </div>
+</body>
+</html>
